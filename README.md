@@ -1,5 +1,11 @@
 # 알아라 슈퍼보드 App
 
+## React Native Debugger
+```
+https://github.com/jhen0409/react-native-debugger
+```
+
+
 ## Build
 ```
 //cd ios & pod install
