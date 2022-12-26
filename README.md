@@ -2,6 +2,7 @@
 
 ## Build
 ```
+//cd ios & pod install
 npm run ios 
 npm run android
 ```
