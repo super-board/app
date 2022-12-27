@@ -11,10 +11,10 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name='Home' component={HomeStack} />
-        <Tab.Screen name='Mypage' component={MyPageStack} />
-        <Tab.Screen name='Search' component={SearchStack} />
-        <Tab.Screen name='Write' component={WriteStack} />
+        <Tab.Screen name='HomeTab' component={HomeStack} />
+        <Tab.Screen name='MypageTab' component={MyPageStack} />
+        <Tab.Screen name='SearchTab' component={SearchStack} />
+        <Tab.Screen name='WriteTab' component={WriteStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );
