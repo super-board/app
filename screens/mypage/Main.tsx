@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
 
 const MyPageScreen = () => {
   return (
     <View>
       <Text>mypage</Text>
     </View>
-  )
-}
+  );
+};
 
-export default MyPageScreen
+export default MyPageScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

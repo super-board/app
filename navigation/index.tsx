@@ -1,9 +1,10 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStack from './stack/HomeStack';
 import MyPageStack from './stack/MyPageStack';
 import SearchStack from './stack/SearchStack';
 import WriteStack from './stack/WriteStack';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -11,13 +12,13 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name='HomeTab' component={HomeStack} />
-        <Tab.Screen name='MypageTab' component={MyPageStack} />
-        <Tab.Screen name='SearchTab' component={SearchStack} />
-        <Tab.Screen name='WriteTab' component={WriteStack} />
+        <Tab.Screen name="HomeTab" component={HomeStack} />
+        <Tab.Screen name="MypageTab" component={MyPageStack} />
+        <Tab.Screen name="SearchTab" component={SearchStack} />
+        <Tab.Screen name="WriteTab" component={WriteStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default Navigation;
