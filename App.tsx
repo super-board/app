@@ -4,8 +4,8 @@ import React from 'react';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import Reducer from './_reducers';
-import Navigation from './navigation';
+import Reducer from '_reducers';
+import Navigation from 'navigation';
 
 declare global {
   interface Window {
