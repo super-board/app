@@ -1,11 +1,13 @@
-import {createStore, applyMiddleware, compose} from 'redux';
-import {Provider, Provider as ReduxProvider} from 'react-redux';
 import React from 'react';
+
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Provider, Provider as ReduxProvider} from 'react-redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import Reducer from '_reducers';
-import Navigation from 'navigation';
+
+import Reducer from '@/_reducers';
+import Navigation from '@/navigation';
 
 declare global {
   interface Window {

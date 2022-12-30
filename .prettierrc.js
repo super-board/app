@@ -7,4 +7,7 @@ module.exports = {
   semi: true,
   useTabs: false,
   tabWidth: 2,
+  importOrder: ['^react$', '<THIRD_PARTY_MODULES>', '^@/(.*)$', '^[./]'],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
 };

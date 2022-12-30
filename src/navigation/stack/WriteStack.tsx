@@ -1,7 +1,9 @@
 import * as React from 'react';
+
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import WriteScreen from 'screens/write/Main';
-import screenOptions from 'navigation/config';
+
+import screenOptions from '@/navigation/config';
+import WriteScreen from '@/screens/write/Main';
 
 const Stack = createNativeStackNavigator();
 
