@@ -4,6 +4,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <RNKakaoLogins.h>
+#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
 
 #import <React/RCTAppSetupUtils.h>
 
@@ -136,6 +137,12 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
      options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
       dispatch_async(dispatch_get_main_queue(), ^(void){
+        // naver
+        if ([url.scheme isEqualToString:@"ontheboard.co.kr"]) {
+          [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
+        }
+
+        // kakao
         if ([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
           [RNKakaoLogins handleOpenUrl: url];
         }
