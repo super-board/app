@@ -9,7 +9,7 @@ https://github.com/jhen0409/react-native-debugger
 ## Build
 ```
 //cd ios & pod install
-npm run ios 
+npm run ios // if fail, build in xcode
 npm run android
 ```
 
