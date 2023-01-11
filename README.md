@@ -40,7 +40,7 @@ pod install
 ```
 arch -x86_64 pod install
 ```
-
-
+- target has transitive dependencies that include statically linked binaries
+https://github.com/facebook/flipper/issues/606
 
 
