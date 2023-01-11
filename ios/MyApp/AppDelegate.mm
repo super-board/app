@@ -1,10 +1,12 @@
+#import <Firebase.h>
+#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
+
 #import "AppDelegate.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <RNKakaoLogins.h>
-#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
 
 #import <React/RCTAppSetupUtils.h>
 
@@ -33,6 +35,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   RCTAppSetupPrepareApp(application);
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
@@ -139,7 +142,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
       dispatch_async(dispatch_get_main_queue(), ^(void){
         // naver
         if ([url.scheme isEqualToString:@"ontheboard.co.kr"]) {
-          [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
+          [[NaverThirdPartyLoginConnection getSharedInstance] application:app openURL:url options:options];
         }
 
         // kakao

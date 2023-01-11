@@ -10,6 +10,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-firebase/analytics": "15.4.0",
+    "@react-native-firebase/app": "15.4.0",
+    "@react-native-firebase/crashlytics": "15.4.0",
     "@react-native-seoul/kakao-login": "^5.2.6",
     "@react-native-seoul/naver-login": "^3.0.0-rc.1",
     "@react-navigation/bottom-tabs": "^6.5.2",
