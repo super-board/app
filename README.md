@@ -25,5 +25,22 @@ $ rbenv install 2.7.5
 $ rbenv global 2.7.5
 ```
 
+- M1 MAC pod install Error
+
+Could not find 'ffi' (>= 1.3.0) among 85 total gem(s) (Gem::MissingSpecError)
+```
+sudo gem uninstall -aIx
+rm -rf ~/.gem
+sudo gem install cocoapods
+
+sudo chown -R $USER ~/Library/Caches/CocoaPods
+```
+
+pod install
+```
+arch -x86_64 pod install
+```
+
+
 
 
