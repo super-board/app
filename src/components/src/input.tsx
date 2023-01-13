@@ -18,7 +18,7 @@ const TextInput = (props: TextInputProps) => {
   const {text, title, placeholder, keyboardType, bottomText, setText, setIsValid, style, ...otherProps} = props;
   const [errMsg, setErrMsg] = useState<string>("");
   const [time, setTime] = useState(10000);
-  const [security, setSecurity] = useState(true);
+  const [security, setSecurity] = useState(title === "비밀번호" || title === "비밀번호 확인" ? true : false);
 
   let timer: any;
 
