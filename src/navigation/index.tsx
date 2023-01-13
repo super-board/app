@@ -1,24 +1,22 @@
 import React from 'react';
 
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import screenOptions from './config';
+import BottomTab from './stack/BottomTabk';
+import LoginScreen from '@/screens/login/LoginScreen';
 
-import HomeStack from './stack/HomeStack';
-import MyPageStack from './stack/MyPageStack';
-import SearchStack from './stack/SearchStack';
-import WriteStack from './stack/WriteStack';
-
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="HomeTab" component={HomeStack} />
-        <Tab.Screen name="MypageTab" component={MyPageStack} />
-        <Tab.Screen name="SearchTab" component={SearchStack} />
-        <Tab.Screen name="WriteTab" component={WriteStack} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName="Login" screenOptions={screenOptions}>
+        <Stack.Group>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Home" component={BottomTab} />
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
