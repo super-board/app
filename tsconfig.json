@@ -1,7 +1,7 @@
 // prettier-ignored
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
-  "include": ["./App.tsx", "./src/**/*", "./assets/**/*", "tests/**/*"],
+  "include": ["./App.tsx", "./src/**/*", "./assets/**/*", "tests/**/*", "src/custom.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
