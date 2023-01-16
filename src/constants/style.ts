@@ -7,7 +7,9 @@ const style = {
   nextBtn: {
     height: 60,
     borderRadius: 10,
-    alignSelf: "flex-start",
+    position: "absolute",
+    alignSelf: "center",
+    bottom: "10%",
   },
 };
 
