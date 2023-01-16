@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1038740653507",
+    "project_id": "on-the-board-14183",
+    "storage_bucket": "on-the-board-14183.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038740653507:android:0045ed3a306ab8fb33a976",
+        "android_client_info": {
+          "package_name": "kr.co.ontheboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038740653507-pnen1sfj0rirj252fmh4aflki228b1ee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCGpYh6i7ccO8zRhl_S8uYwvAwLv7tdEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038740653507-pnen1sfj0rirj252fmh4aflki228b1ee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
