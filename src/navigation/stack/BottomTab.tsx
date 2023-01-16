@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MyPageStack from './src/MyPageStack';
-import SearchStack from './src/SearchStack';
-import WriteStack from './src/WriteStack';
-import HomeStack from './src/HomeStack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+import HomeStack from './src/HomeStack';
+import MyPageStack from './src/MyPageStack';
+import SearchStack from './src/SearchStack';
+import WriteStack from './src/WriteStack';
 
 const Tab = createBottomTabNavigator();
 
