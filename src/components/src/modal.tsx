@@ -5,11 +5,11 @@ import * as SVG from "../../assets/svgs";
 type ModalProps = DefModal["props"]&{
   title?: string,
   subTitle?: string,
-  button?: any
+  button?: any,
 }
 
 const Warn = (props: ModalProps) => {
-  const { title, subTitle, button, visible, onRequestClose,  children, ...otherProps } = props;
+  const { title, subTitle, button, visible, onRequestClose, ...otherProps } = props;
     
   return (
     <DefModal visible={visible} animationType="fade" transparent statusBarTranslucent

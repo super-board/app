@@ -1,5 +1,5 @@
-import { KeyboardTypeOptions, Text, TextInput as DefTextInput, StyleSheet, View, ViewStyle, TouchableOpacity} from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { KeyboardTypeOptions, Text, TextInput as DefTextInput, StyleSheet, View, ViewStyle, TouchableOpacity, ViewProps} from 'react-native'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import colors from '@/constants/colors';
 import * as SVG from "../../assets/svgs";
 
@@ -10,19 +10,21 @@ type TextInputProps = DefTextInput["props"]&{
   setText: Function,
   title?: string,
   bottomText?: string,
-  setIsValid: Function,
-  style?: ViewStyle
+  setIsValid?: Dispatch<SetStateAction<boolean>> | any
+  style?: ViewProps | any,
+  type?: string,
+  err?: string
 }
  
 const TextInput = (props: TextInputProps) => {
-  const {text, title, placeholder, keyboardType, bottomText, setText, setIsValid, style, ...otherProps} = props;
-  const [errMsg, setErrMsg] = useState<string>("");
-  const [time, setTime] = useState(10000);
+  const {text, title, placeholder, keyboardType, bottomText, setText, setIsValid, style, type, err="", ...otherProps} = props;
+  const [errMsg, setErrMsg] = useState<string>(err);
+  const [time, setTime] = useState(180000);
   const [security, setSecurity] = useState(title === "비밀번호" || title === "비밀번호 확인" ? true : false);
 
   let timer: any;
 
-  useEffect(()=> {
+  useEffect(() => {
     if (time > 0) timer = setTimeout(()=> setTime(time - 1000), 1000);
     else clearTimeout(timer);
   }, [time])
@@ -30,20 +32,46 @@ const TextInput = (props: TextInputProps) => {
   const checkValid = (text: string) => {
     switch(title) {
       case "이메일":
-        let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
-        if(regex.test(text)) {
-          setErrMsg("");
-          setIsValid(true);
+        if (type === "register" || type === "find") {
+          let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+          if(regex.test(text)) {
+            setErrMsg("");
+            setIsValid(true);
+          } else {
+            setErrMsg("이메일 형식이 맞지 않습니다. 다시 입력해주세요.");
+            setIsValid(false);
+          }
         } else {
-          setErrMsg("이메일 형식이 맞지 않습니다. 다시 입력해주세요.");
-          setIsValid(false);
+
         }
+        
       break;
       case "인증번호":
-
+        
       break;
       case "비밀번호":
+        if(type === "register") {
+          let num = text.search(/[0-9]/g);
+          let eng = text.search(/[a-z]/ig);
+          let spe = text.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
+          if(text.length < 8 || text.length > 20){
+            setErrMsg("8~20자 이내의 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요.")
+            setIsValid(false);
+          }else if(text.search(/\s/) != -1){
+            setErrMsg("비밀번호는 공백 없이 입력해주세요.");
+            setIsValid(false);
+          }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
+            setErrMsg("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+            setIsValid(false);
+          }else {
+            setIsValid(true);	 
+            setErrMsg("");
+          }
+        } else {
+
+        }
+        
       break;
       case "비밀번호 확인":
 
@@ -52,7 +80,6 @@ const TextInput = (props: TextInputProps) => {
       
       return true;
     }
-    
   }
 
   const onChangeText = (text: string) => {
@@ -64,7 +91,9 @@ const TextInput = (props: TextInputProps) => {
   const InsideComponent = () => {
     switch(title) {
       case "인증번호":
-        return (<Text style={styles.timer}>{(Math.floor(time/60000)).toString().padStart(2,"0")}:{(Math.floor(time%60000) / 1000).toString().padStart(2,"0")}</Text>);
+        return (
+          <Text style={styles.timer}>{(Math.floor(time/60000)).toString().padStart(2,"0")}:{(Math.floor(time%60000) / 1000).toString().padStart(2,"0")}</Text>
+        );
       case "비밀번호": case "비밀번호 확인":
         return (
           <TouchableOpacity onPress={() => setSecurity(!security)} style={styles.iconContainer}>
@@ -134,12 +163,10 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     justifyContent: "center",
-    width: 35, 
-    height: 35
   },
   view: {
     position: "absolute",
-    right: 55,
+    right: 20,
     width: 18,
     height: 18
   }

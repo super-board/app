@@ -9,6 +9,7 @@ import ReduxThunk from 'redux-thunk';
 import Reducer from '@/_reducers';
 import Navigation from '@/navigation';
 
+
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;

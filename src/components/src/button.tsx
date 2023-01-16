@@ -1,16 +1,16 @@
-import { StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, ViewProps } from 'react-native'
 import React from 'react'
 
-type buttonProps = {
+type ButtonProps = { 
   onPress: () => void,
   text: string,
   disabled?: boolean,
   borderRadious?: number,
-  height?: number,
-  style?: ViewStyle
+  height?: number, 
+  style?: ViewProps | any
 }
 
-const Button = (props: buttonProps) => {
+const Button = (props: ButtonProps) => {
   const {text, onPress, style, borderRadious=4, height=48, disabled, ...otherProps} = props;
 
   return (
