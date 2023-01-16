@@ -1,12 +1,14 @@
-import { View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Button, Cacnel, Title, TextInput } from '@/components'
-import style from '@/constants/style';
-import { NavigationProp, ParamListBase, RouteProp } from '@react-navigation/native';
+import React, {useEffect, useState} from "react";
+
+import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
+import {View} from "react-native";
+
+import {Button, Cacnel, TextInput, Title} from "@/components";
+import style from "@/constants/style";
 
 const Password = (props: {
-  navigation: NavigationProp<ParamListBase>
-  route: RouteProp<ParamListBase>
+  navigation: NavigationProp<ParamListBase>;
+  route: RouteProp<ParamListBase>;
 }) => {
   const {navigation, route} = props;
   const [password, setPassword] = useState("");
@@ -15,16 +17,13 @@ const Password = (props: {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: ()=> <Cacnel screen={"Login"}/>
-    })
-  }, [])
-  
+      headerRight: () => <Cacnel />,
+    });
+  }, []);
+
   return (
     <View style={style.container}>
-      <Title
-        title="비밀번호 입력"
-        subTitle="로그인에 사용할 비밀번호를 입력하세요."
-      /> 
+      <Title title="비밀번호 입력" subTitle="로그인에 사용할 비밀번호를 입력하세요." />
       <TextInput
         title="비밀번호"
         text={password}
@@ -36,7 +35,7 @@ const Password = (props: {
         title="비밀번호 확인"
         text={password}
         setText={_setPassword}
-        style={{ marginTop: 24 }}      
+        style={{marginTop: 24}}
       />
       <Button
         text="다음"
@@ -45,7 +44,7 @@ const Password = (props: {
         style={style.nextBtn}
       />
     </View>
-  )
-}
+  );
+};
 
-export default Password
+export default Password;

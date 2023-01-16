@@ -1,16 +1,17 @@
-import colors from '@/constants/colors';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {NativeStackNavigationOptions} from "@react-navigation/native-stack";
+
+import colors from "@/constants/colors";
 
 const screenOptions: NativeStackNavigationOptions = {
-  animation: 'slide_from_right',
+  animation: "slide_from_right",
   headerShown: true,
-  headerStyle:{
+  headerStyle: {
     backgroundColor: colors.background,
   },
   headerTitleStyle: {
-    color: colors.background
+    color: colors.background,
   },
-  headerTintColor: '#fff',
+  headerTintColor: "#fff",
   headerBackTitleVisible: false,
 };
 

@@ -1,27 +1,27 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import style from '@/constants/style'
-import { Button, Cacnel, Title } from '@/components'
-import { NavigationProp, ParamListBase, RouteProp } from '@react-navigation/native'
+import React, {useEffect, useState} from "react";
+
+import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
+import {StyleSheet, View} from "react-native";
+
+import {Button, Cacnel, Title} from "@/components";
+import style from "@/constants/style";
 
 const Profile = (props: {
-  navigation: NavigationProp<ParamListBase>
-  route: RouteProp<ParamListBase>
+  navigation: NavigationProp<ParamListBase>;
+  route: RouteProp<ParamListBase>;
 }) => {
   const {navigation, route} = props;
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: ()=> <Cacnel screen={"Login"}/>
-    })
-  }, [])
-  
+      headerRight: () => <Cacnel />,
+    });
+  }, []);
+
   return (
     <View style={style.container}>
-      <Title 
-        title="프로필 캐릭터 선택"
-      />
+      <Title title="프로필 캐릭터 선택" />
       <Button
         text="다음"
         onPress={() => navigation.navigate("RegisterProfile", {...route.params})}
@@ -29,9 +29,9 @@ const Profile = (props: {
         style={style.nextBtn}
       />
     </View>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

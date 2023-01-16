@@ -2,7 +2,7 @@ module.exports = {
   arrowParens: 'avoid',
   bracketSameLine: true,
   bracketSpacing: false,
-  singleQuote: true,
+  singleQuote: false,
   trailingComma: 'all',
   semi: true,
   useTabs: false,
@@ -10,4 +10,6 @@ module.exports = {
   importOrder: ['^react$', '<THIRD_PARTY_MODULES>', '^@/(.*)$', '^[./]'],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
+  printWidth: 100,
+  jsxBracketSameLine: true,
 };
