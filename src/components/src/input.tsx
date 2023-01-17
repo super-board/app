@@ -1,40 +1,66 @@
-import { KeyboardTypeOptions, Text, TextInput as DefTextInput, StyleSheet, View, ViewStyle, TouchableOpacity, ViewProps} from 'react-native'
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import colors from '@/constants/colors';
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
+
+import {
+  TextInput as DefTextInput,
+  KeyboardTypeOptions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewProps,
+  ViewStyle,
+} from "react-native";
+
+import colors from "@/constants/colors";
+
 import * as SVG from "../../assets/svgs";
 
-type TextInputProps = DefTextInput["props"]&{
-  placeholder?: string,
-  keyboardType?: KeyboardTypeOptions,
-  text: string,
-  setText: Function,
-  title?: string,
-  bottomText?: string,
-  setIsValid?: Dispatch<SetStateAction<boolean>> | any
-  style?: ViewProps | any,
-  type?: string,
-  err?: string
-}
- 
+type TextInputProps = DefTextInput["props"] & {
+  placeholder?: string;
+  keyboardType?: KeyboardTypeOptions;
+  text: string;
+  setText: Function;
+  title?: string;
+  bottomText?: string;
+  setIsValid?: Dispatch<SetStateAction<boolean>> | any;
+  style?: ViewProps | any;
+  type?: string;
+  err?: string;
+};
+
 const TextInput = (props: TextInputProps) => {
-  const {text, title, placeholder, keyboardType, bottomText, setText, setIsValid, style, type, err="", ...otherProps} = props;
+  const {
+    text,
+    title,
+    placeholder,
+    keyboardType,
+    bottomText,
+    setText,
+    setIsValid,
+    style,
+    type,
+    err = "",
+    ...otherProps
+  } = props;
   const [errMsg, setErrMsg] = useState<string>(err);
   const [time, setTime] = useState(180000);
-  const [security, setSecurity] = useState(title === "비밀번호" || title === "비밀번호 확인" ? true : false);
+  const [security, setSecurity] = useState(
+    title === "비밀번호" || title === "비밀번호 확인" ? true : false,
+  );
 
   let timer: any;
 
   useEffect(() => {
-    if (time > 0) timer = setTimeout(()=> setTime(time - 1000), 1000);
+    if (time > 0) timer = setTimeout(() => setTime(time - 1000), 1000);
     else clearTimeout(timer);
-  }, [time])
+  }, [time]);
 
   const checkValid = (text: string) => {
-    switch(title) {
+    switch (title) {
       case "이메일":
         if (type === "register" || type === "find") {
-          let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
-          if(regex.test(text)) {
+          let regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
+          if (regex.test(text)) {
             setErrMsg("");
             setIsValid(true);
           } else {
@@ -42,68 +68,73 @@ const TextInput = (props: TextInputProps) => {
             setIsValid(false);
           }
         } else {
-
         }
-        
-      break;
+
+        break;
       case "인증번호":
-        
-      break;
+        break;
       case "비밀번호":
-        if(type === "register") {
+        if (type === "register") {
           let num = text.search(/[0-9]/g);
-          let eng = text.search(/[a-z]/ig);
+          let eng = text.search(/[a-z]/gi);
           let spe = text.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-          if(text.length < 8 || text.length > 20){
-            setErrMsg("8~20자 이내의 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요.")
+          if (text.length < 8 || text.length > 20) {
+            setErrMsg("8~20자 이내의 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요.");
             setIsValid(false);
-          }else if(text.search(/\s/) != -1){
+          } else if (text.search(/\s/) != -1) {
             setErrMsg("비밀번호는 공백 없이 입력해주세요.");
             setIsValid(false);
-          }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
+          } else if ((num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0)) {
             setErrMsg("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
             setIsValid(false);
-          }else {
-            setIsValid(true);	 
+          } else {
+            setIsValid(true);
             setErrMsg("");
           }
         } else {
-
         }
-        
-      break;
-      case "비밀번호 확인":
 
-      break;
+        break;
+      case "비밀번호 확인":
+        break;
       default:
-      
-      return true;
+        return true;
     }
-  }
+  };
 
   const onChangeText = (text: string) => {
     setText(text);
     checkValid(text);
-    if(!text.length) setErrMsg("");
-  }
+    if (!text.length) setErrMsg("");
+  };
 
   const InsideComponent = () => {
-    switch(title) {
+    switch (title) {
       case "인증번호":
         return (
-          <Text style={styles.timer}>{(Math.floor(time/60000)).toString().padStart(2,"0")}:{(Math.floor(time%60000) / 1000).toString().padStart(2,"0")}</Text>
+          <Text style={styles.timer}>
+            {Math.floor(time / 60000)
+              .toString()
+              .padStart(2, "0")}
+            :{(Math.floor(time % 60000) / 1000).toString().padStart(2, "0")}
+          </Text>
         );
-      case "비밀번호": case "비밀번호 확인":
+      case "비밀번호":
+      case "비밀번호 확인":
         return (
           <TouchableOpacity onPress={() => setSecurity(!security)} style={styles.iconContainer}>
-            {security ? <SVG.Icon.ViewFalse style={styles.view}/> : <SVG.Icon.ViewTrue style={styles.view}/>}
-          </TouchableOpacity> 
+            {security ? (
+              <SVG.Icon.ViewFalse style={styles.view} />
+            ) : (
+              <SVG.Icon.ViewTrue style={styles.view} />
+            )}
+          </TouchableOpacity>
         );
       default:
-      return null;
+        return null;
     }
-  }
+  };
 
   return (
     <View style={{...style}}>
@@ -119,38 +150,40 @@ const TextInput = (props: TextInputProps) => {
           editable
           secureTextEntry={security}
         />
-        <InsideComponent/>
-      </View> 
+        <InsideComponent />
+      </View>
       <View style={styles.bottomTextContainer}>
-        <Text style={[styles.bottomText, {color: !errMsg ? "grey" : colors.warning}]}>{!errMsg ? text.length ? null : bottomText : errMsg}</Text>
+        <Text style={[styles.bottomText, {color: !errMsg ? "grey" : colors.warning}]}>
+          {!errMsg ? (text.length ? null : bottomText) : errMsg}
+        </Text>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default TextInput
+export default TextInput;
 
 const styles = StyleSheet.create({
   text: {
     color: "white",
-    marginBottom: 8
+    marginBottom: 8,
   },
   textInput: {
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: "white",
-    borderRadius: 4, 
-    height: 52, 
-    width: "100%", 
-    padding: 12, 
-    color: "white"
+    borderRadius: 4,
+    height: 52,
+    width: "100%",
+    padding: 12,
+    color: "white",
   },
   bottomTextContainer: {
     alignItems: "center",
-    margin: 8
+    margin: 8,
   },
   bottomText: {
     color: "grey",
-    fontSize: 12
+    fontSize: 12,
   },
   textInputContainer: {
     flexDirection: "row",
@@ -168,6 +201,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 20,
     width: 18,
-    height: 18
-  }
-})
+    height: 18,
+  },
+});
