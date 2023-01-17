@@ -1,5 +1,3 @@
 import Warning from "./warning.svg";
 
-export {
-  Warning
-}
+export {Warning};

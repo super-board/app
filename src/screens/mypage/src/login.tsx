@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 
-import {NavigationProp, ParamListBase, RouteProp} from '@react-navigation/native';
+import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -10,20 +10,20 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
+} from "react-native";
 
-import {Button, TextInput, Title} from '@/components';
-import style from '@/constants/style';
+import {Button, TextInput, Title} from "@/components";
+import style from "@/constants/style";
 
-import * as SVG from '../../../assets/svgs';
+import * as SVG from "../../../assets/svgs";
 
 const Login = (props: {
   navigation: NavigationProp<ParamListBase>;
   route: RouteProp<ParamListBase>;
 }) => {
   const {navigation, route} = props;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     navigation.setOptions({
@@ -36,20 +36,20 @@ const Login = (props: {
     kakao: () => {},
     naver: () => {},
     register: () => {
-      navigation.navigate('RegisterEmail');
+      navigation.navigate("RegisterEmail");
     },
     findPassword: () => {
-      navigation.navigate('RegisterEmail', {type: 'find'});
+      navigation.navigate("RegisterEmail", {type: "find"});
     },
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View
           style={[
             style.container,
-            {alignItems: 'center', justifyContent: 'center', flexDirection: 'column'},
+            {alignItems: "center", justifyContent: "center", flexDirection: "column"},
           ]}>
           <Title title={`보드게임 좋아하는사람\n온더보드에서 모여라!`} textAlign="center" />
           <TextInput
@@ -92,23 +92,23 @@ export default Login;
 
 const styles = StyleSheet.create({
   sns: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 56,
   },
   textInput: {
     padding: 24,
   },
   findRegister: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   text: {
-    color: 'white',
-    textDecorationLine: 'underline',
+    color: "white",
+    textDecorationLine: "underline",
   },
   divider: {
     borderRightWidth: 1,
-    borderColor: 'white',
+    borderColor: "white",
     margin: 10,
     height: 14,
   },

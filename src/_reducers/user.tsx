@@ -1,4 +1,4 @@
-import '@/_actions/types';
+import "@/_actions/types";
 
 export default function (state = {}, action: any) {
   switch (action.type) {

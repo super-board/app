@@ -1,1 +1,1 @@
-export const APPLE_LOGIN = 'apple_login';
+export const APPLE_LOGIN = "apple_login";
