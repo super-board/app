@@ -1706,6 +1706,11 @@
     "@expo/config-plugins" "^5.0.1"
     "stacktrace-js" "^2.0.0"
 
+"@react-native-firebase/messaging@^15.4.0":
+  "integrity" "sha512-irmmkAWwD0PqZc3Nua4vdDS5liPfJzis5/zC1XxZw/AS4AfoEj2yv3+r273bqx/E9aZ2Udl1GBPV2nWBDDR/yA=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-15.4.0.tgz"
+  "version" "15.4.0"
+
 "@react-native-seoul/kakao-login@^5.2.6":
   "integrity" "sha512-93pkAScF8uVnAwwFkOV5m0xCbkNFGc5ey99AUy9n191YZL5ywguEV0ZBcgij+1cPkM0e7xVcXGfUG7/GmXcn0A=="
   "resolved" "https://registry.npmjs.org/@react-native-seoul/kakao-login/-/kakao-login-5.2.6.tgz"
