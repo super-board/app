@@ -1,12 +1,6 @@
-import {
-  PERMISSIONS,
-  PermissionStatus,
-  requestMultiple,
-} from 'react-native-permissions';
+import {PERMISSIONS, PermissionStatus, requestMultiple} from "react-native-permissions";
 
-export async function requestPermission(): Promise<
-  Record<string, PermissionStatus>
-> {
+export async function requestPermission(): Promise<Record<string, PermissionStatus>> {
   const statuses = await requestMultiple([
     PERMISSIONS.IOS.CAMERA,
     PERMISSIONS.IOS.PHOTO_LIBRARY,

@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from "react-native";
 
-import {Button} from '@/components';
-import colors from '@/constants/colors';
+import {Button} from "@/components";
+import colors from "@/constants/colors";
 import {
   PermissionAppTrackingTransparencyService,
   PermissionCameraAndGalleryService,
   PermissionNotificationsService,
-} from '@/services/permission';
+} from "@/services/permission";
 
 function PermissionTestScreen() {
   return (
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: colors.background,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonGap: {
     marginBottom: 8,

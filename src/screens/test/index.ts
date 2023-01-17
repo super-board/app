@@ -1,1 +1,1 @@
-export {default as PermissionTestScreen} from './src/PermissionTestScreen';
+export {default as PermissionTestScreen} from "./src/PermissionTestScreen";
