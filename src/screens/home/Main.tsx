@@ -1,9 +1,7 @@
 import React from "react";
 
-import NaverLoginTest from "@/screens/login/NaverLoginTest";
-
 const HomeScreen = () => {
-  return <NaverLoginTest />;
+  return <></>;
 };
 
 export default HomeScreen;
