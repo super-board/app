@@ -1,6 +1,6 @@
-import '@/_actions/types';
+import "@/_actions/types";
 
-export default function (state = {}, action: any) {
+export default function (state = {name: "온더보드"}, action: any) {
   switch (action.type) {
     default:
       return state;

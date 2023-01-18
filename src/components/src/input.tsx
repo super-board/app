@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
   ViewProps,
-  ViewStyle,
 } from "react-native";
 
 import colors from "@/constants/colors";
@@ -48,7 +47,7 @@ const TextInput = (props: TextInputProps) => {
     title === "비밀번호" || title === "비밀번호 확인" ? true : false,
   );
 
-  let timer: any;
+  let timer: number;
 
   useEffect(() => {
     if (time > 0) timer = setTimeout(() => setTime(time - 1000), 1000);
@@ -75,9 +74,9 @@ const TextInput = (props: TextInputProps) => {
         break;
       case "비밀번호":
         if (type === "register") {
-          let num = text.search(/[0-9]/g);
-          let eng = text.search(/[a-z]/gi);
-          let spe = text.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+          const num = text.search(/[0-9]/g);
+          const eng = text.search(/[a-z]/gi);
+          const spe = text.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
           if (text.length < 8 || text.length > 20) {
             setErrMsg("8~20자 이내의 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요.");
@@ -97,6 +96,15 @@ const TextInput = (props: TextInputProps) => {
 
         break;
       case "비밀번호 확인":
+        break;
+      case "닉네임":
+        const kor = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+        if (kor.test(text) && text.length <= 10) {
+          setIsValid(true);
+        } else {
+          setErrMsg("닉네임 형식이 맞지 않습니다. 다시 입력해주세요.");
+          setIsValid(false);
+        }
         break;
       default:
         return true;
