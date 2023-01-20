@@ -8,7 +8,12 @@ import colors from "@/constants/colors";
 import {Login} from "@/screens/mypage";
 import {PermissionTestScreen} from "@/screens/test";
 
-import {RegisterEmail, RegisterPassword, RegisterProfile} from "../screens/register";
+import {
+  RegisterEmail,
+  RegisterNickname,
+  RegisterPassword,
+  RegisterProfile,
+} from "../screens/register";
 import screenOptions from "./config";
 import BottomTab from "./stack/BottomTab";
 
@@ -25,6 +30,7 @@ const Navigation = () => {
             <Stack.Screen name="RegisterEmail" component={RegisterEmail} />
             <Stack.Screen name="RegisterPassword" component={RegisterPassword} />
             <Stack.Screen name="RegisterProfile" component={RegisterProfile} />
+            <Stack.Screen name="RegisterNickname" component={RegisterNickname} />
             <Stack.Screen name="Home" component={BottomTab} />
           </Stack.Group>
         </Stack.Navigator>

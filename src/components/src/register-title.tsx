@@ -14,7 +14,7 @@ const Title = (props: RegTitleProps) => {
   return (
     <View style={[styles.textContainer]}>
       <Text style={[styles.title, {textAlign: textAlign}]}>{title}</Text>
-      <Text style={styles.subTitle}>{subTitle}</Text>
+      {subTitle ? <Text style={styles.subTitle}>{subTitle}</Text> : null}
     </View>
   );
 };
@@ -23,7 +23,7 @@ export default Title;
 
 const styles = StyleSheet.create({
   textContainer: {
-    marginBottom: 40,
+    marginBottom: 24,
   },
   title: {
     color: "white",
