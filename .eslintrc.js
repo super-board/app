@@ -1,24 +1,29 @@
 module.exports = {
-  root: true,
-  extends: '@react-native-community',
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  extends: ["eslint:recommended", "@react-native-community", "plugin:prettier/recommended"],
   overrides: [
     {
-      files: ['*.ts', '*.tsx'],
+      files: ["*.ts", "*.tsx"],
       rules: {
-        '@typescript-eslint/no-shadow': ['error'],
-        'no-shadow': 'off',
-        'no-undef': 'off',
+        "@typescript-eslint/no-shadow": ["off"],
+        "no-shadow": "off",
+        "no-undef": "off",
       },
     },
   ],
   rules: {
-    'prettier/prettier': [
-      'error',
+    "react-native/no-inline-styles": [0],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [0],
+    "prettier/prettier": [
+      "error",
       {
-        endOfLine: 'auto',
+        endOfLine: "auto",
       },
     ],
+  },
+  settings: {
+    "import/resolver": {
+      "babel-module": {allowExistingDirectories: true},
+    },
   },
 };

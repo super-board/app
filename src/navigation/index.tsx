@@ -6,6 +6,7 @@ import {View} from "react-native";
 
 import colors from "@/constants/colors";
 import {Login} from "@/screens/mypage";
+import {PermissionTestScreen} from "@/screens/test";
 
 import {
   RegisterEmail,
@@ -24,6 +25,7 @@ const Navigation = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login" screenOptions={screenOptions}>
           <Stack.Group>
+            <Stack.Screen name="PermissionTestScreen" component={PermissionTestScreen} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="RegisterEmail" component={RegisterEmail} />
             <Stack.Screen name="RegisterPassword" component={RegisterPassword} />
