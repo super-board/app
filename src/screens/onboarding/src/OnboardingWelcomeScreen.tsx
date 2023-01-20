@@ -2,10 +2,11 @@ import React from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {ImageBackground, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
+import effects from "@/constants/effects";
 import keys from "@/constants/keys";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
@@ -24,37 +25,34 @@ function OnboardingWelcomeScreen({navigation}: Props) {
     navigation.navigate("OnboardingTagSelectScreen");
   };
 
-  const completeOnboarding = () => {
-    AsyncStorageService.saveData(keys.ONBOARDING_COMPLETED, true);
-    navigation.replace("Home");
-  };
-
   return (
     <ImageBackground
       style={[style.container, styles.container]}
       imageStyle={styles.background}
       source={require("@/assets/images/background/onboarding-welcome.png")}>
       <View style={styles.slogan}>
-        <Text style={[typography.display01, styles.textWhite, styles.textWithShadow]}>
+        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
           보드게임
         </Text>
-        <Text style={[typography.display01, styles.textWhite, styles.textWithShadow]}>
+        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
           좋아하는 사람
         </Text>
-        <Text style={[typography.display01, styles.textWhite, styles.textWithShadow]}>
+        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
           '온더보드'에서
         </Text>
-        <Text style={[typography.display01, styles.textWhite, styles.textWithShadow]}>모여라!</Text>
+        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
+          모여라!
+        </Text>
       </View>
 
       <View style={styles.bottomActions}>
         <OTBButton type="basic-primary" text="로그인" onPress={navigateToLogin} />
         <SizedBox height={8} />
-        <TouchableHighlight onPress={navigateToOnboardingTagSelectScreen}>
+        <TouchableOpacity activeOpacity={1} onPress={navigateToOnboardingTagSelectScreen}>
           <Text style={[typography.subhead02, styles.hyperlink, styles.textWhite]}>
             로그인 없이 둘러보기
           </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
         <SizedBox height={8} />
       </View>
     </ImageBackground>
@@ -78,11 +76,6 @@ const styles = StyleSheet.create({
   },
   textWhite: {
     color: colors.white,
-  },
-  textWithShadow: {
-    textShadowColor: "rgba(0, 0, 0, 0.25)",
-    textShadowOffset: {width: 0, height: 4},
-    textShadowRadius: 4,
   },
   bottomActions: {
     alignItems: "center",
