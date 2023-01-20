@@ -1,6 +1,7 @@
 import * as Badge from "./src/badge";
 import * as Common from "./src/common";
 import * as Icon from "./src/icon";
+import * as Logo from "./src/logo";
 import * as Profile from "./src/profile";
 
-export {Common, Icon, Profile, Badge};
+export {Common, Icon, Profile, Badge, Logo};
