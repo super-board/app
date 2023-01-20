@@ -8,6 +8,7 @@ import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import screenOptions from "@/navigation/config";
 import {Login} from "@/screens/mypage";
+import {OnboardingTagSelectScreen} from "@/screens/onboarding";
 import {SplashScreen} from "@/screens/splash";
 
 import {
@@ -33,7 +34,12 @@ const Navigation = () => {
           initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "Home"}
           screenOptions={screenOptions}>
           <Stack.Group>
-            <Stack.Screen name="OnboardingWelcomeScreen" component={OnboardingWelcomeScreen} />
+            <Stack.Screen
+              name="OnboardingWelcomeScreen"
+              options={{headerShown: false}}
+              component={OnboardingWelcomeScreen}
+            />
+            <Stack.Screen name="OnboardingTagSelectScreen" component={OnboardingTagSelectScreen} />
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen name="Login" component={Login} />
