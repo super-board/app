@@ -1,24 +1,17 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {PayloadAction, createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import keys from "@/constants/keys";
 import {AsyncStorageService} from "@/services/storage";
 
 type OnboardingState = {
-  shouldRequestOnboarding: boolean;
   loading: "idle" | "pending" | "success";
+  shouldRequestOnboarding: boolean;
 };
 
 const initialState = {
-  shouldRequestOnboarding: true,
   loading: "idle",
+  shouldRequestOnboarding: true,
 } as OnboardingState;
-
-export const checkOnboardingCompletedAsync = createAsyncThunk(
-  "onboarding/checkOnboardingCompletedStatus",
-  async () => {
-    return await AsyncStorageService.containsKey(keys.ONBOARDING_COMPLETED);
-  },
-);
 
 export const onboardingSlice = createSlice({
   name: "onboarding",
@@ -32,5 +25,12 @@ export const onboardingSlice = createSlice({
     });
   },
 });
+
+export const checkOnboardingCompletedAsync = createAsyncThunk(
+  "onboarding/checkOnboardingCompletedStatus",
+  async () => {
+    return await AsyncStorageService.containsKey(keys.ONBOARDING_COMPLETED);
+  },
+);
 
 export default onboardingSlice.reducer;

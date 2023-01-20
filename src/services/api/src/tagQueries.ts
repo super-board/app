@@ -1,4 +1,14 @@
-const tagQueries = {
+export type Tag = {
+  id: number;
+  name: string;
+};
+
+export type TagGroup = {
+  type: string;
+  tags: Tag[];
+};
+
+export const tagQueries = {
   getTags: {
     queryFn() {
       return {
@@ -42,5 +52,3 @@ const tagQueries = {
     },
   },
 };
-
-export default tagQueries;
