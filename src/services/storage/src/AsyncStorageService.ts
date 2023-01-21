@@ -18,6 +18,16 @@ export async function getData(key: string): Promise<any> {
   }
 }
 
+export async function getAllData(): Promise<any> {
+  try {
+    const storedKeys = await AsyncStorage.getAllKeys();
+    const keyValuePairs = await AsyncStorage.multiGet(storedKeys);
+    return keyValuePairs.map(([key, value]) => ({[key]: JSON.parse(value ?? "")}));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function removeData(key: string): Promise<void> {
   try {
     await AsyncStorage.removeItem(key);

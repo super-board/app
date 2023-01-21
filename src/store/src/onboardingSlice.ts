@@ -23,6 +23,11 @@ export const onboardingSlice = createSlice({
       state.shouldRequestOnboarding = !action.payload;
       state.loading = "success";
     });
+    builder.addCase(saveOnboardingResultAsync.fulfilled, (state, action) => {
+      state.loading = "pending";
+      state.shouldRequestOnboarding = !action.payload;
+      state.loading = "success";
+    });
   },
 });
 
@@ -30,6 +35,15 @@ export const checkOnboardingCompletedAsync = createAsyncThunk(
   "onboarding/checkOnboardingCompletedStatus",
   async () => {
     return await AsyncStorageService.containsKey(keys.ONBOARDING_COMPLETED);
+  },
+);
+
+export const saveOnboardingResultAsync = createAsyncThunk(
+  "onboarding/saveOnboardingResultStatus",
+  async (interestTagIds: number[]) => {
+    await AsyncStorageService.saveData(keys.INTEREST_TAG_IDS, interestTagIds);
+    await AsyncStorageService.saveData(keys.ONBOARDING_COMPLETED, true);
+    return true;
   },
 );
 

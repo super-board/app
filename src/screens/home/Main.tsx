@@ -14,8 +14,14 @@ type Props = {
 };
 
 const HomeScreen = ({navigation}: Props) => {
-  const resetOnboarding = () => {
+  const resetOnboarding = async () => {
+    // 기존 데이터 확인
+    const data = await AsyncStorageService.getAllData();
+    console.log(data);
+
+    // 초기화
     AsyncStorageService.removeData(keys.ONBOARDING_COMPLETED);
+    AsyncStorageService.removeData(keys.INTEREST_TAG_IDS);
     navigation.replace("OnboardingWelcomeScreen");
   };
 

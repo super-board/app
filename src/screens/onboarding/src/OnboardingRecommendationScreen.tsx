@@ -9,6 +9,7 @@ import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useSaveOnboardingResult} from "@/hooks/onboarding";
 import {useGetRecommendedBoardGamesQuery} from "@/services/api";
 
 type Props = {
@@ -17,6 +18,12 @@ type Props = {
 
 function OnboardingRecommendationScreen({navigation}: Props) {
   const {isLoading, data: recommendedBoardGames} = useGetRecommendedBoardGamesQuery();
+  const {isSubmitting, saveOnboardingResult} = useSaveOnboardingResult();
+
+  const submitOnboardingResult = async () => {
+    await saveOnboardingResult();
+    navigation.navigate("Home");
+  };
 
   return (
     <View style={[style.container, styles.container]}>
@@ -57,7 +64,12 @@ function OnboardingRecommendationScreen({navigation}: Props) {
       </View>
       <SizedBox height={26} />
 
-      <OTBButton type="basic-primary" text="더 많은 게임 둘러보기" />
+      <OTBButton
+        type="basic-primary"
+        text="더 많은 게임 둘러보기"
+        disabled={isSubmitting}
+        onPress={submitOnboardingResult}
+      />
     </View>
   );
 }
