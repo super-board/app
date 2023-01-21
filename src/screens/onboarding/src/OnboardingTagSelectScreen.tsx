@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
@@ -20,16 +20,45 @@ type Props = {
 function OnboardingTagSelectScreen({navigation}: Props) {
   const {isLoading, data: tagGroups} = useGetTagsQuery();
   const {selectedTagIds, toggleTag, isSelectedTag} = useSelectedTagIds();
-  const {visible, openModal, closeModal} = useModal();
+  const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
+  const {
+    visible: loadingVisible,
+    openModal: openLoadingModal,
+    closeModal: closeLoadingModal,
+  } = useModal();
+  const [loadingText, setLoadingText] = useState(
+    "온더보드가 당신을 위한\n보드게임을 찾는 중입니다.",
+  );
 
   const toggleTagSelection = (id: number) => {
     if (!isSelectedTag(id) && selectedTagIds.length === 5) {
-      openModal();
+      openWarnModal();
       return;
     }
 
     toggleTag(id);
   };
+
+  const findRecommendation = () => {
+    openLoadingModal();
+
+    const iterator = generateLoadingText();
+    const interval = setInterval(() => setLoadingText(() => iterator.next().value as string), 750);
+
+    setTimeout(() => {
+      clearInterval(interval);
+      closeLoadingModal();
+      navigation.navigate("OnboardingRecommendationScreen");
+    }, 750 * 4);
+  };
+
+  function* generateLoadingText() {
+    while (true) {
+      yield "온더보드가 당신을 위한\n보드게임을 찾는 중입니다..";
+      yield "온더보드가 당신을 위한\n보드게임을 찾는 중입니다...";
+      yield "온더보드가 당신을 위한\n보드게임을 찾는 중입니다.";
+    }
+  }
 
   return (
     <View style={[style.container, styles.container]}>
@@ -68,14 +97,20 @@ function OnboardingTagSelectScreen({navigation}: Props) {
       </View>
       <SizedBox height={26} />
 
-      <OTBButton type="basic-secondary" text="다음" disabled={selectedTagIds.length === 0} />
+      <OTBButton
+        type="basic-secondary"
+        text="다음"
+        disabled={selectedTagIds.length === 0}
+        onPress={findRecommendation}
+      />
 
       <Modal.Warn
-        visible={visible}
+        visible={warnVisible}
         title="관심 태그는 5개까지 고를 수 있어요."
-        onRequestClose={closeModal}
+        onRequestClose={closeWarnModal}
         dismissible
       />
+      <Modal.Loading visible={loadingVisible} title={loadingText} />
     </View>
   );
 }

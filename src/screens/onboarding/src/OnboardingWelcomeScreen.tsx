@@ -7,10 +7,8 @@ import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-n
 import {OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
-import keys from "@/constants/keys";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {AsyncStorageService} from "@/services/storage";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;

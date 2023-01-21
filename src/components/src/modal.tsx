@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {Modal as DefModal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Modal as DefModal, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
 import SizedBox from "@/components/src/SizedBox";
@@ -57,6 +57,38 @@ const Warn = ({
   );
 };
 
+const Loading = ({visible, title = "", ...otherProps}: ModalProps) => {
+  return (
+    <DefModal
+      visible={visible}
+      animationType="fade"
+      transparent
+      statusBarTranslucent
+      onRequestClose={() => {}}
+      {...otherProps}>
+      <View style={styles.screenContainer}>
+        <View style={styles.backdrop} />
+        <View style={[styles.modalContainer, styles.loadingContainer]}>
+          <Image
+            source={require("@/assets/images/icon/puzzle-icon.png")}
+            style={styles.loadingImage}
+          />
+          <SizedBox height={16} />
+          <Text
+            style={[
+              typography.subhead01,
+              typography.textWhite,
+              typography.textCenter,
+              effects.textDropShadow,
+            ]}>
+            {title}
+          </Text>
+        </View>
+      </View>
+    </DefModal>
+  );
+};
+
 type BadgeModalProps = {
   type: string;
 } & ModalProps;
@@ -106,7 +138,7 @@ const Badge = ({
       {...otherProps}>
       <View style={styles.screenContainer}>
         <TouchableOpacity activeOpacity={1} style={styles.backdrop} />
-        <View style={styles.badgeContainer}>
+        <View style={[styles.modalContainer, styles.badgeContainer]}>
           <View style={styles.close}>
             <TouchableOpacity onPress={onRequestClose}>
               <SVG.Icon.Close width={30} height={30} />
@@ -136,7 +168,7 @@ const Badge = ({
   );
 };
 
-export {Warn, Badge};
+export {Warn, Loading, Badge};
 
 const styles = StyleSheet.create({
   backdrop: {
@@ -158,10 +190,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 24,
   },
+  loadingContainer: {
+    maxWidth: 240,
+    paddingHorizontal: 34,
+    paddingVertical: 34,
+  },
+  loadingImage: {width: 112, height: 112},
   badgeContainer: {
-    backgroundColor: colors.OTBBlack800,
-    alignItems: "center",
-    width: "70%",
     borderRadius: 8,
     height: "50%",
   },

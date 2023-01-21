@@ -8,16 +8,19 @@ import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import screenOptions from "@/navigation/config";
 import {Login} from "@/screens/mypage";
-import {OnboardingTagSelectScreen} from "@/screens/onboarding";
-import {SplashScreen} from "@/screens/splash";
-
+import {
+  OnboardingRecommendationScreen,
+  OnboardingTagSelectScreen,
+  OnboardingWelcomeScreen,
+} from "@/screens/onboarding";
 import {
   RegisterEmail,
   RegisterNickname,
   RegisterPassword,
   RegisterProfile,
-} from "../screens/register";
-import OnboardingWelcomeScreen from "./../screens/onboarding/src/OnboardingWelcomeScreen";
+} from "@/screens/register";
+import {SplashScreen} from "@/screens/splash";
+
 import BottomTab from "./stack/BottomTab";
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +43,10 @@ const Navigation = () => {
               component={OnboardingWelcomeScreen}
             />
             <Stack.Screen name="OnboardingTagSelectScreen" component={OnboardingTagSelectScreen} />
+            <Stack.Screen
+              name="OnboardingRecommendationScreen"
+              component={OnboardingRecommendationScreen}
+            />
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen name="Login" component={Login} />
