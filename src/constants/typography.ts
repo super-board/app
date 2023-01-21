@@ -1,5 +1,7 @@
 import {StyleSheet} from "react-native";
 
+import colors from "@/constants/colors";
+
 const typography = StyleSheet.create({
   display01: {
     fontFamily: "PretendardVariable",
@@ -113,6 +115,7 @@ const typography = StyleSheet.create({
     lineHeight: 18,
     letterSpacing: -0.6,
   },
+  textWhite: {color: colors.white},
 });
 
 export default typography;

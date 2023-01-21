@@ -19,16 +19,14 @@ export const interestTagSlice = createSlice({
         return;
       }
 
-      if (state.selectedTagIds.length === 5) {
-        console.error("5개 까지만 고를 수 있어요!");
-        return;
-      }
-
       state.selectedTagIds = [...state.selectedTagIds, targetId];
+    },
+    clearSelectedTags(state) {
+      state.selectedTagIds = [];
     },
   },
 });
 
-export const {toggleSelectedTag} = interestTagSlice.actions;
+export const {toggleSelectedTag, clearSelectedTags} = interestTagSlice.actions;
 
 export default interestTagSlice.reducer;

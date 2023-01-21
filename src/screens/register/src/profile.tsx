@@ -76,7 +76,7 @@ const Profile = (props: ScreenProps) => {
         */}
 
       <Button text="뱃지 모달" onPress={() => setVisible(true)} />
-      <Modal.Badge visible={visible} setVisible={setVisible} type="welcome" />
+      <Modal.Badge visible={visible} onRequestClose={() => setVisible(false)} type="welcome" />
 
       <Button
         text="다음"

@@ -4,11 +4,12 @@ import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {ScrollView, StyleSheet, Text, View} from "react-native";
 
-import {OTBButton, OTBButtonTag, SizedBox} from "@/components";
+import {Modal, OTBButton, OTBButtonTag, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useModal} from "@/hooks/modal";
 import {useSelectedTagIds} from "@/hooks/onboarding";
 import {useGetTagsQuery} from "@/services/api";
 
@@ -18,7 +19,17 @@ type Props = {
 
 function OnboardingTagSelectScreen({navigation}: Props) {
   const {isLoading, data: tagGroups} = useGetTagsQuery();
-  const {selectedTagIds, toggleTag} = useSelectedTagIds();
+  const {selectedTagIds, toggleTag, isSelectedTag} = useSelectedTagIds();
+  const {visible, openModal, closeModal} = useModal();
+
+  const toggleTagSelection = (id: number) => {
+    if (!isSelectedTag(id) && selectedTagIds.length === 5) {
+      openModal();
+      return;
+    }
+
+    toggleTag(id);
+  };
 
   return (
     <View style={[style.container, styles.container]}>
@@ -45,8 +56,8 @@ function OnboardingTagSelectScreen({navigation}: Props) {
                     <OTBButtonTag
                       key={tag.id}
                       text={tag.name}
-                      active={selectedTagIds.includes(tag.id)}
-                      onPress={() => toggleTag(tag.id)}
+                      active={isSelectedTag(tag.id)}
+                      onPress={() => toggleTagSelection(tag.id)}
                     />
                   ))}
                 </View>
@@ -58,6 +69,13 @@ function OnboardingTagSelectScreen({navigation}: Props) {
       <SizedBox height={26} />
 
       <OTBButton type="basic-secondary" text="다음" disabled={selectedTagIds.length === 0} />
+
+      <Modal.Warn
+        visible={visible}
+        title="관심 태그는 5개까지 고를 수 있어요."
+        onRequestClose={closeModal}
+        dismissible
+      />
     </View>
   );
 }

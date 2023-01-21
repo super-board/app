@@ -1,18 +1,30 @@
 import React from "react";
 
-import {StyleProp, StyleSheet, Text, TouchableHighlight, ViewStyle} from "react-native";
+import {
+  NativeSyntheticEvent,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  ViewStyle,
+} from "react-native";
 
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 
-type OTBButtonType = "basic-primary" | "basic-secondary" | "medium-primary" | "medium-secondary";
+type OTBButtonType =
+  | "basic-primary"
+  | "basic-secondary"
+  | "medium-primary"
+  | "medium-secondary"
+  | "modal-primary";
 
 type Props = {
   type: OTBButtonType;
   text?: string;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
-  onPress?: () => void;
+  onPress?: (() => void) | ((event: NativeSyntheticEvent<any>) => void);
 };
 
 function OTBButton({
@@ -99,6 +111,25 @@ function OTBButton({
       </TouchableHighlight>
     );
 
+  if (type === "modal-primary")
+    return (
+      <TouchableHighlight
+        style={[
+          styles.button,
+          styles.buttonModal,
+          disabled ? styles.buttonDisabled : styles.buttonModalPrimary,
+          style,
+        ]}
+        underlayColor={colors.OTBBlueDark}
+        disabled={disabled}
+        onPress={onPress}
+        {...otherProps}>
+        <Text style={[typography.subhead02, disabled ? styles.textDisabled : styles.textModal]}>
+          {text}
+        </Text>
+      </TouchableHighlight>
+    );
+
   return (
     <TouchableHighlight
       style={[styles.button, styles.buttonBasic]}
@@ -135,12 +166,20 @@ const styles = StyleSheet.create({
   buttonMediumSecondary: {
     backgroundColor: colors.OTBBlack300,
   },
+  buttonModal: {
+    height: 40,
+    borderRadius: 4,
+  },
+  buttonModalPrimary: {backgroundColor: colors.OTBBlue},
   buttonDisabled: {
     backgroundColor: colors.OTBBlack800,
     color: colors.OTBBlack600,
   },
   textPrimary: {
     color: colors.white,
+  },
+  textModal: {
+    color: colors.OTBBlack100,
   },
   textSecondary: {
     color: colors.OTBBlack,
