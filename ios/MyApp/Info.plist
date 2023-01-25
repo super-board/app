@@ -51,7 +51,7 @@
 		<string>storykompassauth</string>
 		<string>kakaolink</string>
 		<string>naversearchapp</string>
-  	<string>naversearchthirdlogin</string>
+		<string>naversearchthirdlogin</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -83,12 +83,16 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSUserTrackingUsageDescription</key>
-  <string>맞춤 서비스를 안내드리기 위해 권한을 허용해주세요.</string>
+	<string>맞춤 서비스를 안내드리기 위해 권한을 허용해주세요.</string>
 	<key>NSCameraUsageDescription</key>
-  <string>사진을 업로드하기 위해 카메라 권한을 혀용해주세요.</string>
+	<string>사진을 업로드하기 위해 카메라 권한을 혀용해주세요.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-  <string>사진을 업로드하기 위해 카메라 권한을 혀용해주세요.</string>
-  <key>NSPhotoLibraryAddUsageDescription</key>
-  <string>사진을 업로드하기 위해 카메라 권한을 혀용해주세요.</string>
+	<string>사진을 업로드하기 위해 카메라 권한을 혀용해주세요.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>PretendardVariable-Regular.ttf</string>
+	</array>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>사진을 업로드하기 위해 카메라 권한을 혀용해주세요.</string>
 </dict>
 </plist>
