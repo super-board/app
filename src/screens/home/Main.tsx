@@ -22,7 +22,7 @@ const HomeScreen = ({navigation}: Props) => {
     // 초기화
     AsyncStorageService.removeData(keys.ONBOARDING_COMPLETED);
     AsyncStorageService.removeData(keys.INTEREST_TAG_IDS);
-    navigation.replace("OnboardingWelcomeScreen");
+    navigation.reset({index: 0, routes: [{name: "OnboardingWelcomeScreen"}]});
   };
 
   return (
