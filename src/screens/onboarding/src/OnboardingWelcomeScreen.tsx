@@ -3,6 +3,7 @@ import React from "react";
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 import {OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
@@ -24,40 +25,46 @@ function OnboardingWelcomeScreen({navigation}: Props) {
   };
 
   return (
-    <ImageBackground
-      style={[style.container, styles.container]}
-      imageStyle={styles.background}
-      source={require("@/assets/images/background/onboarding-welcome.png")}>
-      <View style={styles.slogan}>
-        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-          보드게임
-        </Text>
-        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-          좋아하는 사람
-        </Text>
-        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-          '온더보드'에서
-        </Text>
-        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-          모여라!
-        </Text>
-      </View>
-
-      <View style={styles.bottomActions}>
-        <OTBButton type="basic-primary" text="로그인" onPress={navigateToLogin} />
-        <SizedBox height={8} />
-        <TouchableOpacity activeOpacity={1} onPress={navigateToOnboardingTagSelectScreen}>
-          <Text style={[typography.subhead02, styles.hyperlink, styles.textWhite]}>
-            로그인 없이 둘러보기
+    <SafeAreaView style={styles.safeArea}>
+      <ImageBackground
+        style={[style.container, styles.container]}
+        imageStyle={styles.background}
+        source={require("@/assets/images/background/onboarding-welcome.png")}>
+        <View style={styles.slogan}>
+          <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
+            보드게임
           </Text>
-        </TouchableOpacity>
-        <SizedBox height={8} />
-      </View>
-    </ImageBackground>
+          <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
+            좋아하는 사람
+          </Text>
+          <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
+            '온더보드'에서
+          </Text>
+          <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
+            모여라!
+          </Text>
+        </View>
+
+        <View style={styles.bottomActions}>
+          <OTBButton type="basic-primary" text="로그인" onPress={navigateToLogin} />
+          <SizedBox height={8} />
+          <TouchableOpacity activeOpacity={1} onPress={navigateToOnboardingTagSelectScreen}>
+            <Text style={[typography.subhead02, styles.hyperlink, styles.textWhite]}>
+              로그인 없이 둘러보기
+            </Text>
+          </TouchableOpacity>
+          <SizedBox height={8} />
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    position: "relative",
+  },
   container: {
     justifyContent: "space-between",
     position: "relative",
