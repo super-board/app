@@ -33,7 +33,6 @@ function OnboardingRecommendationScreen({navigation}: Props) {
       <SizedBox height={8} />
       <Text style={[typography.body01, effects.textDropShadow, styles.description]}>
         온더보드가 추천해주는 보드게임입니다!
-        {"\n"}더 많은 정보가 궁금하시다면 회원가입해주세요.
       </Text>
 
       <SizedBox height={60} />
