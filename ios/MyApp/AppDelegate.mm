@@ -1,5 +1,6 @@
 #import <Firebase.h>
 #import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
+#import <RNKakaoLogins.h>
 
 #import "AppDelegate.h"
 
