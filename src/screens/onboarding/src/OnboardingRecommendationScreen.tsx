@@ -69,6 +69,7 @@ function OnboardingRecommendationScreen({navigation}: Props) {
         disabled={isSubmitting}
         onPress={submitOnboardingResult}
       />
+      <SizedBox height={36} />
     </View>
   );
 }

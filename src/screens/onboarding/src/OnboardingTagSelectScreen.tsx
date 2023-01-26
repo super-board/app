@@ -103,6 +103,7 @@ function OnboardingTagSelectScreen({navigation}: Props) {
         disabled={selectedTagIds.length === 0}
         onPress={findRecommendation}
       />
+      <SizedBox height={36} />
 
       <Modal.Warn
         visible={warnVisible}
