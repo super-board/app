@@ -3,7 +3,7 @@ import React from "react";
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
@@ -23,25 +23,16 @@ function OnboardingWelcomeScreen({navigation}: Props) {
   const navigateToOnboardingTagSelectScreen = () => {
     navigation.navigate("OnboardingTagSelectScreen");
   };
-
+  const insets = useSafeAreaInsets();
+  
   return (
-    <SafeAreaView style={styles.safeArea}>
       <ImageBackground
         style={[style.container, styles.container]}
         imageStyle={styles.background}
         source={require("@/assets/images/background/onboarding-welcome.png")}>
-        <View style={styles.slogan}>
+        <View style={[styles.slogan, {marginTop: insets.top ? insets.top : 0}]}>
           <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-            보드게임
-          </Text>
-          <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-            좋아하는 사람
-          </Text>
-          <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-            '온더보드'에서
-          </Text>
-          <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-            모여라!
+            {`보드게임\n좋아하는 사람\n'온더보드'에서\n모여라!`}
           </Text>
         </View>
 
@@ -56,7 +47,6 @@ function OnboardingWelcomeScreen({navigation}: Props) {
           <SizedBox height={8} />
         </View>
       </ImageBackground>
-    </SafeAreaView>
   );
 }
 
