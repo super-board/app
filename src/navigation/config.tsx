@@ -6,12 +6,12 @@ const screenOptions: NativeStackNavigationOptions = {
   animation: "slide_from_right",
   headerShown: true,
   headerStyle: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.OTBBlack,
   },
   headerTitleStyle: {
-    color: colors.background,
+    color: colors.OTBBlack,
   },
-  headerTintColor: "#fff",
+  headerTintColor: colors.white,
   headerBackTitleVisible: false,
 };
 

@@ -1,23 +1,30 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
-import {Modal as DefModal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Modal as DefModal, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
+import * as SVG from "@/assets/svgs";
+import SizedBox from "@/components/src/SizedBox";
 import badge from "@/constants/badges";
+import colors from "@/constants/colors";
+import effects from "@/constants/effects";
+import typography from "@/constants/typography";
 
-import * as SVG from "../../assets/svgs";
-import Button from "./button";
+import OTBButton from "./OTBButton";
 
 type ModalProps = DefModal["props"] & {
   title?: string;
-  subTitle?: string;
-  button?: any;
-  setVisible?: Dispatch<SetStateAction<boolean>> | any;
-  type?: string;
+  description?: string;
+  dismissible?: boolean;
 };
 
-const Warn = (props: ModalProps) => {
-  const {title, subTitle, button, visible, setVisible, onRequestClose, ...otherProps} = props;
-
+const Warn = ({
+  visible,
+  title = "",
+  description = "",
+  dismissible = false,
+  onRequestClose,
+  ...otherProps
+}: ModalProps) => {
   return (
     <DefModal
       visible={visible}
@@ -26,22 +33,65 @@ const Warn = (props: ModalProps) => {
       statusBarTranslucent
       onRequestClose={onRequestClose}
       {...otherProps}>
-      <View style={{alignItems: "center", justifyContent: "center", flex: 1}}>
+      <View style={styles.screenContainer}>
         <TouchableOpacity
-          onPress={onRequestClose}
+          onPress={dismissible ? onRequestClose : () => {}}
           activeOpacity={1}
-          style={styles.onRequestClose}
+          style={styles.backdrop}
         />
-        <View style={styles.container}>
-          <SVG.Common.Warning width={40} height={40} style={{margin: 20}} />
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subTitle}>{subTitle}</Text>
-          <Button text="확인" onPress={() => setVisible(false)} style={{marginBottom: 4}} />
+        <View style={styles.modalContainer}>
+          <SizedBox height={8} />
+          <SVG.Common.Warning width={48} height={48} />
+          <SizedBox height={24} />
+          <Text style={[typography.subhead01, typography.textWhite, effects.textDropShadow]}>
+            {title}
+          </Text>
+          <SizedBox height={8} />
+          <Text style={[typography.body02, typography.textWhite, effects.textDropShadow]}>
+            {description}
+          </Text>
+          <OTBButton type="modal-primary" text="확인" onPress={onRequestClose} />
         </View>
       </View>
     </DefModal>
   );
 };
+
+const Loading = ({visible, title = "", ...otherProps}: ModalProps) => {
+  return (
+    <DefModal
+      visible={visible}
+      animationType="fade"
+      transparent
+      statusBarTranslucent
+      onRequestClose={() => {}}
+      {...otherProps}>
+      <View style={styles.screenContainer}>
+        <View style={styles.backdrop} />
+        <View style={[styles.modalContainer, styles.loadingContainer]}>
+          <Image
+            source={require("@/assets/images/icon/puzzle-icon.png")}
+            style={styles.loadingImage}
+          />
+          <SizedBox height={16} />
+          <Text
+            style={[
+              typography.subhead01,
+              typography.textWhite,
+              typography.textCenter,
+              effects.textDropShadow,
+            ]}>
+            {title}
+          </Text>
+        </View>
+      </View>
+    </DefModal>
+  );
+};
+
+type BadgeModalProps = {
+  type: string;
+} & ModalProps;
 
 type BadgeProps = {
   svg?: any;
@@ -49,8 +99,14 @@ type BadgeProps = {
   subTitle?: string;
 };
 
-const Badge = (props: ModalProps) => {
-  const {title, subTitle, button, visible, setVisible, type, ...otherProps} = props;
+const Badge = ({
+  visible,
+  type,
+  title = "",
+  description = "",
+  onRequestClose,
+  ...otherProps
+}: BadgeModalProps) => {
   const [item, setItem] = useState<BadgeProps>({});
 
   useEffect(() => {
@@ -80,24 +136,31 @@ const Badge = (props: ModalProps) => {
       transparent
       statusBarTranslucent
       {...otherProps}>
-      <View style={styles.modalContainer}>
-        <TouchableOpacity activeOpacity={1} style={styles.onRequestClose} />
-        <View style={styles.badgeContainer}>
+      <View style={styles.screenContainer}>
+        <TouchableOpacity activeOpacity={1} style={styles.backdrop} />
+        <View style={[styles.modalContainer, styles.badgeContainer]}>
           <View style={styles.close}>
-            <TouchableOpacity onPress={() => setVisible(false)}>
+            <TouchableOpacity onPress={onRequestClose}>
               <SVG.Icon.Close width={30} height={30} />
             </TouchableOpacity>
           </View>
           <View style={styles.badge}>
             <SVG.Badge.Welcome width={"103%"} height={"100%"} style={styles.badgeSVG} />
           </View>
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.subTitle}>{item.subTitle}</Text>
+          <Text style={[typography.subhead01, typography.textWhite, effects.textDropShadow]}>
+            {item.title}
+          </Text>
+          <SizedBox height={8} />
+          <Text style={[typography.body02, typography.textWhite, effects.textDropShadow]}>
+            {item.subTitle}
+          </Text>
+          <SizedBox height={20} />
         </View>
 
-        <Button
+        <OTBButton
+          type="modal-primary"
           text="내 뱃지 보러가기"
-          onPress={() => setVisible(false)}
+          onPress={onRequestClose}
           style={{marginTop: 8, width: "70%"}}
         />
       </View>
@@ -105,44 +168,35 @@ const Badge = (props: ModalProps) => {
   );
 };
 
-export {Warn, Badge};
+export {Warn, Loading, Badge};
 
 const styles = StyleSheet.create({
-  onRequestClose: {
+  backdrop: {
     position: "absolute",
     width: "100%",
     height: "100%",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
-  modalContainer: {
+  screenContainer: {
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
   },
-  container: {
-    backgroundColor: "#1F2937",
+  modalContainer: {
+    backgroundColor: colors.OTBBlack800,
     alignItems: "center",
     width: "70%",
     borderRadius: 8,
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 24,
   },
-  title: {
-    fontSize: 16,
-    color: "white",
-    fontWeight: "700",
-    marginBottom: 8,
-    textAlign: "center",
+  loadingContainer: {
+    maxWidth: 240,
+    paddingHorizontal: 34,
+    paddingVertical: 34,
   },
-  subTitle: {
-    fontSize: 14,
-    color: "white",
-    marginBottom: 20,
-    textAlign: "center",
-  },
+  loadingImage: {width: 112, height: 112},
   badgeContainer: {
-    backgroundColor: "#1F2937",
-    alignItems: "center",
-    width: "70%",
     borderRadius: 8,
     height: "50%",
   },

@@ -4,6 +4,7 @@
   "include": ["./App.tsx", "./src/**/*", "./assets/**/*", "tests/**/*", "src/custom.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
+    "types": ["node"],
     "paths": {
       "@/*": ["src/*"],
       "@assets/*": ["assets/*"],
