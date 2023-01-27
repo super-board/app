@@ -7,7 +7,7 @@ import {Cacnel} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Email = (props: ScreenProps) => {
+export default function Email(props: ScreenProps) {
   const {navigation, route} = props;
   const {type = "register"} = route.params || {};
   const [email, setEmail] = useState("");
@@ -77,6 +77,4 @@ const Email = (props: ScreenProps) => {
       />
     </KeyboardView>
   );
-};
-
-export default Email;
+}

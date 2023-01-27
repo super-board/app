@@ -6,7 +6,7 @@ import {Button, Cacnel, KeyboardView, Modal, TextInput, Title} from "@/component
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Password = (props: ScreenProps) => {
+export default function Password(props: ScreenProps) {
   const {navigation, route} = props;
   const [password, setPassword] = useState("");
   const [_password, _setPassword] = useState("");
@@ -56,6 +56,4 @@ const Password = (props: ScreenProps) => {
       />
     </KeyboardView>
   );
-};
-
-export default Password;
+}

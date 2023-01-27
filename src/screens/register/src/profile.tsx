@@ -14,7 +14,7 @@ const selectedCircleSize = height / 6;
 const listSize = height / 7;
 const listCircleSize = height / 8;
 
-const Profile = (props: ScreenProps) => {
+export default function Profile(props: ScreenProps) {
   const {navigation, route} = props;
   const [disabled, setDisabled] = useState(false);
   const [profile, setProfile] = useState({});
@@ -86,8 +86,6 @@ const Profile = (props: ScreenProps) => {
       />
     </View>
   );
-};
-
-export default Profile;
+}
 
 const styles = StyleSheet.create({});

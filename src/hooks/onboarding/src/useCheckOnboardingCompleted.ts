@@ -1,7 +1,7 @@
 import {useAppDispatch, useAppSelector} from "@/hooks/redux";
 import {checkOnboardingCompletedAsync} from "@/store";
 
-function useCheckOnboardingCompleted() {
+export default function useCheckOnboardingCompleted() {
   const shouldRequestOnboarding = useAppSelector(state => state.onboarding.shouldRequestOnboarding);
   const isLoading = useAppSelector(state => state.onboarding.loading !== "success");
 
@@ -10,5 +10,3 @@ function useCheckOnboardingCompleted() {
 
   return {isLoading, shouldRequestOnboarding, checkOnboardingCompleted};
 }
-
-export default useCheckOnboardingCompleted;

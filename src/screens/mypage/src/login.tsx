@@ -1,26 +1,17 @@
 import React, {useState} from "react";
 
 import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {Button, KeyboardView, TextInput, Title} from "@/components";
 import style from "@/constants/style";
 
 import * as SVG from "../../../assets/svgs";
 
-const Login = (props: {
+export default function Login(props: {
   navigation: NavigationProp<ParamListBase>;
   route: RouteProp<ParamListBase>;
-}) => {
+}) {
   const {navigation, route} = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -72,9 +63,7 @@ const Login = (props: {
       <Button text="로그인" style={style.nextBtn} onPress={onPress.login} />
     </KeyboardView>
   );
-};
-
-export default Login;
+}
 
 const styles = StyleSheet.create({
   sns: {

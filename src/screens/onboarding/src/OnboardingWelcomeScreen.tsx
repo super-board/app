@@ -15,7 +15,7 @@ type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
-function OnboardingWelcomeScreen({navigation}: Props) {
+export default function OnboardingWelcomeScreen({navigation}: Props) {
   const navigateToLogin = () => {
     navigation.navigate("Login");
   };
@@ -80,5 +80,3 @@ const styles = StyleSheet.create({
     padding: 0,
   },
 });
-
-export default OnboardingWelcomeScreen;

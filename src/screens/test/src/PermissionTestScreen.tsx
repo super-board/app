@@ -10,7 +10,7 @@ import {
   PermissionNotificationsService,
 } from "@/services/permission";
 
-function PermissionTestScreen() {
+export default function PermissionTestScreen() {
   return (
     <View style={styles.container}>
       <Button
@@ -43,5 +43,3 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
-export default PermissionTestScreen;

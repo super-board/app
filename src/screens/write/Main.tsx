@@ -2,14 +2,10 @@ import React from "react";
 
 import {StyleSheet, Text, View} from "react-native";
 
-const WriteScreen = () => {
+export default function WriteScreen() {
   return (
     <View>
       <Text>write</Text>
     </View>
   );
-};
-
-export default WriteScreen;
-
-const styles = StyleSheet.create({});
+}

@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "@/hooks/redux";
 import {clearSelectedTags, toggleSelectedTag} from "@/store";
 
-function useSelectedTagIds() {
+export default function useSelectedTagIds() {
   const selectedTagIds = useAppSelector(state => state.interestTag.selectedTagIds);
 
   const dispatch = useAppDispatch();
@@ -16,5 +16,3 @@ function useSelectedTagIds() {
 
   return {selectedTagIds, toggleTag, isSelectedTag};
 }
-
-export default useSelectedTagIds;

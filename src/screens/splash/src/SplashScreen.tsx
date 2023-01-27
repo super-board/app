@@ -7,7 +7,7 @@ import {SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 
-function SplashScreen() {
+export default function SplashScreen() {
   const {checkOnboardingCompleted} = useCheckOnboardingCompleted();
 
   useEffect(() => {
@@ -37,5 +37,3 @@ const styles = StyleSheet.create({
     height: 50.25,
   },
 });
-
-export default SplashScreen;

@@ -17,7 +17,7 @@ type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
-function OnboardingTagSelectScreen({navigation}: Props) {
+export default function OnboardingTagSelectScreen({navigation}: Props) {
   const {isLoading, data: tagGroups} = useGetTagsQuery();
   const {selectedTagIds, toggleTag, isSelectedTag} = useSelectedTagIds();
   const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
@@ -136,5 +136,3 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 });
-
-export default OnboardingTagSelectScreen;

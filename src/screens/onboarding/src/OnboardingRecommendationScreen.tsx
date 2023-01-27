@@ -16,7 +16,7 @@ type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
-function OnboardingRecommendationScreen({navigation}: Props) {
+export default function OnboardingRecommendationScreen({navigation}: Props) {
   const {isLoading, data: recommendedBoardGames} = useGetRecommendedBoardGamesQuery();
   const {isSubmitting, saveOnboardingResult} = useSaveOnboardingResult();
 
@@ -106,5 +106,3 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
-export default OnboardingRecommendationScreen;

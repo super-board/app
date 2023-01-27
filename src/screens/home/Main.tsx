@@ -13,7 +13,7 @@ type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
-const HomeScreen = ({navigation}: Props) => {
+export default function HomeScreen ({navigation}: Props){
   const resetOnboarding = async () => {
     // 기존 데이터 확인
     const data = await AsyncStorageService.getAllData();
@@ -31,5 +31,3 @@ const HomeScreen = ({navigation}: Props) => {
     </View>
   );
 };
-
-export default HomeScreen;

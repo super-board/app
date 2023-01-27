@@ -1,7 +1,7 @@
 import {useAppDispatch, useAppSelector} from "@/hooks/redux";
 import {saveOnboardingResultAsync} from "@/store";
 
-function useSaveOnboardingResult() {
+export default function useSaveOnboardingResult() {
   const isSubmitting = useAppSelector(state => state.onboarding.loading === "pending");
   const interestTagIds = useAppSelector(state => state.interestTag.selectedTagIds);
 
@@ -10,5 +10,3 @@ function useSaveOnboardingResult() {
 
   return {isSubmitting, saveOnboardingResult};
 }
-
-export default useSaveOnboardingResult;

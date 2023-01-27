@@ -4,7 +4,7 @@ import {Button, Cacnel, KeyboardView, TextInput, Title} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Nickname = (props: ScreenProps) => {
+export default function Nickname(props: ScreenProps) {
   const {navigation, route} = props;
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
@@ -35,6 +35,4 @@ const Nickname = (props: ScreenProps) => {
       <Button text="다음" onPress={onPress.next} disabled={!isValid} style={style.nextBtn} />
     </KeyboardView>
   );
-};
-
-export default Nickname;
+}
