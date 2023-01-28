@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 
 import messaging, {FirebaseMessagingTypes} from "@react-native-firebase/messaging";
 
-function useFcmForegroundMessageListener(
+export default function useFcmForegroundMessageListener(
   onMessage: (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => Promise<void>,
 ) {
   useEffect(() => {
@@ -10,5 +10,3 @@ function useFcmForegroundMessageListener(
     return unsubscribe;
   }, [onMessage]);
 }
-
-export default useFcmForegroundMessageListener;
