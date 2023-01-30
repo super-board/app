@@ -1,6 +1,9 @@
 import {createApi, fakeBaseQuery} from "@reduxjs/toolkit/query/react";
 
-import {BoardGameSummary, boardGameQueries} from "./boardGameQueries";
+import {reviewQueries} from "@/services/api/src/reviewQueries";
+import {BoardGameSummary, ReviewSummary} from "@/services/api/src/types";
+
+import {boardGameQueries} from "./boardGameQueries";
 import {TagGroup, tagQueries} from "./tagQueries";
 
 export const OTBApi = createApi({
@@ -11,10 +14,21 @@ export const OTBApi = createApi({
     getTags: build.query<TagGroup[], void>({
       queryFn: tagQueries.getTags.queryFn,
     }),
+    getBoardGamesForHomeCuration: build.query<BoardGameSummary[], void>({
+      queryFn: boardGameQueries.getBoardGamesForHomeCuration.queryFn,
+    }),
     getRecommendedBoardGamesByTags: build.query<BoardGameSummary[], void>({
       queryFn: boardGameQueries.getRecommendedBoardGamesByTags.queryFn,
+    }),
+    getBestReviews: build.query<ReviewSummary[], void>({
+      queryFn: reviewQueries.getBestReviews.queryFn,
     }),
   }),
 });
 
-export const {useGetTagsQuery, useGetRecommendedBoardGamesByTagsQuery} = OTBApi;
+export const {
+  useGetTagsQuery,
+  useGetBoardGamesForHomeCurationQuery,
+  useGetRecommendedBoardGamesByTagsQuery,
+  useGetBestReviewsQuery,
+} = OTBApi;
