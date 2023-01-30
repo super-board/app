@@ -21,7 +21,7 @@ import {
 } from "@/screens/register";
 import {SplashScreen} from "@/screens/splash";
 
-import screenOptions from "./config";
+import {stackScreenOptions} from "./config";
 import BottomTab from "./stack/BottomTab";
 
 const Stack = createNativeStackNavigator();
@@ -36,7 +36,7 @@ const Navigation = () => {
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "Home"}
-          screenOptions={screenOptions}>
+          screenOptions={stackScreenOptions}>
           <Stack.Group>
             <Stack.Screen
               name="OnboardingWelcomeScreen"
