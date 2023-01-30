@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import Animated, {FadeIn, FadeInUp, FadeOutDown} from "react-native-reanimated";
 
 import {Button, KeyboardView, Modal, TextInput, Title} from "@/components";
-import {Cacnel} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Email = (props: ScreenProps) => {
-  const {navigation, route} = props;
+const Email = ({navigation, route}: ScreenProps) => {
   const {type = "register"} = route.params || {};
   const [email, setEmail] = useState("");
   const [authNum, setAuthNum] = useState("");
@@ -16,12 +14,6 @@ const Email = (props: ScreenProps) => {
   const [authValid, setAuthValid] = useState(false);
   const [authView, setAuthView] = useState(false);
   const [warn, setWarn] = useState(false);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <Cacnel />,
-    });
-  }, []);
 
   return (
     <KeyboardView>
@@ -70,9 +62,8 @@ const Email = (props: ScreenProps) => {
       />
       <Modal.Warn
         visible={warn}
-        setVisible={setWarn}
         title={type === "register" ? "이미 사용중인 이메일 주소입니다." : ""}
-        subTitle="다시 입력해주세요"
+        description="다시 입력해주세요"
         onRequestClose={() => setWarn(false)}
       />
     </KeyboardView>

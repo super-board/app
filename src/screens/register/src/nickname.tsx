@@ -1,19 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
-import {Button, Cacnel, KeyboardView, TextInput, Title} from "@/components";
+import {Button, KeyboardView, TextInput, Title} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Nickname = (props: ScreenProps) => {
-  const {navigation, route} = props;
+const Nickname = ({navigation}: ScreenProps) => {
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <Cacnel />,
-    });
-  }, []);
 
   const onPress = {
     next: () => {
