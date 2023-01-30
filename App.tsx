@@ -1,6 +1,7 @@
 import React from "react";
 
 import {StatusBar} from "react-native";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {Provider} from "react-redux";
 
@@ -13,7 +14,9 @@ export default function App() {
     <Provider store={store}>
       <SafeAreaProvider>
         <StatusBar backgroundColor={colors.OTBBlack} />
-        <Navigation />
+        <GestureHandlerRootView style={{flex: 1}}>
+          <Navigation />
+        </GestureHandlerRootView>
       </SafeAreaProvider>
     </Provider>
   );
