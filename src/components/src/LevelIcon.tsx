@@ -9,7 +9,7 @@ type Props = {
   height?: number;
 };
 
-export default function ({level, width, height}: Props) {
+export default function LevelIcon({level, width, height}: Props) {
   switch (level) {
     case "CLOVER":
       return <Svgs.Icon.LevelClover width={width ?? 10} height={height ?? 10} />;

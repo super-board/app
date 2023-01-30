@@ -7,7 +7,7 @@ import effects from "@/constants/effects";
 import typography from "@/constants/typography";
 import {BoardGameSummary, useGetBoardGamesForHomeCurationQuery} from "@/services/api";
 
-export default function () {
+export default function CurationCarousel() {
   const {width: screenWidth} = Dimensions.get("window");
   const {isLoading, data: boardGames} = useGetBoardGamesForHomeCurationQuery();
 

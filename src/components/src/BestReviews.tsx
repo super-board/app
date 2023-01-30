@@ -9,7 +9,7 @@ import LevelIcon from "./LevelIcon";
 import RatingIcons from "./RatingIcons";
 import SizedBox from "./SizedBox";
 
-export default function () {
+export default function BestReviews() {
   const {isLoading, data: bestReviews} = useGetBestReviewsQuery();
 
   if (isLoading || !bestReviews) return <View style={styles.container} />;

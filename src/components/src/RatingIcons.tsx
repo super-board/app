@@ -9,7 +9,7 @@ type Props = {
   rating: Rating;
 };
 
-export default function ({rating}: Props) {
+export default function RatingIcons({rating}: Props) {
   const fullCount = Math.floor(rating);
   const hasHalf = rating % 1 === 0.5;
   const emptyCount = Math.floor(5 - rating);
