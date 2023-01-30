@@ -3,6 +3,7 @@ const style = {
     backgroundColor: "#111B26",
     flex: 1,
     padding: 24,
+    paddingTop: 0,
   },
   nextBtn: {
     height: 60,

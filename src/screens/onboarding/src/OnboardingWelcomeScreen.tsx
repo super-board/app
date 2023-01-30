@@ -24,29 +24,29 @@ function OnboardingWelcomeScreen({navigation}: Props) {
     navigation.navigate("OnboardingTagSelectScreen");
   };
   const insets = useSafeAreaInsets();
-  
-  return (
-      <ImageBackground
-        style={[style.container, styles.container]}
-        imageStyle={styles.background}
-        source={require("@/assets/images/background/onboarding-welcome.png")}>
-        <View style={[styles.slogan, {marginTop: insets.top ? insets.top : 0}]}>
-          <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-            {`보드게임\n좋아하는 사람\n'온더보드'에서\n모여라!`}
-          </Text>
-        </View>
 
-        <View style={styles.bottomActions}>
-          <OTBButton type="basic-primary" text="로그인" onPress={navigateToLogin} />
-          <SizedBox height={8} />
-          <TouchableOpacity activeOpacity={1} onPress={navigateToOnboardingTagSelectScreen}>
-            <Text style={[typography.subhead02, styles.hyperlink, styles.textWhite]}>
-              로그인 없이 둘러보기
-            </Text>
-          </TouchableOpacity>
-          <SizedBox height={8} />
-        </View>
-      </ImageBackground>
+  return (
+    <ImageBackground
+      style={[style.container, styles.container]}
+      imageStyle={styles.background}
+      source={require("@/assets/images/background/onboarding-welcome.png")}>
+      <View style={[styles.slogan, {marginTop: insets.top ? insets.top : 0}]}>
+        <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
+          {`보드게임\n좋아하는 사람\n'온더보드'에서\n모여라!`}
+        </Text>
+      </View>
+
+      <View style={styles.bottomActions}>
+        <OTBButton type="basic-primary" text="로그인" onPress={navigateToLogin} />
+        <SizedBox height={8} />
+        <TouchableOpacity activeOpacity={1} onPress={navigateToOnboardingTagSelectScreen}>
+          <Text style={[typography.subhead02, styles.hyperlink, styles.textWhite]}>
+            로그인 없이 둘러보기
+          </Text>
+        </TouchableOpacity>
+        <SizedBox height={8} />
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     top: "16%",
   },
   slogan: {
-    marginTop: 4,
+    paddingTop: 4,
     display: "flex",
   },
   textWhite: {
