@@ -1,10 +1,11 @@
 import {createApi, fakeBaseQuery} from "@reduxjs/toolkit/query/react";
 
 import {reviewQueries} from "@/services/api/src/reviewQueries";
-import {BoardGameSummary, ReviewSummary} from "@/services/api/src/types";
 
 import {boardGameQueries} from "./boardGameQueries";
-import {TagGroup, tagQueries} from "./tagQueries";
+import {notificationsQuery} from "./notificationsQuery";
+import {tagQueries} from "./tagQueries";
+import {BoardGameSummary, Notifications, ReviewSummary, TagGroup} from "./types";
 
 export const OTBApi = createApi({
   reducerPath: "OTBApi",
@@ -23,6 +24,9 @@ export const OTBApi = createApi({
     getBestReviews: build.query<ReviewSummary[], void>({
       queryFn: reviewQueries.getBestReviews.queryFn,
     }),
+    getRecentNotifications: build.query<Notifications[], void>({
+      queryFn: notificationsQuery.getRecentNotifications.queryFn,
+    }),
   }),
 });
 
@@ -31,4 +35,5 @@ export const {
   useGetBoardGamesForHomeCurationQuery,
   useGetRecommendedBoardGamesByTagsQuery,
   useGetBestReviewsQuery,
+  useGetRecentNotificationsQuery,
 } = OTBApi;
