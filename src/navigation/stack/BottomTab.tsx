@@ -11,11 +11,11 @@ const Tab = createBottomTabNavigator();
 
 const BottomTab = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen name="HomeTab" component={HomeStack} />
-      <Tab.Screen name="MypageTab" component={MyPageStack} />
       <Tab.Screen name="SearchTab" component={SearchStack} />
       <Tab.Screen name="WriteTab" component={WriteStack} />
+      <Tab.Screen name="MypageTab" component={MyPageStack} />
     </Tab.Navigator>
   );
 };

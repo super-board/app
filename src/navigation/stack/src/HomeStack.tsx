@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
+import {HomeAppBar} from "@/components/src/AppBar";
 import screenOptions from "@/navigation/config";
 import HomeScreen from "@/screens/home/Main";
 
@@ -11,7 +12,7 @@ const HomeStack = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={screenOptions}>
       <Stack.Group>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" options={{header: HomeAppBar}} component={HomeScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

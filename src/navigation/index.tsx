@@ -7,7 +7,6 @@ import {StyleSheet, View} from "react-native";
 import {LoginAppBar, OnboardingAppBar, RegisterAppBar} from "@/components/src/AppBar";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
-import screenOptions from "@/navigation/config";
 import {Login} from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
@@ -22,6 +21,7 @@ import {
 } from "@/screens/register";
 import {SplashScreen} from "@/screens/splash";
 
+import screenOptions from "./config";
 import BottomTab from "./stack/BottomTab";
 
 const Stack = createNativeStackNavigator();
@@ -79,7 +79,7 @@ const Navigation = () => {
             />
           </Stack.Group>
           <Stack.Group>
-            <Stack.Screen name="Home" component={BottomTab} />
+            <Stack.Screen name="Home" options={{headerShown: false}} component={BottomTab} />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

@@ -25,13 +25,13 @@ function Header({style, children}: LayoutProps) {
 }
 
 /* AppBar.Header 왼쪽 영역에 배치할 때 쓰는 레이아웃 컴포넌트 */
-function Left({marginLeft = 0, style, children}: LayoutProps) {
-  return <View style={[styles.leftContainer, {marginLeft}, style]}>{children}</View>;
+function Left({marginLeft = 0, gap = 0, style, children}: LayoutProps) {
+  return <View style={[styles.leftContainer, {marginLeft, gap}, style]}>{children}</View>;
 }
 
 /* AppBar.Header 오른쪽 영역에 배치할 때 쓰는 레이아웃 컴포넌트 */
-function Right({marginRight = 0, style, children}: LayoutProps) {
-  return <View style={[styles.rightContainer, {marginRight}, style]}>{children}</View>;
+function Right({marginRight = 0, gap = 0, style, children}: LayoutProps) {
+  return <View style={[styles.rightContainer, {marginRight, gap}, style]}>{children}</View>;
 }
 
 /* AppBar.Header 가운데 영역에 배치할 때 쓰는 레이아웃 컴포넌트 */
