@@ -4,6 +4,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {StyleSheet, View} from "react-native";
 
+import {OnboardingAppBar} from "@/components/src/AppBar";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import screenOptions from "@/navigation/config";
@@ -42,9 +43,14 @@ const Navigation = () => {
               options={{headerShown: false}}
               component={OnboardingWelcomeScreen}
             />
-            <Stack.Screen name="OnboardingTagSelectScreen" component={OnboardingTagSelectScreen} />
+            <Stack.Screen
+              name="OnboardingTagSelectScreen"
+              options={{header: OnboardingAppBar}}
+              component={OnboardingTagSelectScreen}
+            />
             <Stack.Screen
               name="OnboardingRecommendationScreen"
+              options={{header: OnboardingAppBar}}
               component={OnboardingRecommendationScreen}
             />
           </Stack.Group>
