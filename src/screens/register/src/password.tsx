@@ -1,23 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import {View} from "react-native";
 
-import {Button, Cacnel, KeyboardView, Modal, TextInput, Title} from "@/components";
+import {Button, KeyboardView, Modal, TextInput, Title} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Password = (props: ScreenProps) => {
-  const {navigation, route} = props;
+const Password = ({navigation, route}: ScreenProps) => {
   const [password, setPassword] = useState("");
   const [_password, _setPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [warn, setWarn] = useState(false);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <Cacnel />,
-    });
-  }, []);
 
   return (
     <KeyboardView>
@@ -49,9 +42,8 @@ const Password = (props: ScreenProps) => {
       />
       <Modal.Warn
         visible={warn}
-        setVisible={setWarn}
         title="이미 사용중인 닉네임 입니다."
-        subTitle="다시 입력해주세요"
+        description="다시 입력해주세요"
         onRequestClose={() => setWarn(false)}
       />
     </KeyboardView>

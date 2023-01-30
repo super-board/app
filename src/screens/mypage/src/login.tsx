@@ -1,27 +1,13 @@
 import React, {useState} from "react";
 
-import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
+import * as SVG from "@/assets/svgs";
 import {Button, KeyboardView, TextInput, Title} from "@/components";
+import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-import * as SVG from "../../../assets/svgs";
-
-const Login = (props: {
-  navigation: NavigationProp<ParamListBase>;
-  route: RouteProp<ParamListBase>;
-}) => {
-  const {navigation, route} = props;
+const Login = ({navigation, route}: ScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

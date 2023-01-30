@@ -1,30 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 
-import {Button, Cacnel, Modal, Title} from "@/components";
+import * as SVG from "@/assets/svgs";
+import {Button, Modal, Title} from "@/components";
 import {height} from "@/constants/device";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-
-import * as SVG from "../../../assets/svgs";
 
 const selectedSize = height / 5.5;
 const selectedCircleSize = height / 6;
 const listSize = height / 7;
 const listCircleSize = height / 8;
 
-const Profile = (props: ScreenProps) => {
-  const {navigation, route} = props;
+const Profile = ({navigation, route}: ScreenProps) => {
   const [disabled, setDisabled] = useState(false);
   const [profile, setProfile] = useState({});
   const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <Cacnel />,
-    });
-  }, []);
 
   const profileData = [
     {svg: 1, color: "#87FCBD"},
