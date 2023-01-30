@@ -11,7 +11,11 @@ export type ReviewSummary = {
   author: {
     id: number;
     nickname: string;
-    level: string;
+    level: Level;
   };
-  grade: number;
+  grade: Rating;
 };
+
+export type Level = "PLAYER" | "CLOVER" | "HEART" | "DIAMOND" | "SPADE" | "JOKER";
+
+export type Rating = 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;

@@ -1,21 +1,14 @@
-import CurationCarousel from "./src/CurationCarousel";
-import OTBButton from "./src/OTBButton";
-import OTBButtonTag from "./src/OTBButtonTag";
-import SizedBox from "./src/SizedBox";
-import Button from "./src/button";
-import TextInput from "./src/input";
-import KeyboardView from "./src/keyboard-avoid";
 import * as Modal from "./src/modal";
-import Title from "./src/register-title";
 
-export {
-  TextInput,
-  Button,
-  Modal,
-  Title,
-  OTBButton,
-  SizedBox,
-  OTBButtonTag,
-  KeyboardView,
-  CurationCarousel,
-};
+export {default as BestReviews} from "./src/BestReviews";
+export {default as Button} from "./src/button";
+export {default as CurationCarousel} from "./src/CurationCarousel";
+export {default as TextInput} from "./src/input";
+export {default as KeyboardView} from "./src/keyboard-avoid";
+export {default as LevelIcon} from "./src/LevelIcon";
+export {default as OTBButton} from "./src/OTBButton";
+export {default as OTBButtonTag} from "./src/OTBButtonTag";
+export {default as RatingIcons} from "./src/RatingIcons";
+export {default as Title} from "./src/register-title";
+export {default as SizedBox} from "./src/SizedBox";
+export {Modal};

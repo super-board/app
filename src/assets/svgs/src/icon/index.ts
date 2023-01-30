@@ -7,8 +7,15 @@ import EditNote from "./edit-note.svg";
 import HomeAccent from "./home-accent.svg";
 import Home from "./home.svg";
 import Kakao from "./kakao.svg";
+import LevelClover from "./level-clover.svg";
+import LevelDiamond from "./level-diamond.svg";
+import LevelHeart from "./level-heart.svg";
+import LevelSpade from "./level-spade.svg";
 import Naver from "./naver.svg";
 import Notifications from "./notifications.svg";
+import RatingStarEmpty from "./rating-star-empty.svg";
+import RatingStarFull from "./rating-star-full.svg";
+import RatingStarHalf from "./rating-star-half.svg";
 import Search from "./search.svg";
 import SpaceDashboardAccent from "./space-dashboard-accent.svg";
 import SpaceDashboard from "./space-dashboard.svg";
@@ -32,4 +39,11 @@ export {
   AccountCircleAccent,
   SpaceDashboard,
   SpaceDashboardAccent,
+  LevelClover,
+  LevelDiamond,
+  LevelHeart,
+  LevelSpade,
+  RatingStarEmpty,
+  RatingStarFull,
+  RatingStarHalf,
 };
