@@ -38,6 +38,8 @@ export default function CurationCarousel() {
         loop
         pagingEnabled={true}
         snapEnabled={true}
+        autoPlay={true}
+        autoPlayInterval={3000}
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.937,
