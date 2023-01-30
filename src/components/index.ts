@@ -1,5 +1,6 @@
 import * as Modal from "./src/modal";
 
+export * from "./src/AppBar";
 export {default as BestReviews} from "./src/BestReviews";
 export {default as Button} from "./src/button";
 export {default as CurationCarousel} from "./src/CurationCarousel";

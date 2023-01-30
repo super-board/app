@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
-import {LoginAppBar, OnboardingAppBar, RegisterAppBar} from "@/components/src/AppBar";
+import {LoginAppBar, OnboardingAppBar, RegisterAppBar} from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {Login} from "@/screens/mypage";
