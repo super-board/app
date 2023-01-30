@@ -1,6 +1,7 @@
 import React, {ReactNode} from "react";
 
 import {Dimensions, StyleProp, StyleSheet, View, ViewStyle} from "react-native";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import colors from "@/constants/colors";
 
@@ -14,7 +15,8 @@ type LayoutProps = {
 
 /* 전체 AppBar를 감싸는 컨테이너 컴포넌트 */
 function Container({style, children}: LayoutProps) {
-  return <View style={[styles.container, style]}>{children}</View>;
+  const insets = useSafeAreaInsets();
+  return <View style={[styles.container, style, {marginTop: insets.top ? insets.top : 0}]}>{children}</View>;
 }
 
 /* AppBar 상단 56px로 고정되는 레이아웃 컴포넌트 */
