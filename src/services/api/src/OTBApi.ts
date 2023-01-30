@@ -11,10 +11,10 @@ export const OTBApi = createApi({
     getTags: build.query<TagGroup[], void>({
       queryFn: tagQueries.getTags.queryFn,
     }),
-    getRecommendedBoardGames: build.query<BoardGameSummary[], void>({
-      queryFn: boardGameQueries.getRecommendedBoardGames.queryFn,
+    getRecommendedBoardGamesByTags: build.query<BoardGameSummary[], void>({
+      queryFn: boardGameQueries.getRecommendedBoardGamesByTags.queryFn,
     }),
   }),
 });
 
-export const {useGetTagsQuery, useGetRecommendedBoardGamesQuery} = OTBApi;
+export const {useGetTagsQuery, useGetRecommendedBoardGamesByTagsQuery} = OTBApi;

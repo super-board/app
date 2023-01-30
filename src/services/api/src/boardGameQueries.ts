@@ -5,7 +5,7 @@ export type BoardGameSummary = {
 };
 
 export const boardGameQueries = {
-  getRecommendedBoardGames: {
+  getRecommendedBoardGamesByTags: {
     queryFn() {
       return {
         data: [

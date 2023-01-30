@@ -10,14 +10,14 @@ import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {useGetRecommendedBoardGamesQuery} from "@/services/api";
+import {useGetRecommendedBoardGamesByTagsQuery} from "@/services/api";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 function OnboardingRecommendationScreen({navigation}: Props) {
-  const {isLoading, data: recommendedBoardGames} = useGetRecommendedBoardGamesQuery();
+  const {isLoading, data: recommendedBoardGames} = useGetRecommendedBoardGamesByTagsQuery();
   const {isSubmitting, saveOnboardingResult} = useSaveOnboardingResult();
 
   const submitOnboardingResult = async () => {
