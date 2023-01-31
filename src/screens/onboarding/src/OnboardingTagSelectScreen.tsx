@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
@@ -19,7 +19,7 @@ type Props = {
 
 function OnboardingTagSelectScreen({navigation}: Props) {
   const {isLoading, data: tagGroups} = useGetTagsQuery();
-  const {selectedTagIds, toggleTag, isSelectedTag} = useSelectedTagIds();
+  const {selectedTagIds, toggleTag, resetSelectedTags, isSelectedTag} = useSelectedTagIds();
   const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
   const {
     visible: loadingVisible,
@@ -59,6 +59,11 @@ function OnboardingTagSelectScreen({navigation}: Props) {
       yield "온더보드가 당신을 위한\n보드게임을 찾는 중입니다.";
     }
   }
+
+  useEffect(() => {
+    resetSelectedTags();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={[style.container, styles.container]}>
