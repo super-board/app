@@ -1,12 +1,13 @@
 import {useEffect} from "react";
 
 import {useAppDispatch, useAppSelector} from "@/hooks/redux";
-import {clearSelectedTags, toggleSelectedTag} from "@/store";
+import {clearSelectedTags, loadInterestTagsAsync, toggleSelectedTag} from "@/store";
 
 function useSelectedTagIds() {
   const selectedTagIds = useAppSelector(state => state.interestTag.selectedTagIds);
 
   const dispatch = useAppDispatch();
+  const loadSelectedTags = () => dispatch(loadInterestTagsAsync());
   const toggleTag = (id: number) => dispatch(toggleSelectedTag(id));
   const isSelectedTag = (id: number) => selectedTagIds.includes(id);
 
@@ -14,7 +15,7 @@ function useSelectedTagIds() {
     dispatch(clearSelectedTags());
   }, [dispatch]);
 
-  return {selectedTagIds, toggleTag, isSelectedTag};
+  return {selectedTagIds, loadSelectedTags, toggleTag, isSelectedTag};
 }
 
 export default useSelectedTagIds;

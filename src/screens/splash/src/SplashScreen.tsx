@@ -5,15 +5,15 @@ import {Image, StyleSheet, View} from "react-native";
 import {Logo} from "@/assets/svgs";
 import {SizedBox} from "@/components";
 import colors from "@/constants/colors";
-import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
+import {useInitializeApp} from "@/hooks/common";
 
 function SplashScreen() {
-  const {checkOnboardingCompleted} = useCheckOnboardingCompleted();
+  const {initializeApp} = useInitializeApp();
 
   useEffect(() => {
-    const timeout = setTimeout(checkOnboardingCompleted, 1500);
+    const timeout = setTimeout(initializeApp, 1500);
     return () => clearTimeout(timeout);
-  }, [checkOnboardingCompleted]);
+  }, [initializeApp]);
 
   return (
     <View style={styles.container}>
