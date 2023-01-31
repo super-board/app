@@ -2,9 +2,9 @@ import React, {useState} from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {ScrollView, StyleSheet, Text, View} from "react-native";
+import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import {Modal, OTBButton, OTBButtonTag, SizedBox} from "@/components";
+import {Modal, OTBButton, SizedBox, TagChip} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
@@ -82,12 +82,12 @@ function OnboardingTagSelectScreen({navigation}: Props) {
                 <SizedBox height={8} />
                 <View style={styles.tagContainer}>
                   {tagGroup.tags.map(tag => (
-                    <OTBButtonTag
+                    <TouchableOpacity
                       key={tag.id}
-                      text={tag.name}
-                      active={isSelectedTag(tag.id)}
-                      onPress={() => toggleTagSelection(tag.id)}
-                    />
+                      activeOpacity={1}
+                      onPress={() => toggleTagSelection(tag.id)}>
+                      <TagChip text={tag.name} active={isSelectedTag(tag.id)} />
+                    </TouchableOpacity>
                   ))}
                 </View>
               </View>
@@ -100,7 +100,7 @@ function OnboardingTagSelectScreen({navigation}: Props) {
       <OTBButton
         type="basic-secondary"
         text="다음"
-        disabled={!selectedTagIds.length}
+        disabled={isLoading || !selectedTagIds.length}
         onPress={findRecommendation}
       />
       <SizedBox height={36} />
