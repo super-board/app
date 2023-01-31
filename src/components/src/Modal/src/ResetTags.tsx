@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Toast from "react-native-toast-message";
 
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";
@@ -21,6 +22,7 @@ import {useGetTagsQuery} from "@/services/api";
 import OTBButton from "../../OTBButton";
 import SizedBox from "../../SizedBox";
 import {TagChip} from "../../Tag";
+import ToastConfig from "../../ToastConfig";
 import type {ModalProps} from "./types";
 
 export default function ResetTags({visible, onRequestClose}: ModalProps) {
@@ -34,7 +36,12 @@ export default function ResetTags({visible, onRequestClose}: ModalProps) {
   const toggleTag = (targetId: number) => {
     const isSelected = isSelectedTag(targetId);
     if (!isSelected && selectedTagIds.length === 5) {
-      // TODO: 토스트 알림 띄우기
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        visibilityTime: 3000,
+        text1: "태그는 최대 5개까지 선택 가능합니다.",
+      });
       return;
     }
 
@@ -116,6 +123,8 @@ export default function ResetTags({visible, onRequestClose}: ModalProps) {
           />
         </View>
       </View>
+
+      <Toast config={ToastConfig} />
     </DefModal>
   );
 }
@@ -134,9 +143,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   modalContainer: {
-    backgroundColor: colors.OTBBlack800,
     width: Dimensions.get("window").width * 0.7 + 8,
+    maxHeight: "50%",
+    paddingBottom: 36,
+    backgroundColor: colors.OTBBlack800,
     borderRadius: 5,
+    overflow: "hidden",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -151,7 +163,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   tagSelectContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 18,
     paddingBottom: 16,
     backgroundColor: colors.OTBBlack800,
     borderRadius: 5,

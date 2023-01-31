@@ -12,4 +12,5 @@ export {default as RatingIcons} from "./src/RatingIcons";
 export {default as Title} from "./src/register-title";
 export {default as SizedBox} from "./src/SizedBox";
 export * from "./src/Tag";
+export {default as ToastConfig} from "./src/ToastConfig";
 export {Modal};
