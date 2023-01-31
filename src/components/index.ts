@@ -1,4 +1,4 @@
-import * as Modal from "./src/modal";
+import * as Modal from "./src/Modal";
 
 export * from "./src/AppBar";
 export {default as BestReviews} from "./src/BestReviews";

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import * as Svgs from "@/assets/svgs";
+import * as SVG from "@/assets/svgs";
 import {bottomTabScreenOptions} from "@/navigation/config";
 
 import HomeStack from "./src/HomeStack";
@@ -14,30 +14,30 @@ const Tab = createBottomTabNavigator();
 
 const HomeTabIcon = (focused: boolean) =>
   focused ? (
-    <Svgs.Icon.HomeAccent width={32} height={32} />
+    <SVG.Icon.HomeAccent width={32} height={32} />
   ) : (
-    <Svgs.Icon.Home width={32} height={32} />
+    <SVG.Icon.Home width={32} height={32} />
   );
 
 const SearchTabIcon = (focused: boolean) =>
   focused ? (
-    <Svgs.Icon.SpaceDashboardAccent width={32} height={32} />
+    <SVG.Icon.SpaceDashboardAccent width={32} height={32} />
   ) : (
-    <Svgs.Icon.SpaceDashboard width={32} height={32} />
+    <SVG.Icon.SpaceDashboard width={32} height={32} />
   );
 
 const WriteTabIcon = (focused: boolean) =>
   focused ? (
-    <Svgs.Icon.EditNoteAccent width={32} height={32} />
+    <SVG.Icon.EditNoteAccent width={32} height={32} />
   ) : (
-    <Svgs.Icon.EditNote width={32} height={32} />
+    <SVG.Icon.EditNote width={32} height={32} />
   );
 
 const MyPageTabIcon = (focused: boolean) =>
   focused ? (
-    <Svgs.Icon.AccountCircleAccent width={32} height={32} />
+    <SVG.Icon.AccountCircleAccent width={32} height={32} />
   ) : (
-    <Svgs.Icon.AccountCircle width={32} height={32} />
+    <SVG.Icon.AccountCircle width={32} height={32} />
   );
 
 const BottomTab = () => {

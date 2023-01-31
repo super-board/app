@@ -2,7 +2,7 @@ import React from "react";
 
 import {StyleSheet, View} from "react-native";
 
-import * as Svgs from "@/assets/svgs";
+import * as SVG from "@/assets/svgs";
 import type {Rating} from "@/services/api";
 
 type Props = {
@@ -17,11 +17,11 @@ export default function RatingIcons({rating}: Props) {
   return (
     <View style={styles.container}>
       {new Array(fullCount).fill(0).map((_, index) => (
-        <Svgs.Icon.RatingStarFull key={index} width={12} height={12} />
+        <SVG.Icon.RatingStarFull key={index} width={12} height={12} />
       ))}
-      {hasHalf ? <Svgs.Icon.RatingStarHalf width={12} height={12} /> : null}
+      {hasHalf ? <SVG.Icon.RatingStarHalf width={12} height={12} /> : null}
       {new Array(emptyCount).fill(0).map((_, index) => (
-        <Svgs.Icon.RatingStarEmpty key={index + 5} width={12} height={12} />
+        <SVG.Icon.RatingStarEmpty key={index + 5} width={12} height={12} />
       ))}
     </View>
   );
