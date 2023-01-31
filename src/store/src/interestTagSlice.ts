@@ -24,6 +24,9 @@ export const interestTagSlice = createSlice({
 
       state.selectedTagIds = [...state.selectedTagIds, targetId];
     },
+    updateSelectedTags(state, action: PayloadAction<number[]>) {
+      state.selectedTagIds = action.payload;
+    },
     clearSelectedTags(state) {
       state.selectedTagIds = [];
     },
@@ -42,6 +45,6 @@ export const loadInterestTagsAsync = createAsyncThunk(
   },
 );
 
-export const {toggleSelectedTag, clearSelectedTags} = interestTagSlice.actions;
+export const {toggleSelectedTag, updateSelectedTags, clearSelectedTags} = interestTagSlice.actions;
 
 export default interestTagSlice.reducer;

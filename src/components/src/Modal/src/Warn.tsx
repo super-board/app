@@ -1,7 +1,6 @@
 import React from "react";
 
-import {Modal as DefModal, Text, TouchableOpacity, View} from "react-native";
-import {StyleSheet} from "react-native";
+import {Modal as DefModal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";

@@ -1,4 +1,6 @@
-import {useCheckOnboardingCompleted, useSelectedTagIds} from "@/hooks/onboarding";
+import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
+
+import useSelectedTagIds from "./useSelectedTagIds";
 
 export default function useInitializeApp() {
   const {loadSelectedTags} = useSelectedTagIds();

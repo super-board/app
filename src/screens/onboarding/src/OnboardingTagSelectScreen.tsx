@@ -9,8 +9,8 @@ import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useSelectedTagIds} from "@/hooks/common";
 import {useModal} from "@/hooks/modal";
-import {useSelectedTagIds} from "@/hooks/onboarding";
 import {useGetTagsQuery} from "@/services/api";
 
 type Props = {

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {ScrollView, StyleSheet, View} from "react-native";
 
-import {useSelectedTagIds} from "@/hooks/onboarding";
+import {useSelectedTagIds} from "@/hooks/common";
 import type {Tag} from "@/services/api";
 import {useGetTagsQuery} from "@/services/api";
 

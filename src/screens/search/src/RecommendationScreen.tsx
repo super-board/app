@@ -2,20 +2,25 @@ import React from "react";
 
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import {SelectedTagsHorizontalListView} from "@/components";
+import {Modal, SelectedTagsHorizontalListView} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
+import {useModal} from "@/hooks/modal";
 
 export default function RecommendationScreen() {
+  const {visible, openModal, closeModal} = useModal();
+
   return (
     <View style={styles.container}>
       <SelectedTagsHorizontalListView />
 
       <View style={{paddingHorizontal: 24}}>
-        <TouchableOpacity activeOpacity={1} style={styles.tagUpdateLink}>
+        <TouchableOpacity activeOpacity={1} style={styles.tagUpdateLink} onPress={openModal}>
           <Text style={[typography.caption, styles.tagUpdateLinkText]}>태그 재설정</Text>
         </TouchableOpacity>
       </View>
+
+      <Modal.ResetTags visible={visible} onRequestClose={closeModal} />
     </View>
   );
 }
