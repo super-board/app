@@ -51,7 +51,7 @@ function Search({navigation}: ButtonProps) {
 
 function Notifications({navigation}: ButtonProps) {
   const onPress = () => {
-    navigation?.push("Notifications");
+    navigation?.push("NotificationsScreen");
   };
 
   return (

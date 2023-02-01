@@ -37,7 +37,7 @@ const Navigation = () => {
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "Home"}
+          initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "BottomTab"}
           screenOptions={stackScreenOptions}>
           <Stack.Group>
             <Stack.Screen
@@ -80,7 +80,7 @@ const Navigation = () => {
             />
           </Stack.Group>
           <Stack.Group>
-            <Stack.Screen name="Home" options={{headerShown: false}} component={BottomTab} />
+            <Stack.Screen name="BottomTab" options={{headerShown: false}} component={BottomTab} />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

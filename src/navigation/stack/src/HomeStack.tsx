@@ -10,11 +10,11 @@ const Stack = createNativeStackNavigator();
 
 const HomeStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={stackScreenOptions}>
+    <Stack.Navigator initialRouteName="HomeScreen" screenOptions={stackScreenOptions}>
       <Stack.Group>
-        <Stack.Screen name="Home" options={{header: HomeAppBar}} component={HomeScreen} />
+        <Stack.Screen name="HomeScreen" options={{header: HomeAppBar}} component={HomeScreen} />
         <Stack.Screen
-          name="Notifications"
+          name="NotificationsScreen"
           options={{header: NotificationsAppBar}}
           component={NotificationsScreen}
         />
