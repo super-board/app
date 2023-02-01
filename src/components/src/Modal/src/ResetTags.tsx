@@ -17,7 +17,7 @@ import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useSelectedTagIds} from "@/hooks/common";
 import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {useGetTagsQuery} from "@/services/api";
+import {useGetTagListQuery} from "@/services/api";
 
 import OTBButton from "../../OTBButton";
 import SizedBox from "../../SizedBox";
@@ -27,7 +27,7 @@ import type {ModalProps} from "./types";
 
 export default function ResetTags({visible, onRequestClose}: ModalProps) {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const {isLoading, data: tagGroups} = useGetTagsQuery();
+  const {isLoading, data: tagList} = useGetTagListQuery();
   const {selectedTagIds: storedSelectedTagIds, updateSelectedTags} = useSelectedTagIds();
   const {saveOnboardingResult} = useSaveOnboardingResult();
 
@@ -84,9 +84,9 @@ export default function ResetTags({visible, onRequestClose}: ModalProps) {
             <SVG.Icon.Close width={30} height={30} />
           </TouchableOpacity>
           <View style={styles.tagSelectContainer}>
-            {!isLoading && tagGroups ? (
+            {!isLoading && tagList ? (
               <ScrollView>
-                {tagGroups.map(tagGroup => (
+                {tagList.map(tagGroup => (
                   <View key={tagGroup.type} style={styles.tagGroupContainer}>
                     <Text style={[typography.body01, styles.tagGroupName]}>{tagGroup.type}</Text>
                     <SizedBox height={8} />

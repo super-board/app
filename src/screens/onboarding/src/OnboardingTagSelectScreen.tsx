@@ -11,14 +11,14 @@ import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useSelectedTagIds} from "@/hooks/common";
 import {useModal} from "@/hooks/modal";
-import {useGetTagsQuery} from "@/services/api";
+import {useGetTagListQuery} from "@/services/api";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 function OnboardingTagSelectScreen({navigation}: Props) {
-  const {isLoading, data: tagGroups} = useGetTagsQuery();
+  const {isLoading, data: tagList} = useGetTagListQuery();
   const {selectedTagIds, toggleTag, resetSelectedTags, isSelectedTag} = useSelectedTagIds();
   const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
   const {
@@ -79,9 +79,9 @@ function OnboardingTagSelectScreen({navigation}: Props) {
 
       <SizedBox height={60} />
       <View style={styles.tagSelectContainer}>
-        {!isLoading && tagGroups ? (
+        {!isLoading && tagList ? (
           <ScrollView>
-            {tagGroups.map(tagGroup => (
+            {tagList.map(tagGroup => (
               <View key={tagGroup.type} style={styles.tagGroupContainer}>
                 <Text style={[typography.body01, styles.tagGroupName]}>{tagGroup.type}</Text>
                 <SizedBox height={8} />

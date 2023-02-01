@@ -12,8 +12,8 @@ export const OTBApi = createApi({
   // FIXME: 백엔드 서버 구축 완료되면 fakeBaseQuery를 fetchBaseQuery로 교체해야 함.
   baseQuery: fakeBaseQuery(),
   endpoints: build => ({
-    getTags: build.query<TagGroup[], void>({
-      queryFn: tagQueries.getTags.queryFn,
+    getTagList: build.query<TagGroup[], void>({
+      queryFn: tagQueries.getTagList.queryFn,
     }),
     getBoardGamesForHomeCuration: build.query<BoardGameSummary[], void>({
       queryFn: boardGameQueries.getBoardGamesForHomeCuration.queryFn,
@@ -31,7 +31,7 @@ export const OTBApi = createApi({
 });
 
 export const {
-  useGetTagsQuery,
+  useGetTagListQuery,
   useGetBoardGamesForHomeCurationQuery,
   useGetRecommendedBoardGamesByTagsQuery,
   useGetBestReviewsQuery,

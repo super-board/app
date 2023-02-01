@@ -4,27 +4,27 @@ import {ScrollView, StyleSheet, View} from "react-native";
 
 import {useSelectedTagIds} from "@/hooks/common";
 import type {Tag} from "@/services/api";
-import {useGetTagsQuery} from "@/services/api";
+import {useGetTagListQuery} from "@/services/api";
 
 import SizedBox from "../../SizedBox";
 import TagChip from "./TagChip";
 
 export default function SelectedTagsHorizontalListView() {
-  const {isLoading, data: interestTags} = useGetTagsQuery();
+  const {isLoading, data: tagList} = useGetTagListQuery();
   const {selectedTagIds} = useSelectedTagIds();
   const [filteredTags, setFilteredTags] = useState<Tag[]>([]);
 
   useEffect(() => {
-    if (isLoading || !interestTags) return;
-    const selectedTags = interestTags
+    if (isLoading || !tagList) return;
+    const selectedTags = tagList
       .map(tagGroup => tagGroup.tags)
       .flat()
       .filter(tag => selectedTagIds.includes(tag.id));
 
     setFilteredTags(() => selectedTags);
-  }, [isLoading, interestTags, selectedTagIds]);
+  }, [isLoading, tagList, selectedTagIds]);
 
-  if (isLoading || !interestTags) return <View style={styles.container} />;
+  if (isLoading || !tagList) return <View style={styles.container} />;
 
   return (
     <View style={styles.container}>
