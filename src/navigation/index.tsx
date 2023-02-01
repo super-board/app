@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
-import {LoginAppBar, OnboardingAppBar, RegisterAppBar} from "@/components";
+import {LoginAppBar, OnboardingAppBar, RegisterAppBar, SearchAppBar} from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {Login} from "@/screens/mypage";
@@ -20,6 +20,7 @@ import {
   RegisterPassword,
   RegisterProfile,
 } from "@/screens/register";
+import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
 
 import {stackScreenOptions} from "./config";
@@ -81,6 +82,11 @@ const Navigation = () => {
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen name="BottomTab" options={{headerShown: false}} component={BottomTab} />
+            <Stack.Screen
+              name="SearchScreen"
+              options={{header: SearchAppBar}}
+              component={SearchScreen}
+            />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

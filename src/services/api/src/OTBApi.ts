@@ -18,6 +18,9 @@ export const OTBApi = createApi({
     getBoardGamesForHomeCuration: build.query<BoardGameSummary[], void>({
       queryFn: boardGameQueries.getBoardGamesForHomeCuration.queryFn,
     }),
+    getTop10BoardGames: build.query<BoardGameSummary[], void>({
+      queryFn: boardGameQueries.getTop10BoardGames.queryFn,
+    }),
     getRecommendedBoardGamesByTags: build.query<
       BoardGameSummary[],
       {tagIds: number[]; page: number}
@@ -45,6 +48,7 @@ export const OTBApi = createApi({
 export const {
   useGetTagListQuery,
   useGetBoardGamesForHomeCurationQuery,
+  useGetTop10BoardGamesQuery,
   useGetRecommendedBoardGamesByTagsQuery,
   useGetBestReviewsQuery,
   useGetRecentNotificationsQuery,
