@@ -19,7 +19,7 @@ export const reviewQueries = {
               nickname: "Margo",
               level: "DIAMOND",
             },
-            grade: 4.5,
+            rating: 4.5,
           },
           {
             id: 2,
@@ -34,7 +34,7 @@ export const reviewQueries = {
               nickname: "yeay",
               level: "HEART",
             },
-            grade: 3.5,
+            rating: 3.5,
           },
           {
             id: 3,
@@ -49,7 +49,7 @@ export const reviewQueries = {
               nickname: "abcdefg1234",
               level: "SPADE",
             },
-            grade: 0.5,
+            rating: 0.5,
           },
           {
             id: 4,
@@ -64,7 +64,7 @@ export const reviewQueries = {
               nickname: "미쳤습니까휴먼",
               level: "CLOVER",
             },
-            grade: 5,
+            rating: 5,
           },
           {
             id: 5,
@@ -79,7 +79,7 @@ export const reviewQueries = {
               nickname: "그게나야",
               level: "SPADE",
             },
-            grade: 2.5,
+            rating: 2.5,
           },
           {
             id: 6,
@@ -95,7 +95,7 @@ export const reviewQueries = {
               nickname: "Margo",
               level: "DIAMOND",
             },
-            grade: 4.5,
+            rating: 4.5,
           },
           {
             id: 7,
@@ -110,7 +110,7 @@ export const reviewQueries = {
               nickname: "yeay",
               level: "HEART",
             },
-            grade: 3.5,
+            rating: 3.5,
           },
           {
             id: 8,
@@ -125,7 +125,7 @@ export const reviewQueries = {
               nickname: "abcdefg1234",
               level: "SPADE",
             },
-            grade: 0.5,
+            rating: 0.5,
           },
           {
             id: 9,
@@ -140,7 +140,7 @@ export const reviewQueries = {
               nickname: "미쳤습니까휴먼",
               level: "CLOVER",
             },
-            grade: 5,
+            rating: 5,
           },
           {
             id: 10,
@@ -155,7 +155,7 @@ export const reviewQueries = {
               nickname: "그게나야",
               level: "SPADE",
             },
-            grade: 2.5,
+            rating: 2.5,
           },
         ] as ReviewSummary[],
       };
