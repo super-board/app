@@ -2,6 +2,7 @@ import * as Modal from "./src/Modal";
 
 export * from "./src/AppBar";
 export {default as BestReviews} from "./src/BestReviews";
+export * from "./src/BoardGame";
 export {default as Button} from "./src/button";
 export {default as CurationCarousel} from "./src/CurationCarousel";
 export {default as TextInput} from "./src/input";

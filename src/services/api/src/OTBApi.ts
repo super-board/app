@@ -18,8 +18,20 @@ export const OTBApi = createApi({
     getBoardGamesForHomeCuration: build.query<BoardGameSummary[], void>({
       queryFn: boardGameQueries.getBoardGamesForHomeCuration.queryFn,
     }),
-    getRecommendedBoardGamesByTags: build.query<BoardGameSummary[], void>({
+    getRecommendedBoardGamesByTags: build.query<
+      BoardGameSummary[],
+      {tagIds: number[]; page: number}
+    >({
       queryFn: boardGameQueries.getRecommendedBoardGamesByTags.queryFn,
+      serializeQueryArgs: ({queryArgs}) => queryArgs.tagIds.join("&"),
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.push(...responseData);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
     }),
     getBestReviews: build.query<ReviewSummary[], void>({
       queryFn: reviewQueries.getBestReviews.queryFn,
