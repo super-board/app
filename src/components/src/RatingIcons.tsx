@@ -3,16 +3,25 @@ import React from "react";
 import {StyleSheet, View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
-import type {Rating} from "@/services/api";
 
 type Props = {
-  rating: Rating;
+  rating?: number;
 };
 
 export default function RatingIcons({rating}: Props) {
-  const fullCount = Math.floor(rating);
-  const hasHalf = rating % 1 === 0.5;
-  const emptyCount = Math.floor(5 - rating);
+  if (!rating)
+    return (
+      <View style={styles.container}>
+        {new Array(5).fill(0).map((_, index) => (
+          <SVG.Icon.RatingStartNotRated key={index} width={12} height={12} />
+        ))}
+      </View>
+    );
+
+  const rounded = Math.round(rating * 2) / 2;
+  const fullCount = Math.floor(rounded);
+  const hasHalf = rounded % 1 === 0.5;
+  const emptyCount = Math.floor(5 - rounded);
 
   return (
     <View style={styles.container}>

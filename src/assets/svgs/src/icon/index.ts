@@ -16,6 +16,7 @@ import Notifications from "./notifications.svg";
 import RatingStarEmpty from "./rating-star-empty.svg";
 import RatingStarFull from "./rating-star-full.svg";
 import RatingStarHalf from "./rating-star-half.svg";
+import RatingStartNotRated from "./rating-star-not-rated.svg";
 import Search from "./search.svg";
 import SpaceDashboardAccent from "./space-dashboard-accent.svg";
 import SpaceDashboard from "./space-dashboard.svg";
@@ -46,4 +47,5 @@ export {
   RatingStarEmpty,
   RatingStarFull,
   RatingStarHalf,
+  RatingStartNotRated,
 };

@@ -12,6 +12,7 @@ export type BoardGameSummary = {
   id: number;
   name: string;
   imageUrl: string;
+  averageRating: number;
 };
 
 export type ReviewSummary = {
@@ -23,12 +24,10 @@ export type ReviewSummary = {
     nickname: string;
     level: Level;
   };
-  grade: Rating;
+  rating: number;
 };
 
 export type Level = "PLAYER" | "CLOVER" | "HEART" | "DIAMOND" | "SPADE" | "JOKER";
-
-export type Rating = 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
 
 export type Notifications = {
   id: number;
