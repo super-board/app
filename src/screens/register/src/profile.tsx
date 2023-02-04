@@ -1,12 +1,14 @@
 import React, {useState} from "react";
 
-import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
-import {Button, Modal, Title} from "@/components";
+import {Button, Modal, OTBButton, Title} from "@/components";
 import {height} from "@/constants/device";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
+
+import {ProfileImage} from "../components";
 
 const selectedSize = height / 5.5;
 const selectedCircleSize = height / 6;
@@ -24,24 +26,6 @@ const Profile = ({navigation, route}: ScreenProps) => {
     {svg: 3, color: "#B583F0"},
   ];
 
-  const RenderProfileImage = (item: any) => {
-    const {svg, color} = item.item;
-    return (
-      <TouchableOpacity
-        style={{
-          width: listCircleSize,
-          height: listCircleSize,
-          borderRadius: listCircleSize / 2,
-          backgroundColor: color,
-          justifyContent: "center",
-          alignItems: "center",
-          margin: 8,
-        }}>
-        <SVG.Profile.Fur1 width={listSize} height={listSize} />
-      </TouchableOpacity>
-    );
-  };
-
   return (
     <View style={style.container}>
       <Title title="프로필 캐릭터 선택" />
@@ -58,14 +42,18 @@ const Profile = ({navigation, route}: ScreenProps) => {
           <SVG.Profile.Fur1 width={selectedSize} height={selectedSize} />
         </View>
       </View>
-      {/* 
+
       <View style={{alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
         {profileData.map((item, idx) => (
-          <RenderProfileImage item={item} key={idx} />
+          <ProfileImage
+            item={item}
+            listCircleSize={listCircleSize}
+            listSize={listSize}
+            key={idx.toString()}
+            setProfile={setProfile}
+          />
         ))}
       </View>
-
-        */}
 
       <Button text="뱃지 모달" onPress={() => setVisible(true)} />
       <Modal.Badge visible={visible} onRequestClose={() => setVisible(false)} type="welcome" />
@@ -81,5 +69,3 @@ const Profile = ({navigation, route}: ScreenProps) => {
 };
 
 export default Profile;
-
-const styles = StyleSheet.create({});
