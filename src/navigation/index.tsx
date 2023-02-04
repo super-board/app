@@ -3,6 +3,7 @@ import React from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {StyleSheet, View} from "react-native";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {LoginAppBar, OnboardingAppBar, RegisterAppBar} from "@/components/src/AppBar";
 import colors from "@/constants/colors";
@@ -31,8 +32,10 @@ const Navigation = () => {
 
   if (isLoading) return <SplashScreen />;
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: insets.top}]}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "Home"}
@@ -56,7 +59,6 @@ const Navigation = () => {
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen name="Login" options={{header: LoginAppBar}} component={Login} />
-
             <Stack.Screen
               name="RegisterEmail"
               options={{header: RegisterAppBar}}
