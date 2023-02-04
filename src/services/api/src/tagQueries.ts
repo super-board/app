@@ -1,12 +1,4 @@
-export type Tag = {
-  id: number;
-  name: string;
-};
-
-export type TagGroup = {
-  type: string;
-  tags: Tag[];
-};
+import type {TagGroup} from "./types";
 
 export const tagQueries = {
   getTags: {
@@ -47,7 +39,7 @@ export const tagQueries = {
               {id: 19, name: "어려움"},
             ],
           },
-        ],
+        ] as TagGroup[],
       };
     },
   },

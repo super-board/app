@@ -37,9 +37,10 @@ function Cancel({navigation, onPress}: ButtonProps) {
   );
 }
 
-function Search() {
-  // TODO: 검색 화면으로 이동
-  const onPress = () => {};
+function Search({navigation}: ButtonProps) {
+  const onPress = () => {
+    navigation?.push("SearchBoardGames");
+  };
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={onPress}>
@@ -48,9 +49,10 @@ function Search() {
   );
 }
 
-function Notifications() {
-  // TODO: 알림 화면으로 이동
-  const onPress = () => {};
+function Notifications({navigation}: ButtonProps) {
+  const onPress = () => {
+    navigation?.push("Notifications");
+  };
 
   return (
     <TouchableOpacity activeOpacity={1} onPress={onPress}>

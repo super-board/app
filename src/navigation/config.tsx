@@ -1,18 +1,17 @@
+import {BottomTabNavigationOptions} from "@react-navigation/bottom-tabs";
 import {NativeStackNavigationOptions} from "@react-navigation/native-stack";
 
 import colors from "@/constants/colors";
 
-const screenOptions: NativeStackNavigationOptions = {
+export const stackScreenOptions = {
   animation: "slide_from_right",
   headerShown: true,
-  headerStyle: {
-    backgroundColor: colors.OTBBlack,
-  },
-  headerTitleStyle: {
-    color: colors.OTBBlack,
-  },
-  headerTintColor: colors.white,
-  headerBackTitleVisible: false,
-};
+} as NativeStackNavigationOptions;
 
-export default screenOptions;
+export const bottomTabScreenOptions = {
+  headerShown: false,
+  tabBarStyle: {height: 80, backgroundColor: colors.OTBBlack, borderTopWidth: 0},
+  tabBarShowLabel: false,
+  tabBarActiveTintColor: colors.white,
+  tabBarInactiveTintColor: colors.white,
+} as BottomTabNavigationOptions;

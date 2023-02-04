@@ -100,7 +100,7 @@ function OnboardingTagSelectScreen({navigation}: Props) {
       <OTBButton
         type="basic-secondary"
         text="다음"
-        disabled={selectedTagIds.length === 0}
+        disabled={!selectedTagIds.length}
         onPress={findRecommendation}
       />
       <SizedBox height={36} />
