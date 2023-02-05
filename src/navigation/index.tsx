@@ -29,10 +29,9 @@ const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   const {isLoading, shouldRequestOnboarding} = useCheckOnboardingCompleted();
+  const insets = useSafeAreaInsets();
 
   if (isLoading) return <SplashScreen />;
-
-  const insets = useSafeAreaInsets();
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
