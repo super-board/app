@@ -36,6 +36,18 @@ export const OTBApi = createApi({
       },
       forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
     }),
+    getBoardGamesByName: build.query<BoardGameSummary[], {query: string; page: number}>({
+      queryFn: boardGameQueries.getBoardGamesByName.queryFn,
+      serializeQueryArgs: ({queryArgs}) => queryArgs.query,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.push(...responseData);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
     getBestReviews: build.query<ReviewSummary[], void>({
       queryFn: reviewQueries.getBestReviews.queryFn,
     }),
@@ -50,6 +62,7 @@ export const {
   useGetBoardGamesForHomeCurationQuery,
   useGetTop10BoardGamesQuery,
   useGetRecommendedBoardGamesByTagsQuery,
+  useGetBoardGamesByNameQuery,
   useGetBestReviewsQuery,
   useGetRecentNotificationsQuery,
 } = OTBApi;
