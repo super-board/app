@@ -30,8 +30,8 @@ export default function LoginScreen({navigation}: ScreenProps) {
       setIsValidCredentials(true);
       signIn({email, password});
     },
-    kakao: () => {},
     naver: () => {},
+    kakao: () => {},
     register: () => {
       navigation.navigate("RegisterEmailVerificationScreen");
     },
