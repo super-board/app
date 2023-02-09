@@ -15,7 +15,7 @@ const selectedCircleSize = height / 6;
 const listSize = height / 7;
 const listCircleSize = height / 8;
 
-const Profile = ({navigation, route}: ScreenProps) => {
+export default function ProfileSelectionScreen({navigation, route}: ScreenProps) {
   const [disabled, setDisabled] = useState(false);
   const [profile, setProfile] = useState({});
   const [visible, setVisible] = useState(false);
@@ -59,12 +59,10 @@ const Profile = ({navigation, route}: ScreenProps) => {
       <OTBButton
         type="basic-primary"
         text="다음"
-        onPress={() => navigation.navigate("RegisterNickname", {...route.params, profile})}
+        onPress={() => navigation.navigate("RegisterNicknameSettingScreen")}
         disabled={disabled}
       />
       <SizedBox height={36} />
     </View>
   );
-};
-
-export default Profile;
+}

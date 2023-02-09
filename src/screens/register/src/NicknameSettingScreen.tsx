@@ -4,7 +4,7 @@ import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox, TextInput, Title} from
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Nickname = ({navigation}: ScreenProps) => {
+export default function NicknameSettingScreen({navigation}: ScreenProps) {
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
 
@@ -31,6 +31,4 @@ const Nickname = ({navigation}: ScreenProps) => {
       <SizedBox height={36} />
     </KeyboardView>
   );
-};
-
-export default Nickname;
+}

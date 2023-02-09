@@ -13,25 +13,21 @@ import {
 } from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
+import {useModal} from "@/hooks/modal";
 
-const Email = ({navigation, route}: ScreenProps) => {
-  const {type = "register"} = route.params || {};
+export default function EmailVerificationScreen({navigation}: ScreenProps) {
   const [email, setEmail] = useState("");
   const [authNum, setAuthNum] = useState("");
   const [emailValid, setEmailValid] = useState(false);
   const [authValid, setAuthValid] = useState(false);
   const [authView, setAuthView] = useState(false);
-  const [warn, setWarn] = useState(false);
+  const {visible, openModal, closeModal} = useModal();
 
   return (
     <KeyboardView style={style.screenWithAppBarContainer}>
       <Title
-        title={type === "register" ? "이메일 본인인증" : "비밀번호 재설정"}
-        subTitle={
-          type === "register"
-            ? "서비스 로그인을 위한 이메일 입력 및 이메일 본인 확인을 해주세요."
-            : "비밀번호를 재설정을 위해 가입하신 이메일을 입력해 주세요."
-        }
+        title={"이메일 본인인증"}
+        subTitle={"서비스 로그인을 위한 이메일 입력 및 이메일 본인 확인을 해주세요."}
       />
       <TextInput
         title="이메일"
@@ -40,7 +36,7 @@ const Email = ({navigation, route}: ScreenProps) => {
         text={email}
         setText={setEmail}
         setIsValid={setEmailValid}
-        type={type}
+        type="register"
         keyboardType="email-address"
         maxLength={40}
       />
@@ -72,19 +68,17 @@ const Email = ({navigation, route}: ScreenProps) => {
       <OTBButton
         type="basic-primary"
         text="다음"
-        onPress={() => navigation.navigate("RegisterPassword", {email})}
+        onPress={() => navigation.navigate("RegisterPasswordSettingScreen")}
         disabled={authNum.length !== 5}
       />
       <SizedBox height={36} />
 
       <Modal.Warn
-        visible={warn}
-        title={type === "register" ? "이미 사용중인 이메일 주소입니다." : ""}
+        visible={visible}
+        title={"이미 사용중인 이메일 주소입니다."}
         description="다시 입력해주세요"
-        onRequestClose={() => setWarn(false)}
+        onRequestClose={closeModal}
       />
     </KeyboardView>
   );
-};
-
-export default Email;
+}

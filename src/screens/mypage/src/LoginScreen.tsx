@@ -7,7 +7,7 @@ import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox, TextInput, Title} from
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Login = ({navigation, route}: ScreenProps) => {
+export default function LoginScreen({navigation}: ScreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,10 +16,10 @@ const Login = ({navigation, route}: ScreenProps) => {
     kakao: () => {},
     naver: () => {},
     register: () => {
-      navigation.navigate("RegisterEmail");
+      navigation.navigate("RegisterEmailVerificationScreen");
     },
     findPassword: () => {
-      navigation.navigate("RegisterEmail", {type: "find"});
+      navigation.navigate("FindPasswordEmailVerification");
     },
   };
 
@@ -63,9 +63,7 @@ const Login = ({navigation, route}: ScreenProps) => {
       <SizedBox height={36} />
     </KeyboardView>
   );
-};
-
-export default Login;
+}
 
 const styles = StyleSheet.create({
   snsContainer: {

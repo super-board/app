@@ -12,7 +12,7 @@ import {
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-const Password = ({navigation, route}: ScreenProps) => {
+export default function PasswordSettingScreen({navigation, route}: ScreenProps) {
   const [password, setPassword] = useState("");
   const [_password, _setPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
@@ -43,7 +43,7 @@ const Password = ({navigation, route}: ScreenProps) => {
       <OTBButton
         type="basic-primary"
         text="다음"
-        onPress={() => navigation.navigate("RegisterProfile", {...route.params, password})}
+        onPress={() => navigation.navigate("RegisterProfileSelectionScreen")}
         disabled={!(isValid && password === _password)}
       />
       <SizedBox height={36} />
@@ -56,6 +56,4 @@ const Password = ({navigation, route}: ScreenProps) => {
       />
     </KeyboardView>
   );
-};
-
-export default Password;
+}
