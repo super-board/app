@@ -2,7 +2,7 @@ import React from "react";
 
 import {StyleSheet, View} from "react-native";
 
-import {Button} from "@/components";
+import {OTBButton} from "@/components";
 import colors from "@/constants/colors";
 import {
   PermissionAppTrackingTransparencyService,
@@ -13,17 +13,20 @@ import {
 function PermissionTestScreen() {
   return (
     <View style={styles.container}>
-      <Button
+      <OTBButton
+        type="basic-primary"
         style={styles.buttonGap}
         text="카메라 권한 요청하기"
         onPress={PermissionCameraAndGalleryService.requestPermission}
       />
-      <Button
+      <OTBButton
+        type="basic-primary"
         style={styles.buttonGap}
         text="알림 권한 요청하기"
         onPress={PermissionNotificationsService.requestPermission}
       />
-      <Button
+      <OTBButton
+        type="basic-primary"
         text="앱 추적 허용 요청하기"
         onPress={PermissionAppTrackingTransparencyService.requestPermission}
       />

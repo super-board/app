@@ -2,7 +2,15 @@ import React, {useState} from "react";
 
 import Animated, {FadeIn, FadeInUp, FadeOutDown} from "react-native-reanimated";
 
-import {Button, KeyboardView, Modal, TextInput, Title} from "@/components";
+import {
+  FlexEmptyFill,
+  KeyboardView,
+  Modal,
+  OTBButton,
+  SizedBox,
+  TextInput,
+  Title,
+} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
@@ -16,7 +24,7 @@ const Email = ({navigation, route}: ScreenProps) => {
   const [warn, setWarn] = useState(false);
 
   return (
-    <KeyboardView>
+    <KeyboardView style={style.screenWithAppBarContainer}>
       <Title
         title={type === "register" ? "이메일 본인인증" : "비밀번호 재설정"}
         subTitle={
@@ -36,7 +44,12 @@ const Email = ({navigation, route}: ScreenProps) => {
         keyboardType="email-address"
         maxLength={40}
       />
-      <Button text="인증번호 받기" onPress={() => setAuthView(!authView)} disabled={!emailValid} />
+      <OTBButton
+        type="medium-primary"
+        text="인증번호 받기"
+        onPress={() => setAuthView(!authView)}
+        disabled={!emailValid}
+      />
       {authView ? (
         <Animated.View
           layout={FadeIn.duration(500).delay(200)}
@@ -54,12 +67,16 @@ const Email = ({navigation, route}: ScreenProps) => {
           />
         </Animated.View>
       ) : null}
-      <Button
+
+      <FlexEmptyFill />
+      <OTBButton
+        type="basic-primary"
         text="다음"
         onPress={() => navigation.navigate("RegisterPassword", {email})}
         disabled={authNum.length !== 5}
-        style={style.nextBtn}
       />
+      <SizedBox height={36} />
+
       <Modal.Warn
         visible={warn}
         title={type === "register" ? "이미 사용중인 이메일 주소입니다." : ""}

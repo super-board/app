@@ -31,7 +31,7 @@ function OnboardingRecommendationScreen({navigation}: Props) {
   };
 
   return (
-    <View style={[style.container, styles.container]}>
+    <View style={style.screenWithAppBarContainer}>
       <Text style={[typography.display04, effects.textDropShadow, styles.title]}>
         추천 보드게임
       </Text>
@@ -80,7 +80,6 @@ function OnboardingRecommendationScreen({navigation}: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: {paddingTop: 0},
   title: {color: colors.white},
   description: {color: colors.OTBBlack500},
   recommendationContainer: {

@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
-import {Button, KeyboardView, TextInput, Title} from "@/components";
+import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox, TextInput, Title} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
@@ -24,7 +24,7 @@ const Login = ({navigation, route}: ScreenProps) => {
   };
 
   return (
-    <KeyboardView>
+    <KeyboardView style={style.screenWithAppBarContainer}>
       <Title title="로그인" />
       <TextInput
         title="이메일"
@@ -42,12 +42,15 @@ const Login = ({navigation, route}: ScreenProps) => {
         <TouchableOpacity onPress={onPress.findPassword}>
           <Text style={styles.text}>비밀번호를 잊어버리셨나요?</Text>
         </TouchableOpacity>
-        <View style={styles.divider} />
+        <View style={styles.verticalDivider} />
         <TouchableOpacity onPress={onPress.register}>
           <Text style={styles.text}>회원가입</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.sns}>
+
+      <FlexEmptyFill />
+
+      <View style={styles.snsContainer}>
         <TouchableOpacity onPress={onPress.naver}>
           <SVG.Icon.Naver width={40} height={40} style={{marginRight: 24}} />
         </TouchableOpacity>
@@ -55,7 +58,9 @@ const Login = ({navigation, route}: ScreenProps) => {
           <SVG.Icon.Kakao width={40} height={40} />
         </TouchableOpacity>
       </View>
-      <Button text="로그인" style={style.nextBtn} onPress={onPress.login} />
+      <SizedBox height={42} />
+      <OTBButton type="basic-primary" text="로그인" onPress={onPress.login} />
+      <SizedBox height={36} />
     </KeyboardView>
   );
 };
@@ -63,28 +68,22 @@ const Login = ({navigation, route}: ScreenProps) => {
 export default Login;
 
 const styles = StyleSheet.create({
-  sns: {
+  snsContainer: {
     flexDirection: "row",
-    marginTop: 56,
     justifyContent: "center",
-    marginBottom: 42,
-    position: "absolute",
-    bottom: "20%",
-    alignSelf: "center",
-  },
-  textInput: {
-    padding: 24,
+    gap: 16,
   },
   findRegister: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
   },
   text: {
     color: "white",
-    textDecorationLine: "underline",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
   },
-  divider: {
+  verticalDivider: {
     borderRightWidth: 1,
     borderColor: "white",
     margin: 10,

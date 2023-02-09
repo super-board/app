@@ -21,7 +21,7 @@ export default function ({navigation}: ScreenProps) {
   };
 
   return (
-    <View style={style.container}>
+    <View style={style.screenWithAppBarContainer}>
       <OTBButton type="basic-primary" text="온보딩 초기화" onPress={resetOnboarding} />
     </View>
   );

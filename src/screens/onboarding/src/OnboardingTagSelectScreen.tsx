@@ -66,7 +66,7 @@ function OnboardingTagSelectScreen({navigation}: Props) {
   }, []);
 
   return (
-    <View style={[style.container, styles.container]}>
+    <View style={style.screenWithAppBarContainer}>
       <Text style={[typography.display04, effects.textDropShadow, styles.title]}>
         관심 태그 선택
       </Text>
@@ -103,7 +103,7 @@ function OnboardingTagSelectScreen({navigation}: Props) {
       <SizedBox height={26} />
 
       <OTBButton
-        type="basic-secondary"
+        type="basic-primary"
         text="다음"
         disabled={isLoading || !selectedTagIds.length}
         onPress={findRecommendation}
@@ -122,7 +122,6 @@ function OnboardingTagSelectScreen({navigation}: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: {paddingTop: 0},
   title: {color: colors.white},
   description: {color: colors.OTBBlack500},
   tagSelectContainer: {

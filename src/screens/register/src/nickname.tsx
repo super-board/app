@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-import {Button, KeyboardView, TextInput, Title} from "@/components";
+import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox, TextInput, Title} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
@@ -15,7 +15,7 @@ const Nickname = ({navigation}: ScreenProps) => {
   };
 
   return (
-    <KeyboardView>
+    <KeyboardView style={style.screenWithAppBarContainer}>
       <Title title="닉네임 설정" subTitle="서비스 이용에 사용할 닉네임을 설정해주세요" />
       <TextInput
         title="닉네임"
@@ -25,7 +25,10 @@ const Nickname = ({navigation}: ScreenProps) => {
         setIsValid={setIsValid}
         maxLength={10}
       />
-      <Button text="다음" onPress={onPress.next} disabled={!isValid} style={style.nextBtn} />
+
+      <FlexEmptyFill />
+      <OTBButton type="basic-primary" text="다음" onPress={onPress.next} disabled={!isValid} />
+      <SizedBox height={36} />
     </KeyboardView>
   );
 };

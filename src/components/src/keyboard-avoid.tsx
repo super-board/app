@@ -1,22 +1,22 @@
-import React from "react";
+import React, {ReactNode} from "react";
 
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  StyleProp,
   TouchableWithoutFeedback,
   View,
+  ViewStyle,
 } from "react-native";
 
-import style from "@/constants/style";
-
 type KeyBoardViewProps = {
-  children: React.ReactNode;
+  children: ReactNode | ReactNode[];
   avoid?: boolean; //KeyboardAvoid true | false
+  style?: StyleProp<ViewStyle>;
 };
 
-const KeyboardView = (props: KeyBoardViewProps) => {
-  const {children, avoid = false} = props;
+export default function KeyboardView({avoid = false, style, children}: KeyBoardViewProps) {
   return (
     <>
       {avoid ? (
@@ -24,16 +24,14 @@ const KeyboardView = (props: KeyBoardViewProps) => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{flex: 1}}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <View style={style.container}>{children}</View>
+            <View style={style}>{children}</View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
       ) : (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View style={style.container}>{children}</View>
+          <View style={style}>{children}</View>
         </TouchableWithoutFeedback>
       )}
     </>
   );
-};
-
-export default KeyboardView;
+}

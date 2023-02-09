@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
-import {Button, Modal, OTBButton, Title} from "@/components";
+import {FlexEmptyFill, OTBButton, SizedBox, Title} from "@/components";
 import {height} from "@/constants/device";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
@@ -27,7 +27,7 @@ const Profile = ({navigation, route}: ScreenProps) => {
   ];
 
   return (
-    <View style={style.container}>
+    <View style={style.screenWithAppBarContainer}>
       <Title title="프로필 캐릭터 선택" />
       <View style={{justifyContent: "center", alignItems: "center", marginBottom: 12}}>
         <View
@@ -55,15 +55,14 @@ const Profile = ({navigation, route}: ScreenProps) => {
         ))}
       </View>
 
-      <Button text="뱃지 모달" onPress={() => setVisible(true)} />
-      <Modal.Badge visible={visible} onRequestClose={() => setVisible(false)} type="welcome" />
-
-      <Button
+      <FlexEmptyFill />
+      <OTBButton
+        type="basic-primary"
         text="다음"
         onPress={() => navigation.navigate("RegisterNickname", {...route.params, profile})}
         disabled={disabled}
-        style={style.nextBtn}
       />
+      <SizedBox height={36} />
     </View>
   );
 };
