@@ -4,14 +4,14 @@ import {TouchableOpacity} from "react-native";
 
 import * as SVG from "@/assets/svgs";
 
-type ProfileImageProps = {
+type Props = {
   item: any;
   listCircleSize: number;
   listSize: number;
   setProfile: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ProfileImage(props: ProfileImageProps) {
+export default function ProfileImageButton(props: Props) {
   const {item, listCircleSize, listSize, setProfile} = props;
 
   const onPress = () => {

@@ -2,18 +2,12 @@ import React, {useState} from "react";
 
 import Animated, {FadeIn, FadeInUp, FadeOutDown} from "react-native-reanimated";
 
-import {
-  FlexEmptyFill,
-  KeyboardView,
-  Modal,
-  OTBButton,
-  SizedBox,
-  TextInput,
-  Title,
-} from "@/components";
+import {FlexEmptyFill, KeyboardView, Modal, OTBButton, SizedBox, TextInput} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import {useModal} from "@/hooks/modal";
+
+import {ScreenTitle} from "../components";
 
 export default function EmailVerificationScreen({navigation}: ScreenProps) {
   const [email, setEmail] = useState("");
@@ -25,10 +19,11 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
 
   return (
     <KeyboardView style={style.screenWithAppBarContainer}>
-      <Title
-        title={"이메일 본인인증"}
-        subTitle={"서비스 로그인을 위한 이메일 입력 및 이메일 본인 확인을 해주세요."}
+      <ScreenTitle
+        title="이메일 본인인증"
+        description="서비스 로그인을 위한 이메일 입력 및 이메일 본인 확인을 해주세요."
       />
+      <SizedBox height={40} />
       <TextInput
         title="이메일"
         placeholder="ontheboard@gmail.com"

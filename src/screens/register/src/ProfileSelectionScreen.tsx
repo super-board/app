@@ -3,12 +3,12 @@ import React, {useState} from "react";
 import {View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
-import {FlexEmptyFill, OTBButton, SizedBox, Title} from "@/components";
+import {FlexEmptyFill, OTBButton, SizedBox} from "@/components";
 import {height} from "@/constants/device";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 
-import {ProfileImage} from "../components";
+import {ProfileImageButton, ScreenTitle} from "../components";
 
 const selectedSize = height / 5.5;
 const selectedCircleSize = height / 6;
@@ -17,7 +17,7 @@ const listCircleSize = height / 8;
 
 export default function ProfileSelectionScreen({navigation, route}: ScreenProps) {
   const [disabled, setDisabled] = useState(false);
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState({svg: 1, color: "#87FCBD"});
   const [visible, setVisible] = useState(false);
 
   const profileData = [
@@ -28,7 +28,8 @@ export default function ProfileSelectionScreen({navigation, route}: ScreenProps)
 
   return (
     <View style={style.screenWithAppBarContainer}>
-      <Title title="프로필 캐릭터 선택" />
+      <ScreenTitle title="프로필 캐릭터 선택" />
+      <SizedBox height={20} />
       <View style={{justifyContent: "center", alignItems: "center", marginBottom: 12}}>
         <View
           style={{
@@ -45,7 +46,7 @@ export default function ProfileSelectionScreen({navigation, route}: ScreenProps)
 
       <View style={{alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
         {profileData.map((item, idx) => (
-          <ProfileImage
+          <ProfileImageButton
             item={item}
             listCircleSize={listCircleSize}
             listSize={listSize}

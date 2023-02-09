@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 
-import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox, TextInput, Title} from "@/components";
+import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox, TextInput} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
+
+import {ScreenTitle} from "../components";
 
 export default function NicknameSettingScreen({navigation}: ScreenProps) {
   const [nickname, setNickname] = useState("");
@@ -16,7 +18,8 @@ export default function NicknameSettingScreen({navigation}: ScreenProps) {
 
   return (
     <KeyboardView style={style.screenWithAppBarContainer}>
-      <Title title="닉네임 설정" subTitle="서비스 이용에 사용할 닉네임을 설정해주세요" />
+      <ScreenTitle title="닉네임 설정" description="서비스 이용에 사용할 닉네임을 설정해주세요" />
+      <SizedBox height={40} />
       <TextInput
         title="닉네임"
         text={nickname}

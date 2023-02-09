@@ -1,16 +1,10 @@
 import React, {useState} from "react";
 
-import {
-  FlexEmptyFill,
-  KeyboardView,
-  Modal,
-  OTBButton,
-  SizedBox,
-  TextInput,
-  Title,
-} from "@/components";
+import {FlexEmptyFill, KeyboardView, Modal, OTBButton, SizedBox, TextInput} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
+
+import {ScreenTitle} from "../components";
 
 export default function PasswordSettingScreen({navigation, route}: ScreenProps) {
   const [password, setPassword] = useState("");
@@ -20,7 +14,8 @@ export default function PasswordSettingScreen({navigation, route}: ScreenProps) 
 
   return (
     <KeyboardView style={style.screenWithAppBarContainer}>
-      <Title title="비밀번호 입력" subTitle="로그인에 사용할 비밀번호를 입력하세요." />
+      <ScreenTitle title="비밀번호 입력" description="로그인에 사용할 비밀번호를 입력하세요." />
+      <SizedBox height={40} />
       <TextInput
         title="비밀번호"
         text={password}
