@@ -33,7 +33,6 @@ export default function SearchScreen() {
 
   useEffect(() => {
     resetSearchQuery();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isTop10BoardGamesLoading || isSearchResultsLoading || !top10BoardGames || !searchResults)

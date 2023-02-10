@@ -66,7 +66,6 @@ export default function ResetTags({visible, onRequestClose}: ModalProps) {
 
   useEffect(() => {
     setSelectedTagIds(() => storedSelectedTagIds);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   return (
