@@ -25,6 +25,7 @@ export default function DecoratedTextInput({
   keyboardType,
   autoCorrect = false,
   secureTextEntry,
+  editable = true,
   style,
   rightDecorationComponent,
   onChangeText = (text: string) => {},
@@ -39,7 +40,11 @@ export default function DecoratedTextInput({
           style={[
             typography.body02,
             styles.input,
-            {borderColor: isValid ? colors.OTBBlack300 : colors.noticeRed},
+            {
+              borderColor: isValid ? colors.OTBBlack300 : colors.noticeRed,
+              color: editable ? colors.OTBBlack200 : colors.OTBBlack400,
+              backgroundColor: editable ? "transparent" : colors.OTBBlack800,
+            },
           ]}
           value={value}
           placeholder={placeholder}
@@ -48,6 +53,7 @@ export default function DecoratedTextInput({
           autoCorrect={autoCorrect}
           secureTextEntry={secureTextEntry}
           cursorColor={colors.OTBBlack200}
+          editable={editable}
           onChangeText={onChangeText}
           {...otherProps}
         />
@@ -78,7 +84,6 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 16,
     borderRadius: 4,
-    color: colors.OTBBlack200,
     borderWidth: 1,
   },
   bottomContainer: {height: 20, gap: 4, flexDirection: "row", alignItems: "center"},

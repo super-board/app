@@ -35,3 +35,8 @@ export type Notifications = {
   createdAt: string;
   isSeen: boolean;
 };
+
+export type EmailVerificationPayload = {
+  clientKey: string;
+  authCode: string;
+};
