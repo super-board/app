@@ -8,6 +8,7 @@ import EditNote from "./edit-note.svg";
 import Edit from "./edit.svg";
 import HomeAccent from "./home-accent.svg";
 import Home from "./home.svg";
+import Invalid from "./invalid.svg";
 import Kakao from "./kakao.svg";
 import LevelClover from "./level-clover.svg";
 import LevelDiamond from "./level-diamond.svg";
@@ -56,4 +57,5 @@ export {
   Camera,
   ReviewModal,
   Edit,
+  Invalid,
 };
