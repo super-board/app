@@ -9,6 +9,7 @@ import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useSelectedTagIds} from "@/hooks/common";
 import {useSaveOnboardingResult} from "@/hooks/onboarding";
 import {useGetRecommendedBoardGamesByTagsQuery} from "@/services/api";
 
@@ -17,7 +18,11 @@ type Props = {
 };
 
 function OnboardingRecommendationScreen({navigation}: Props) {
-  const {isLoading, data: recommendedBoardGames} = useGetRecommendedBoardGamesByTagsQuery();
+  const {selectedTagIds} = useSelectedTagIds();
+  const {isLoading, data: recommendedBoardGames} = useGetRecommendedBoardGamesByTagsQuery({
+    tagIds: selectedTagIds,
+    page: 1,
+  });
   const {isSubmitting, saveOnboardingResult} = useSaveOnboardingResult();
 
   const submitOnboardingResult = async () => {
@@ -39,7 +44,7 @@ function OnboardingRecommendationScreen({navigation}: Props) {
       <View style={styles.recommendationContainer}>
         <ScrollView>
           {!isLoading && recommendedBoardGames
-            ? recommendedBoardGames.map((boardGame, index) => (
+            ? recommendedBoardGames.slice(0, 5).map((boardGame, index) => (
                 <View key={boardGame.id} style={{gap: 8}}>
                   <View style={styles.boardGameContainer}>
                     <Text style={[typography.subhead01, typography.textWhite]}>{index + 1}</Text>
@@ -53,7 +58,7 @@ function OnboardingRecommendationScreen({navigation}: Props) {
                       source={require("@/assets/images/fallback/board-game-fallback.png")}
                     />
                   </View>
-                  {index < recommendedBoardGames.length - 1 ? (
+                  {index < recommendedBoardGames.slice(0, 5).length - 1 ? (
                     <View style={styles.horizontalDivider} />
                   ) : null}
                 </View>

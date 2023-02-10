@@ -1,6 +1,6 @@
 import React from "react";
 
-import * as Svgs from "@/assets/svgs";
+import * as SVG from "@/assets/svgs";
 import type {Level} from "@/services/api";
 
 type Props = {
@@ -12,13 +12,13 @@ type Props = {
 export default function LevelIcon({level, width, height}: Props) {
   switch (level) {
     case "CLOVER":
-      return <Svgs.Icon.LevelClover width={width ?? 10} height={height ?? 10} />;
+      return <SVG.Icon.LevelClover width={width ?? 10} height={height ?? 10} />;
     case "HEART":
-      return <Svgs.Icon.LevelHeart width={width ?? 10} height={height ?? 9} />;
+      return <SVG.Icon.LevelHeart width={width ?? 10} height={height ?? 9} />;
     case "DIAMOND":
-      return <Svgs.Icon.LevelDiamond width={width ?? 10} height={height ?? 10.5} />;
+      return <SVG.Icon.LevelDiamond width={width ?? 10} height={height ?? 10.5} />;
     case "SPADE":
-      return <Svgs.Icon.LevelSpade width={width ?? 10} height={height ?? 10} />;
+      return <SVG.Icon.LevelSpade width={width ?? 10} height={height ?? 10} />;
     default:
       return null;
   }

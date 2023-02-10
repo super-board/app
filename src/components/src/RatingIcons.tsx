@@ -2,26 +2,35 @@ import React from "react";
 
 import {StyleSheet, View} from "react-native";
 
-import * as Svgs from "@/assets/svgs";
-import type {Rating} from "@/services/api";
+import * as SVG from "@/assets/svgs";
 
 type Props = {
-  rating: Rating;
+  rating?: number;
 };
 
 export default function RatingIcons({rating}: Props) {
-  const fullCount = Math.floor(rating);
-  const hasHalf = rating % 1 === 0.5;
-  const emptyCount = Math.floor(5 - rating);
+  if (!rating)
+    return (
+      <View style={styles.container}>
+        {new Array(5).fill(0).map((_, index) => (
+          <SVG.Icon.RatingStartNotRated key={index} width={12} height={12} />
+        ))}
+      </View>
+    );
+
+  const rounded = Math.round(rating * 2) / 2;
+  const fullCount = Math.floor(rounded);
+  const hasHalf = rounded % 1 === 0.5;
+  const emptyCount = Math.floor(5 - rounded);
 
   return (
     <View style={styles.container}>
       {new Array(fullCount).fill(0).map((_, index) => (
-        <Svgs.Icon.RatingStarFull key={index} width={12} height={12} />
+        <SVG.Icon.RatingStarFull key={index} width={12} height={12} />
       ))}
-      {hasHalf ? <Svgs.Icon.RatingStarHalf width={12} height={12} /> : null}
+      {hasHalf ? <SVG.Icon.RatingStarHalf width={12} height={12} /> : null}
       {new Array(emptyCount).fill(0).map((_, index) => (
-        <Svgs.Icon.RatingStarEmpty key={index + 5} width={12} height={12} />
+        <SVG.Icon.RatingStarEmpty key={index + 5} width={12} height={12} />
       ))}
     </View>
   );

@@ -1,25 +1,25 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {ScrollView, StyleSheet, Text, View} from "react-native";
+import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import {Modal, OTBButton, OTBButtonTag, SizedBox} from "@/components";
+import {Modal, OTBButton, SizedBox, TagChip} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useSelectedTagIds} from "@/hooks/common";
 import {useModal} from "@/hooks/modal";
-import {useSelectedTagIds} from "@/hooks/onboarding";
-import {useGetTagsQuery} from "@/services/api";
+import {useGetTagListQuery} from "@/services/api";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 function OnboardingTagSelectScreen({navigation}: Props) {
-  const {isLoading, data: tagGroups} = useGetTagsQuery();
-  const {selectedTagIds, toggleTag, isSelectedTag} = useSelectedTagIds();
+  const {isLoading, data: tagList} = useGetTagListQuery();
+  const {selectedTagIds, toggleTag, resetSelectedTags, isSelectedTag} = useSelectedTagIds();
   const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
   const {
     visible: loadingVisible,
@@ -60,6 +60,11 @@ function OnboardingTagSelectScreen({navigation}: Props) {
     }
   }
 
+  useEffect(() => {
+    resetSelectedTags();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <View style={[style.container, styles.container]}>
       <Text style={[typography.display04, effects.textDropShadow, styles.title]}>
@@ -74,20 +79,20 @@ function OnboardingTagSelectScreen({navigation}: Props) {
 
       <SizedBox height={60} />
       <View style={styles.tagSelectContainer}>
-        {!isLoading && tagGroups ? (
+        {!isLoading && tagList ? (
           <ScrollView>
-            {tagGroups.map(tagGroup => (
+            {tagList.map(tagGroup => (
               <View key={tagGroup.type} style={styles.tagGroupContainer}>
                 <Text style={[typography.body01, styles.tagGroupName]}>{tagGroup.type}</Text>
                 <SizedBox height={8} />
                 <View style={styles.tagContainer}>
                   {tagGroup.tags.map(tag => (
-                    <OTBButtonTag
+                    <TouchableOpacity
                       key={tag.id}
-                      text={tag.name}
-                      active={isSelectedTag(tag.id)}
-                      onPress={() => toggleTagSelection(tag.id)}
-                    />
+                      activeOpacity={1}
+                      onPress={() => toggleTagSelection(tag.id)}>
+                      <TagChip text={tag.name} active={isSelectedTag(tag.id)} />
+                    </TouchableOpacity>
                   ))}
                 </View>
               </View>
@@ -100,7 +105,7 @@ function OnboardingTagSelectScreen({navigation}: Props) {
       <OTBButton
         type="basic-secondary"
         text="다음"
-        disabled={!selectedTagIds.length}
+        disabled={isLoading || !selectedTagIds.length}
         onPress={findRecommendation}
       />
       <SizedBox height={36} />

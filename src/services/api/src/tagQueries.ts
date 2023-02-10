@@ -1,7 +1,7 @@
 import type {TagGroup} from "./types";
 
 export const tagQueries = {
-  getTags: {
+  getTagList: {
     queryFn() {
       return {
         data: [

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-import {HomeAppBar, NotificationsAppBar} from "@/components/src/AppBar";
+import {HomeAppBar, NotificationsAppBar} from "@/components";
 import {stackScreenOptions} from "@/navigation/config";
 import {HomeScreen, NotificationsScreen} from "@/screens/home";
 

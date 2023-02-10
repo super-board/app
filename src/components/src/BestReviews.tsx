@@ -45,7 +45,7 @@ export default function BestReviews() {
             <Text style={[typography.subhead03, typography.textWhite]}>
               {review.boardGame.name}
             </Text>
-            <RatingIcons rating={review.grade} />
+            <RatingIcons rating={review.rating} />
           </View>
         </View>
       ))}

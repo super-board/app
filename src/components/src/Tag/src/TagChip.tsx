@@ -1,6 +1,6 @@
 import React from "react";
 
-import {StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle} from "react-native";
+import {StyleProp, StyleSheet, Text, View, ViewStyle} from "react-native";
 
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
@@ -9,26 +9,17 @@ type Props = {
   text?: string;
   active?: boolean;
   style?: StyleProp<ViewStyle>;
-  onPress?: () => void;
 };
 
-function OTBButtonTag({
-  text = "",
-  active = false,
-  style,
-  onPress = () => {},
-  ...otherProps
-}: Props) {
+export default function TagChip({text = "", active = false, style, ...otherProps}: Props) {
   return (
-    <TouchableOpacity
-      activeOpacity={1}
+    <View
       style={[styles.tag, active ? styles.tagActive : styles.tagInactive, style]}
-      onPress={onPress}
       {...otherProps}>
       <Text style={[typography.body01, active ? styles.textActive : styles.textInactive]}>
         {text}
       </Text>
-    </TouchableOpacity>
+    </View>
   );
 }
 
@@ -51,5 +42,3 @@ const styles = StyleSheet.create({
     color: colors.OTBBlack,
   },
 });
-
-export default OTBButtonTag;

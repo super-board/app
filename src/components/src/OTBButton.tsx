@@ -17,7 +17,10 @@ type OTBButtonType =
   | "basic-secondary"
   | "medium-primary"
   | "medium-secondary"
-  | "modal-primary";
+  | "modal-primary"
+  | "short-primary"
+  | "short-secondary"
+  | "short-tertiary";
 
 type Props = {
   type: OTBButtonType;
@@ -130,6 +133,58 @@ function OTBButton({
       </TouchableHighlight>
     );
 
+  if (type === "short-primary")
+    return (
+      <TouchableHighlight
+        style={[
+          styles.button,
+          styles.buttonShort,
+          disabled ? styles.buttonDisabled : styles.buttonShortPrimary,
+          style,
+        ]}
+        underlayColor={colors.OTBBlueDark}
+        disabled={disabled}
+        onPress={onPress}
+        {...otherProps}>
+        <Text style={[typography.subhead02, disabled ? styles.textDisabled : styles.textPrimary]}>
+          {text}
+        </Text>
+      </TouchableHighlight>
+    );
+
+  if (type === "short-secondary")
+    return (
+      <TouchableHighlight
+        style={[
+          styles.button,
+          styles.buttonShort,
+          disabled ? styles.buttonDisabled : styles.buttonShortSecondary,
+          style,
+        ]}
+        underlayColor={colors.OTBBlack400}
+        disabled={disabled}
+        onPress={onPress}
+        {...otherProps}>
+        <Text style={[typography.subhead02, disabled ? styles.textDisabled : styles.textSecondary]}>
+          {text}
+        </Text>
+      </TouchableHighlight>
+    );
+
+  if (type === "short-tertiary")
+    return (
+      <TouchableHighlight
+        style={[styles.button, styles.buttonShort, styles.buttonShortTertiary, style]}
+        underlayColor={colors.OTBBlack800}
+        disabled={disabled}
+        onPress={onPress}
+        {...otherProps}>
+        <Text style={[typography.subhead02, disabled ? styles.textDisabled : styles.textTertiary]}>
+          {text}
+        </Text>
+      </TouchableHighlight>
+    );
+
   return (
     <TouchableHighlight
       style={[styles.button, styles.buttonBasic]}
@@ -171,18 +226,27 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   buttonModalPrimary: {backgroundColor: colors.OTBBlue},
+  buttonShort: {
+    height: 48,
+    borderRadius: 4,
+  },
+  buttonShortPrimary: {backgroundColor: colors.OTBBlue},
+  buttonShortSecondary: {backgroundColor: colors.OTBBlack200},
+  buttonShortTertiary: {backgroundColor: colors.OTBBlack800},
   buttonDisabled: {
     backgroundColor: colors.OTBBlack800,
-    color: colors.OTBBlack600,
   },
   textPrimary: {
     color: colors.white,
   },
-  textModal: {
-    color: colors.OTBBlack100,
-  },
   textSecondary: {
     color: colors.OTBBlack,
+  },
+  textTertiary: {
+    color: colors.OTBBlack50,
+  },
+  textModal: {
+    color: colors.OTBBlack100,
   },
   textDisabled: {
     color: colors.OTBBlack600,
