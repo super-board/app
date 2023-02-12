@@ -1,5 +1,6 @@
-import React, {useEffect} from "react";
+import React, {useCallback} from "react";
 
+import {useFocusEffect} from "@react-navigation/native";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {Modal, OTBButton, SizedBox, TagChip} from "@/components";
@@ -26,9 +27,18 @@ export default function TagSelectScreen({navigation, route}: ScreenProps) {
     toggleTag(id);
   };
 
-  useEffect(() => {
-    resetSelectedTags();
-  }, []);
+  const onNextPage = () => {
+    navigation.navigate("RegisterTermsAndConditionsScreen", {
+      ...route.params,
+      tagIds: selectedTagIds,
+    });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      resetSelectedTags();
+    }, []),
+  );
 
   return (
     <View style={style.screenWithAppBarContainer}>
@@ -67,7 +77,12 @@ export default function TagSelectScreen({navigation, route}: ScreenProps) {
       </View>
       <SizedBox height={26} />
 
-      <OTBButton type="basic-primary" text="다음" disabled={isLoading || !selectedTagIds.length} />
+      <OTBButton
+        type="basic-primary"
+        text="다음"
+        disabled={isLoading || !selectedTagIds.length}
+        onPress={onNextPage}
+      />
       <SizedBox height={36} />
 
       <Modal.Warn

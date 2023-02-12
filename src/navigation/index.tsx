@@ -26,6 +26,7 @@ import {
   RegisterPasswordSettingScreen,
   RegisterProfileSelectionScreen,
   RegisterTagSelectScreen,
+  RegisterTermsAndConditionsScreen,
 } from "@/screens/register";
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
@@ -95,6 +96,11 @@ const Navigation = () => {
               name="RegisterTagSelectScreen"
               options={{header: RegisterAppBar}}
               component={RegisterTagSelectScreen}
+            />
+            <Stack.Screen
+              name="RegisterTermsAndConditionsScreen"
+              options={{header: RegisterAppBar}}
+              component={RegisterTermsAndConditionsScreen}
             />
           </Stack.Group>
           <Stack.Group>
