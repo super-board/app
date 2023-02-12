@@ -23,9 +23,12 @@ import LevelHeart from "./level-heart.svg";
 import LevelSpade from "./level-spade.svg";
 import Naver from "./naver.svg";
 import Notifications from "./notifications.svg";
+<<<<<<< HEAD
 import Camera from "./photo-camera.svg";
 import PlayTime from "./play-time.svg";
 import Players from "./players.svg";
+=======
+>>>>>>> 60cce36 (feat: add more profile characters with selection overlay efect on ProfileSelectionScreen)
 import ProfileCheck from "./profile-check.svg";
 import RatingStarEmpty from "./rating-star-empty.svg";
 import RatingStarFull from "./rating-star-full.svg";
