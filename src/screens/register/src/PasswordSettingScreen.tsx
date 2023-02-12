@@ -1,54 +1,89 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 
-import {FlexEmptyFill, KeyboardView, Modal, OTBButton, SizedBox, TextInput} from "@/components";
+import {useFocusEffect} from "@react-navigation/native";
+
+import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
+import {useTextInput} from "@/screens/register/hooks";
+import {Validator} from "@/services/validator";
 
-import {ScreenTitle} from "../components";
+import {DecoratedTextInput, PasswordHideDecoration, ScreenTitle} from "../components";
 
 export default function PasswordSettingScreen({navigation, route}: ScreenProps) {
-  const [password, setPassword] = useState("");
-  const [_password, _setPassword] = useState("");
-  const [isValid, setIsValid] = useState(false);
-  const [warn, setWarn] = useState(false);
+  const {
+    value: password,
+    isValid: isValidPassword,
+    onChangeText: onChangePassword,
+    reset: resetPassword,
+  } = useTextInput(Validator.isValidPassword);
+  const {
+    value: passwordRe,
+    isValid: isValidPasswordRe,
+    onChangeText: onChangePasswordRe,
+    reset: resetPasswordRe,
+  } = useTextInput(passwordRe => password === passwordRe);
+  const [hidePassword, setHidePassword] = useState(true);
+  const [hidePasswordRe, setHidePasswordRe] = useState(true);
+
+  useFocusEffect(
+    useCallback(() => {
+      resetPassword();
+      resetPasswordRe();
+      setHidePassword(true);
+      setHidePasswordRe(true);
+    }, []),
+  );
 
   return (
     <KeyboardView style={style.screenWithAppBarContainer}>
       <ScreenTitle title="비밀번호 입력" description="로그인에 사용할 비밀번호를 입력하세요." />
       <SizedBox height={40} />
-      <TextInput
-        title="비밀번호"
-        text={password}
-        setText={setPassword}
-        setIsValid={setIsValid}
-        bottomText={"8~20자 이내의 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요."}
-        type="register"
+
+      <DecoratedTextInput
+        label="비밀번호"
+        value={password}
+        onChangeText={onChangePassword}
+        instructionText="8~20자 이내로 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요."
+        isValid={isValidPassword}
+        invalidText="8~20자 이내로 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요."
         maxLength={20}
+        secureTextEntry={hidePassword}
+        rightDecorationComponent={
+          <PasswordHideDecoration
+            style={{marginRight: 16}}
+            hide={hidePassword}
+            toggleHide={() => setHidePassword(state => !state)}
+          />
+        }
       />
-      <TextInput
-        title="비밀번호 확인"
-        text={password}
-        setText={_setPassword}
-        style={{marginTop: 24}}
-        type="register"
-        maxLength={20}
+      <SizedBox height={42} />
+      <DecoratedTextInput
+        label="비밀번호 확인"
+        value={passwordRe}
+        onChangeText={onChangePasswordRe}
+        isValid={isValidPasswordRe}
+        invalidText="입력하신 비밀번호가 일치하지 않습니다. 다시 입력해주세요."
+        secureTextEntry={hidePasswordRe}
+        rightDecorationComponent={
+          <PasswordHideDecoration
+            style={{marginRight: 16}}
+            hide={hidePasswordRe}
+            toggleHide={() => setHidePasswordRe(state => !state)}
+          />
+        }
       />
 
       <FlexEmptyFill />
       <OTBButton
         type="basic-primary"
         text="다음"
-        onPress={() => navigation.navigate("RegisterProfileSelectionScreen")}
-        disabled={!(isValid && password === _password)}
+        onPress={() =>
+          navigation.navigate("RegisterProfileSelectionScreen", {...route.params, password})
+        }
+        disabled={!isValidPassword || !isValidPasswordRe}
       />
       <SizedBox height={36} />
-
-      <Modal.Warn
-        visible={warn}
-        title="이미 사용중인 닉네임 입니다."
-        description="다시 입력해주세요"
-        onRequestClose={() => setWarn(false)}
-      />
     </KeyboardView>
   );
 }
