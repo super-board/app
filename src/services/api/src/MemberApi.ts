@@ -12,7 +12,18 @@ export const MemberApi = createApi({
         responseHandler: "text",
       }),
     }),
+    checkDuplicateNicknameRegistered: build.mutation<null, string>({
+      query: (nickname: string) => ({
+        url: "nickname-check",
+        params: {nickname},
+        method: "GET",
+        responseHandler: "text",
+      }),
+    }),
   }),
 });
 
-export const {useCheckDuplicateEmailRegisteredMutation} = MemberApi;
+export const {
+  useCheckDuplicateEmailRegisteredMutation,
+  useCheckDuplicateNicknameRegisteredMutation,
+} = MemberApi;

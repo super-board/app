@@ -16,3 +16,8 @@ export function isValidPassword(password: string): boolean {
   const passwordRegExp = new RegExp(`^${pattern1}|${pattern2}|${pattern3}|${pattern4}$`, "g");
   return passwordRegExp.test(password);
 }
+
+export function isValidNickname(nickname: string): boolean {
+  const pattern = /[가-힣]{2,}/;
+  return pattern.test(nickname);
+}

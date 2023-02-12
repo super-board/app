@@ -25,6 +25,7 @@ import {
   RegisterNicknameSettingScreen,
   RegisterPasswordSettingScreen,
   RegisterProfileSelectionScreen,
+  RegisterTagSelectScreen,
 } from "@/screens/register";
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
@@ -89,6 +90,11 @@ const Navigation = () => {
               name="RegisterNicknameSettingScreen"
               options={{header: RegisterAppBar}}
               component={RegisterNicknameSettingScreen}
+            />
+            <Stack.Screen
+              name="RegisterTagSelectScreen"
+              options={{header: RegisterAppBar}}
+              component={RegisterTagSelectScreen}
             />
           </Stack.Group>
           <Stack.Group>
