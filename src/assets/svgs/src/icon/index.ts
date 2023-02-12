@@ -17,6 +17,7 @@ import LevelSpade from "./level-spade.svg";
 import Naver from "./naver.svg";
 import Notifications from "./notifications.svg";
 import Camera from "./photo-camera.svg";
+import ProfileCheck from "./profile-check.svg";
 import RatingStarEmpty from "./rating-star-empty.svg";
 import RatingStarFull from "./rating-star-full.svg";
 import RatingStarHalf from "./rating-star-half.svg";
@@ -58,4 +59,5 @@ export {
   ReviewModal,
   Edit,
   Invalid,
+  ProfileCheck,
 };

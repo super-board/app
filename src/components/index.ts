@@ -9,6 +9,7 @@ export {default as TextInput} from "./src/input";
 export {default as KeyboardView} from "./src/keyboard-avoid";
 export {default as LevelIcon} from "./src/LevelIcon";
 export {default as OTBButton} from "./src/OTBButton";
+export {default as ProfileImage} from "./src/ProfileImage";
 export {default as RatingIcons} from "./src/RatingIcons";
 export {default as Title} from "./src/register-title";
 export {default as SizedBox} from "./src/SizedBox";
