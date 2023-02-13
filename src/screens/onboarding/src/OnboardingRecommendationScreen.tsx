@@ -27,7 +27,7 @@ function OnboardingRecommendationScreen({navigation}: Props) {
 
   const submitOnboardingResult = async () => {
     await saveOnboardingResult();
-    navigation.reset({index: 0, routes: [{name: "Home"}]});
+    navigation.reset({index: 0, routes: [{name: "BottomTab"}]});
   };
 
   return (

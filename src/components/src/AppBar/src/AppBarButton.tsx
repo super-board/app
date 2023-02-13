@@ -39,7 +39,7 @@ function Cancel({navigation, onPress}: ButtonProps) {
 
 function Search({navigation}: ButtonProps) {
   const onPress = () => {
-    navigation?.push("SearchBoardGames");
+    navigation?.push("SearchScreen");
   };
 
   return (
@@ -51,7 +51,7 @@ function Search({navigation}: ButtonProps) {
 
 function Notifications({navigation}: ButtonProps) {
   const onPress = () => {
-    navigation?.push("Notifications");
+    navigation?.push("NotificationsScreen");
   };
 
   return (

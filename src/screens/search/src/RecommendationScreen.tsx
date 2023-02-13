@@ -43,6 +43,7 @@ export default function RecommendationScreen() {
           hasNextPage={true}
           onLoadNextPage={onLoadNextPage}
           style={{marginTop: 20}}
+          contentContainerStyle={{paddingBottom: 20}}
         />
       ) : null}
 

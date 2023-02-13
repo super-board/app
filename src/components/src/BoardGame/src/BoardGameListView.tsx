@@ -12,6 +12,7 @@ type Props = {
   hasNextPage?: boolean;
   onLoadNextPage?: () => void;
   style?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
 };
 
 export default function BoardGameSearchResultView({
@@ -19,6 +20,7 @@ export default function BoardGameSearchResultView({
   hasNextPage = false,
   onLoadNextPage = () => {},
   style,
+  contentContainerStyle,
 }: Props) {
   const onEndReached = () => {
     if (hasNextPage) onLoadNextPage();
@@ -44,6 +46,7 @@ export default function BoardGameSearchResultView({
       windowSize={5}
       onEndReachedThreshold={0.8}
       onEndReached={onEndReached}
+      contentContainerStyle={contentContainerStyle}
     />
   );
 }
@@ -54,7 +57,6 @@ function ItemSeparator() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingHorizontal: 24,
   },
   itemContainer: {flexDirection: "row", gap: 8},

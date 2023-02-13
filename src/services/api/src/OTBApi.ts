@@ -18,12 +18,27 @@ export const OTBApi = createApi({
     getBoardGamesForHomeCuration: build.query<BoardGameSummary[], void>({
       queryFn: boardGameQueries.getBoardGamesForHomeCuration.queryFn,
     }),
+    getTop10BoardGames: build.query<BoardGameSummary[], void>({
+      queryFn: boardGameQueries.getTop10BoardGames.queryFn,
+    }),
     getRecommendedBoardGamesByTags: build.query<
       BoardGameSummary[],
       {tagIds: number[]; page: number}
     >({
       queryFn: boardGameQueries.getRecommendedBoardGamesByTags.queryFn,
       serializeQueryArgs: ({queryArgs}) => queryArgs.tagIds.join("&"),
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.push(...responseData);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
+    getBoardGamesByName: build.query<BoardGameSummary[], {query: string; page: number}>({
+      queryFn: boardGameQueries.getBoardGamesByName.queryFn,
+      serializeQueryArgs: ({queryArgs}) => queryArgs.query,
       merge: (currentCacheData, responseData, {arg}) => {
         if (arg.page > 1) {
           currentCacheData.push(...responseData);
@@ -45,7 +60,9 @@ export const OTBApi = createApi({
 export const {
   useGetTagListQuery,
   useGetBoardGamesForHomeCurationQuery,
+  useGetTop10BoardGamesQuery,
   useGetRecommendedBoardGamesByTagsQuery,
+  useGetBoardGamesByNameQuery,
   useGetBestReviewsQuery,
   useGetRecentNotificationsQuery,
 } = OTBApi;
