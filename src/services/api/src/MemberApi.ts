@@ -1,5 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
+import type {RegisterForm} from "./types";
+
 export const MemberApi = createApi({
   reducerPath: "MemberApi",
   baseQuery: fetchBaseQuery({baseUrl: "http://129.154.193.47/api/v1/members"}),
@@ -20,10 +22,18 @@ export const MemberApi = createApi({
         responseHandler: "text",
       }),
     }),
+    signUpWithEmailAndPassword: build.mutation<null, RegisterForm>({
+      query: (form: RegisterForm) => ({
+        url: "sign-up",
+        method: "POST",
+        body: form,
+      }),
+    }),
   }),
 });
 
 export const {
   useCheckDuplicateEmailRegisteredMutation,
   useCheckDuplicateNicknameRegisteredMutation,
+  useSignUpWithEmailAndPasswordMutation,
 } = MemberApi;

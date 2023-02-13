@@ -6,6 +6,7 @@ export type {
   BoardGameSummary,
   Level,
   ProfileCharacter,
+  RegisterForm,
   ReviewSummary,
   Tag,
   TagGroup,
