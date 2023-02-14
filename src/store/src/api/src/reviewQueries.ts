@@ -1,4 +1,4 @@
-import {ReviewSummary} from "@/services/api/src/types";
+import {ReviewSummary} from "./types";
 
 export const reviewQueries = {
   getBestReviews: {

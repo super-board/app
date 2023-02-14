@@ -7,8 +7,8 @@ import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import {useModal} from "@/hooks/modal";
 import {useTextInput} from "@/screens/register/hooks";
-import {useCheckDuplicateNicknameRegisteredMutation} from "@/services/api";
 import {Validator} from "@/services/validator";
+import {useCheckDuplicateNicknameRegisteredMutation} from "@/store";
 
 import {DecoratedTextInput, ScreenTitle} from "../components";
 

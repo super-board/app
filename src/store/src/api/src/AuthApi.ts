@@ -1,7 +1,6 @@
 import {createApi} from "@reduxjs/toolkit/query/react";
 
-import {saveTokensAsync} from "@/store";
-
+import {saveTokensAsync} from "../../authSlice";
 import {OTBBaseQueryWithReAuthentication} from "./config";
 import {EmailVerificationPayload, LoginForm} from "./types";
 

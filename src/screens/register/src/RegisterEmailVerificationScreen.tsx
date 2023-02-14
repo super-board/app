@@ -8,12 +8,12 @@ import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import {useModal} from "@/hooks/modal";
 import {useTextInput} from "@/screens/register/hooks";
+import {Validator} from "@/services/validator";
 import {
   useCheckDuplicateEmailRegisteredMutation,
   useSendVerificationMailMutation,
   useVerifyAuthCodeMutation,
-} from "@/services/api";
-import {Validator} from "@/services/validator";
+} from "@/store";
 
 import {DecoratedTextInput, ScreenTitle, TimeDecoration} from "../components";
 

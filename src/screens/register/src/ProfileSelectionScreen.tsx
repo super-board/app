@@ -8,7 +8,7 @@ import {OTBButton, ProfileImage, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import type {ProfileCharacter} from "@/services/api";
+import type {ProfileCharacter} from "@/store";
 
 import {ScreenTitle} from "../components";
 

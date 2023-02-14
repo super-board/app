@@ -7,7 +7,7 @@ import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useSelectedTagIds} from "@/hooks/common";
 import {useModal} from "@/hooks/modal";
-import {useGetRecommendedBoardGamesByTagsQuery} from "@/services/api";
+import {useGetRecommendedBoardGamesByTagsQuery} from "@/store";
 
 export default function RecommendationScreen() {
   const [page, setPage] = useState(0);

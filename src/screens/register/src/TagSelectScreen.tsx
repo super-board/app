@@ -11,7 +11,7 @@ import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useSelectedTagIds} from "@/hooks/common";
 import {useModal} from "@/hooks/modal";
-import {useGetTagListQuery} from "@/services/api";
+import {useGetTagListQuery} from "@/store";
 
 export default function TagSelectScreen({navigation, route}: ScreenProps) {
   const {isLoading, data: tagList} = useGetTagListQuery();

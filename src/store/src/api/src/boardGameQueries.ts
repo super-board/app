@@ -1,4 +1,4 @@
-import {BoardGameSummary} from "@/services/api/src/types";
+import {BoardGameSummary} from "./types";
 
 export const boardGameQueries = {
   getBoardGamesForHomeCuration: {

@@ -1,9 +1,8 @@
 import {createApi, fakeBaseQuery} from "@reduxjs/toolkit/query/react";
 
-import {reviewQueries} from "@/services/api/src/reviewQueries";
-
 import {boardGameQueries} from "./boardGameQueries";
 import {notificationsQuery} from "./notificationsQuery";
+import {reviewQueries} from "./reviewQueries";
 import {tagQueries} from "./tagQueries";
 import {BoardGameSummary, Notifications, ReviewSummary, TagGroup} from "./types";
 

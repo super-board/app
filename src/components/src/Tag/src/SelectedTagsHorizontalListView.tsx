@@ -3,8 +3,8 @@ import React, {useEffect, useState} from "react";
 import {ScrollView, StyleSheet, View} from "react-native";
 
 import {useSelectedTagIds} from "@/hooks/common";
-import type {Tag} from "@/services/api";
-import {useGetTagListQuery} from "@/services/api";
+import type {Tag} from "@/store";
+import {useGetTagListQuery} from "@/store";
 
 import SizedBox from "../../SizedBox";
 import TagChip from "./TagChip";

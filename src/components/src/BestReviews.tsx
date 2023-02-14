@@ -3,7 +3,7 @@ import React from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
 
 import typography from "@/constants/typography";
-import {useGetBestReviewsQuery} from "@/services/api";
+import {useGetBestReviewsQuery} from "@/store";
 
 import LevelIcon from "./LevelIcon";
 import RatingIcons from "./RatingIcons";

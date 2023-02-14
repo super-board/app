@@ -11,7 +11,7 @@ import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {RegisterForm, useSignUpWithEmailAndPasswordMutation} from "@/services/api";
+import {RegisterForm, useSignUpWithEmailAndPasswordMutation} from "@/store";
 
 import {ScreenTitle} from "../components";
 

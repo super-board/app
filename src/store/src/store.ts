@@ -1,8 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {setupListeners} from "@reduxjs/toolkit/query";
 
-import {AuthApi, MemberApi, OTBApi} from "@/services/api";
-
+import {AuthApi, MemberApi, OTBApi} from "./api";
 import authSlice from "./authSlice";
 import interestTagSlice from "./interestTagSlice";
 import onboardingSlice from "./onboardingSlice";

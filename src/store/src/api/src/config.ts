@@ -7,7 +7,8 @@ import {
 } from "@reduxjs/toolkit/query";
 import {Mutex} from "async-mutex";
 
-import {RootState, logoutAsync, saveTokensAsync} from "@/store";
+import {logoutAsync, saveTokensAsync} from "../../authSlice";
+import {RootState} from "../../store";
 
 const OTB_API_BASE_URL = "http://129.154.193.47/api/v1";
 const mutex = new Mutex();

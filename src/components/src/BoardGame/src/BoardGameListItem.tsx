@@ -3,7 +3,7 @@ import React, {memo} from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
 
 import typography from "@/constants/typography";
-import type {BoardGameSummary} from "@/services/api";
+import type {BoardGameSummary} from "@/store";
 
 import RatingIcons from "../../RatingIcons";
 

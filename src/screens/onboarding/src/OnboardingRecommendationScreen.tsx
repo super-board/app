@@ -11,7 +11,7 @@ import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useSelectedTagIds} from "@/hooks/common";
 import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {useGetRecommendedBoardGamesByTagsQuery} from "@/services/api";
+import {useGetRecommendedBoardGamesByTagsQuery} from "@/store";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
