@@ -51,3 +51,16 @@ export type ProfileCharacter =
   | "PROFILE_7"
   | "PROFILE_8"
   | "PROFILE_9";
+
+export type RegisterForm = {
+  email: string;
+  password: string;
+  profileCharacter: string;
+  nickname: string;
+  tagIds: number[];
+};
+
+export type LoginForm = {
+  email: string;
+  password: string;
+};
