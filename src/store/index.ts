@@ -1,3 +1,4 @@
+export * from "./src/authSlice";
 export * from "./src/interestTagSlice";
 export * from "./src/onboardingSlice";
 export * from "./src/searchQuerySlice";

@@ -59,3 +59,8 @@ export type RegisterForm = {
   nickname: string;
   tagIds: number[];
 };
+
+export type LoginForm = {
+  email: string;
+  password: string;
+};

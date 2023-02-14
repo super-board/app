@@ -1,14 +1,15 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {createApi} from "@reduxjs/toolkit/query/react";
 
+import {OTBBaseQueryWithReAuthentication} from "./config";
 import type {RegisterForm} from "./types";
 
 export const MemberApi = createApi({
   reducerPath: "MemberApi",
-  baseQuery: fetchBaseQuery({baseUrl: "http://129.154.193.47/api/v1/members"}),
+  baseQuery: OTBBaseQueryWithReAuthentication,
   endpoints: build => ({
     checkDuplicateEmailRegistered: build.mutation<null, string>({
       query: (email: string) => ({
-        url: "mail-check",
+        url: "members/mail-check",
         params: {email},
         method: "GET",
         responseHandler: "text",
@@ -16,7 +17,7 @@ export const MemberApi = createApi({
     }),
     checkDuplicateNicknameRegistered: build.mutation<null, string>({
       query: (nickname: string) => ({
-        url: "nickname-check",
+        url: "members/nickname-check",
         params: {nickname},
         method: "GET",
         responseHandler: "text",
@@ -24,9 +25,10 @@ export const MemberApi = createApi({
     }),
     signUpWithEmailAndPassword: build.mutation<null, RegisterForm>({
       query: (form: RegisterForm) => ({
-        url: "sign-up",
+        url: "members/sign-up",
         method: "POST",
         body: form,
+        responseHandler: "text",
       }),
     }),
   }),
