@@ -11,6 +11,7 @@ type Props = TextInput["props"] & {
   instructionText?: string;
   isValid?: boolean;
   invalidText?: string;
+  hideInvalidText?: boolean;
   style?: StyleProp<ViewStyle>;
   rightDecorationComponent?: ReactNode;
 };
@@ -21,6 +22,7 @@ export default function DecoratedTextInput({
   instructionText,
   isValid = true,
   invalidText,
+  hideInvalidText = false,
   placeholder,
   keyboardType,
   autoCorrect = false,
@@ -64,7 +66,7 @@ export default function DecoratedTextInput({
         {instructionText && !value && isValid ? (
           <Text style={[typography.caption, styles.instruction]}>{instructionText}</Text>
         ) : null}
-        {!isValid ? (
+        {!isValid && !hideInvalidText ? (
           <>
             <SVG.Icon.Invalid width={12} height={12} />
             <Text style={[typography.caption, styles.invalid]}>{invalidText}</Text>

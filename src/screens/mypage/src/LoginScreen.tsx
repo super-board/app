@@ -1,18 +1,35 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
+import {useFocusEffect} from "@react-navigation/native";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
-import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox, TextInput, Title} from "@/components";
+import {
+  DecoratedTextInput,
+  FlexEmptyFill,
+  KeyboardView,
+  OTBButton,
+  PasswordHideDecoration,
+  SizedBox,
+} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
+import typography from "@/constants/typography";
+import {useSignInMutation} from "@/store";
 
 export default function LoginScreen({navigation}: ScreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [hidePassword, setHidePassword] = useState(true);
+  const [isValidCredentials, setIsValidCredentials] = useState(true);
+
+  const [signIn, {isLoading, isSuccess, isError}] = useSignInMutation();
 
   const onPress = {
-    login: () => {},
+    login: () => {
+      setIsValidCredentials(true);
+      signIn({email, password});
+    },
     kakao: () => {},
     naver: () => {},
     register: () => {
@@ -23,28 +40,66 @@ export default function LoginScreen({navigation}: ScreenProps) {
     },
   };
 
+  /* 로그인에 실패하면 invalidate */
+  useEffect(() => {
+    if (isError) setIsValidCredentials(false);
+  }, [isError]);
+
+  /* 로그인에 성공하면 토큰 저장 후 화면 이동 */
+  useEffect(() => {
+    if (isSuccess) navigation.reset({index: 0, routes: [{name: "BottomTabView"}]});
+  }, [isSuccess]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setEmail("");
+      setPassword("");
+      setHidePassword(true);
+      setIsValidCredentials(true);
+    }, []),
+  );
+
   return (
     <KeyboardView style={style.screenWithAppBarContainer}>
-      <Title title="로그인" />
-      <TextInput
-        title="이메일"
+      <Text style={[typography.display04, typography.textWhite]}>로그인</Text>
+      <SizedBox height={8} />
+
+      <DecoratedTextInput
+        label="이메일"
+        value={email}
+        onChangeText={setEmail}
         placeholder="ontheboard@gmail.com"
-        text={email}
-        setText={setEmail}
+        isValid={isValidCredentials}
+        hideInvalidText
+        maxLength={320}
       />
-      <TextInput
-        title="비밀번호"
-        placeholder="비밀번호를 입력해주세요"
-        text={password}
-        setText={setPassword}
+      <DecoratedTextInput
+        label="비밀번호"
+        value={password}
+        onChangeText={setPassword}
+        placeholder="비밀번호를 입력해주세요."
+        isValid={isValidCredentials}
+        invalidText="이메일 혹은 비밀번호가 맞지 않습니다. 다시 입력해주세요."
+        maxLength={20}
+        secureTextEntry={hidePassword}
+        rightDecorationComponent={
+          <PasswordHideDecoration
+            style={{marginRight: 16}}
+            hide={hidePassword}
+            toggleHide={() => setHidePassword(state => !state)}
+          />
+        }
       />
-      <View style={styles.findRegister}>
-        <TouchableOpacity onPress={onPress.findPassword}>
-          <Text style={styles.text}>비밀번호를 잊어버리셨나요?</Text>
+
+      <SizedBox height={8} />
+
+      <View style={styles.actionsContainer}>
+        <TouchableOpacity activeOpacity={1} onPress={onPress.findPassword}>
+          <Text style={[typography.body02, typography.textWhite]}>비밀번호를 잊으셨나요?</Text>
         </TouchableOpacity>
         <View style={styles.verticalDivider} />
-        <TouchableOpacity onPress={onPress.register}>
-          <Text style={styles.text}>회원가입</Text>
+        <TouchableOpacity activeOpacity={1} onPress={onPress.register}>
+          <Text style={[typography.body02, typography.textWhite]}>회원가입</Text>
         </TouchableOpacity>
       </View>
 
@@ -52,14 +107,19 @@ export default function LoginScreen({navigation}: ScreenProps) {
 
       <View style={styles.snsContainer}>
         <TouchableOpacity onPress={onPress.naver}>
-          <SVG.Icon.Naver width={40} height={40} style={{marginRight: 24}} />
+          <SVG.Icon.Naver width={48} height={48} />
         </TouchableOpacity>
         <TouchableOpacity onPress={onPress.kakao}>
-          <SVG.Icon.Kakao width={40} height={40} />
+          <SVG.Icon.Kakao width={48} height={48} />
         </TouchableOpacity>
       </View>
       <SizedBox height={42} />
-      <OTBButton type="basic-primary" text="로그인" onPress={onPress.login} />
+      <OTBButton
+        type="basic-primary"
+        text="로그인"
+        onPress={onPress.login}
+        disabled={!email || !password || isLoading}
+      />
       <SizedBox height={36} />
     </KeyboardView>
   );
@@ -71,20 +131,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 16,
   },
-  findRegister: {
+  actionsContainer: {
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "center",
-  },
-  text: {
-    color: "white",
-    borderBottomColor: "white",
-    borderBottomWidth: 1,
   },
   verticalDivider: {
     borderRightWidth: 1,
     borderColor: "white",
-    margin: 10,
-    height: 14,
+    marginHorizontal: 8,
+    height: 12.5,
   },
 });
