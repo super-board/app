@@ -5,6 +5,7 @@ export * from "./src/tagQueries";
 export type {
   BoardGameSummary,
   Level,
+  LoginForm,
   ProfileCharacter,
   RegisterForm,
   ReviewSummary,
