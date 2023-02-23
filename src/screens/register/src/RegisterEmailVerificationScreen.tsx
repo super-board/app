@@ -3,19 +3,26 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useFocusEffect} from "@react-navigation/native";
 import Animated, {FadeIn, FadeInUp, FadeOutDown} from "react-native-reanimated";
 
-import {FlexEmptyFill, KeyboardView, Modal, OTBButton, SizedBox} from "@/components";
+import {
+  DecoratedTextInput,
+  FlexEmptyFill,
+  KeyboardView,
+  Modal,
+  OTBButton,
+  ScreenTitle,
+  SizedBox,
+  TimerDecoration,
+} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
+import {useTextInput} from "@/hooks/form";
 import {useModal} from "@/hooks/modal";
-import {useTextInput} from "@/screens/register/hooks";
 import {Validator} from "@/services/validator";
 import {
   useCheckDuplicateEmailRegisteredMutation,
   useSendVerificationMailMutation,
   useVerifyAuthCodeMutation,
 } from "@/store";
-
-import {DecoratedTextInput, ScreenTitle, TimeDecoration} from "../components";
 
 export default function EmailVerificationScreen({navigation}: ScreenProps) {
   const {
@@ -177,7 +184,7 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
               keyboardType="phone-pad"
               maxLength={6}
               rightDecorationComponent={
-                <TimeDecoration key={fulfilledTimeStamp} style={{paddingRight: 20}} />
+                <TimerDecoration key={fulfilledTimeStamp} style={{paddingRight: 20}} />
               }
             />
           </Animated.View>

@@ -4,7 +4,7 @@ import type {BottomSheetBackdropProps} from "@gorhom/bottom-sheet";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import {FlexEmptyFill, OTBButton, OTBSwitch, SizedBox} from "@/components";
+import {FlexEmptyFill, OTBButton, OTBSwitch, ScreenTitle, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import officialDocuments, {OfficialDocuments} from "@/constants/officialDocuments";
 import {ScreenProps} from "@/constants/props";
@@ -17,8 +17,6 @@ import {
   useSignInMutation,
   useSignUpWithEmailAndPasswordMutation,
 } from "@/store";
-
-import {ScreenTitle} from "../components";
 
 export default function TermsAndConditionsScreen({navigation, route}: ScreenProps) {
   const [didAgreeAll, setDidAgreeAll] = useState(false);

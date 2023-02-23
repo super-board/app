@@ -2,13 +2,19 @@ import React, {useCallback, useState} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
 
-import {FlexEmptyFill, KeyboardView, OTBButton, SizedBox} from "@/components";
+import {
+  DecoratedTextInput,
+  FlexEmptyFill,
+  KeyboardView,
+  OTBButton,
+  PasswordHideDecoration,
+  ScreenTitle,
+  SizedBox,
+} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import {useTextInput} from "@/screens/register/hooks";
+import {useTextInput} from "@/hooks/form";
 import {Validator} from "@/services/validator";
-
-import {DecoratedTextInput, PasswordHideDecoration, ScreenTitle} from "../components";
 
 export default function ResetPasswordSettingScreen({navigation, route}: ScreenProps) {
   const {

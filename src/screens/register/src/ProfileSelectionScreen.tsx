@@ -4,13 +4,11 @@ import {useFocusEffect} from "@react-navigation/native";
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
-import {OTBButton, ProfileImage, SizedBox} from "@/components";
+import {OTBButton, ProfileImage, ScreenTitle, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import type {ProfileCharacter} from "@/store";
-
-import {ScreenTitle} from "../components";
 
 export default function ProfileSelectionScreen({navigation, route}: ScreenProps) {
   const [profile, setProfile] = useState<ProfileCharacter>("PROFILE_1");

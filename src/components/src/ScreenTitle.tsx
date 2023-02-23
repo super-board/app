@@ -2,9 +2,10 @@ import React from "react";
 
 import {StyleProp, Text, View, ViewStyle} from "react-native";
 
-import {SizedBox} from "@/components";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
+
+import SizedBox from "./SizedBox";
 
 type Props = {
   title: string;

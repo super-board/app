@@ -2,15 +2,21 @@ import React, {useCallback, useEffect} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
 
-import {FlexEmptyFill, KeyboardView, Modal, OTBButton, SizedBox} from "@/components";
+import {
+  DecoratedTextInput,
+  FlexEmptyFill,
+  KeyboardView,
+  Modal,
+  OTBButton,
+  ScreenTitle,
+  SizedBox,
+} from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
+import {useTextInput} from "@/hooks/form";
 import {useModal} from "@/hooks/modal";
-import {useTextInput} from "@/screens/register/hooks";
 import {Validator} from "@/services/validator";
 import {useCheckDuplicateNicknameRegisteredMutation} from "@/store";
-
-import {DecoratedTextInput, ScreenTitle} from "../components";
 
 export default function NicknameSettingScreen({navigation, route}: ScreenProps) {
   const {
