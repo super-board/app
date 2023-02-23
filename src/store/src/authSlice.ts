@@ -8,7 +8,10 @@ type AuthState = {
   refreshToken?: string | null;
 };
 
-const initialState = {accessToken: null, refreshToken: null} as AuthState;
+const initialState = {
+  accessToken: null,
+  refreshToken: null,
+} as AuthState;
 
 export const authSlice = createSlice({
   name: "auth",
@@ -18,6 +21,9 @@ export const authSlice = createSlice({
     builder.addCase(saveTokensAsync.fulfilled, (state, action) => {
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
+    });
+    builder.addCase(loginAsync.fulfilled, (state, action) => {
+      state.refreshToken = action.payload;
     });
     builder.addCase(logoutAsync.fulfilled, state => {
       state.accessToken = null;
@@ -34,8 +40,12 @@ export const saveTokensAsync = createAsyncThunk(
   },
 );
 
+export const loginAsync = createAsyncThunk("auth/loginStatus", async () => {
+  return await SecureStorageService.getData(keys.REFRESH_TOKEN);
+});
+
 export const logoutAsync = createAsyncThunk("auth/logoutStatus", async () => {
-  SecureStorageService.removeData(keys.REFRESH_TOKEN);
+  await SecureStorageService.removeData(keys.REFRESH_TOKEN);
 });
 
 export default authSlice.reducer;

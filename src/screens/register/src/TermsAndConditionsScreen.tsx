@@ -11,7 +11,12 @@ import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {RegisterForm, useSignUpWithEmailAndPasswordMutation} from "@/store";
+import {
+  LoginForm,
+  RegisterForm,
+  useSignInMutation,
+  useSignUpWithEmailAndPasswordMutation,
+} from "@/store";
 
 import {ScreenTitle} from "../components";
 
@@ -29,8 +34,9 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
   );
 
   const {saveOnboardingResult} = useSaveOnboardingResult();
-  const [signUp, {isLoading, isSuccess: isSuccessToSignUp}] =
+  const [signUp, {isLoading: isSigningUp, isSuccess: isSuccessToSignUp}] =
     useSignUpWithEmailAndPasswordMutation();
+  const [signIn, {isLoading: isSigningIn, isSuccess: isSuccessToSignIn}] = useSignInMutation();
 
   const onToggleAgreeAll = () => {
     const toBe = !didAgreeAll;
@@ -59,13 +65,19 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
     signUp({...route.params} as RegisterForm);
   };
 
-  /* 회원가입에 성공하면 온보딩 결과 저장 및 화면 이동 */
+  /* 회원가입에 성공하면 온보딩 결과 저장 및 로그인*/
   useEffect(() => {
     if (!isSuccessToSignUp) return;
 
+    const {email, password} = route.params as LoginForm;
     saveOnboardingResult();
-    navigation.navigate("BottomTabView");
+    signIn({email, password});
   }, [isSuccessToSignUp]);
+
+  /* 로그인 성공하면 홈 화면으로 이동 */
+  useEffect(() => {
+    if (isSuccessToSignIn) navigation.navigate("BottomTabView");
+  }, [isSuccessToSignIn]);
 
   /* 동의 여부에 따라 전체 동의 토글 상태 변경 */
   useEffect(() => {
@@ -134,7 +146,7 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
         type="basic-primary"
         text="완료"
         onPress={onSignUp}
-        disabled={!didAgreeAll || isLoading}
+        disabled={!didAgreeAll || isSigningUp || isSigningIn}
       />
 
       <BottomSheetModal
