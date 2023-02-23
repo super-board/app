@@ -44,6 +44,7 @@ export default function Warn({
           <Text style={[typography.body02, typography.textWhite, effects.textDropShadow]}>
             {description}
           </Text>
+          {description ? <SizedBox height={22} /> : null}
           <OTBButton type="modal-primary" text="확인" onPress={onRequestClose} />
         </View>
       </View>
