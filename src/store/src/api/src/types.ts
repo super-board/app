@@ -64,3 +64,5 @@ export type LoginForm = {
   email: string;
   password: string;
 };
+
+export type ResetPasswordForm = LoginForm & {resetToken: string};

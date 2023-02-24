@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
 
@@ -15,6 +15,7 @@ import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import {useTextInput} from "@/hooks/form";
 import {Validator} from "@/services/validator";
+import {ResetPasswordForm, useUpdatePasswordMutation} from "@/store";
 
 export default function ResetPasswordSettingScreen({navigation, route}: ScreenProps) {
   const {
@@ -32,7 +33,21 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordRe, setHidePasswordRe] = useState(true);
 
-  const onSubmit = () => {};
+  const [updatePassword, {isSuccess}] = useUpdatePasswordMutation();
+
+  const onSubmit = () => {
+    const {email, resetToken} = route.params as ResetPasswordForm;
+    updatePassword({email, password, resetToken});
+  };
+
+  /* 비밀번호 재설정에 성공하면 화면 이동 */
+  useEffect(() => {
+    if (isSuccess)
+      navigation.reset({
+        index: 1,
+        routes: [{name: "OnboardingWelcomeScreen"}, {name: "LoginScreen"}],
+      });
+  }, [isSuccess]);
 
   useFocusEffect(
     useCallback(() => {
@@ -87,7 +102,7 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
         type="basic-primary"
         text="확인"
         onPress={onSubmit}
-        disabled={!isValidPassword || !isValidPasswordRe}
+        disabled={!password || !isValidPassword || !isValidPasswordRe}
       />
       <SizedBox height={36} />
     </KeyboardView>

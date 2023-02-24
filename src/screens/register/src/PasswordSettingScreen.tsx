@@ -87,7 +87,7 @@ export default function PasswordSettingScreen({navigation, route}: ScreenProps) 
         onPress={() =>
           navigation.navigate("RegisterProfileSelectionScreen", {...route.params, password})
         }
-        disabled={!isValidPassword || !isValidPasswordRe}
+        disabled={!password || !isValidPassword || !isValidPasswordRe}
       />
       <SizedBox height={36} />
     </KeyboardView>

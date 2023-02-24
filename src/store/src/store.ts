@@ -1,7 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {setupListeners} from "@reduxjs/toolkit/query";
 
-import {AuthApi, MemberApi, OTBApi} from "./api";
+import {AuthApi, MemberApi, OTBApi, PasswordApi} from "./api";
 import authSlice from "./authSlice";
 import interestTagSlice from "./interestTagSlice";
 import onboardingSlice from "./onboardingSlice";
@@ -18,12 +18,14 @@ export const store = configureStore({
     [OTBApi.reducerPath]: OTBApi.reducer,
     [AuthApi.reducerPath]: AuthApi.reducer,
     [MemberApi.reducerPath]: MemberApi.reducer,
+    [PasswordApi.reducerPath]: PasswordApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .concat(OTBApi.middleware)
       .concat(AuthApi.middleware)
-      .concat(MemberApi.middleware),
+      .concat(MemberApi.middleware)
+      .concat(PasswordApi.middleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 

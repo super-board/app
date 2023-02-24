@@ -19,8 +19,8 @@ import {useTextInput} from "@/hooks/form";
 import {useModal} from "@/hooks/modal";
 import {
   useCheckDuplicateEmailRegisteredMutation,
-  useSendVerificationMailMutation,
-  useVerifyAuthCodeMutation,
+  useSendPasswordVerificationMailMutation,
+  useVerifyPasswordAuthCodeMutation,
 } from "@/store";
 
 export default function ResetPasswordEmailVerificationScreen({navigation}: ScreenProps) {
@@ -51,15 +51,16 @@ export default function ResetPasswordEmailVerificationScreen({navigation}: Scree
     },
   ] = useCheckDuplicateEmailRegisteredMutation();
   const [sendVerificationMail, {data: clientKeyResponse, fulfilledTimeStamp}] =
-    useSendVerificationMailMutation();
+    useSendPasswordVerificationMailMutation();
   const [
     verifyAuthCode,
     {
+      data: resetTokenResponse,
       isSuccess: canSubmit,
       isError: shouldAlertInvalidAuthCodeError,
       reset: resetInvalidAuthCodeError,
     },
-  ] = useVerifyAuthCodeMutation();
+  ] = useVerifyPasswordAuthCodeMutation();
   const [didSendVerificationMail, setDidSendVerificationMail] = useState(false);
   const [canResendVerificationMail, setCanResendVerificationMail] = useState(false);
   const [isAuthCodeExpired, setIsAuthCodeExpired] = useState(false);
@@ -117,7 +118,8 @@ export default function ResetPasswordEmailVerificationScreen({navigation}: Scree
 
   /* 올바른 AuthCode를 입력하면 다음 화면으로 이동 */
   useEffect(() => {
-    if (canSubmit) navigation.navigate("ResetPasswordSettingScreen", {email});
+    if (canSubmit)
+      navigation.navigate("ResetPasswordSettingScreen", {email, resetToken: resetTokenResponse});
   }, [canSubmit]);
 
   /* AuthCode가 만료되면 Alert */
@@ -201,7 +203,7 @@ export default function ResetPasswordEmailVerificationScreen({navigation}: Scree
 
       <Modal.Warn
         visible={unregisteredEmailModalVisible}
-        title="이미 사용중인 이메일 주소입니다."
+        title="등록되지 않은 이메일입니다."
         description="다시 입력해주세요."
         onRequestClose={() => {
           resetUnregisteredEmailError();
