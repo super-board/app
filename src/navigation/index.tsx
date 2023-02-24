@@ -6,7 +6,8 @@ import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {
-  LoginAppBar,
+  EmptyAppBar,
+  HistoryBackOnlyAppBar,
   OnboardingAppBar,
   RegisterAppBar,
   ReviewAppBar,
@@ -20,6 +21,7 @@ import {
   OnboardingTagSelectScreen,
   OnboardingWelcomeScreen,
 } from "@/screens/onboarding";
+import {PermissionGrantNoticeScreen, PermissionGrantRequestScreen} from "@/screens/permission";
 import {
   RegisterEmailVerificationScreen,
   RegisterNicknameSettingScreen,
@@ -71,7 +73,7 @@ const Navigation = () => {
           <Stack.Group>
             <Stack.Screen
               name="LoginScreen"
-              options={{header: LoginAppBar}}
+              options={{header: HistoryBackOnlyAppBar}}
               component={LoginScreen}
             />
             <Stack.Screen
@@ -113,6 +115,18 @@ const Navigation = () => {
               name="ResetPasswordSettingScreen"
               options={{header: RegisterAppBar}}
               component={ResetPasswordSettingScreen}
+            />
+          </Stack.Group>
+          <Stack.Group>
+            <Stack.Screen
+              name="PermissionGrantNoticeScreen"
+              options={{header: EmptyAppBar}}
+              component={PermissionGrantNoticeScreen}
+            />
+            <Stack.Screen
+              name="PermissionGrantRequestScreen"
+              options={{header: HistoryBackOnlyAppBar}}
+              component={PermissionGrantRequestScreen}
             />
           </Stack.Group>
           <Stack.Group>

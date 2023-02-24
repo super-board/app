@@ -1,5 +1,6 @@
 import AccountCircleAccent from "./account-circle-accent.svg";
 import AccountCircle from "./account-circle.svg";
+import AddAPhoto from "./add-a-photo.svg";
 import ArrowBack from "./arrow-back.svg";
 import CloseBlack from "./close-black.svg";
 import Close from "./close.svg";
@@ -60,4 +61,5 @@ export {
   Edit,
   Invalid,
   ProfileCheck,
+  AddAPhoto,
 };

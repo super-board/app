@@ -74,7 +74,7 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
 
   /* 로그인 성공하면 홈 화면으로 이동 */
   useEffect(() => {
-    if (isSuccessToSignIn) navigation.reset({index: 0, routes: [{name: "BottomTabView"}]});
+    if (isSuccessToSignIn) navigation.navigate("PermissionGrantNoticeScreen");
   }, [isSuccessToSignIn]);
 
   /* 동의 여부에 따라 전체 동의 토글 상태 변경 */

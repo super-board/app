@@ -5,12 +5,14 @@ import {AuthApi, MemberApi, OTBApi} from "./api";
 import authSlice from "./authSlice";
 import interestTagSlice from "./interestTagSlice";
 import onboardingSlice from "./onboardingSlice";
+import permissionGrantSlice from "./permissionGrantSlice";
 import searchQuerySlice from "./searchQuerySlice";
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     onboarding: onboardingSlice,
+    permissionGrant: permissionGrantSlice,
     interestTag: interestTagSlice,
     searchQuery: searchQuerySlice,
     [OTBApi.reducerPath]: OTBApi.reducer,

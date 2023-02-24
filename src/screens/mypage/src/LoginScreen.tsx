@@ -47,7 +47,7 @@ export default function LoginScreen({navigation}: ScreenProps) {
 
   /* 로그인에 성공하면 토큰 저장 후 화면 이동 */
   useEffect(() => {
-    if (isSuccess) navigation.reset({index: 0, routes: [{name: "BottomTabView"}]});
+    if (isSuccess) navigation.navigate("PermissionGrantNoticeScreen");
   }, [isSuccess]);
 
   useFocusEffect(
