@@ -1,4 +1,4 @@
-import {ReviewSummary} from "./types";
+import {ReviewSummary} from "../types";
 
 export const reviewQueries = {
   getBestReviews: {

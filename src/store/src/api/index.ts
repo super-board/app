@@ -1,8 +1,7 @@
 export * from "./src/AuthApi";
+export * from "./src/dummies/OTBApi";
 export * from "./src/MemberApi";
-export * from "./src/OTBApi";
 export * from "./src/PasswordApi";
-export * from "./src/tagQueries";
 export type {
   BoardGameSummary,
   Level,
