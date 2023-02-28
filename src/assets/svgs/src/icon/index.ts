@@ -1,12 +1,15 @@
 import AccountCircleAccent from "./account-circle-accent.svg";
 import AccountCircle from "./account-circle.svg";
 import AddAPhoto from "./add-a-photo.svg";
+import Age from "./age.svg";
 import ArrowBack from "./arrow-back.svg";
+import Category from "./category.svg";
 import CloseBlack from "./close-black.svg";
 import Close from "./close.svg";
 import EditNoteAccent from "./edit-note-accent.svg";
 import EditNote from "./edit-note.svg";
 import Edit from "./edit.svg";
+import Favorite from "./favorite.svg";
 import HomeAccent from "./home-accent.svg";
 import Home from "./home.svg";
 import Invalid from "./invalid.svg";
@@ -18,6 +21,8 @@ import LevelSpade from "./level-spade.svg";
 import Naver from "./naver.svg";
 import Notifications from "./notifications.svg";
 import Camera from "./photo-camera.svg";
+import PlayTime from "./play-time.svg";
+import Players from "./players.svg";
 import ProfileCheck from "./profile-check.svg";
 import RatingStarEmpty from "./rating-star-empty.svg";
 import RatingStarFull from "./rating-star-full.svg";
@@ -62,4 +67,9 @@ export {
   Invalid,
   ProfileCheck,
   AddAPhoto,
+  Players,
+  PlayTime,
+  Category,
+  Age,
+  Favorite,
 };

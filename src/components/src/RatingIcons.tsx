@@ -4,15 +4,12 @@ import {StyleSheet, View} from "react-native";
 
 import * as SVG from "@/assets/svgs";
 
-type RatingProps = {
-  rating: Rating;
-  size: number;
-  editable: boolean;
-  setRate: () => void;
+type Props = {
+  rating?: number;
+  size?: number;
 };
 
-export default function RatingIcons(props: RatingProps) {
-  const {size = 12, rating, editable = true, setRate} = props;
+export default function RatingIcons({rating = 0, size = 12}: Props) {
   const rounded = Math.round(rating * 2) / 2;
   const fullCount = Math.floor(rounded);
   const hasHalf = rounded % 1 === 0.5;
@@ -22,11 +19,11 @@ export default function RatingIcons(props: RatingProps) {
     return (
       <View style={styles.container}>
         {new Array(5).fill(0).map((_, index) => (
-          <SVG.Icon.RatingStartNotRated key={index} width={12} height={12} />
+          <SVG.Icon.RatingStartNotRated key={index} width={size} height={size} />
         ))}
       </View>
     );
-          
+
   return (
     <View style={styles.container}>
       {new Array(fullCount).fill(0).map((_, index) => (

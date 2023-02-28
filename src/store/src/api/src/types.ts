@@ -22,6 +22,7 @@ export type BoardGameDetails = {
   description: string;
   image: string;
   favoriteCount: number;
+  averageRating: number;
   tagList: Tag[];
 };
 

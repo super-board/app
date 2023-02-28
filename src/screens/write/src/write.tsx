@@ -3,21 +3,20 @@ import React, {useState} from "react";
 import {Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
 import {launchImageLibrary} from "react-native-image-picker";
-import {PERMISSIONS, RESULTS, check} from "react-native-permissions";
 import StarRating from "react-native-star-rating-widget";
 
 import * as SVG from "@/assets/svgs";
 import {Modal, OTBButton} from "@/components";
 import colors from "@/constants/colors";
+import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useModal} from "@/hooks/modal";
 import {PermissionCameraAndGalleryService} from "@/services/permission";
-import { ScreenProps } from "@/constants/props";
+
 import {Image} from "../components";
 
-
-const WriteScreen = ({navigation, route}: ScreenProps) => {
+export default function WriteScreen({navigation}: ScreenProps) {
   const [rate, setRate] = useState(0);
   const [image, setImage] = useState([]);
   const [text, setText] = useState("");
@@ -34,7 +33,7 @@ const WriteScreen = ({navigation, route}: ScreenProps) => {
 
   const onPress = {
     search: () => {
-      navigation.navigate("SearchScreen")
+      navigation.navigate("SearchScreen");
     },
     image: async () => {
       PermissionCameraAndGalleryService.requestPermission();
@@ -58,7 +57,7 @@ const WriteScreen = ({navigation, route}: ScreenProps) => {
   };
 
   return (
-    <ScrollView style={style.container}>
+    <ScrollView style={style.screenWithAppBarContainer}>
       <Text style={[typography.subhead01, typography.textWhite, styles.title]}>보드게임</Text>
       <Pressable style={styles.search} onPress={onPress.search}>
         <Text style={{color: colors.OTBBlack500}}>보드게임을 선택해주세요</Text>
@@ -120,7 +119,6 @@ const WriteScreen = ({navigation, route}: ScreenProps) => {
         title="리뷰를 등록하시겠습니까?"
         onRequestClose={closeSubmitModal}
         dismissible
-        svg={<SVG.Icon.ReviewModal width={40} height={40} />}
       />
       <Modal.Warn
         visible={cancelVisible}
@@ -131,9 +129,7 @@ const WriteScreen = ({navigation, route}: ScreenProps) => {
       />
     </ScrollView>
   );
-};
-
-export default WriteScreen;
+}
 
 const styles = StyleSheet.create({
   title: {marginBottom: 8},
