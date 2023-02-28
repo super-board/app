@@ -1,6 +1,7 @@
 export type Tag = {
   id: number;
   name: string;
+  type: string;
 };
 
 export type TagGroup = {
@@ -13,6 +14,15 @@ export type BoardGameSummary = {
   name: string;
   imageUrl: string;
   averageRating: number;
+};
+
+export type BoardGameDetails = {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  favoriteCount: number;
+  tagList: Tag[];
 };
 
 export type ReviewSummary = {

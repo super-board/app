@@ -1,15 +1,21 @@
 import React, {memo} from "react";
 
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import typography from "@/constants/typography";
+import {useNavigateToBoardGameDetails} from "@/hooks/navigation";
 import type {BoardGameSummary} from "@/store";
 
 import RatingIcons from "../../RatingIcons";
 
 function BoardGameListItem({boardGame}: {boardGame: BoardGameSummary}) {
+  const {navigateToBoardGameDetails} = useNavigateToBoardGameDetails(boardGame.id);
+
   return (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={styles.itemContainer}
+      onPress={navigateToBoardGameDetails}>
       <Image
         source={require("@/assets/images/fallback/board-game-fallback.png")}
         style={styles.thumbnail}
@@ -18,7 +24,7 @@ function BoardGameListItem({boardGame}: {boardGame: BoardGameSummary}) {
         <Text style={[typography.subhead01, typography.textWhite]}>{boardGame.name}</Text>
         <RatingIcons rating={boardGame.averageRating} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

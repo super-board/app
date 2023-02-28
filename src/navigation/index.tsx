@@ -6,6 +6,7 @@ import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {
+  BoardGameDetailsAppBar,
   EmptyAppBar,
   HistoryBackOnlyAppBar,
   OnboardingAppBar,
@@ -15,6 +16,7 @@ import {
 } from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
+import {BoardGameDetailsScreen} from "@/screens/boardgame";
 import {LoginScreen} from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
@@ -67,6 +69,8 @@ export type RootStackParamList = {
   PermissionGrantRequestScreen: undefined;
   BottomTabView: undefined;
   SearchScreen: undefined;
+  WriteScreen: undefined;
+  BoardGameDetailsScreen: {id: number};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -174,6 +178,11 @@ const Navigation = () => {
               name="WriteScreen"
               options={{header: ReviewAppBar, animation: "slide_from_bottom"}}
               component={WriteScreen}
+            />
+            <Stack.Screen
+              name="BoardGameDetailsScreen"
+              options={{header: BoardGameDetailsAppBar}}
+              component={BoardGameDetailsScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

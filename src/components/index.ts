@@ -3,7 +3,7 @@ import * as Modal from "./src/Modal";
 export * from "./src/AppBar";
 export {default as BestReviews} from "./src/BestReviews";
 export * from "./src/BoardGame";
-export {default as CurationCarousel} from "./src/CurationCarousel";
+export * from "./src/CurationCarousel";
 export {default as FlexEmptyFill} from "./src/FlexEmptyFill";
 export * from "./src/Form";
 export {default as KeyboardView} from "./src/keyboard-avoid";
