@@ -39,7 +39,37 @@ import {WriteScreen} from "@/screens/write";
 import {stackScreenOptions} from "./config";
 import BottomTab from "./stack/BottomTab";
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  OnboardingWelcomeScreen: undefined;
+  OnboardingTagSelectScreen: undefined;
+  OnboardingRecommendationScreen: undefined;
+  LoginScreen: undefined;
+  RegisterEmailVerificationScreen: undefined;
+  RegisterPasswordSettingScreen: {email?: string};
+  RegisterProfileSelectionScreen: {email?: string; password?: string};
+  RegisterNicknameSettingScreen: {email?: string; password?: string; profileCharacter?: string};
+  RegisterTagSelectScreen: {
+    email?: string;
+    password?: string;
+    profileCharacter?: string;
+    nickname?: string;
+  };
+  RegisterTermsAndConditionsScreen: {
+    email?: string;
+    password?: string;
+    profileCharacter?: string;
+    nickname?: string;
+    tagIds?: number[];
+  };
+  ResetPasswordEmailVerificationScreen: undefined;
+  ResetPasswordSettingScreen: {email?: string};
+  PermissionGrantNoticeScreen: undefined;
+  PermissionGrantRequestScreen: undefined;
+  BottomTabView: undefined;
+  SearchScreen: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
   const {isLoading, shouldRequestOnboarding} = useCheckOnboardingCompleted();
