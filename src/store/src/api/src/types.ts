@@ -44,6 +44,7 @@ export type ReviewDetails = {
   content: string;
   rating: number;
   images: string[];
+  commentCount: number;
   likeCount: number;
   author: MemberSummary;
 };

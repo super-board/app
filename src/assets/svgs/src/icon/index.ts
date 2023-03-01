@@ -4,8 +4,10 @@ import AddAPhoto from "./add-a-photo.svg";
 import Age from "./age.svg";
 import ArrowBack from "./arrow-back.svg";
 import Category from "./category.svg";
+import Chat from "./chat.svg";
 import CloseBlack from "./close-black.svg";
 import Close from "./close.svg";
+import Collapse from "./collapse.svg";
 import EditNoteAccent from "./edit-note-accent.svg";
 import EditNote from "./edit-note.svg";
 import Edit from "./edit.svg";
@@ -74,4 +76,6 @@ export {
   Age,
   Favorite,
   ExpandMore,
+  Chat,
+  Collapse,
 };

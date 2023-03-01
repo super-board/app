@@ -119,6 +119,11 @@ const typography = StyleSheet.create({
   textBlack500: {color: colors.OTBBlack500},
   textBlueLight2: {color: colors.OTBBlueLight2},
   textCenter: {textAlign: "center"},
+  underline: {
+    textDecorationLine: "underline",
+    textDecorationStyle: "solid",
+    textDecorationColor: colors.white,
+  },
 });
 
 export default typography;

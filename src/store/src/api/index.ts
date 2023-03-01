@@ -6,6 +6,7 @@ export type {
   BoardGameSummary,
   Level,
   LoginForm,
+  MemberSummary,
   ProfileCharacter,
   RegisterForm,
   ResetPasswordForm,

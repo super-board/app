@@ -22,3 +22,18 @@ export function toRelativeTime(isoString: string): string {
   }
   return "방금 전";
 }
+
+export function toJoinedDate(isoString: string, separator: string = "-") {
+  const date = new Date(isoString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return [year, month.toString().padStart(2, "0"), day.toString().padStart(2, "0")].join(separator);
+}
+
+export function toJoinedTime(isoString: string, separator: string = ":") {
+  const date = new Date(isoString);
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  return [hour.toString().padStart(2, "0"), minute.toString().padStart(2, "0")].join(separator);
+}

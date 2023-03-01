@@ -172,7 +172,8 @@ export const reviewQueries = {
               createAt: "2023-03-01T00:41:33.161Z",
               content: "이 문장은 예시 문장입니다. 대신 짧습니다.",
               rating: 4.5,
-              images: ["link1", "link2", "link3"],
+              images: [],
+              commentCount: 2542,
               likeCount: 403,
               author: {
                 id: 1,
@@ -187,7 +188,8 @@ export const reviewQueries = {
               content:
                 "이 문장은 예시 문장입니다. 최대 몇 문장까지 노출 시킬 것인지/ 말 줄임표가 어떻게 붙는지 등은 논의가 필요합니다. 예를들어, 3줄 이상의 문장은 짧게 보기를 지원합니다. 이 문장은 예시 문장입니다. 최대 몇 문장까지 노출 시킬 것인지/ 말 줄임표가 어떻게 붙는지 등은 논의가 필요합니다. 예를들어, 3줄 이상의 문장은 짧게 보기를 지원합니다.",
               rating: 3.5,
-              images: ["link1", "link2", "link3"],
+              images: ["link1"],
+              commentCount: 0,
               likeCount: 250,
               author: {
                 id: 1,
@@ -203,6 +205,7 @@ export const reviewQueries = {
                 "이 문장은 예시 문장입니다. 최대 몇 문장까지 노출 시킬 것인지/ 말 줄임표가 어떻게 붙는지 등은 논의가 필요합니다. 예를들어, 3줄 이상의 문장은 짧게 보기를 지원합니다. 이 문장은 예시 문장입니다. 최대 몇 문장까지 노출 시킬 것인지/ 말 줄임표가 어떻게 붙는지 등은 논의가 필요합니다. 예를들어, 3줄 이상의 문장은 짧게 보기를 지원합니다.",
               rating: 4,
               images: ["link1", "link2", "link3"],
+              commentCount: 2,
               likeCount: 1403,
               author: {
                 id: 3,

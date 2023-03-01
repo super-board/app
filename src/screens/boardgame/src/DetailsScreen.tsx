@@ -29,12 +29,15 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
     {skip: !isSuccess},
   );
 
-  const findTag = useCallback((type: string) => {
-    const DEFAULT_TAG = {name: "-"};
-    if (!boardGame) return DEFAULT_TAG;
+  const findTag = useCallback(
+    (type: string) => {
+      const DEFAULT_TAG = {name: "-"};
+      if (!boardGame) return DEFAULT_TAG;
 
-    return boardGame.tagList.find(tag => tag.type === type) ?? DEFAULT_TAG;
-  }, []);
+      return boardGame.tagList.find(tag => tag.type === type) ?? DEFAULT_TAG;
+    },
+    [boardGame],
+  );
 
   const onMoreReviews = useCallback(() => {
     setPage(state => state + 1);
