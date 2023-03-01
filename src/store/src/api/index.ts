@@ -9,6 +9,7 @@ export type {
   ProfileCharacter,
   RegisterForm,
   ResetPasswordForm,
+  ReviewDetails,
   ReviewSummary,
   Tag,
   TagGroup,

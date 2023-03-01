@@ -1,6 +1,13 @@
 import {createApi, fakeBaseQuery} from "@reduxjs/toolkit/query/react";
 
-import {BoardGameDetails, BoardGameSummary, Notifications, ReviewSummary, TagGroup} from "../types";
+import {
+  BoardGameDetails,
+  BoardGameSummary,
+  Notifications,
+  PaginatedReviews,
+  ReviewSummary,
+  TagGroup,
+} from "../types";
 import {boardGameQueries} from "./boardGameQueries";
 import {notificationsQuery} from "./notificationsQuery";
 import {reviewQueries} from "./reviewQueries";
@@ -50,6 +57,20 @@ export const OTBApi = createApi({
     getBestReviews: build.query<ReviewSummary[], void>({
       queryFn: reviewQueries.getBestReviews.queryFn,
     }),
+    getReviews: build.query<PaginatedReviews, {boardGameId: number; page: number}>({
+      queryFn: reviewQueries.getReviews.queryFn,
+      serializeQueryArgs: ({queryArgs}) => queryArgs.boardGameId,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.hasNext = responseData.hasNext;
+          currentCacheData.reviews.push(...responseData.reviews);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
+
     getRecentNotifications: build.query<Notifications[], void>({
       queryFn: notificationsQuery.getRecentNotifications.queryFn,
     }),
@@ -66,6 +87,7 @@ export const {
   useGetRecommendedBoardGamesByTagsQuery,
   useGetBoardGamesByNameQuery,
   useGetBestReviewsQuery,
+  useGetReviewsQuery,
   useGetRecentNotificationsQuery,
   useGetBoardGameDetailsQuery,
 } = OTBApi;

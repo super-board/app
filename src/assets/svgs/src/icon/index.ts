@@ -9,6 +9,7 @@ import Close from "./close.svg";
 import EditNoteAccent from "./edit-note-accent.svg";
 import EditNote from "./edit-note.svg";
 import Edit from "./edit.svg";
+import ExpandMore from "./expand-more.svg";
 import Favorite from "./favorite.svg";
 import HomeAccent from "./home-accent.svg";
 import Home from "./home.svg";
@@ -72,4 +73,5 @@ export {
   Category,
   Age,
   Favorite,
+  ExpandMore,
 };

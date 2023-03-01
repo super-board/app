@@ -38,6 +38,28 @@ export type ReviewSummary = {
   rating: number;
 };
 
+export type ReviewDetails = {
+  id: number;
+  createAt: string;
+  content: string;
+  rating: number;
+  images: string[];
+  likeCount: number;
+  author: MemberSummary;
+};
+
+export type PaginatedReviews = {
+  hasNext: boolean;
+  reviews: ReviewDetails[];
+};
+
+export type MemberSummary = {
+  id: number;
+  nickname: string;
+  level: Level;
+  profileCharacter: ProfileCharacter;
+};
+
 export type Level = "PLAYER" | "CLOVER" | "HEART" | "DIAMOND" | "SPADE" | "JOKER";
 
 export type Notifications = {
