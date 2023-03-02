@@ -5,11 +5,14 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {DateTimeFormatter} from "@/services/formatter";
-import type {CommentDetails} from "@/store";
+import {CommentDetails} from "@/store";
 
+import {useMyMemberInfo} from "../../hooks";
 import AuthorChip from "./AuthorChip";
 
 function CommentListItem({comment}: {comment: CommentDetails}) {
+  const {isLoginUser, isAdmin} = useMyMemberInfo();
+
   return (
     <View style={styles.container}>
       <AuthorChip author={comment.author} />
@@ -25,19 +28,42 @@ function CommentListItem({comment}: {comment: CommentDetails}) {
             {DateTimeFormatter.toJoinedTime(comment.createdAt)}
           </Text>
         </View>
-        <View style={styles.buttonsContainer}>
-          {/* TODO: 댓글 수정 화면 디자인 완료되면 작성하기 */
-          /* <TouchableOpacity activeOpacity={1}>
-            <Text style={[typography.body02, typography.textWhite, typography.underline]}>
-              수정
-            </Text>
-          </TouchableOpacity> */}
-          <TouchableOpacity activeOpacity={1}>
-            <Text style={[typography.body02, typography.textWhite, typography.underline]}>
-              삭제
-            </Text>
-          </TouchableOpacity>
-        </View>
+
+        {isAdmin() ? (
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                숨김
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
+        {!isAdmin() && isLoginUser(comment.author.id) ? (
+          <View style={styles.buttonsContainer}>
+            {/* TODO: 댓글 수정 화면 디자인 완료되면 활성화하기
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                수정
+              </Text>
+            </TouchableOpacity> */}
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                삭제
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
+        {!isAdmin() && !isLoginUser(comment.author.id) ? (
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                신고
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
     </View>
   );

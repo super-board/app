@@ -17,6 +17,7 @@ import CommentList from "@/screens/boardgame/components/src/CommentList";
 import {DateTimeFormatter, NumberFormatter} from "@/services/formatter";
 import {ReviewDetails} from "@/store";
 
+import {useMyMemberInfo} from "../../hooks";
 import AuthorChip from "./AuthorChip";
 import CommentForm from "./CommentForm";
 import ReviewImageSlider from "./ReviewImageSlider";
@@ -30,6 +31,7 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>(MAX_LINES);
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const route = useRoute();
+  const {isLoginUser, isAdmin} = useMyMemberInfo();
 
   const onTextLayout = useCallback((e: NativeSyntheticEvent<TextLayoutEventData>) => {
     if (e.nativeEvent.lines.length > MAX_LINES) setHasEllipsis(true);
@@ -92,18 +94,41 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
             {DateTimeFormatter.toJoinedTime(review.createdAt)}
           </Text>
         </View>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity activeOpacity={1}>
-            <Text style={[typography.body02, typography.textWhite, typography.underline]}>
-              수정
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1}>
-            <Text style={[typography.body02, typography.textWhite, typography.underline]}>
-              삭제
-            </Text>
-          </TouchableOpacity>
-        </View>
+
+        {isAdmin() ? (
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                숨김
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
+        {!isAdmin() && isLoginUser(review.author.id) ? (
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                수정
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                삭제
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
+        {!isAdmin() && !isLoginUser(review.author.id) ? (
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity activeOpacity={1}>
+              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                신고
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
 
       {hasEllipsis || review.images.length > 1 ? (

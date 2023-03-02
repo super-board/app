@@ -192,7 +192,7 @@ export const reviewQueries = {
               commentCount: 0,
               likeCount: 250,
               author: {
-                id: 1,
+                id: 2,
                 nickname: "한글닉네임",
                 level: "DIAMOND",
                 profileCharacter: "PROFILE_3",

@@ -24,7 +24,7 @@ export const commentQueries = {
               content:
                 "이 문장은 예시 문장입니다. 최대 몇 문장까지 노출 시킬 것인지/ 말 줄임표가 어떻게 붙는지 등은 논의가 필요합니다. 예를들어, 3줄 이상의 문장은 짧게 보기를 지원합니다. 이 문장은 예시 문장입니다. 최대 몇 문장까지 노출 시킬 것인지/ 말 줄임표가 어떻게 붙는지 등은 논의가 필요합니다. 예를들어, 3줄 이상의 문장은 짧게 보기를 지원합니다.",
               author: {
-                id: 1,
+                id: 2,
                 nickname: "한글닉네임",
                 level: "DIAMOND",
                 profileCharacter: "PROFILE_3",
