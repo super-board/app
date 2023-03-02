@@ -7,6 +7,7 @@ export type {
   CommentDetails,
   Level,
   LoginForm,
+  MemberDetails,
   MemberSummary,
   ProfileCharacter,
   RegisterForm,

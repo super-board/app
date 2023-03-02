@@ -45,7 +45,6 @@ function CommentListItem({comment}: {comment: CommentDetails}) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 20,
     gap: 8,
     backgroundColor: colors.OTBBlack800,
   },

@@ -18,6 +18,7 @@ import {DateTimeFormatter, NumberFormatter} from "@/services/formatter";
 import {ReviewDetails} from "@/store";
 
 import AuthorChip from "./AuthorChip";
+import CommentForm from "./CommentForm";
 import ReviewImageSlider from "./ReviewImageSlider";
 import ReviewThumbnailImage from "./ReviewThumbnailImage";
 
@@ -116,9 +117,10 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
       ) : null}
 
       {isCommentsVisible ? (
-        <>
+        <View style={{paddingLeft: 20, gap: 16}}>
           <CommentList boardGameId={(route.params as {id: number}).id} reviewId={review.id} />
-        </>
+          <CommentForm />
+        </View>
       ) : null}
     </View>
   );

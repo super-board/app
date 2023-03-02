@@ -73,6 +73,10 @@ export type MemberSummary = {
   profileCharacter: ProfileCharacter;
 };
 
+export type MemberDetails = MemberSummary & {email: string; role: MemberRole};
+
+export type MemberRole = "ADMIN" | "USER";
+
 export type Level = "PLAYER" | "CLOVER" | "HEART" | "DIAMOND" | "SPADE" | "JOKER";
 
 export type Notifications = {
