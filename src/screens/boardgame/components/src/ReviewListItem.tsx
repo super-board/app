@@ -1,5 +1,6 @@
 import React, {memo, useCallback, useState} from "react";
 
+import {useRoute} from "@react-navigation/native";
 import {
   NativeSyntheticEvent,
   StyleSheet,
@@ -12,8 +13,9 @@ import {
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
+import CommentList from "@/screens/boardgame/components/src/CommentList";
 import {DateTimeFormatter, NumberFormatter} from "@/services/formatter";
-import type {ReviewDetails} from "@/store";
+import {ReviewDetails} from "@/store";
 
 import AuthorChip from "./AuthorChip";
 import ReviewImageSlider from "./ReviewImageSlider";
@@ -25,6 +27,8 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
   const [hasEllipsis, setHasEllipsis] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>(MAX_LINES);
+  const [isCommentsVisible, setIsCommentsVisible] = useState(false);
+  const route = useRoute();
 
   const onTextLayout = useCallback((e: NativeSyntheticEvent<TextLayoutEventData>) => {
     if (e.nativeEvent.lines.length > MAX_LINES) setHasEllipsis(true);
@@ -40,7 +44,10 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
       <View style={styles.row}>
         <AuthorChip author={review.author} />
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity activeOpacity={1} style={styles.button}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={styles.button}
+            onPress={() => setIsCommentsVisible(state => !state)}>
             <SVG.Icon.Chat width={20} height={20} />
             {review.commentCount ? (
               <Text style={[typography.body02, typography.textWhite]}>
@@ -78,10 +85,10 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
       <View style={[styles.row]}>
         <View style={styles.timestampContainer}>
           <Text style={[typography.body02, styles.timestamp]}>
-            {DateTimeFormatter.toJoinedDate(review.createAt)}
+            {DateTimeFormatter.toJoinedDate(review.createdAt)}
           </Text>
           <Text style={[typography.body02, styles.timestamp]}>
-            {DateTimeFormatter.toJoinedTime(review.createAt)}
+            {DateTimeFormatter.toJoinedTime(review.createdAt)}
           </Text>
         </View>
         <View style={styles.buttonsContainer}>
@@ -106,6 +113,12 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
             <SVG.Icon.ExpandMore width={24} height={24} />
           )}
         </TouchableOpacity>
+      ) : null}
+
+      {isCommentsVisible ? (
+        <>
+          <CommentList boardGameId={(route.params as {id: number}).id} reviewId={review.id} />
+        </>
       ) : null}
     </View>
   );

@@ -4,6 +4,7 @@ export * from "./src/MemberApi";
 export * from "./src/PasswordApi";
 export type {
   BoardGameSummary,
+  CommentDetails,
   Level,
   LoginForm,
   MemberSummary,

@@ -40,7 +40,7 @@ export type ReviewSummary = {
 
 export type ReviewDetails = {
   id: number;
-  createAt: string;
+  createdAt: string;
   content: string;
   rating: number;
   images: string[];
@@ -52,6 +52,18 @@ export type ReviewDetails = {
 export type PaginatedReviews = {
   hasNext: boolean;
   reviews: ReviewDetails[];
+};
+
+export type CommentDetails = {
+  id: number;
+  createdAt: string;
+  content: string;
+  author: MemberSummary;
+};
+
+export type PaginatedComments = {
+  hasNext: boolean;
+  comments: CommentDetails[];
 };
 
 export type MemberSummary = {

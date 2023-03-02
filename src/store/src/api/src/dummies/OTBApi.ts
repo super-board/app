@@ -4,11 +4,13 @@ import {
   BoardGameDetails,
   BoardGameSummary,
   Notifications,
+  PaginatedComments,
   PaginatedReviews,
   ReviewSummary,
   TagGroup,
 } from "../types";
 import {boardGameQueries} from "./boardGameQueries";
+import {commentQueries} from "./commentQueries";
 import {notificationsQuery} from "./notificationsQuery";
 import {reviewQueries} from "./reviewQueries";
 import {tagQueries} from "./tagQueries";
@@ -70,7 +72,22 @@ export const OTBApi = createApi({
       },
       forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
     }),
-
+    getComments: build.query<
+      PaginatedComments,
+      {boardGameId: number; reviewId: number; page: number}
+    >({
+      queryFn: commentQueries.getComments.queryFn,
+      serializeQueryArgs: ({queryArgs}) => queryArgs.boardGameId,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.hasNext = responseData.hasNext;
+          currentCacheData.comments.push(...responseData.comments);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
     getRecentNotifications: build.query<Notifications[], void>({
       queryFn: notificationsQuery.getRecentNotifications.queryFn,
     }),
@@ -88,6 +105,7 @@ export const {
   useGetBoardGamesByNameQuery,
   useGetBestReviewsQuery,
   useGetReviewsQuery,
+  useGetCommentsQuery,
   useGetRecentNotificationsQuery,
   useGetBoardGameDetailsQuery,
 } = OTBApi;
