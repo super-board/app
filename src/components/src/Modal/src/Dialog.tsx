@@ -52,13 +52,25 @@ export default function Dialog({
           <SizedBox height={8} />
           {IconComponent}
           <SizedBox height={24} />
-          <Text style={[typography.subhead01, typography.textWhite, effects.textDropShadow]}>
+          <Text
+            style={[
+              typography.subhead01,
+              typography.textWhite,
+              typography.textCenter,
+              effects.textDropShadow,
+            ]}>
             {title}
           </Text>
           {description ? (
             <>
               <SizedBox height={8} />
-              <Text style={[typography.body02, typography.textWhite, effects.textDropShadow]}>
+              <Text
+                style={[
+                  typography.body02,
+                  typography.textWhite,
+                  typography.textCenter,
+                  effects.textDropShadow,
+                ]}>
                 {description}
               </Text>
             </>

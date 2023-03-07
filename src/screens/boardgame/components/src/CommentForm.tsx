@@ -1,9 +1,14 @@
 import React, {useState} from "react";
 
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {useNavigation} from "@react-navigation/native";
+import {Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 
+import * as SVG from "@/assets/svgs";
+import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
+import {useLogin} from "@/hooks/common";
+import {useModal} from "@/hooks/modal";
 import {useGetMyMemberInfoQuery} from "@/store";
 
 import AuthorChip from "./AuthorChip";
@@ -11,6 +16,21 @@ import AuthorChip from "./AuthorChip";
 export default function CommentForm() {
   const [comment, setComment] = useState("");
   const {isLoading, data: myInfo} = useGetMyMemberInfoQuery();
+  const {didLogin} = useLogin();
+  const navigation = useNavigation();
+  const {
+    visible: isSignUpModalVisible,
+    openModal: openSignUpModal,
+    closeModal: closeSignUpModal,
+  } = useModal();
+
+  const checkDidLogIn = () => {
+    if (!didLogin) openSignUpModal();
+  };
+
+  const onSignUp = () => {
+    navigation.navigate("RegisterEmailVerificationScreen");
+  };
 
   if (isLoading || !myInfo) return <View style={styles.container} />;
 
@@ -20,23 +40,36 @@ export default function CommentForm() {
 
       <View style={styles.row}>
         <View style={styles.textareaContainer}>
-          <TextInput
-            style={styles.textarea}
-            multiline={true}
-            value={comment}
-            onChangeText={setComment}
-            cursorColor={colors.white}
-            placeholder="최소 10자 이상 입력해주세요"
-            placeholderTextColor={colors.OTBBlack500}
-            maxLength={200}
-          />
+          <Pressable onPress={checkDidLogIn}>
+            <TextInput
+              style={styles.textarea}
+              multiline={true}
+              value={comment}
+              onChangeText={setComment}
+              cursorColor={colors.white}
+              placeholder="최소 10자 이상 입력해주세요"
+              placeholderTextColor={colors.OTBBlack500}
+              maxLength={200}
+              editable={didLogin}
+            />
+          </Pressable>
           <Text style={[typography.caption, styles.letterCounter]}>{comment.length}/200</Text>
         </View>
 
-        <TouchableOpacity style={styles.submitButton}>
+        <TouchableOpacity style={styles.submitButton} disabled={!didLogin}>
           <Text style={[typography.subhead03, typography.textWhite]}>등록</Text>
         </TouchableOpacity>
       </View>
+
+      <Modal.Dialog
+        visible={isSignUpModalVisible}
+        IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
+        title={"더 많은 보드게임 정보가\n궁금하신가요?"}
+        description={"회원가입하고 재미있는\n보드게임 정보를 확인하세요!"}
+        confirmText="회원가입"
+        onConfirm={onSignUp}
+        onRequestClose={closeSignUpModal}
+      />
     </View>
   );
 }

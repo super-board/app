@@ -33,6 +33,7 @@ import RatingStarHalf from "./rating-star-half.svg";
 import RatingStartNotRated from "./rating-star-not-rated.svg";
 import ReviewModal from "./review-modal.svg";
 import Search from "./search.svg";
+import SignUp from "./sign-up.svg";
 import SpaceDashboardAccent from "./space-dashboard-accent.svg";
 import SpaceDashboard from "./space-dashboard.svg";
 import ViewFalse from "./view-false.svg";
@@ -78,4 +79,5 @@ export {
   Chat,
   Collapse,
   Edit,
+  SignUp,
 };

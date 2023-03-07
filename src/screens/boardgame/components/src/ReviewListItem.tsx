@@ -1,6 +1,6 @@
 import React, {memo, useCallback, useState} from "react";
 
-import {useRoute} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import {
   NativeSyntheticEvent,
   Pressable,
@@ -15,6 +15,8 @@ import * as SVG from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
+import {useLogin} from "@/hooks/common";
+import {useModal} from "@/hooks/modal";
 import CommentList from "@/screens/boardgame/components/src/CommentList";
 import {DateTimeFormatter, NumberFormatter} from "@/services/formatter";
 import {ReviewDetails} from "@/store";
@@ -32,8 +34,10 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>(MAX_LINES);
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
+  const navigation = useNavigation();
   const route = useRoute();
   const {isLoginUser, isAdmin} = useMyMemberInfo();
+  const {didLogin} = useLogin();
 
   const {
     isEditModalVisible,
@@ -46,12 +50,22 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
     openReportModal,
     closeReportModal,
   } = useDialogModals();
+  const {
+    visible: isSignUpModalVisible,
+    openModal: openSignUpModal,
+    closeModal: closeSignUpModal,
+  } = useModal();
 
   const onTextLayout = useCallback((e: NativeSyntheticEvent<TextLayoutEventData>) => {
     if (e.nativeEvent.lines.length > MAX_LINES) setHasEllipsis(true);
   }, []);
 
   const onToggleExpand = () => {
+    if (!didLogin) {
+      openSignUpModal();
+      return;
+    }
+
     setNumberOfLines(isExpanded ? MAX_LINES : undefined);
     setIsExpanded(state => !state);
   };
@@ -68,6 +82,10 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
   const onReport = async () => {
     // TODO: 리뷰 신고 요청 날리기
     await new Promise(resolve => setTimeout(resolve, 3000));
+  };
+
+  const onSignUp = () => {
+    navigation.navigate("RegisterEmailVerificationScreen");
   };
 
   return (
@@ -200,6 +218,15 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
         confirmText="신고"
         onConfirm={onReport}
         onRequestClose={closeReportModal}
+      />
+      <Modal.Dialog
+        visible={isSignUpModalVisible}
+        IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
+        title={"더 많은 보드게임 정보가\n궁금하신가요?"}
+        description={"회원가입하고 재미있는\n보드게임 정보를 확인하세요!"}
+        confirmText="회원가입"
+        onConfirm={onSignUp}
+        onRequestClose={closeSignUpModal}
       />
     </>
   );
