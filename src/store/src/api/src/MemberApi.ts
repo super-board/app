@@ -34,22 +34,22 @@ export const MemberApi = createApi({
     // FIXME: API 연동할 때 더미데이터 지우기
     getMyMemberInfo: build.query<MemberDetails, void>({
       queryFn: () => ({
-        // data: {
-        //   id: 1,
-        //   email: "test@test.com",
-        //   nickname: "그게나야",
-        //   profileCharacter: "PROFILE_3",
-        //   level: "CLOVER",
-        //   role: "USER",
-        // } as MemberDetails,
         data: {
-          id: 5,
+          id: 1,
           email: "test@test.com",
-          nickname: "테스트관리자",
-          profileCharacter: "PROFILE_5",
-          level: "JOKER",
-          role: "ADMIN",
-        },
+          nickname: "그게나야",
+          profileCharacter: "PROFILE_3",
+          level: "CLOVER",
+          role: "USER",
+        } as MemberDetails,
+        // data: {
+        //   id: 5,
+        //   email: "test@test.com",
+        //   nickname: "테스트관리자",
+        //   profileCharacter: "PROFILE_5",
+        //   level: "JOKER",
+        //   role: "ADMIN",
+        // },
       }),
       keepUnusedDataFor: 1800,
     }),

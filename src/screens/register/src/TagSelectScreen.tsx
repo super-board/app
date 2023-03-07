@@ -89,7 +89,6 @@ export default function TagSelectScreen({navigation, route}: ScreenProps) {
         visible={warnVisible}
         title="관심 태그는 5개까지 고를 수 있어요."
         onRequestClose={closeWarnModal}
-        dismissible
       />
     </View>
   );

@@ -113,7 +113,6 @@ function OnboardingTagSelectScreen({navigation}: Props) {
         visible={warnVisible}
         title="관심 태그는 5개까지 고를 수 있어요."
         onRequestClose={closeWarnModal}
-        dismissible
       />
       <Modal.Loading visible={loadingVisible} title={loadingText} />
     </View>

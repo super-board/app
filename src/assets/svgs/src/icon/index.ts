@@ -66,7 +66,6 @@ export {
   CloseBlack,
   Camera,
   ReviewModal,
-  Edit,
   Invalid,
   ProfileCheck,
   AddAPhoto,
@@ -78,4 +77,5 @@ export {
   ExpandMore,
   Chat,
   Collapse,
+  Edit,
 };
