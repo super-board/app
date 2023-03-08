@@ -10,12 +10,14 @@ import typography from "@/constants/typography";
 import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";
 
-export default function RecommendationAppBar({navigation}: NativeStackHeaderProps) {
+export default function EditProfileAppBar({navigation}: NativeStackHeaderProps) {
   return (
     <AppBar.Container>
       <AppBar.Header>
         <AppBar.Center>
-          <Text style={[typography.subhead01, effects.textDropShadow, styles.title]}>추천</Text>
+          <Text style={[typography.subhead01, effects.textDropShadow, styles.title]}>
+            프로필 수정
+          </Text>
         </AppBar.Center>
         <AppBar.Left marginLeft={24}>
           <AppBarButton.HistoryBack navigation={navigation} />

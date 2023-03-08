@@ -17,7 +17,8 @@ import {
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
-import {LoginScreen} from "@/screens/mypage";
+import {LoginScreen, MyPageEditProfileScreen} from "@/screens/mypage";
+import EditProfileScreen from "@/screens/mypage/src/EditProfileScreen";
 import {
   OnboardingRecommendationScreen,
   OnboardingTagSelectScreen,
@@ -71,6 +72,7 @@ export type RootStackParamList = {
   SearchScreen: undefined;
   WriteScreen: undefined;
   BoardGameDetailsScreen: {id: number};
+  MyPageEditProfileScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -183,6 +185,13 @@ export default function Navigation() {
               name="BoardGameDetailsScreen"
               options={{header: BoardGameDetailsAppBar}}
               component={BoardGameDetailsScreen}
+            />
+          </Stack.Group>
+          <Stack.Group>
+            <Stack.Screen
+              name="MyPageEditProfileScreen"
+              options={{header: EditProfileScreen}}
+              component={MyPageEditProfileScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

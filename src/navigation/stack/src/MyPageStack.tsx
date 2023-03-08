@@ -12,7 +12,11 @@ export default function MyPageStack() {
   return (
     <Stack.Navigator initialRouteName="MyPageMainScreen" screenOptions={stackScreenOptions}>
       <Stack.Group>
-        <Stack.Screen name="MyPage" component={MyPageScreen} />
+        <Stack.Screen
+          name="MyPageMainScreen"
+          options={{header: MyPageAppBar}}
+          component={MyPageMainScreen}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

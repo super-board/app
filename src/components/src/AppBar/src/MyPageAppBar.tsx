@@ -10,16 +10,21 @@ import typography from "@/constants/typography";
 import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";
 
-export default function RecommendationAppBar({navigation}: NativeStackHeaderProps) {
+export default function MyPageAppBar({navigation}: NativeStackHeaderProps) {
   return (
     <AppBar.Container>
       <AppBar.Header>
         <AppBar.Center>
-          <Text style={[typography.subhead01, effects.textDropShadow, styles.title]}>추천</Text>
+          <Text style={[typography.subhead01, effects.textDropShadow, styles.title]}>
+            마이페이지
+          </Text>
         </AppBar.Center>
         <AppBar.Left marginLeft={24}>
           <AppBarButton.HistoryBack navigation={navigation} />
         </AppBar.Left>
+        <AppBar.Right marginRight={24}>
+          <AppBarButton.EditProfile navigation={navigation} />
+        </AppBar.Right>
       </AppBar.Header>
     </AppBar.Container>
   );

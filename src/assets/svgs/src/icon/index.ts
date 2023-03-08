@@ -10,6 +10,7 @@ import Close from "./close.svg";
 import Collapse from "./collapse.svg";
 import EditNoteAccent from "./edit-note-accent.svg";
 import EditNote from "./edit-note.svg";
+import EditProfile from "./edit-profile.svg";
 import Edit from "./edit.svg";
 import ExpandMore from "./expand-more.svg";
 import Favorite from "./favorite.svg";
@@ -80,4 +81,5 @@ export {
   Collapse,
   Edit,
   SignUp,
+  EditProfile,
 };

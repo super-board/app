@@ -9,7 +9,7 @@ import style from "@/constants/style";
 import {AsyncStorageService} from "@/services/storage";
 import {useCheckPasswordShouldBeChangedMutation} from "@/store";
 
-export default function ({navigation}: ScreenProps) {
+export default function MainScreen({navigation}: ScreenProps) {
   const [checkPasswordShouldBeChanged, {data, error}] = useCheckPasswordShouldBeChangedMutation();
 
   const resetOnboarding = async () => {
