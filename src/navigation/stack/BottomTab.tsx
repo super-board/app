@@ -7,8 +7,8 @@ import {bottomTabScreenOptions} from "@/navigation/config";
 
 import HomeStack from "./src/HomeStack";
 import MyPageStack from "./src/MyPageStack";
-import RecommendaationStack from "./src/RecommendaationStack";
-import SearchStack from "./src/SearchStack";
+import RecommendationStack from "./src/RecommendationStack";
+import WriteStack from "./src/WriteStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,7 +40,7 @@ const MyPageTabIcon = (focused: boolean) =>
     <SVG.Icon.AccountCircle width={32} height={32} />
   );
 
-const BottomTab = () => {
+export default function BottomTab() {
   return (
     <Tab.Navigator screenOptions={bottomTabScreenOptions}>
       <Tab.Screen
@@ -51,18 +51,18 @@ const BottomTab = () => {
         component={HomeStack}
       />
       <Tab.Screen
-        name="SearchTab"
+        name="RecommendationTab"
         options={{
           tabBarIcon: ({focused}) => SearchTabIcon(focused),
         }}
-        component={RecommendaationStack}
+        component={RecommendationStack}
       />
       <Tab.Screen
         name="WriteTab"
         options={{
           tabBarIcon: ({focused}) => WriteTabIcon(focused),
         }}
-        component={SearchStack}
+        component={WriteStack}
       />
       <Tab.Screen
         name="MyPageTab"
@@ -73,6 +73,4 @@ const BottomTab = () => {
       />
     </Tab.Navigator>
   );
-};
-
-export default BottomTab;
+}

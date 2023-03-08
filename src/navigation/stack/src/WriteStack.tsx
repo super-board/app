@@ -2,17 +2,16 @@ import * as React from "react";
 
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-import {MyPageAppBar} from "@/components";
 import {stackScreenOptions} from "@/navigation/config";
-import {MyPageMainScreen} from "@/screens/mypage";
+import WriteScreen from "@/screens/write/Main";
 
 const Stack = createNativeStackNavigator();
 
-export default function MyPageStack() {
+export default function WriteStack() {
   return (
-    <Stack.Navigator initialRouteName="MyPageMainScreen" screenOptions={stackScreenOptions}>
+    <Stack.Navigator initialRouteName="Write" screenOptions={stackScreenOptions}>
       <Stack.Group>
-        <Stack.Screen name="MyPage" component={MyPageScreen} />
+        <Stack.Screen name="Write" component={WriteScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
