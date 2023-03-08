@@ -1,4 +1,4 @@
-import {PayloadAction, createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import keys from "@/constants/keys";
 import {AsyncStorageService} from "@/services/storage";
