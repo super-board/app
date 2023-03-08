@@ -7,14 +7,15 @@ import {
 } from "@reduxjs/toolkit/query";
 import {Mutex} from "async-mutex";
 
+import {network} from "@/constants/network";
+
 import {logoutAsync, saveTokensAsync} from "../../authSlice";
 import {RootState} from "../../store";
 
-const OTB_API_BASE_URL = "http://129.154.193.47/api/v1";
 const mutex = new Mutex();
 
 const OTBBaseQuery = fetchBaseQuery({
-  baseUrl: OTB_API_BASE_URL,
+  baseUrl: network.OTB_API_BASE_URL,
   prepareHeaders: (headers, {getState}) => {
     if (headers.has("RefreshToken")) return headers;
     const accessToken = (getState() as RootState).auth.accessToken;
