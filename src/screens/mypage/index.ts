@@ -1,2 +1,2 @@
 export {default as LoginScreen} from "./src/LoginScreen";
-export {default as MyPageScreen} from "./src/MyPageScreen";
+export {default as MyPageMainScreen} from "./src/MainScreen";

@@ -8,7 +8,7 @@ import SearchScreen from "@/screens/search/src/SearchScreen";
 
 const Stack = createNativeStackNavigator();
 
-const SearchStack = () => {
+export default function RecommendationStack() {
   return (
     <Stack.Navigator initialRouteName="Search" screenOptions={stackScreenOptions}>
       <Stack.Group>
@@ -16,6 +16,4 @@ const SearchStack = () => {
       </Stack.Group>
     </Stack.Navigator>
   );
-};
-
-export default SearchStack;
+}

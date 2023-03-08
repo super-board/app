@@ -75,7 +75,7 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const Navigation = () => {
+export default function Navigation() {
   const {isLoading, shouldRequestOnboarding} = useCheckOnboardingCompleted();
   const insets = useSafeAreaInsets();
 
@@ -189,7 +189,7 @@ const Navigation = () => {
       </NavigationContainer>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -197,5 +197,3 @@ const styles = StyleSheet.create({
     backgroundColor: colors.OTBBlack,
   },
 });
-
-export default Navigation;

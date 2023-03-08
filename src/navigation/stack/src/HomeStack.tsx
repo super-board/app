@@ -8,7 +8,7 @@ import {HomeScreen, NotificationsScreen} from "@/screens/home";
 
 const Stack = createNativeStackNavigator();
 
-const HomeStack = () => {
+export default function HomeStack() {
   return (
     <Stack.Navigator initialRouteName="HomeScreen" screenOptions={stackScreenOptions}>
       <Stack.Group>
@@ -21,6 +21,4 @@ const HomeStack = () => {
       </Stack.Group>
     </Stack.Navigator>
   );
-};
-
-export default HomeStack;
+}
