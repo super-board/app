@@ -2,7 +2,7 @@ import React from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {Text, TouchableOpacity} from "react-native";
+import {Pressable, Text} from "react-native";
 
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";
@@ -19,9 +19,9 @@ function HistoryBack({navigation, onPress}: ButtonProps) {
   };
 
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress ?? onPressDefault}>
+    <Pressable onPress={onPress ?? onPressDefault}>
       <SVG.Icon.ArrowBack width={20} height={20} />
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -31,9 +31,9 @@ function Cancel({navigation, onPress}: ButtonProps) {
   };
 
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress ?? onPressDefault}>
+    <Pressable onPress={onPress ?? onPressDefault}>
       <Text style={[typography.subhead02, {color: colors.OTBBlack50}]}>취소</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -43,9 +43,9 @@ function Search({navigation}: ButtonProps) {
   };
 
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress}>
+    <Pressable onPress={onPress}>
       <SVG.Icon.Search width={24} height={24} />
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -55,9 +55,21 @@ function Notifications({navigation}: ButtonProps) {
   };
 
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress}>
+    <Pressable onPress={onPress}>
       <SVG.Icon.Notifications width={24} height={24} />
-    </TouchableOpacity>
+    </Pressable>
+  );
+}
+
+function EditProfile({navigation}: ButtonProps) {
+  const onPress = () => {
+    navigation?.push("MyPageEditProfileScreen");
+  };
+
+  return (
+    <Pressable onPress={onPress}>
+      <SVG.Icon.EditProfile width={24} height={24} />
+    </Pressable>
   );
 }
 
@@ -66,4 +78,5 @@ export const AppBarButton = {
   Cancel,
   Search,
   Notifications,
+  EditProfile,
 };

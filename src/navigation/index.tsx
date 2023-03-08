@@ -18,8 +18,13 @@ import {
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
+<<<<<<< HEAD
 import {Comment, Inquiry, Manager, Notice, Report, Review, User} from "@/screens/manager";
 import {LoginScreen} from "@/screens/mypage";
+=======
+import {LoginScreen, MyPageEditProfileScreen} from "@/screens/mypage";
+import EditProfileScreen from "@/screens/mypage/src/EditProfileScreen";
+>>>>>>> 34dc8a6 (feat: add base layout with its appbar on MyPageScreen)
 import {
   OnboardingRecommendationScreen,
   OnboardingTagSelectScreen,
@@ -74,6 +79,7 @@ export type RootStackParamList = {
   SearchScreen: undefined;
   WriteScreen: undefined;
   BoardGameDetailsScreen: {id: number};
+<<<<<<< HEAD
   ManagerScreen: undefined;
   ManageNoticeScreen: undefined;
   ManageInquiryScreen: undefined;
@@ -82,6 +88,9 @@ export type RootStackParamList = {
   ManageReportScreen: undefined;
   ManageTabScreen: undefined;
   ManageUserScreen: undefined;
+=======
+  MyPageEditProfileScreen: undefined;
+>>>>>>> 34dc8a6 (feat: add base layout with its appbar on MyPageScreen)
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -198,6 +207,7 @@ export default function Navigation() {
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen
+<<<<<<< HEAD
               name="ManagerScreen"
               component={Manager}
               options={{header: ManagerAppBar}}
@@ -221,6 +231,11 @@ export default function Navigation() {
               name="ManageUserScreen"
               component={User}
               options={{header: ManagerAppBar}}
+=======
+              name="MyPageEditProfileScreen"
+              options={{header: EditProfileScreen}}
+              component={MyPageEditProfileScreen}
+>>>>>>> 34dc8a6 (feat: add base layout with its appbar on MyPageScreen)
             />
           </Stack.Group>
         </Stack.Navigator>

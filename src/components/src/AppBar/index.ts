@@ -1,8 +1,10 @@
 export {default as BoardGameDetailsAppBar} from "./src/BoardGameDetailsAppBar";
+export {default as EditProfileAppBar} from "./src/EditProfileAppBar";
 export {default as EmptyAppBar} from "./src/EmptyAppBar";
 export {default as HistoryBackOnlyAppBar} from "./src/HistoryBackOnlyAppBar";
 export {default as HomeAppBar} from "./src/HomeAppBar";
 export {default as ManagerAppBar} from "./src/ManagerAppBar";
+export {default as MyPageAppBar} from "./src/MyPageAppBar";
 export {default as NotificationsAppBar} from "./src/NotificationsAppBar";
 export {default as OnboardingAppBar} from "./src/OnboardingAppBar";
 export {default as RecommendationAppBar} from "./src/RecommendationAppBar";
