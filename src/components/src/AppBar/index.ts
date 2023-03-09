@@ -5,3 +5,4 @@ export {default as OnboardingAppBar} from "./src/OnboardingAppBar";
 export {default as RecommendationAppBar} from "./src/RecommendationAppBar";
 export {default as RegisterAppBar} from "./src/RegisterAppBar";
 export {default as SearchAppBar} from "./src/SearchAppBar";
+export {default as ReviewAppBar} from "./src/ReviewAppBar";

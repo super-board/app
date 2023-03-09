@@ -15,7 +15,6 @@ export default function HomeAppBar({navigation}: NativeStackHeaderProps) {
           <SVG.Logo.Text width={127} height={15} />
         </AppBar.Left>
         <AppBar.Right marginRight={24} gap={16}>
-          <AppBarButton.Search navigation={navigation} />
           <AppBarButton.Notifications navigation={navigation} />
         </AppBar.Right>
       </AppBar.Header>
