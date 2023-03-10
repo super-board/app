@@ -5,7 +5,7 @@ import {Image, StyleSheet, Text, View} from "react-native";
 import typography from "@/constants/typography";
 import {useGetBestReviewsQuery} from "@/store";
 
-import LevelIcon from "./LevelIcon";
+import {LevelIcon} from "./Level";
 import RatingIcons from "./RatingIcons";
 import SizedBox from "./SizedBox";
 
