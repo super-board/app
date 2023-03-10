@@ -116,3 +116,13 @@ export type LoginForm = {
 };
 
 export type ResetPasswordForm = LoginForm & {resetToken: string};
+
+export type MyPageDetails = {
+  nickname: string;
+  level: Level;
+  point: number;
+  profileCharacter: ProfileCharacter;
+  favoriteTags: Tag[];
+  favoriteBoardGames: BoardGameSummary[];
+  myReviews: ReviewSummary[];
+};
