@@ -18,10 +18,6 @@ import HomeAccent from "./home-accent.svg";
 import Home from "./home.svg";
 import Invalid from "./invalid.svg";
 import Kakao from "./kakao.svg";
-import LevelClover from "./level-clover.svg";
-import LevelDiamond from "./level-diamond.svg";
-import LevelHeart from "./level-heart.svg";
-import LevelSpade from "./level-spade.svg";
 import Naver from "./naver.svg";
 import Notifications from "./notifications.svg";
 import Camera from "./photo-camera.svg";
@@ -40,6 +36,12 @@ import SpaceDashboard from "./space-dashboard.svg";
 import ViewFalse from "./view-false.svg";
 import ViewTrue from "./view-true.svg";
 
+export {default as LevelClover} from "./LevelClover";
+export {default as LevelDiamond} from "./LevelDiamond";
+export {default as LevelHeart} from "./LevelHeart";
+export {default as LevelJoker} from "./LevelJoker";
+export {default as LevelPlayer} from "./LevelPlayer";
+export {default as LevelSpade} from "./LevelSpade";
 export {
   ViewTrue,
   ViewFalse,
@@ -57,10 +59,6 @@ export {
   AccountCircleAccent,
   SpaceDashboard,
   SpaceDashboardAccent,
-  LevelClover,
-  LevelDiamond,
-  LevelHeart,
-  LevelSpade,
   RatingStarEmpty,
   RatingStarFull,
   RatingStarHalf,
