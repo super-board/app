@@ -3,6 +3,7 @@ import {createApi, fakeBaseQuery} from "@reduxjs/toolkit/query/react";
 import {
   BoardGameDetails,
   BoardGameSummary,
+  MyPageDetails,
   Notifications,
   PaginatedComments,
   PaginatedReviews,
@@ -94,6 +95,40 @@ export const OTBApi = createApi({
     getBoardGameDetails: build.query<BoardGameDetails, number>({
       queryFn: boardGameQueries.getBoardGameDetails.queryFn,
     }),
+    getMyPageDetails: build.query<MyPageDetails, void>({
+      queryFn: () => {
+        return {
+          data: {
+            nickname: "테스트",
+            level: "SPADE",
+            point: 300,
+            profileCharacter: "PROFILE_3",
+            favoriteTags: [
+              {id: 1, name: "2인이상", type: "PLAYERS"},
+              {id: 2, name: "카드", type: "CATEGORY"},
+              {id: 3, name: "18+", type: "AGE"},
+              {id: 4, name: "15+", type: "AGE"},
+              {id: 5, name: "협동/전략", type: "CATEGORY"},
+            ],
+            favoriteBoardGames: [
+              {id: 1, name: "테라포밍 마스:익스페디션", imageUrl: "no-image", averageRating: 4.64},
+              {id: 2, name: "글룸헤이븐", imageUrl: "no-image", averageRating: 4.64},
+              {id: 3, name: "한밤의 늑대인간", imageUrl: "no-image", averageRating: 4.64},
+            ],
+            myReviews: [
+              {
+                boardGame: {
+                  id: 1,
+                  name: "테라포밍 마스:익스페디션",
+                  imageUrl: "no-image",
+                  averageRating: 4.64,
+                },
+              },
+            ],
+          } as MyPageDetails,
+        };
+      },
+    }),
   }),
 });
 
@@ -108,4 +143,5 @@ export const {
   useGetCommentsQuery,
   useGetRecentNotificationsQuery,
   useGetBoardGameDetailsQuery,
+  useGetMyPageDetailsQuery,
 } = OTBApi;

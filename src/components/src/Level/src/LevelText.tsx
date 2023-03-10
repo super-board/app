@@ -4,7 +4,7 @@ import {Text} from "react-native";
 
 import {Level} from "@/store";
 
-type Props = {
+type Props = Text["props"] & {
   level: Level;
 };
 
