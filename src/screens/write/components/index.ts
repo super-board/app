@@ -1,3 +1,1 @@
-import Image from "./src/image";
-
-export {Image};
+export {default as Image} from './src/image'
