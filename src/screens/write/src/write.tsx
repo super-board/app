@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
 import {launchImageLibrary} from "react-native-image-picker";
 import {PERMISSIONS, RESULTS, check} from "react-native-permissions";
@@ -60,9 +60,9 @@ const WriteScreen = ({navigation, route}: ScreenProps) => {
   return (
     <ScrollView style={style.container}>
       <Text style={[typography.subhead01, typography.textWhite, styles.title]}>보드게임</Text>
-      <TouchableOpacity style={styles.search} onPress={() => onPress.search()} activeOpacity={1}>
+      <Pressable style={styles.search} onPress={onPress.search}>
         <Text style={{color: colors.OTBBlack500}}>보드게임을 선택해주세요</Text>
-      </TouchableOpacity>
+      </Pressable>
       <Text style={[typography.subhead01, typography.textWhite, styles.title, {marginTop: 32}]}>
         게임 평점
       </Text>
