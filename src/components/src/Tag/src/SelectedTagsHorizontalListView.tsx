@@ -1,15 +1,27 @@
 import React, {useEffect, useState} from "react";
 
-import {ScrollView, StyleSheet, View} from "react-native";
+import {ScrollView, StyleProp, StyleSheet, View, ViewStyle} from "react-native";
 
 import {useSelectedTagIds} from "@/hooks/common";
 import type {Tag} from "@/store";
 import {useGetTagListQuery} from "@/store";
 
 import SizedBox from "../../SizedBox";
-import TagChip from "./TagChip";
+import TagChip, {TagChipType} from "./TagChip";
 
-export default function SelectedTagsHorizontalListView() {
+type Props = {
+  insetPadding?: number;
+  gap?: number;
+  style?: StyleProp<ViewStyle>;
+  chipType?: TagChipType;
+};
+
+export default function SelectedTagsHorizontalListView({
+  insetPadding = 24,
+  gap = 8,
+  style,
+  chipType = "active",
+}: Props) {
   const {isLoading, data: tagList} = useGetTagListQuery();
   const {selectedTagIds} = useSelectedTagIds();
   const [filteredTags, setFilteredTags] = useState<Tag[]>([]);
@@ -24,19 +36,19 @@ export default function SelectedTagsHorizontalListView() {
     setFilteredTags(() => selectedTags);
   }, [isLoading, tagList, selectedTagIds]);
 
-  if (isLoading || !tagList) return <View style={styles.container} />;
+  if (isLoading || !tagList) return <View style={[styles.container, style]} />;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <ScrollView horizontal>
-        <SizedBox width={16} />
+        <SizedBox width={insetPadding} />
         {filteredTags.map(tag => (
           <View key={tag.id} style={styles.row}>
-            <TagChip text={tag.name} active />
-            <SizedBox width={8} />
+            <TagChip type={chipType} text={tag.name} />
+            <SizedBox width={gap} />
           </View>
         ))}
-        <SizedBox width={8} />
+        <SizedBox width={insetPadding - gap} />
       </ScrollView>
     </View>
   );
