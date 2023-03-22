@@ -95,7 +95,10 @@ export default function ResetTags({visible, onRequestClose}: ModalProps) {
                           key={tag.id}
                           activeOpacity={1}
                           onPress={() => toggleTag(tag.id)}>
-                          <TagChip text={tag.name} active={isSelectedTag(tag.id)} />
+                          <TagChip
+                            type={isSelectedTag(tag.id) ? "active" : "inactive"}
+                            text={tag.name}
+                          />
                         </TouchableOpacity>
                       ))}
                     </View>

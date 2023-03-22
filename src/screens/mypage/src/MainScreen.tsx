@@ -10,6 +10,7 @@ import {
   Modal,
   OTBButton,
   ProfileImage,
+  SelectedTagsHorizontalListView,
   SizedBox,
 } from "@/components";
 import colors from "@/constants/colors";
@@ -29,6 +30,11 @@ export default function MainScreen({navigation}: ScreenProps) {
     visible: isSignUpModalVisible,
     openModal: openSignUpModal,
     closeModal: closeSignUpModal,
+  } = useModal();
+  const {
+    visible: isResetTagsModalVisible,
+    openModal: openResetTagsModal,
+    closeModal: closeResetTagsModal,
   } = useModal();
 
   const onSignUp = () => {
@@ -71,6 +77,16 @@ export default function MainScreen({navigation}: ScreenProps) {
       </View>
       <SizedBox height={16} />
 
+      <View style={styles.sectionRow}>
+        <Text style={[typography.subhead01, {color: colors.OTBBlack100}]}>내 관심태그</Text>
+        <Pressable style={styles.link} onPress={openResetTagsModal}>
+          <Text style={[typography.caption, styles.linkText]}>태그 재설정</Text>
+        </Pressable>
+      </View>
+      <SizedBox height={8} />
+      <SelectedTagsHorizontalListView insetPadding={0} chipType="myPage" />
+      <SizedBox height={16} />
+
       <Modal.Dialog
         visible={isSignUpModalVisible}
         IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
@@ -90,6 +106,7 @@ export default function MainScreen({navigation}: ScreenProps) {
         text="회원관리"
         onPress={() => navigation.navigate("ManageUserScreen")}
       />
+      <Modal.ResetTags visible={isResetTagsModalVisible} onRequestClose={closeResetTagsModal} />
     </ScrollView>
   );
 }
@@ -109,5 +126,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: colors.OTBBlack400,
     borderWidth: 1,
+  },
+  sectionRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  link: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.OTBBlack300,
+  },
+  linkText: {
+    color: colors.OTBBlack300,
   },
 });
