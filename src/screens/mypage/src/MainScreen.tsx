@@ -32,6 +32,12 @@ export default function MainScreen({navigation}: ScreenProps) {
     closeModal: closeSignUpModal,
   } = useModal();
   const {
+    visible: isLevelInfoModalVisible,
+    openModal: openLevelInfoModal,
+    closeModal,
+    closeModal: closeLevelInfoModal,
+  } = useModal();
+  const {
     visible: isResetTagsModalVisible,
     openModal: openResetTagsModal,
     closeModal: closeResetTagsModal,
@@ -70,7 +76,7 @@ export default function MainScreen({navigation}: ScreenProps) {
             {myPageDetails.point}포인트
           </Text>
         </View>
-        <Pressable style={styles.aboutLevelsButton}>
+        <Pressable style={styles.aboutLevelsButton} onPress={openLevelInfoModal}>
           <Text style={[typography.subhead03, {color: colors.OTBBlack400}]}>등급 알아보기</Text>
         </Pressable>
         <SizedBox width={6} />
@@ -106,6 +112,7 @@ export default function MainScreen({navigation}: ScreenProps) {
         text="회원관리"
         onPress={() => navigation.navigate("ManageUserScreen")}
       />
+      <Modal.LevelInfo visible={isLevelInfoModalVisible} onRequestClose={closeLevelInfoModal} />
       <Modal.ResetTags visible={isResetTagsModalVisible} onRequestClose={closeResetTagsModal} />
     </ScrollView>
   );
