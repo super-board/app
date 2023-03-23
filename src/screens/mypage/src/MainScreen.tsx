@@ -33,7 +33,6 @@ export default function MainScreen({navigation}: ScreenProps) {
   const {
     visible: isLevelInfoModalVisible,
     openModal: openLevelInfoModal,
-    closeModal,
     closeModal: closeLevelInfoModal,
   } = useModal();
   const {
@@ -52,7 +51,20 @@ export default function MainScreen({navigation}: ScreenProps) {
     }, []),
   );
 
-  if (!didLogin || isLoading || !myPageDetails) return <MainScreenSkeleton />;
+  if (!didLogin || isLoading || !myPageDetails)
+    return (
+      <>
+        <MainScreenSkeleton />
+        <Modal.Dialog
+          visible={isSignUpModalVisible}
+          IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
+          title={"회원가입으로 좋아하는\n보드게임을 모아보세요!"}
+          confirmText="회원가입"
+          onConfirm={onSignUp}
+          onRequestClose={closeSignUpModal}
+        />
+      </>
+    );
 
   return (
     <ScrollView style={style.screenWithAppBarContainer}>
@@ -92,15 +104,6 @@ export default function MainScreen({navigation}: ScreenProps) {
       <SelectedTagsHorizontalListView insetPadding={0} chipType="myPage" />
       <SizedBox height={16} />
 
-      <Modal.Dialog
-        visible={isSignUpModalVisible}
-        IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
-        title={"더 많은 보드게임 정보가\n궁금하신가요?"}
-        description={"회원가입하고 재미있는\n보드게임 정보를 확인하세요!"}
-        confirmText="회원가입"
-        onConfirm={onSignUp}
-        onRequestClose={closeSignUpModal}
-      />
       <Modal.LevelInfo visible={isLevelInfoModalVisible} onRequestClose={closeLevelInfoModal} />
       <Modal.ResetTags visible={isResetTagsModalVisible} onRequestClose={closeResetTagsModal} />
     </ScrollView>

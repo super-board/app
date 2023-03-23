@@ -6,11 +6,14 @@ import {StyleSheet, Text} from "react-native";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
+import {useLogin} from "@/hooks/common";
 
 import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";
 
 export default function MyPageAppBar({navigation}: NativeStackHeaderProps) {
+  const {didLogin} = useLogin();
+
   return (
     <AppBar.Container>
       <AppBar.Header>
@@ -22,9 +25,11 @@ export default function MyPageAppBar({navigation}: NativeStackHeaderProps) {
         <AppBar.Left marginLeft={24}>
           <AppBarButton.HistoryBack navigation={navigation} />
         </AppBar.Left>
-        <AppBar.Right marginRight={24}>
-          <AppBarButton.EditProfile navigation={navigation} />
-        </AppBar.Right>
+        {didLogin ? (
+          <AppBar.Right marginRight={24}>
+            <AppBarButton.EditProfile navigation={navigation} />
+          </AppBar.Right>
+        ) : null}
       </AppBar.Header>
     </AppBar.Container>
   );
