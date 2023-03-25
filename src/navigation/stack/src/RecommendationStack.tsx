@@ -2,18 +2,24 @@ import * as React from "react";
 
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-import {SearchAppBar} from "@/components/src/AppBar";
+import {RecommendationAppBar} from "@/components";
 import {stackScreenOptions} from "@/navigation/config";
-import SearchScreen from "@/screens/search/src/SearchScreen";
+import {RecommendationScreen} from "@/screens/search";
 
 const Stack = createNativeStackNavigator();
 
-export default function RecommendationStack() {
+const SearchStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Search" screenOptions={stackScreenOptions}>
+    <Stack.Navigator initialRouteName="RecommendationScreen" screenOptions={stackScreenOptions}>
       <Stack.Group>
-        <Stack.Screen name="Search" options={{header: SearchAppBar}} component={SearchScreen} />
+        <Stack.Screen
+          name="RecommendationScreen"
+          options={{header: RecommendationAppBar}}
+          component={RecommendationScreen}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
-}
+};
+
+export default SearchStack;
