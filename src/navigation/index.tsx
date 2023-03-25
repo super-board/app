@@ -6,6 +6,7 @@ import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {
+  BadgeAppBar,
   BoardGameDetailsAppBar,
   EmptyAppBar,
   HistoryBackOnlyAppBar,
@@ -17,7 +18,7 @@ import {
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
-import {LoginScreen, MyPageEditProfileScreen} from "@/screens/mypage";
+import {LoginScreen, MyPageBadgeScreen, MyPageEditProfileScreen} from "@/screens/mypage";
 import EditProfileScreen from "@/screens/mypage/src/EditProfileScreen";
 import {
   OnboardingRecommendationScreen,
@@ -73,6 +74,7 @@ export type RootStackParamList = {
   WriteScreen: undefined;
   BoardGameDetailsScreen: {id: number};
   MyPageEditProfileScreen: undefined;
+  MyPageBadgeScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -192,6 +194,11 @@ export default function Navigation() {
               name="MyPageEditProfileScreen"
               options={{header: EditProfileScreen}}
               component={MyPageEditProfileScreen}
+            />
+            <Stack.Screen
+              name="MyPageBadgeScreen"
+              options={{header: BadgeAppBar}}
+              component={MyPageBadgeScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

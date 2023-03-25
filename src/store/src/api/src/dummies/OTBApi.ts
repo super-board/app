@@ -1,6 +1,7 @@
 import {createApi, fakeBaseQuery} from "@reduxjs/toolkit/query/react";
 
 import {
+  Badge,
   BoardGameDetails,
   BoardGameSummary,
   MyPageDetails,
@@ -103,6 +104,7 @@ export const OTBApi = createApi({
             level: "SPADE",
             point: 300,
             profileCharacter: "PROFILE_3",
+            badgeCounts: 2,
             favoriteTags: [
               {id: 1, name: "2인이상", type: "PLAYERS"},
               {id: 2, name: "카드", type: "CATEGORY"},
@@ -129,6 +131,14 @@ export const OTBApi = createApi({
         };
       },
     }),
+    getMyBadges: build.query<Badge[], void>({
+      queryFn: () => ({
+        data: [
+          {id: 1, type: 1, isAchieved: true},
+          {id: 5, type: 5, isAchieved: true},
+        ] as Badge[],
+      }),
+    }),
   }),
 });
 
@@ -144,4 +154,5 @@ export const {
   useGetRecentNotificationsQuery,
   useGetBoardGameDetailsQuery,
   useGetMyPageDetailsQuery,
+  useGetMyBadgesQuery,
 } = OTBApi;

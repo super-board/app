@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useMemo} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
@@ -41,6 +41,16 @@ export default function MainScreen({navigation}: ScreenProps) {
     closeModal: closeResetTagsModal,
   } = useModal();
 
+  const onPress = useMemo(
+    () => ({
+      moreBadges: () => {
+        navigation.navigate("MyPageBadgeScreen");
+      },
+      resetTags: openResetTagsModal,
+    }),
+    [],
+  );
+
   const onSignUp = () => {
     navigation.navigate("RegisterEmailVerificationScreen");
   };
@@ -51,7 +61,8 @@ export default function MainScreen({navigation}: ScreenProps) {
     }, []),
   );
 
-  if (!didLogin || isLoading || !myPageDetails)
+  // if (!didLogin || isLoading || !myPageDetails)
+  if (isLoading || !myPageDetails)
     return (
       <>
         <MainScreenSkeleton />
@@ -92,11 +103,24 @@ export default function MainScreen({navigation}: ScreenProps) {
         </Pressable>
         <SizedBox width={6} />
       </View>
-      <SizedBox height={16} />
+
+      <SizedBox height={24} />
+      <View style={styles.sectionRow}>
+        <View style={{flexDirection: "row", gap: 8}}>
+          <Text style={[typography.subhead01, {color: colors.OTBBlack100}]}>내 뱃지</Text>
+          <Text style={[typography.subhead02, {color: colors.OTBBlueLight4}]}>
+            {myPageDetails.badgeCounts}/10개
+          </Text>
+        </View>
+        <Pressable style={styles.link} onPress={onPress.moreBadges}>
+          <Text style={[typography.caption, styles.linkText]}>더보기</Text>
+        </Pressable>
+      </View>
+      <SizedBox height={24} />
 
       <View style={styles.sectionRow}>
         <Text style={[typography.subhead01, {color: colors.OTBBlack100}]}>내 관심태그</Text>
-        <Pressable style={styles.link} onPress={openResetTagsModal}>
+        <Pressable style={styles.link} onPress={onPress.resetTags}>
           <Text style={[typography.caption, styles.linkText]}>태그 재설정</Text>
         </Pressable>
       </View>

@@ -1,3 +1,4 @@
+export {default as BadgeAppBar} from "./src/BadgeAppBar";
 export {default as BoardGameDetailsAppBar} from "./src/BoardGameDetailsAppBar";
 export {default as EditProfileAppBar} from "./src/EditProfileAppBar";
 export {default as EmptyAppBar} from "./src/EmptyAppBar";
