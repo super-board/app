@@ -122,7 +122,16 @@ export type MyPageDetails = {
   level: Level;
   point: number;
   profileCharacter: ProfileCharacter;
+  badgeCounts: number;
   favoriteTags: Tag[];
   favoriteBoardGames: BoardGameSummary[];
   myReviews: ReviewSummary[];
 };
+
+export type Badge = {
+  id: number;
+  type: BadgeType;
+  isAchieved: boolean;
+};
+
+export type BadgeType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;

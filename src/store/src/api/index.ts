@@ -3,6 +3,7 @@ export * from "./src/dummies/OTBApi";
 export * from "./src/MemberApi";
 export * from "./src/PasswordApi";
 export type {
+  BadgeType,
   BoardGameSummary,
   CommentDetails,
   Level,
