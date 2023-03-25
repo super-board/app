@@ -42,50 +42,9 @@ import {SplashScreen} from "@/screens/splash";
 import {WriteScreen} from "@/screens/write";
 
 import {stackScreenOptions} from "./config";
+import {RootStackParamList} from "./navigation";
 import BottomTab from "./stack/BottomTab";
 import Tabs from "./tab";
-
-export type RootStackParamList = {
-  OnboardingWelcomeScreen: undefined;
-  OnboardingTagSelectScreen: undefined;
-  OnboardingRecommendationScreen: undefined;
-  LoginScreen: undefined;
-  RegisterEmailVerificationScreen: undefined;
-  RegisterPasswordSettingScreen: {email?: string};
-  RegisterProfileSelectionScreen: {email?: string; password?: string};
-  RegisterNicknameSettingScreen: {email?: string; password?: string; profileCharacter?: string};
-  RegisterTagSelectScreen: {
-    email?: string;
-    password?: string;
-    profileCharacter?: string;
-    nickname?: string;
-  };
-  RegisterTermsAndConditionsScreen: {
-    email?: string;
-    password?: string;
-    profileCharacter?: string;
-    nickname?: string;
-    tagIds?: number[];
-  };
-  ResetPasswordEmailVerificationScreen: undefined;
-  ResetPasswordSettingScreen: {email?: string};
-  PermissionGrantNoticeScreen: undefined;
-  PermissionGrantRequestScreen: undefined;
-  BottomTabView: undefined;
-  SearchScreen: undefined;
-  WriteScreen: undefined;
-  BoardGameDetailsScreen: {id: number};
-  ManagerScreen: undefined;
-  ManageNoticeScreen: undefined;
-  ManageInquiryScreen: undefined;
-  ManageReviewScreen: undefined;
-  ManageCommentScreen: undefined;
-  ManageReportScreen: undefined;
-  ManageTabScreen: undefined;
-  ManageUserScreen: undefined;
-  MyPageEditProfileScreen: undefined;
-  MyPageBadgeScreen: undefined;
-};
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

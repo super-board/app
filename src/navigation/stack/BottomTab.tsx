@@ -4,13 +4,14 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
 import * as SVG from "@/assets/svgs";
 import {bottomTabScreenOptions} from "@/navigation/config";
+import {RootTabParamList} from "@/navigation/navigation";
 
 import HomeStack from "./src/HomeStack";
 import MyPageStack from "./src/MyPageStack";
 import RecommendationStack from "./src/RecommendationStack";
 import WriteStack from "./src/WriteStack";
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const HomeTabIcon = (focused: boolean) =>
   focused ? (
