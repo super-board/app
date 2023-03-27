@@ -50,6 +50,7 @@ export type RootTabParamList = {
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
   RecommendationTab: NavigatorScreenParams<RecommendationTabParamList>;
   WriteTab: NavigatorScreenParams<WriteTabParamList>;
+  SearchTab: NavigatorScreenParams<SearchTabParamList>;
   MyPageTab: NavigatorScreenParams<MyPageTabParamList>;
 };
 
@@ -64,6 +65,10 @@ export type RecommendationTabParamList = {
 
 export type WriteTabParamList = {
   WriteScreen: undefined;
+};
+
+export type SearchTabParamList = {
+  SearchScreen: undefined;
 };
 
 export type MyPageTabParamList = {

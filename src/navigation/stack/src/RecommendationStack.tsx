@@ -4,9 +4,10 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 import {SimpleAppBar} from "@/components";
 import {stackScreenOptions} from "@/navigation/config";
+import {RecommendationTabParamList} from "@/navigation/navigation";
 import {RecommendationScreen} from "@/screens/search";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RecommendationTabParamList>();
 
 const SearchStack = () => {
   return (
