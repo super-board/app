@@ -1,4 +1,4 @@
-import {PaginatedReviews, ReviewSummary} from "../types";
+import {Paginated, ReviewDetails, ReviewSummary} from "../types";
 
 export const reviewQueries = {
   getBestReviews: {
@@ -166,7 +166,7 @@ export const reviewQueries = {
       return {
         data: {
           hasNext: true,
-          reviews: [
+          content: [
             {
               id: 1,
               createdAt: "2023-03-01T00:41:33.161Z",
@@ -215,7 +215,7 @@ export const reviewQueries = {
               },
             },
           ],
-        } as PaginatedReviews,
+        } as Paginated<ReviewDetails>,
       };
     },
   },

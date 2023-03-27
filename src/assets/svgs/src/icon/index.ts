@@ -16,6 +16,7 @@ import ExpandMore from "./expand-more.svg";
 import Favorite from "./favorite.svg";
 import HomeAccent from "./home-accent.svg";
 import Home from "./home.svg";
+import ImageAddFill from "./image-add-fill.svg";
 import Invalid from "./invalid.svg";
 import Kakao from "./kakao.svg";
 import Naver from "./naver.svg";
@@ -23,6 +24,7 @@ import Notifications from "./notifications.svg";
 import Camera from "./photo-camera.svg";
 import PlayTime from "./play-time.svg";
 import Players from "./players.svg";
+import PlusRound from "./plus-round.svg";
 import ProfileCheck from "./profile-check.svg";
 import RatingStarEmpty from "./rating-star-empty.svg";
 import RatingStarFull from "./rating-star-full.svg";
@@ -80,4 +82,6 @@ export {
   Edit,
   SignUp,
   EditProfile,
+  PlusRound,
+  ImageAddFill,
 };

@@ -25,7 +25,7 @@ export default function CommentList({boardGameId, reviewId, style}: Props) {
 
   return (
     <View style={[styles.container, style]}>
-      {paginatedComments.comments.map((comment, index) => (
+      {paginatedComments.content.map((comment, index) => (
         <CommentListItem key={comment.id + index} comment={comment} />
       ))}
 

@@ -110,7 +110,7 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
         <OTBButton style={{marginVertical: 16}} type="basic-primary" text="내 리뷰 작성하기" />
       </View>
       {!isReviewsLoading && paginatedReviews ? (
-        <ReviewList reviews={paginatedReviews.reviews} />
+        <ReviewList reviews={paginatedReviews.content} />
       ) : null}
 
       {!isReviewsLoading && paginatedReviews?.hasNext ? (

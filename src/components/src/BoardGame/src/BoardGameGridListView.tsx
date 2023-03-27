@@ -1,11 +1,11 @@
 import React, {useCallback} from "react";
 
-import {FlatList, StyleProp, StyleSheet, View, ViewStyle} from "react-native";
+import {FlatList, StyleProp, StyleSheet, ViewStyle} from "react-native";
 
-import colors from "@/constants/colors";
+import SizedBox from "@/components/src/SizedBox";
 import type {BoardGameSummary} from "@/store";
 
-import BoardGameListItem from "./BoardGameListItem";
+import BoardGameGridListItem from "./BoardGameGridListItem";
 
 type Props = {
   boardGames: BoardGameSummary[];
@@ -15,7 +15,7 @@ type Props = {
   contentContainerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function BoardGameListView({
+export default function BoardGameGridListView({
   boardGames,
   hasNextPage = false,
   onLoadNextPage = () => {},
@@ -27,7 +27,7 @@ export default function BoardGameListView({
   };
 
   const renderItem = useCallback(
-    ({item}: {item: BoardGameSummary}) => <BoardGameListItem boardGame={item} />,
+    ({item}: {item: BoardGameSummary}) => <BoardGameGridListItem boardGame={item} />,
     [],
   );
   // FIXME: API 연결 후 실제 ID로 처리하기
@@ -43,7 +43,7 @@ export default function BoardGameListView({
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       ItemSeparatorComponent={ItemSeparator}
-      windowSize={5}
+      numColumns={2}
       onEndReachedThreshold={0.8}
       onEndReached={onEndReached}
       contentContainerStyle={contentContainerStyle}
@@ -52,18 +52,10 @@ export default function BoardGameListView({
 }
 
 function ItemSeparator() {
-  return <View style={styles.horizontalDivider} />;
+  return <SizedBox height={24} />;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 24,
-  },
+  container: {},
   itemContainer: {flexDirection: "row", gap: 8},
-  horizontalDivider: {
-    width: "100%",
-    marginVertical: 8,
-    borderTopColor: colors.OTBBlack700,
-    borderTopWidth: 1,
-  },
 });
