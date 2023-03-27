@@ -1,4 +1,4 @@
-import {PaginatedComments} from "@/store/src/api/src/types";
+import {CommentDetails, Paginated} from "@/store/src/api/src/types";
 
 export const commentQueries = {
   getComments: {
@@ -6,7 +6,7 @@ export const commentQueries = {
       return {
         data: {
           hasNext: true,
-          comments: [
+          content: [
             {
               id: 1,
               createdAt: "2023-03-01T00:41:33.161Z",
@@ -43,7 +43,7 @@ export const commentQueries = {
               },
             },
           ],
-        } as PaginatedComments,
+        } as Paginated<CommentDetails>,
       };
     },
   },

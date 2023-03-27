@@ -21,7 +21,7 @@ import {useLogin} from "@/hooks/common";
 import {useModal} from "@/hooks/modal";
 import {useGetMyPageDetailsQuery} from "@/store";
 
-import {MainScreenSkeleton} from "../components";
+import {FavoriteBoardGamesPreview, MainScreenSkeleton, MyReviewsPreview} from "../components";
 
 export default function MainScreen({navigation}: ScreenProps) {
   const {didLogin} = useLogin();
@@ -46,6 +46,12 @@ export default function MainScreen({navigation}: ScreenProps) {
     () => ({
       moreBadges: () => {
         navigation.navigate("MyPageBadgeScreen");
+      },
+      moreMyReviews: () => {
+        navigation.navigate("MyPageMyReviewsScreen");
+      },
+      moreFavoriteBoardGames: () => {
+        navigation.navigate("MyPageFavoriteBoardGamesScreen");
       },
       resetTags: openResetTagsModal,
     }),
@@ -129,15 +135,36 @@ export default function MainScreen({navigation}: ScreenProps) {
       <SelectedTagsHorizontalListView insetPadding={0} chipType="myPage" />
       <SizedBox height={16} />
 
-      <Modal.Dialog
-        visible={isSignUpModalVisible}
-        IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
-        title={"더 많은 보드게임 정보가\n궁금하신가요?"}
-        description={"회원가입하고 재미있는\n보드게임 정보를 확인하세요!"}
-        confirmText="회원가입"
-        onConfirm={onSignUp}
-        onRequestClose={closeSignUpModal}
-      />
+      <View style={styles.sectionRow}>
+        <View style={{flexDirection: "row", gap: 8}}>
+          <Text style={[typography.subhead01, {color: colors.OTBBlack100}]}>내 리뷰</Text>
+        </View>
+        {myPageDetails.myReviews.length > 3 ? (
+          <Pressable style={styles.link} onPress={onPress.moreMyReviews}>
+            <Text style={[typography.caption, styles.linkText]}>더보기</Text>
+          </Pressable>
+        ) : null}
+      </View>
+      <SizedBox height={16} />
+      <MyReviewsPreview reviews={myPageDetails.myReviews} />
+      <SizedBox height={24} />
+
+      <View style={styles.sectionRow}>
+        <View style={{flexDirection: "row", gap: 8}}>
+          <Text style={[typography.subhead01, {color: colors.OTBBlack100}]}>
+            보드게임 좋아요 목록
+          </Text>
+        </View>
+        {myPageDetails.favoriteBoardGames.length > 3 ? (
+          <Pressable style={styles.link} onPress={onPress.moreFavoriteBoardGames}>
+            <Text style={[typography.caption, styles.linkText]}>더보기</Text>
+          </Pressable>
+        ) : null}
+      </View>
+      <SizedBox height={16} />
+      <FavoriteBoardGamesPreview boardGames={myPageDetails.favoriteBoardGames} />
+      <SizedBox height={24} />
+
       <OTBButton
         type="basic-primary"
         text="관리자"
@@ -148,8 +175,18 @@ export default function MainScreen({navigation}: ScreenProps) {
         text="회원관리"
         onPress={() => navigation.navigate("ManageUserScreen")}
       />
+
       <Modal.LevelInfo visible={isLevelInfoModalVisible} onRequestClose={closeLevelInfoModal} />
       <Modal.ResetTags visible={isResetTagsModalVisible} onRequestClose={closeResetTagsModal} />
+      <Modal.Dialog
+        visible={isSignUpModalVisible}
+        IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
+        title={"더 많은 보드게임 정보가\n궁금하신가요?"}
+        description={"회원가입하고 재미있는\n보드게임 정보를 확인하세요!"}
+        confirmText="회원가입"
+        onConfirm={onSignUp}
+        onRequestClose={closeSignUpModal}
+      />
     </ScrollView>
   );
 }

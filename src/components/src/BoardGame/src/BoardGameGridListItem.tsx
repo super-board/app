@@ -1,14 +1,12 @@
 import React, {memo} from "react";
 
-import {Image, Pressable, StyleSheet, Text, View} from "react-native";
+import {Dimensions, Image, Pressable, StyleSheet, Text} from "react-native";
 
 import typography from "@/constants/typography";
 import {useNavigateToBoardGameDetails} from "@/hooks/navigation";
 import type {BoardGameSummary} from "@/store";
 
-import RatingIcons from "../../RatingIcons";
-
-function BoardGameListItem({boardGame}: {boardGame: BoardGameSummary}) {
+function BoardGameGridListItem({boardGame}: {boardGame: BoardGameSummary}) {
   const {navigateToBoardGameDetails} = useNavigateToBoardGameDetails(boardGame.id);
 
   return (
@@ -17,18 +15,17 @@ function BoardGameListItem({boardGame}: {boardGame: BoardGameSummary}) {
         source={require("@/assets/images/fallback/board-game-fallback.png")}
         style={styles.thumbnail}
       />
-      <View style={styles.contentContainer}>
-        <Text style={[typography.subhead01, typography.textWhite]}>{boardGame.name}</Text>
-        <RatingIcons rating={boardGame.averageRating} />
-      </View>
+      <Text style={[typography.subhead02, typography.textWhite]}>{boardGame.name}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  itemContainer: {flexDirection: "row", gap: 8},
-  thumbnail: {width: 72, height: 72},
-  contentContainer: {flexDirection: "column", gap: 4},
+  itemContainer: {gap: 8, alignItems: "center"},
+  thumbnail: {
+    width: (Dimensions.get("window").width - 56) / 2,
+    height: (Dimensions.get("window").width - 56) / 2,
+  },
 });
 
-export default memo(BoardGameListItem);
+export default memo(BoardGameGridListItem);

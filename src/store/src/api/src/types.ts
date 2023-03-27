@@ -1,3 +1,8 @@
+export type Paginated<T> = {
+  hasNext: boolean;
+  content: T[];
+};
+
 export type Tag = {
   id: number;
   name: string;
@@ -49,21 +54,11 @@ export type ReviewDetails = {
   author: MemberSummary;
 };
 
-export type PaginatedReviews = {
-  hasNext: boolean;
-  reviews: ReviewDetails[];
-};
-
 export type CommentDetails = {
   id: number;
   createdAt: string;
   content: string;
   author: MemberSummary;
-};
-
-export type PaginatedComments = {
-  hasNext: boolean;
-  comments: CommentDetails[];
 };
 
 export type MemberSummary = {

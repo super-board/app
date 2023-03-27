@@ -4,10 +4,11 @@ import {
   Badge,
   BoardGameDetails,
   BoardGameSummary,
+  CommentDetails,
   MyPageDetails,
   Notifications,
-  PaginatedComments,
-  PaginatedReviews,
+  Paginated,
+  ReviewDetails,
   ReviewSummary,
   TagGroup,
 } from "../types";
@@ -61,13 +62,13 @@ export const OTBApi = createApi({
     getBestReviews: build.query<ReviewSummary[], void>({
       queryFn: reviewQueries.getBestReviews.queryFn,
     }),
-    getReviews: build.query<PaginatedReviews, {boardGameId: number; page: number}>({
+    getReviews: build.query<Paginated<ReviewDetails>, {boardGameId: number; page: number}>({
       queryFn: reviewQueries.getReviews.queryFn,
       serializeQueryArgs: ({queryArgs}) => queryArgs.boardGameId,
       merge: (currentCacheData, responseData, {arg}) => {
         if (arg.page > 1) {
           currentCacheData.hasNext = responseData.hasNext;
-          currentCacheData.reviews.push(...responseData.reviews);
+          currentCacheData.content.push(...responseData.content);
           return currentCacheData;
         }
         return responseData;
@@ -75,7 +76,7 @@ export const OTBApi = createApi({
       forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
     }),
     getComments: build.query<
-      PaginatedComments,
+      Paginated<CommentDetails>,
       {boardGameId: number; reviewId: number; page: number}
     >({
       queryFn: commentQueries.getComments.queryFn,
@@ -83,7 +84,7 @@ export const OTBApi = createApi({
       merge: (currentCacheData, responseData, {arg}) => {
         if (arg.page > 1) {
           currentCacheData.hasNext = responseData.hasNext;
-          currentCacheData.comments.push(...responseData.comments);
+          currentCacheData.content.push(...responseData.content);
           return currentCacheData;
         }
         return responseData;
@@ -116,9 +117,40 @@ export const OTBApi = createApi({
               {id: 1, name: "테라포밍 마스:익스페디션", imageUrl: "no-image", averageRating: 4.64},
               {id: 2, name: "글룸헤이븐", imageUrl: "no-image", averageRating: 4.64},
               {id: 3, name: "한밤의 늑대인간", imageUrl: "no-image", averageRating: 4.64},
+              {id: 4, name: "테라포밍 마스:익스페디션", imageUrl: "no-image", averageRating: 4.64},
+              {id: 5, name: "글룸헤이븐", imageUrl: "no-image", averageRating: 4.64},
+              {id: 6, name: "한밤의 늑대인간", imageUrl: "no-image", averageRating: 4.64},
             ],
             myReviews: [
               {
+                id: 1,
+                boardGame: {
+                  id: 1,
+                  name: "테라포밍 마스:익스페디션",
+                  imageUrl: "no-image",
+                  averageRating: 4.64,
+                },
+              },
+              {
+                id: 2,
+                boardGame: {
+                  id: 1,
+                  name: "테라포밍 마스:익스페디션",
+                  imageUrl: "no-image",
+                  averageRating: 4.64,
+                },
+              },
+              {
+                id: 3,
+                boardGame: {
+                  id: 1,
+                  name: "테라포밍 마스:익스페디션",
+                  imageUrl: "no-image",
+                  averageRating: 4.64,
+                },
+              },
+              {
+                id: 4,
                 boardGame: {
                   id: 1,
                   name: "테라포밍 마스:익스페디션",
@@ -139,6 +171,144 @@ export const OTBApi = createApi({
         ] as Badge[],
       }),
     }),
+    getMyReviews: build.query<Paginated<ReviewSummary>, {page: number}>({
+      queryFn: () => ({
+        data: {
+          hasNext: true,
+          content: [
+            {
+              id: 1,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 2,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 3,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 4,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 5,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 6,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 7,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 8,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 9,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+            {
+              id: 10,
+              boardGame: {
+                id: 1,
+                name: "테라포밍 마스:익스페디션",
+                imageUrl: "no-image",
+                averageRating: 4.64,
+              },
+            },
+          ] as ReviewSummary[],
+        },
+      }),
+      serializeQueryArgs: ({endpointName}) => endpointName,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.hasNext = responseData.hasNext;
+          currentCacheData.content.push(...responseData.content);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
+    getFavoriteBoardGames: build.query<Paginated<BoardGameSummary>, {page: number}>({
+      queryFn: () => ({
+        data: {
+          hasNext: true,
+          content: [
+            {id: 1, name: "테라포밍 마스:익스페디션", imageUrl: "no-image", averageRating: 4.64},
+            {id: 2, name: "글룸헤이븐", imageUrl: "no-image", averageRating: 4.64},
+            {id: 3, name: "한밤의 늑대인간", imageUrl: "no-image", averageRating: 4.64},
+            {id: 4, name: "테라포밍 마스:익스페디션", imageUrl: "no-image", averageRating: 4.64},
+            {id: 5, name: "글룸헤이븐", imageUrl: "no-image", averageRating: 4.64},
+            {id: 6, name: "한밤의 늑대인간", imageUrl: "no-image", averageRating: 4.64},
+            {id: 7, name: "한밤의 늑대인간", imageUrl: "no-image", averageRating: 4.64},
+            {id: 8, name: "테라포밍 마스:익스페디션", imageUrl: "no-image", averageRating: 4.64},
+            {id: 9, name: "글룸헤이븐", imageUrl: "no-image", averageRating: 4.64},
+            {id: 10, name: "한밤의 늑대인간", imageUrl: "no-image", averageRating: 4.64},
+          ],
+        },
+      }),
+      serializeQueryArgs: ({endpointName}) => endpointName,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.hasNext = responseData.hasNext;
+          currentCacheData.content.push(...responseData.content);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
   }),
 });
 
@@ -155,4 +325,6 @@ export const {
   useGetBoardGameDetailsQuery,
   useGetMyPageDetailsQuery,
   useGetMyBadgesQuery,
+  useGetMyReviewsQuery,
+  useGetFavoriteBoardGamesQuery,
 } = OTBApi;

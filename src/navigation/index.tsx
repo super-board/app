@@ -18,7 +18,13 @@ import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
 import {Inquiry, Manager, Notice, User} from "@/screens/manager";
-import {LoginScreen, MyPageBadgeScreen, MyPageEditProfileScreen} from "@/screens/mypage";
+import {
+  LoginScreen,
+  MyPageBadgeScreen,
+  MyPageEditProfileScreen,
+  MyPageFavoriteBoardGamesScreen,
+  MyPageMyReviewsScreen,
+} from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
   OnboardingTagSelectScreen,
@@ -193,6 +199,16 @@ export default function Navigation() {
               name="MyPageBadgeScreen"
               options={{header: SimpleAppBar, title: "내 뱃지"}}
               component={MyPageBadgeScreen}
+            />
+            <Stack.Screen
+              name="MyPageMyReviewsScreen"
+              options={{header: SimpleAppBar, title: "내 리뷰"}}
+              component={MyPageMyReviewsScreen}
+            />
+            <Stack.Screen
+              name="MyPageFavoriteBoardGamesScreen"
+              options={{header: SimpleAppBar, title: "보드게임 좋아요 목록"}}
+              component={MyPageFavoriteBoardGamesScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

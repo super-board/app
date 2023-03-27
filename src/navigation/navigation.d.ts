@@ -42,6 +42,8 @@ export type RootStackParamList = {
   ManageReportScreen: undefined;
   ManageTabScreen: undefined;
   ManageUserScreen: undefined;
+  MyPageMyReviewsScreen: undefined;
+  MyPageFavoriteBoardGamesScreen: undefined;
 };
 
 export type RootStackNavigationProp = NavigationProp<RootStackParamList>;
