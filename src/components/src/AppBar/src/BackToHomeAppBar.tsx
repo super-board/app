@@ -1,11 +1,13 @@
 import React from "react";
 
-import {NativeStackHeaderProps} from "@react-navigation/native-stack";
+import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 
-import {AppBar} from "./AppBar";
-import {AppBarButton} from "./AppBarButton";
+import { AppBar } from "./AppBar";
+import { AppBarButton } from "./AppBarButton";
 
-export default function BoardGameDetailsAppBar({navigation}: NativeStackHeaderProps) {
+export default function BackToHomeAppBar({
+  navigation,
+}: NativeStackHeaderProps) {
   const onCancel = () => {
     navigation.popToTop();
     navigation.navigate("HomeScreen");

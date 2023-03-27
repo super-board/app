@@ -6,14 +6,12 @@ import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {
-  BadgeAppBar,
-  BoardGameDetailsAppBar,
+  BackToHomeAppBar,
   EmptyAppBar,
-  HistoryBackOnlyAppBar,
-  OnboardingAppBar,
-  RegisterAppBar,
-  ReviewAppBar,
+  PopToSecondTopAppBar,
+  PopToTopAppBar,
   SearchAppBar,
+  SimpleAppBar,
 } from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
@@ -66,59 +64,59 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="OnboardingTagSelectScreen"
-              options={{header: OnboardingAppBar}}
+              options={{header: PopToTopAppBar}}
               component={OnboardingTagSelectScreen}
             />
             <Stack.Screen
               name="OnboardingRecommendationScreen"
-              options={{header: OnboardingAppBar}}
+              options={{header: PopToTopAppBar}}
               component={OnboardingRecommendationScreen}
             />
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen
               name="LoginScreen"
-              options={{header: HistoryBackOnlyAppBar}}
+              options={{header: SimpleAppBar}}
               component={LoginScreen}
             />
             <Stack.Screen
               name="RegisterEmailVerificationScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: PopToSecondTopAppBar}}
               component={RegisterEmailVerificationScreen}
             />
             <Stack.Screen
               name="RegisterPasswordSettingScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: PopToSecondTopAppBar}}
               component={RegisterPasswordSettingScreen}
             />
             <Stack.Screen
               name="RegisterProfileSelectionScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: PopToSecondTopAppBar}}
               component={RegisterProfileSelectionScreen}
             />
             <Stack.Screen
               name="RegisterNicknameSettingScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: PopToSecondTopAppBar}}
               component={RegisterNicknameSettingScreen}
             />
             <Stack.Screen
               name="RegisterTagSelectScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: PopToSecondTopAppBar}}
               component={RegisterTagSelectScreen}
             />
             <Stack.Screen
               name="RegisterTermsAndConditionsScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: PopToSecondTopAppBar}}
               component={RegisterTermsAndConditionsScreen}
             />
             <Stack.Screen
               name="ResetPasswordEmailVerificationScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: PopToSecondTopAppBar}}
               component={ResetPasswordEmailVerificationScreen}
             />
             <Stack.Screen
               name="ResetPasswordSettingScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: PopToSecondTopAppBar}}
               component={ResetPasswordSettingScreen}
             />
           </Stack.Group>
@@ -130,7 +128,7 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="PermissionGrantRequestScreen"
-              options={{header: HistoryBackOnlyAppBar}}
+              options={{header: SimpleAppBar}}
               component={PermissionGrantRequestScreen}
             />
           </Stack.Group>
@@ -147,24 +145,24 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="WriteScreen"
-              options={{header: ReviewAppBar, animation: "slide_from_bottom"}}
+              options={{header: SimpleAppBar, title: "리뷰", animation: "slide_from_bottom"}}
               component={WriteScreen}
             />
             <Stack.Screen
               name="BoardGameDetailsScreen"
-              options={{header: BoardGameDetailsAppBar}}
+              options={{header: BackToHomeAppBar}}
               component={BoardGameDetailsScreen}
             />
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen
               name="MyPageEditProfileScreen"
-              options={{header: EditProfileScreen}}
+              options={{header: SimpleAppBar, title: "프로필 수정"}}
               component={MyPageEditProfileScreen}
             />
             <Stack.Screen
               name="MyPageBadgeScreen"
-              options={{header: BadgeAppBar}}
+              options={{header: SimpleAppBar, title: "내 뱃지"}}
               component={MyPageBadgeScreen}
             />
           </Stack.Group>
