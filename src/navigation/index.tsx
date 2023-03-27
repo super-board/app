@@ -21,7 +21,10 @@ import {
   MyPageBadgeScreen,
   MyPageEditProfileScreen,
   MyPageFavoriteBoardGamesScreen,
+  MyPageInquiryScreen,
   MyPageMyReviewsScreen,
+  MyPageNoticeScreen,
+  MyPageSettingsScreen,
 } from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
@@ -179,6 +182,21 @@ export default function Navigation() {
               name="MyPageFavoriteBoardGamesScreen"
               options={{header: SimpleAppBar, title: "보드게임 좋아요 목록"}}
               component={MyPageFavoriteBoardGamesScreen}
+            />
+            <Stack.Screen
+              name="MyPageNoticeScreen"
+              options={{header: SimpleAppBar, title: "공지사항"}}
+              component={MyPageNoticeScreen}
+            />
+            <Stack.Screen
+              name="MyPageInquiryScreen"
+              options={{header: SimpleAppBar, title: "1:1문의"}}
+              component={MyPageInquiryScreen}
+            />
+            <Stack.Screen
+              name="MyPageSettingsScreen"
+              options={{header: SimpleAppBar, title: "설정"}}
+              component={MyPageSettingsScreen}
             />
           </Stack.Group>
         </Stack.Navigator>
