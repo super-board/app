@@ -47,13 +47,22 @@ export default function MainScreen({navigation}: ScreenProps) {
       moreBadges: () => {
         navigation.navigate("MyPageBadgeScreen");
       },
+      resetTags: openResetTagsModal,
       moreMyReviews: () => {
         navigation.navigate("MyPageMyReviewsScreen");
       },
       moreFavoriteBoardGames: () => {
         navigation.navigate("MyPageFavoriteBoardGamesScreen");
       },
-      resetTags: openResetTagsModal,
+      toNotice: () => {
+        navigation.navigate("MyPageNoticeScreen");
+      },
+      toInquiry: () => {
+        navigation.navigate("MyPageInquiryScreen");
+      },
+      toSettings: () => {
+        navigation.navigate("MyPageSettingsScreen");
+      },
     }),
     [],
   );
@@ -165,6 +174,28 @@ export default function MainScreen({navigation}: ScreenProps) {
       <FavoriteBoardGamesPreview boardGames={myPageDetails.favoriteBoardGames} />
       <SizedBox height={24} />
 
+      <View style={styles.sectionRow}>
+        <View style={{flexDirection: "row", gap: 8}}>
+          <Text style={[typography.subhead01, {color: colors.OTBBlack100}]}>내 관리 목록</Text>
+        </View>
+      </View>
+      <SizedBox height={16} />
+      <View style={styles.listContainer}>
+        <Pressable style={styles.listItem} onPress={onPress.toNotice}>
+          <Text style={[typography.subhead02, styles.listItemText]}>공지사항</Text>
+          <SVG.Icon.ArrowBack style={styles.listItemIcon} width={20} height={20} />
+        </Pressable>
+        <Pressable style={styles.listItem} onPress={onPress.toInquiry}>
+          <Text style={[typography.subhead02, styles.listItemText]}>1:1문의</Text>
+          <SVG.Icon.ArrowBack style={styles.listItemIcon} width={20} height={20} />
+        </Pressable>
+        <Pressable style={styles.listItem} onPress={onPress.toSettings}>
+          <Text style={[typography.subhead02, styles.listItemText]}>설정</Text>
+          <SVG.Icon.ArrowBack style={styles.listItemIcon} width={20} height={20} />
+        </Pressable>
+      </View>
+      <SizedBox height={24} />
+
       <OTBButton
         type="basic-primary"
         text="관리자"
@@ -219,4 +250,16 @@ const styles = StyleSheet.create({
   linkText: {
     color: colors.OTBBlack300,
   },
+  listContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: colors.OTBBlack800,
+    borderRadius: 8,
+  },
+  listItem: {
+    flexDirection: "row",
+    paddingVertical: 12,
+  },
+  listItemText: {color: colors.OTBBlack300, flex: 1},
+  listItemIcon: {transform: [{rotate: "180deg"}], color: colors.OTBBlack300},
 });

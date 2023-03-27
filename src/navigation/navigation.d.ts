@@ -44,6 +44,9 @@ export type RootStackParamList = {
   ManageUserScreen: undefined;
   MyPageMyReviewsScreen: undefined;
   MyPageFavoriteBoardGamesScreen: undefined;
+  MyPageNoticeScreen: undefined;
+  MyPageInquiryScreen: undefined;
+  MyPageSettingsScreen: undefined;
 };
 
 export type RootStackNavigationProp = NavigationProp<RootStackParamList>;
