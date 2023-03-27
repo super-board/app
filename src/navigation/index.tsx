@@ -5,7 +5,13 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
-import {LoginAppBar, OnboardingAppBar, RegisterAppBar, SearchAppBar} from "@/components";
+import {
+  LoginAppBar,
+  OnboardingAppBar,
+  RegisterAppBar,
+  ReviewAppBar,
+  SearchAppBar,
+} from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {Login} from "@/screens/mypage";
@@ -22,6 +28,7 @@ import {
 } from "@/screens/register";
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
+import {WriteScreen} from "@/screens/write";
 
 import {stackScreenOptions} from "./config";
 import BottomTab from "./stack/BottomTab";
@@ -86,6 +93,11 @@ const Navigation = () => {
               name="SearchScreen"
               options={{header: SearchAppBar}}
               component={SearchScreen}
+            />
+            <Stack.Screen
+              name="WriteScreen"
+              options={{header: ReviewAppBar, animation: "slide_from_bottom"}}
+              component={WriteScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: 64,
     paddingHorizontal: 24,
+    backgroundColor: colors.OTBBlack,
   },
   searchInput: {
     marginVertical: 8,

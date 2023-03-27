@@ -18,6 +18,7 @@ type OTBButtonType =
   | "medium-primary"
   | "medium-secondary"
   | "modal-primary"
+  | "modal-secondary"
   | "short-primary"
   | "short-secondary"
   | "short-tertiary";
@@ -132,6 +133,26 @@ function OTBButton({
         </Text>
       </TouchableHighlight>
     );
+  
+  if (type === "modal-secondary")
+    return (
+      <TouchableHighlight
+        style={[
+          styles.button,
+          styles.buttonModal,
+          disabled ? styles.buttonDisabled : styles.buttonModalSecondary,
+          style,
+        ]}
+        underlayColor={colors.OTBBlueDark}
+        disabled={disabled}
+        onPress={onPress}
+        {...otherProps}>
+        <Text style={[typography.subhead02, disabled ? styles.textDisabled : styles.textSecondary]}>
+          {text}
+        </Text>
+      </TouchableHighlight>
+    );
+
 
   if (type === "short-primary")
     return (
@@ -226,6 +247,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   buttonModalPrimary: {backgroundColor: colors.OTBBlue},
+  buttonModalSecondary: {backgroundColor: colors.white},
   buttonShort: {
     height: 48,
     borderRadius: 4,
