@@ -1,11 +1,11 @@
 import React from "react";
 
-import {Dimensions, Image, StyleSheet, Text, View} from "react-native";
+import {Dimensions, StyleSheet, View} from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 
-import effects from "@/constants/effects";
-import typography from "@/constants/typography";
 import {BoardGameSummary, useGetBoardGamesForHomeCurationQuery} from "@/store";
+
+import CurationCarouselItem from "./CurationCarouselItem";
 
 export default function CurationCarousel() {
   const {width: screenWidth} = Dimensions.get("window");
@@ -13,24 +13,9 @@ export default function CurationCarousel() {
 
   if (isLoading || !boardGames) return <View style={styles.container} />;
 
-  const renderItem = ({item}: {item: BoardGameSummary}) => {
-    return (
-      <View style={styles.itemContainer}>
-        {/* FIXME: item에서 이미지 source 불러오게 변경*/}
-        <Image source={require("@/assets/images/fallback/board-game-fallback.png")} />
-        <Text
-          style={[
-            typography.subhead01,
-            typography.textWhite,
-            typography.textCenter,
-            effects.textDropShadow,
-            styles.itemTitle,
-          ]}>
-          {item.name}
-        </Text>
-      </View>
-    );
-  };
+  const renderItem = ({item}: {item: BoardGameSummary}) => (
+    <CurationCarouselItem boardGame={item} />
+  );
 
   return (
     <View style={styles.container}>
@@ -56,6 +41,4 @@ export default function CurationCarousel() {
 
 const styles = StyleSheet.create({
   container: {width: "100%"},
-  itemContainer: {justifyContent: "center", alignItems: "center"},
-  itemTitle: {marginTop: -12},
 });

@@ -15,7 +15,7 @@ export default function Warn({
   visible,
   title = "",
   description = "",
-  dismissible = false,
+  dismissible = true,
   onRequestClose,
   ...otherProps
 }: ModalProps) {

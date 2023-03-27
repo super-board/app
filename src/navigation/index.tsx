@@ -6,6 +6,7 @@ import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {
+  BoardGameDetailsAppBar,
   EmptyAppBar,
   HistoryBackOnlyAppBar,
   OnboardingAppBar,
@@ -15,6 +16,7 @@ import {
 } from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
+import {BoardGameDetailsScreen} from "@/screens/boardgame";
 import {LoginScreen} from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
@@ -39,7 +41,39 @@ import {WriteScreen} from "@/screens/write";
 import {stackScreenOptions} from "./config";
 import BottomTab from "./stack/BottomTab";
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  OnboardingWelcomeScreen: undefined;
+  OnboardingTagSelectScreen: undefined;
+  OnboardingRecommendationScreen: undefined;
+  LoginScreen: undefined;
+  RegisterEmailVerificationScreen: undefined;
+  RegisterPasswordSettingScreen: {email?: string};
+  RegisterProfileSelectionScreen: {email?: string; password?: string};
+  RegisterNicknameSettingScreen: {email?: string; password?: string; profileCharacter?: string};
+  RegisterTagSelectScreen: {
+    email?: string;
+    password?: string;
+    profileCharacter?: string;
+    nickname?: string;
+  };
+  RegisterTermsAndConditionsScreen: {
+    email?: string;
+    password?: string;
+    profileCharacter?: string;
+    nickname?: string;
+    tagIds?: number[];
+  };
+  ResetPasswordEmailVerificationScreen: undefined;
+  ResetPasswordSettingScreen: {email?: string};
+  PermissionGrantNoticeScreen: undefined;
+  PermissionGrantRequestScreen: undefined;
+  BottomTabView: undefined;
+  SearchScreen: undefined;
+  WriteScreen: undefined;
+  BoardGameDetailsScreen: {id: number};
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
   const {isLoading, shouldRequestOnboarding} = useCheckOnboardingCompleted();
@@ -144,6 +178,11 @@ const Navigation = () => {
               name="WriteScreen"
               options={{header: ReviewAppBar, animation: "slide_from_bottom"}}
               component={WriteScreen}
+            />
+            <Stack.Screen
+              name="BoardGameDetailsScreen"
+              options={{header: BoardGameDetailsAppBar}}
+              component={BoardGameDetailsScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

@@ -1,4 +1,4 @@
-import type {TagGroup} from "./types";
+import type {TagGroup} from "../types";
 
 export const tagQueries = {
   getTagList: {

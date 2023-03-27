@@ -1,4 +1,4 @@
-import {Notifications} from "./types";
+import {Notifications} from "../types";
 
 export const notificationsQuery = {
   getRecentNotifications: {

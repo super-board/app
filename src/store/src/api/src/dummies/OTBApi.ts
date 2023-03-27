@@ -1,10 +1,19 @@
 import {createApi, fakeBaseQuery} from "@reduxjs/toolkit/query/react";
 
+import {
+  BoardGameDetails,
+  BoardGameSummary,
+  Notifications,
+  PaginatedComments,
+  PaginatedReviews,
+  ReviewSummary,
+  TagGroup,
+} from "../types";
 import {boardGameQueries} from "./boardGameQueries";
+import {commentQueries} from "./commentQueries";
 import {notificationsQuery} from "./notificationsQuery";
 import {reviewQueries} from "./reviewQueries";
 import {tagQueries} from "./tagQueries";
-import {BoardGameSummary, Notifications, ReviewSummary, TagGroup} from "./types";
 
 export const OTBApi = createApi({
   reducerPath: "OTBApi",
@@ -50,8 +59,40 @@ export const OTBApi = createApi({
     getBestReviews: build.query<ReviewSummary[], void>({
       queryFn: reviewQueries.getBestReviews.queryFn,
     }),
+    getReviews: build.query<PaginatedReviews, {boardGameId: number; page: number}>({
+      queryFn: reviewQueries.getReviews.queryFn,
+      serializeQueryArgs: ({queryArgs}) => queryArgs.boardGameId,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.hasNext = responseData.hasNext;
+          currentCacheData.reviews.push(...responseData.reviews);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
+    getComments: build.query<
+      PaginatedComments,
+      {boardGameId: number; reviewId: number; page: number}
+    >({
+      queryFn: commentQueries.getComments.queryFn,
+      serializeQueryArgs: ({queryArgs}) => queryArgs.boardGameId,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.hasNext = responseData.hasNext;
+          currentCacheData.comments.push(...responseData.comments);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
     getRecentNotifications: build.query<Notifications[], void>({
       queryFn: notificationsQuery.getRecentNotifications.queryFn,
+    }),
+    getBoardGameDetails: build.query<BoardGameDetails, number>({
+      queryFn: boardGameQueries.getBoardGameDetails.queryFn,
     }),
   }),
 });
@@ -63,5 +104,8 @@ export const {
   useGetRecommendedBoardGamesByTagsQuery,
   useGetBoardGamesByNameQuery,
   useGetBestReviewsQuery,
+  useGetReviewsQuery,
+  useGetCommentsQuery,
   useGetRecentNotificationsQuery,
+  useGetBoardGameDetailsQuery,
 } = OTBApi;
