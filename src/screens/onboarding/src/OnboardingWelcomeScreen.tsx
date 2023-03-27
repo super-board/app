@@ -16,7 +16,7 @@ type Props = {
 
 function OnboardingWelcomeScreen({navigation}: Props) {
   const navigateToLogin = () => {
-    navigation.navigate("Login");
+    navigation.navigate("LoginScreen");
   };
 
   const navigateToOnboardingTagSelectScreen = () => {
@@ -25,7 +25,7 @@ function OnboardingWelcomeScreen({navigation}: Props) {
 
   return (
     <ImageBackground
-      style={[style.container, styles.container]}
+      style={[style.screenWithoutAppBarContainer, styles.container]}
       imageStyle={styles.background}
       source={require("@/assets/images/background/onboarding-welcome.png")}>
       <View style={[styles.slogan]}>

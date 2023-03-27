@@ -5,7 +5,7 @@ import Carousel from "react-native-reanimated-carousel";
 
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
-import {BoardGameSummary, useGetBoardGamesForHomeCurationQuery} from "@/services/api";
+import {BoardGameSummary, useGetBoardGamesForHomeCurationQuery} from "@/store";
 
 export default function CurationCarousel() {
   const {width: screenWidth} = Dimensions.get("window");

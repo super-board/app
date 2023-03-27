@@ -17,7 +17,7 @@ import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useSelectedTagIds} from "@/hooks/common";
 import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {useGetTagListQuery} from "@/services/api";
+import {useGetTagListQuery} from "@/store";
 
 import OTBButton from "../../OTBButton";
 import SizedBox from "../../SizedBox";
@@ -66,7 +66,6 @@ export default function ResetTags({visible, onRequestClose}: ModalProps) {
 
   useEffect(() => {
     setSelectedTagIds(() => storedSelectedTagIds);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   return (

@@ -4,8 +4,8 @@ import {StyleSheet, Text, View} from "react-native";
 
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useGetRecentNotificationsQuery} from "@/services/api";
 import {DateTimeFormatter} from "@/services/formatter";
+import {useGetRecentNotificationsQuery} from "@/store";
 
 export default function NotificationsScreen() {
   const {isLoading, data: notifications} = useGetRecentNotificationsQuery();

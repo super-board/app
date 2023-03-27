@@ -6,7 +6,8 @@ import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {
-  LoginAppBar,
+  EmptyAppBar,
+  HistoryBackOnlyAppBar,
   OnboardingAppBar,
   RegisterAppBar,
   ReviewAppBar,
@@ -14,17 +15,22 @@ import {
 } from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
-import {Login} from "@/screens/mypage";
+import {LoginScreen} from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
   OnboardingTagSelectScreen,
   OnboardingWelcomeScreen,
 } from "@/screens/onboarding";
+import {PermissionGrantNoticeScreen, PermissionGrantRequestScreen} from "@/screens/permission";
 import {
-  RegisterEmail,
-  RegisterNickname,
-  RegisterPassword,
-  RegisterProfile,
+  RegisterEmailVerificationScreen,
+  RegisterNicknameSettingScreen,
+  RegisterPasswordSettingScreen,
+  RegisterProfileSelectionScreen,
+  RegisterTagSelectScreen,
+  RegisterTermsAndConditionsScreen,
+  ResetPasswordEmailVerificationScreen,
+  ResetPasswordSettingScreen,
 } from "@/screens/register";
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
@@ -45,7 +51,7 @@ const Navigation = () => {
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "BottomTab"}
+          initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "BottomTabView"}
           screenOptions={stackScreenOptions}>
           <Stack.Group>
             <Stack.Screen
@@ -65,30 +71,70 @@ const Navigation = () => {
             />
           </Stack.Group>
           <Stack.Group>
-            <Stack.Screen name="Login" options={{header: LoginAppBar}} component={Login} />
             <Stack.Screen
-              name="RegisterEmail"
-              options={{header: RegisterAppBar}}
-              component={RegisterEmail}
+              name="LoginScreen"
+              options={{header: HistoryBackOnlyAppBar}}
+              component={LoginScreen}
             />
             <Stack.Screen
-              name="RegisterPassword"
+              name="RegisterEmailVerificationScreen"
               options={{header: RegisterAppBar}}
-              component={RegisterPassword}
+              component={RegisterEmailVerificationScreen}
             />
             <Stack.Screen
-              name="RegisterProfile"
+              name="RegisterPasswordSettingScreen"
               options={{header: RegisterAppBar}}
-              component={RegisterProfile}
+              component={RegisterPasswordSettingScreen}
             />
             <Stack.Screen
-              name="RegisterNickname"
+              name="RegisterProfileSelectionScreen"
               options={{header: RegisterAppBar}}
-              component={RegisterNickname}
+              component={RegisterProfileSelectionScreen}
+            />
+            <Stack.Screen
+              name="RegisterNicknameSettingScreen"
+              options={{header: RegisterAppBar}}
+              component={RegisterNicknameSettingScreen}
+            />
+            <Stack.Screen
+              name="RegisterTagSelectScreen"
+              options={{header: RegisterAppBar}}
+              component={RegisterTagSelectScreen}
+            />
+            <Stack.Screen
+              name="RegisterTermsAndConditionsScreen"
+              options={{header: RegisterAppBar}}
+              component={RegisterTermsAndConditionsScreen}
+            />
+            <Stack.Screen
+              name="ResetPasswordEmailVerificationScreen"
+              options={{header: RegisterAppBar}}
+              component={ResetPasswordEmailVerificationScreen}
+            />
+            <Stack.Screen
+              name="ResetPasswordSettingScreen"
+              options={{header: RegisterAppBar}}
+              component={ResetPasswordSettingScreen}
             />
           </Stack.Group>
           <Stack.Group>
-            <Stack.Screen name="BottomTab" options={{headerShown: false}} component={BottomTab} />
+            <Stack.Screen
+              name="PermissionGrantNoticeScreen"
+              options={{header: EmptyAppBar}}
+              component={PermissionGrantNoticeScreen}
+            />
+            <Stack.Screen
+              name="PermissionGrantRequestScreen"
+              options={{header: HistoryBackOnlyAppBar}}
+              component={PermissionGrantRequestScreen}
+            />
+          </Stack.Group>
+          <Stack.Group>
+            <Stack.Screen
+              name="BottomTabView"
+              options={{headerShown: false}}
+              component={BottomTab}
+            />
             <Stack.Screen
               name="SearchScreen"
               options={{header: SearchAppBar}}

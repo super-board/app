@@ -6,11 +6,7 @@ import {BoardGameListView, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useSearchQuery} from "@/hooks/searchQuery";
-import {
-  BoardGameSummary,
-  useGetBoardGamesByNameQuery,
-  useGetTop10BoardGamesQuery,
-} from "@/services/api";
+import {BoardGameSummary, useGetBoardGamesByNameQuery, useGetTop10BoardGamesQuery} from "@/store";
 
 export default function SearchScreen() {
   const {isLoading: isTop10BoardGamesLoading, data: top10BoardGames} = useGetTop10BoardGamesQuery();
@@ -33,7 +29,6 @@ export default function SearchScreen() {
 
   useEffect(() => {
     resetSearchQuery();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isTop10BoardGamesLoading || isSearchResultsLoading || !top10BoardGames || !searchResults)

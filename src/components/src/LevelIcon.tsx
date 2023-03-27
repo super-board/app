@@ -1,7 +1,7 @@
 import React from "react";
 
 import * as SVG from "@/assets/svgs";
-import type {Level} from "@/services/api";
+import type {Level} from "@/store";
 
 type Props = {
   level: Level;

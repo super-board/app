@@ -116,6 +116,8 @@ const typography = StyleSheet.create({
     letterSpacing: -0.6,
   },
   textWhite: {color: colors.white},
+  textBlack500: {color: colors.OTBBlack500},
+  textBlueLight2: {color: colors.OTBBlueLight2},
   textCenter: {textAlign: "center"},
 });
 

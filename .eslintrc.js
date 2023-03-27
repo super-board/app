@@ -14,6 +14,7 @@ module.exports = {
     "react-native/no-inline-styles": [0],
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [0],
+    "react-hooks/exhaustive-deps": [0],
     "prettier/prettier": [
       "error",
       {

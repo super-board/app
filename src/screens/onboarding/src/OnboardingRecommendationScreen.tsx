@@ -11,7 +11,7 @@ import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useSelectedTagIds} from "@/hooks/common";
 import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {useGetRecommendedBoardGamesByTagsQuery} from "@/services/api";
+import {useGetRecommendedBoardGamesByTagsQuery} from "@/store";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -27,11 +27,11 @@ function OnboardingRecommendationScreen({navigation}: Props) {
 
   const submitOnboardingResult = async () => {
     await saveOnboardingResult();
-    navigation.reset({index: 0, routes: [{name: "BottomTab"}]});
+    navigation.reset({index: 0, routes: [{name: "BottomTabView"}]});
   };
 
   return (
-    <View style={[style.container, styles.container]}>
+    <View style={style.screenWithAppBarContainer}>
       <Text style={[typography.display04, effects.textDropShadow, styles.title]}>
         추천 보드게임
       </Text>
@@ -80,7 +80,6 @@ function OnboardingRecommendationScreen({navigation}: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: {paddingTop: 0},
   title: {color: colors.white},
   description: {color: colors.OTBBlack500},
   recommendationContainer: {

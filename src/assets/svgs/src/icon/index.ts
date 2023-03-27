@@ -1,5 +1,6 @@
 import AccountCircleAccent from "./account-circle-accent.svg";
 import AccountCircle from "./account-circle.svg";
+import AddAPhoto from "./add-a-photo.svg";
 import ArrowBack from "./arrow-back.svg";
 import CloseBlack from "./close-black.svg";
 import Close from "./close.svg";
@@ -8,6 +9,7 @@ import EditNote from "./edit-note.svg";
 import Edit from "./edit.svg";
 import HomeAccent from "./home-accent.svg";
 import Home from "./home.svg";
+import Invalid from "./invalid.svg";
 import Kakao from "./kakao.svg";
 import LevelClover from "./level-clover.svg";
 import LevelDiamond from "./level-diamond.svg";
@@ -16,6 +18,7 @@ import LevelSpade from "./level-spade.svg";
 import Naver from "./naver.svg";
 import Notifications from "./notifications.svg";
 import Camera from "./photo-camera.svg";
+import ProfileCheck from "./profile-check.svg";
 import RatingStarEmpty from "./rating-star-empty.svg";
 import RatingStarFull from "./rating-star-full.svg";
 import RatingStarHalf from "./rating-star-half.svg";
@@ -56,4 +59,7 @@ export {
   Camera,
   ReviewModal,
   Edit,
+  Invalid,
+  ProfileCheck,
+  AddAPhoto,
 };
