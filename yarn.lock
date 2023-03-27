@@ -1766,7 +1766,7 @@
   "resolved" "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-16.5.0.tgz"
   "version" "16.5.0"
 
-"@react-native-firebase/app@^16.5.0", "@react-native-firebase/app@16.5.0":
+"@react-native-firebase/app@^16.5.0", "@react-native-firebase/app@15.4.0", "@react-native-firebase/app@16.5.0":
   "integrity" "sha512-Vi8F4+UVS+ybv7w/7m9UjZWWUjMTr/0nChZBv5aVqo84Afld99hN5YT2wdpF4QbDs39l92WLJYUT9LMCqvBKeg=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-16.5.0.tgz"
   "version" "16.5.0"
@@ -1782,6 +1782,11 @@
   dependencies:
     "@expo/config-plugins" "^5.0.4"
     "stacktrace-js" "^2.0.0"
+
+"@react-native-firebase/messaging@^15.4.0":
+  "integrity" "sha512-irmmkAWwD0PqZc3Nua4vdDS5liPfJzis5/zC1XxZw/AS4AfoEj2yv3+r273bqx/E9aZ2Udl1GBPV2nWBDDR/yA=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-15.4.0.tgz"
+  "version" "15.4.0"
 
 "@react-native-seoul/kakao-login@^5.2.6":
   "integrity" "sha512-93pkAScF8uVnAwwFkOV5m0xCbkNFGc5ey99AUy9n191YZL5ywguEV0ZBcgij+1cPkM0e7xVcXGfUG7/GmXcn0A=="
