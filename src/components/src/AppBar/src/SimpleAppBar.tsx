@@ -10,16 +10,20 @@ import typography from "@/constants/typography";
 import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";
 
-export default function NotificationsAppBar({navigation}: NativeStackHeaderProps) {
+export default function SimpleAppBar({navigation, back, options}: NativeStackHeaderProps) {
   return (
     <AppBar.Container>
       <AppBar.Header>
         <AppBar.Center>
-          <Text style={[typography.subhead01, effects.textDropShadow, styles.title]}>알림</Text>
+          <Text style={[typography.subhead01, effects.textDropShadow, styles.title]}>
+            {options.title}
+          </Text>
         </AppBar.Center>
-        <AppBar.Left marginLeft={24}>
-          <AppBarButton.HistoryBack navigation={navigation} />
-        </AppBar.Left>
+        {back ? (
+          <AppBar.Left marginLeft={24}>
+            <AppBarButton.HistoryBack navigation={navigation} />
+          </AppBar.Left>
+        ) : null}
       </AppBar.Header>
     </AppBar.Container>
   );

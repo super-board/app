@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-import {RecommendationAppBar} from "@/components";
+import {SimpleAppBar} from "@/components";
 import {stackScreenOptions} from "@/navigation/config";
 import {RecommendationScreen} from "@/screens/search";
 
@@ -14,7 +14,7 @@ const SearchStack = () => {
       <Stack.Group>
         <Stack.Screen
           name="RecommendationScreen"
-          options={{header: RecommendationAppBar}}
+          options={{header: SimpleAppBar, title: "추천"}}
           component={RecommendationScreen}
         />
       </Stack.Group>
