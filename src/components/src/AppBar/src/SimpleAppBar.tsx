@@ -10,7 +10,7 @@ import typography from "@/constants/typography";
 import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";
 
-export default function SimpleAppBar({navigation, back, options}: NativeStackHeaderProps) {
+export default function SimpleAppBar({navigation, options}: NativeStackHeaderProps) {
   return (
     <AppBar.Container>
       <AppBar.Header>
@@ -19,11 +19,9 @@ export default function SimpleAppBar({navigation, back, options}: NativeStackHea
             {options.title}
           </Text>
         </AppBar.Center>
-        {back ? (
-          <AppBar.Left marginLeft={24}>
-            <AppBarButton.HistoryBack navigation={navigation} />
-          </AppBar.Left>
-        ) : null}
+        <AppBar.Left marginLeft={24}>
+          <AppBarButton.HistoryBack navigation={navigation} />
+        </AppBar.Left>
       </AppBar.Header>
     </AppBar.Container>
   );

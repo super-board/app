@@ -1,13 +1,11 @@
 import React from "react";
 
-import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import {NativeStackHeaderProps} from "@react-navigation/native-stack";
 
-import { AppBar } from "./AppBar";
-import { AppBarButton } from "./AppBarButton";
+import {AppBar} from "./AppBar";
+import {AppBarButton} from "./AppBarButton";
 
-export default function BackToHomeAppBar({
-  navigation,
-}: NativeStackHeaderProps) {
+export default function BackToHomeAppBar({navigation, options}: NativeStackHeaderProps) {
   const onCancel = () => {
     navigation.popToTop();
     navigation.navigate("HomeScreen");
