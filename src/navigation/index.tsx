@@ -9,6 +9,7 @@ import {
   BoardGameDetailsAppBar,
   EmptyAppBar,
   HistoryBackOnlyAppBar,
+  ManagerAppBar,
   OnboardingAppBar,
   RegisterAppBar,
   ReviewAppBar,
@@ -17,6 +18,7 @@ import {
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
+import {Comment, Inquiry, Manager, Notice, Report, Review} from "@/screens/manager";
 import {LoginScreen} from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
@@ -40,6 +42,7 @@ import {WriteScreen} from "@/screens/write";
 
 import {stackScreenOptions} from "./config";
 import BottomTab from "./stack/BottomTab";
+import Tabs from "./tab";
 
 export type RootStackParamList = {
   OnboardingWelcomeScreen: undefined;
@@ -71,6 +74,13 @@ export type RootStackParamList = {
   SearchScreen: undefined;
   WriteScreen: undefined;
   BoardGameDetailsScreen: {id: number};
+  ManagerScreen: undefined;
+  ManageNoticeScreen: undefined;
+  ManageInquiryScreen: undefined;
+  ManageReviewScreen: undefined;
+  ManageCommentScreen: undefined;
+  ManageReportScreen: undefined;
+  ManageTabScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -183,6 +193,28 @@ const Navigation = () => {
               name="BoardGameDetailsScreen"
               options={{header: BoardGameDetailsAppBar}}
               component={BoardGameDetailsScreen}
+            />
+          </Stack.Group>
+          <Stack.Group>
+            <Stack.Screen
+              name="ManagerScreen"
+              component={Manager}
+              options={{header: ManagerAppBar}}
+            />
+            <Stack.Screen
+              name="ManageNoticeScreen"
+              component={Notice}
+              options={{header: ManagerAppBar}}
+            />
+            <Stack.Screen
+              name="ManageInquiryScreen"
+              component={Inquiry}
+              options={{header: ManagerAppBar}}
+            />
+            <Stack.Screen
+              name="ManageTabScreen"
+              component={Tabs}
+              options={{header: ManagerAppBar}}
             />
           </Stack.Group>
         </Stack.Navigator>
