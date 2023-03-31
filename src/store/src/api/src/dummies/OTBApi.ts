@@ -6,6 +6,7 @@ import {
   BoardGameSummary,
   CommentDetails,
   MyPageDetails,
+  Notice,
   Notifications,
   Paginated,
   ReviewDetails,
@@ -309,6 +310,95 @@ export const OTBApi = createApi({
       },
       forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
     }),
+    getNotices: build.query<Paginated<Notice>, {page: number}>({
+      queryFn: () => ({
+        data: {
+          hasNext: true,
+          content: [
+            {
+              id: 1,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date().toISOString(),
+            },
+            {
+              id: 2,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date().toISOString(),
+            },
+            {
+              id: 3,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date().toISOString(),
+            },
+            {
+              id: 4,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date().toISOString(),
+            },
+            {
+              id: 5,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date().toISOString(),
+            },
+            {
+              id: 6,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date().toISOString(),
+            },
+            {
+              id: 7,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+            },
+            {
+              id: 8,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date().toISOString(),
+            },
+            {
+              id: 9,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+            },
+            {
+              id: 10,
+              title: "새로운 공지사항입니다",
+              content:
+                "새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항새로운 공지사항",
+              createdAt: new Date().toISOString(),
+            },
+          ] as Notice[],
+        },
+      }),
+      serializeQueryArgs: ({endpointName}) => endpointName,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.hasNext = responseData.hasNext;
+          currentCacheData.content.push(...responseData.content);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
   }),
 });
 
@@ -327,4 +417,5 @@ export const {
   useGetMyBadgesQuery,
   useGetMyReviewsQuery,
   useGetFavoriteBoardGamesQuery,
+  useGetNoticesQuery,
 } = OTBApi;

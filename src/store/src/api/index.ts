@@ -10,6 +10,7 @@ export type {
   LoginForm,
   MemberDetails,
   MemberSummary,
+  Notice,
   ProfileCharacter,
   RegisterForm,
   ResetPasswordForm,
