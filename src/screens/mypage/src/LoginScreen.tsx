@@ -33,11 +33,7 @@ export default function LoginScreen({navigation}: ScreenProps) {
     naver: () => {},
     kakao: () => {},
     register: () => {
-      // navigation.navigate("RegisterEmailVerificationScreen");
-      navigation.navigate("RegisterProfileSelectionScreen", {
-        email: "floatim00@gmail.com",
-        password: "asdf1234",
-      });
+      navigation.navigate("RegisterEmailVerificationScreen");
     },
     findPassword: () => {
       navigation.navigate("ResetPasswordEmailVerificationScreen");
