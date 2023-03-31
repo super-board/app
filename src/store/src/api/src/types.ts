@@ -137,3 +137,11 @@ export type Notice = {
   content: string;
   createdAt: string;
 };
+
+export type Inquiry = {
+  id: number;
+  title: string;
+  createdAt: string;
+  question: string;
+  answer: string;
+};

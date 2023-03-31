@@ -8,29 +8,31 @@ import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
 import {DateTimeFormatter} from "@/services/formatter";
-import {Notice} from "@/store";
 
 type Props = {
-  notice: Notice;
+  title?: string;
+  createdAt?: string;
+  content1?: string;
+  content2?: string;
 };
 
-function NoticeListItem({notice}: Props) {
+function PostListItem({title, createdAt = new Date().toISOString(), content1, content2}: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const togggleExpand = () => setIsExpanded(state => !state);
+  const toggleExpand = () => setIsExpanded(state => !state);
 
   return (
     <View>
-      <Pressable style={styles.titleContainer} onPress={togggleExpand}>
+      <Pressable style={styles.titleContainer} onPress={toggleExpand}>
         <View style={{flex: 1}}>
           <Text
             style={[typography.body01, effects.textDropShadow, {color: colors.OTBBlack50}]}
             ellipsizeMode="tail">
-            {notice.title}
+            {title}
           </Text>
           <SizedBox height={4} />
           <Text style={[typography.caption, {color: colors.OTBBlack400}]}>
-            {DateTimeFormatter.toJoinedDate(notice.createdAt, ".")}
+            {DateTimeFormatter.toJoinedDate(createdAt, ".")}
           </Text>
         </View>
         {isExpanded ? (
@@ -40,9 +42,18 @@ function NoticeListItem({notice}: Props) {
         )}
       </Pressable>
       {isExpanded ? (
-        <View style={styles.contentContainer}>
-          <Text style={[typography.body02, {color: colors.OTBBlack200}]}>{notice.content}</Text>
-        </View>
+        <>
+          {content1 ? (
+            <View style={[styles.contentContainer, {backgroundColor: colors.OTBBlack}]}>
+              <Text style={[typography.body02, {color: colors.OTBBlack200}]}>{content1}</Text>
+            </View>
+          ) : null}
+          {content2 ? (
+            <View style={styles.contentContainer}>
+              <Text style={[typography.body02, {color: colors.OTBBlack200}]}>{content2}</Text>
+            </View>
+          ) : null}
+        </>
       ) : null}
     </View>
   );
@@ -63,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(NoticeListItem);
+export default memo(PostListItem);

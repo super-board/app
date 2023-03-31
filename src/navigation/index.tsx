@@ -15,13 +15,13 @@ import {
 } from "@/components";
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
+import InquiryTab from "@/navigation/stack/InquiryTab";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
 import {
   LoginScreen,
   MyPageBadgeScreen,
   MyPageEditProfileScreen,
   MyPageFavoriteBoardGamesScreen,
-  MyPageInquiryScreen,
   MyPageMyReviewsScreen,
   MyPageNoticeScreen,
   MyPageSettingsScreen,
@@ -189,9 +189,9 @@ export default function Navigation() {
               component={MyPageNoticeScreen}
             />
             <Stack.Screen
-              name="MyPageInquiryScreen"
+              name="MyPageInquiryTab"
               options={{header: SimpleAppBar, title: "1:1문의"}}
-              component={MyPageInquiryScreen}
+              component={InquiryTab}
             />
             <Stack.Screen
               name="MyPageSettingsScreen"
