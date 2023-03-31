@@ -45,7 +45,7 @@ export type RootStackParamList = {
   MyPageMyReviewsScreen: undefined;
   MyPageFavoriteBoardGamesScreen: undefined;
   MyPageNoticeScreen: undefined;
-  MyPageInquiryScreen: undefined;
+  MyPageInquiryTab: NavigatorScreenParams<MyPageInquiryTabParamList>;
   MyPageSettingsScreen: undefined;
 };
 
@@ -78,6 +78,11 @@ export type SearchTabParamList = {
 
 export type MyPageTabParamList = {
   MyPageMainScreen: undefined;
+};
+
+export type MyPageInquiryTabParamList = {
+  MyPageNewInquiryScreen: undefined;
+  MyPageMyInquiriesScreen: undefined;
 };
 
 declare global {

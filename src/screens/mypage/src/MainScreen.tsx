@@ -58,7 +58,7 @@ export default function MainScreen({navigation}: ScreenProps) {
         navigation.navigate("MyPageNoticeScreen");
       },
       toInquiry: () => {
-        navigation.navigate("MyPageInquiryScreen");
+        navigation.navigate("MyPageInquiryTab");
       },
       toSettings: () => {
         navigation.navigate("MyPageSettingsScreen");

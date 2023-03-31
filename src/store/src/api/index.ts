@@ -6,6 +6,7 @@ export type {
   BadgeType,
   BoardGameSummary,
   CommentDetails,
+  Inquiry,
   Level,
   LoginForm,
   MemberDetails,

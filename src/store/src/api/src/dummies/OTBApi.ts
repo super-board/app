@@ -5,6 +5,7 @@ import {
   BoardGameDetails,
   BoardGameSummary,
   CommentDetails,
+  Inquiry,
   MyPageDetails,
   Notice,
   Notifications,
@@ -399,6 +400,115 @@ export const OTBApi = createApi({
       },
       forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
     }),
+    getMyInquires: build.query<Paginated<Inquiry>, {page: number}>({
+      queryFn: () => ({
+        data: {
+          hasNext: true,
+          content: [
+            {
+              id: 1,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 2,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 3,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 4,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 5,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 6,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 7,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 8,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 9,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+            {
+              id: 10,
+              title: "새로운 문의사항입니다.",
+              createdAt: new Date().toISOString(),
+              question:
+                "제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.제가 이게 궁금한데요.",
+              answer:
+                "대대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.대답은 이렇습니다.답은 이렇습니다.",
+            },
+          ] as Inquiry[],
+        },
+      }),
+      serializeQueryArgs: ({endpointName}) => endpointName,
+      merge: (currentCacheData, responseData, {arg}) => {
+        if (arg.page > 1) {
+          currentCacheData.hasNext = responseData.hasNext;
+          currentCacheData.content.push(...responseData.content);
+          return currentCacheData;
+        }
+        return responseData;
+      },
+      forceRefetch: ({currentArg, previousArg}) => currentArg !== previousArg,
+    }),
   }),
 });
 
@@ -418,4 +528,5 @@ export const {
   useGetMyReviewsQuery,
   useGetFavoriteBoardGamesQuery,
   useGetNoticesQuery,
+  useGetMyInquiresQuery,
 } = OTBApi;
