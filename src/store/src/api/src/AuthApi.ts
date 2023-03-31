@@ -1,6 +1,6 @@
 import {createApi} from "@reduxjs/toolkit/query/react";
 
-import {saveTokensAsync} from "../../authSlice";
+import {logoutAsync, saveTokensAsync} from "../../authSlice";
 import {OTBBaseQueryWithReAuthentication} from "./config";
 import {EmailVerificationPayload, LoginForm} from "./types";
 
@@ -35,8 +35,22 @@ export const AuthApi = createApi({
         }
       },
     }),
+    signOut: build.mutation<null, void>({
+      query: () => ({
+        url: "auth/sign-out",
+        method: "PATCH",
+      }),
+      onQueryStarted: async (_, {dispatch, queryFulfilled}) => {
+        await queryFulfilled;
+        dispatch(logoutAsync());
+      },
+    }),
   }),
 });
 
-export const {useSendVerificationMailMutation, useVerifyAuthCodeMutation, useSignInMutation} =
-  AuthApi;
+export const {
+  useSendVerificationMailMutation,
+  useVerifyAuthCodeMutation,
+  useSignInMutation,
+  useSignOutMutation,
+} = AuthApi;

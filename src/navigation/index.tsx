@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -15,6 +15,7 @@ import {
   SimpleAppBar,
 } from "@/components";
 import colors from "@/constants/colors";
+import {useLogin} from "@/hooks/common";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import InquiryTab from "@/navigation/stack/InquiryTab";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
@@ -57,16 +58,21 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function Navigation() {
   const {isLoading, shouldRequestOnboarding} = useCheckOnboardingCompleted();
+  const {shouldLogin} = useLogin();
   const insets = useSafeAreaInsets();
+
+  const initialRouteName = useCallback(() => {
+    if (shouldLogin) return "LoginScreen";
+    if (shouldRequestOnboarding) return "OnboardingWelcomeScreen";
+    return "BottomTabView";
+  }, [shouldLogin, shouldRequestOnboarding]);
 
   if (isLoading) return <SplashScreen />;
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "BottomTabView"}
-          screenOptions={stackScreenOptions}>
+        <Stack.Navigator initialRouteName={initialRouteName()} screenOptions={stackScreenOptions}>
           <Stack.Group>
             <Stack.Screen
               name="OnboardingWelcomeScreen"
@@ -87,7 +93,7 @@ export default function Navigation() {
           <Stack.Group>
             <Stack.Screen
               name="LoginScreen"
-              options={{header: SimpleAppBar}}
+              options={{header: SimpleAppBar, headerBackVisible: false}}
               component={LoginScreen}
             />
             <Stack.Screen

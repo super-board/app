@@ -6,13 +6,12 @@ import useSelectedTagIds from "./useSelectedTagIds";
 
 export default function useInitializeApp() {
   const {loadSelectedTags} = useSelectedTagIds();
-  const {login} = useLogin();
+  const {login, checkShouldLogin} = useLogin();
   const {checkOnboardingCompleted} = useCheckOnboardingCompleted();
   const {checkPermissionGrantRequested} = useCheckPermissionGrantRequested();
 
-  const initializeApp = () => {
-    loadSelectedTags();
-    login();
+  const initializeApp = async () => {
+    await Promise.allSettled([loadSelectedTags(), checkShouldLogin(), login()]);
     checkOnboardingCompleted();
     checkPermissionGrantRequested();
   };

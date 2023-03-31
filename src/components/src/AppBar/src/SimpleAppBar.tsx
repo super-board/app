@@ -19,9 +19,11 @@ export default function SimpleAppBar({navigation, options}: NativeStackHeaderPro
             {options.title}
           </Text>
         </AppBar.Center>
-        <AppBar.Left marginLeft={24}>
-          <AppBarButton.HistoryBack navigation={navigation} />
-        </AppBar.Left>
+        {options.headerBackVisible ? (
+          <AppBar.Left marginLeft={24}>
+            <AppBarButton.HistoryBack navigation={navigation} />
+          </AppBar.Left>
+        ) : null}
       </AppBar.Header>
     </AppBar.Container>
   );

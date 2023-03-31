@@ -77,8 +77,7 @@ export default function MainScreen({navigation}: ScreenProps) {
     }, []),
   );
 
-  // if (!didLogin || isLoading || !myPageDetails)
-  if (isLoading || !myPageDetails)
+  if (!didLogin || isLoading || !myPageDetails)
     return (
       <>
         <MainScreenSkeleton />
