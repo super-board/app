@@ -130,3 +130,10 @@ export type Badge = {
 };
 
 export type BadgeType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+
+export type Notice = {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+};
