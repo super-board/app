@@ -1,6 +1,8 @@
 import {createApi} from "@reduxjs/toolkit/query/react";
 
-import {logoutAsync, saveTokensAsync} from "../../authSlice";
+import {loadInterestTagsAsync} from "@/store/src/interestTagSlice";
+
+import {loginAsync, logoutAsync, saveTokensAsync} from "../../authSlice";
 import {OTBBaseQueryWithReAuthentication} from "./config";
 import {EmailVerificationPayload, LoginForm} from "./types";
 
@@ -29,7 +31,11 @@ export const AuthApi = createApi({
           const {meta} = await queryFulfilled;
           const accessToken = meta?.response?.headers.get("Authorization");
           const refreshToken = meta?.response?.headers.get("RefreshToken");
-          dispatch(saveTokensAsync({accessToken, refreshToken}));
+          await Promise.allSettled([
+            dispatch(saveTokensAsync({accessToken, refreshToken})),
+            dispatch(loginAsync()),
+          ]);
+          await dispatch(loadInterestTagsAsync());
         } catch (error) {
           console.log(error);
         }
