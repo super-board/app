@@ -11,9 +11,12 @@ export default function useInitializeApp() {
   const {checkPermissionGrantRequested} = useCheckPermissionGrantRequested();
 
   const initializeApp = async () => {
-    await Promise.allSettled([loadSelectedTags(), checkShouldLogin(), login()]);
-    checkOnboardingCompleted();
-    checkPermissionGrantRequested();
+    await Promise.allSettled([checkShouldLogin(), login()]);
+    await Promise.allSettled([
+      loadSelectedTags(),
+      checkOnboardingCompleted(),
+      checkPermissionGrantRequested(),
+    ]);
   };
 
   return {initializeApp};

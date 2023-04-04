@@ -1,6 +1,7 @@
 export * from "./src/AuthApi";
 export * from "./src/dummies/OTBApi";
 export * from "./src/MemberApi";
+export * from "./src/MyPageApi";
 export * from "./src/PasswordApi";
 export type {
   BadgeType,

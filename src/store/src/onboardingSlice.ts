@@ -41,8 +41,10 @@ export const checkOnboardingCompletedAsync = createAsyncThunk(
 export const saveOnboardingResultAsync = createAsyncThunk(
   "onboarding/saveOnboardingResultStatus",
   async (interestTagIds: number[]) => {
-    await AsyncStorageService.saveData(keys.INTEREST_TAG_IDS, interestTagIds);
-    await AsyncStorageService.saveData(keys.ONBOARDING_COMPLETED, true);
+    await Promise.all([
+      AsyncStorageService.saveData(keys.INTEREST_TAG_IDS, interestTagIds),
+      AsyncStorageService.saveData(keys.ONBOARDING_COMPLETED, true),
+    ]);
     return true;
   },
 );

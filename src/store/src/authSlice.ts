@@ -63,10 +63,12 @@ export const loginAsync = createAsyncThunk("auth/loginStatus", async (_, thunkAp
     if (response.ok) {
       accessToken = response.headers.get("Authorization");
       refreshToken = response.headers.get("RefreshToken");
-      await AsyncStorageService.removeData(keys.SHOULD_LOGIN);
-      // FIXME: 로그인 후 사용자 정보 받아서 태그 정보 업데이트
-      thunkApi.dispatch(saveOnboardingResultAsync([]));
-      thunkApi.dispatch(saveTokensAsync({accessToken, refreshToken}));
+      await Promise.allSettled([
+        AsyncStorageService.removeData(keys.SHOULD_LOGIN),
+        // FIXME: 로그인 후 사용자 정보 받아서 태그 정보 업데이트
+        thunkApi.dispatch(saveOnboardingResultAsync([2, 7])),
+        thunkApi.dispatch(saveTokensAsync({accessToken, refreshToken})),
+      ]);
     }
   } catch (e) {
     console.error(e);
