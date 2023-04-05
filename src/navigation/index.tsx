@@ -25,6 +25,7 @@ import {
   MyPageFavoriteBoardGamesScreen,
   MyPageMyReviewsScreen,
   MyPageNoticeScreen,
+  MyPageNotificationSettingsScreen,
   MyPageSettingsScreen,
 } from "@/screens/mypage";
 import {
@@ -142,7 +143,7 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="PermissionGrantRequestScreen"
-              options={{header: SimpleAppBar}}
+              options={{header: SimpleAppBar, headerBackVisible: true}}
               component={PermissionGrantRequestScreen}
             />
           </Stack.Group>
@@ -159,7 +160,12 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="WriteScreen"
-              options={{header: SimpleAppBar, title: "리뷰", animation: "slide_from_bottom"}}
+              options={{
+                header: SimpleAppBar,
+                title: "리뷰",
+                animation: "slide_from_bottom",
+                headerBackVisible: true,
+              }}
               component={WriteScreen}
             />
             <Stack.Screen
@@ -171,38 +177,47 @@ export default function Navigation() {
           <Stack.Group>
             <Stack.Screen
               name="MyPageEditProfileScreen"
-              options={{header: SimpleAppBar, title: "프로필 수정"}}
+              options={{header: SimpleAppBar, title: "프로필 수정", headerBackVisible: true}}
               component={MyPageEditProfileScreen}
             />
             <Stack.Screen
               name="MyPageBadgeScreen"
-              options={{header: SimpleAppBar, title: "내 뱃지"}}
+              options={{header: SimpleAppBar, title: "내 뱃지", headerBackVisible: true}}
               component={MyPageBadgeScreen}
             />
             <Stack.Screen
               name="MyPageMyReviewsScreen"
-              options={{header: SimpleAppBar, title: "내 리뷰"}}
+              options={{header: SimpleAppBar, title: "내 리뷰", headerBackVisible: true}}
               component={MyPageMyReviewsScreen}
             />
             <Stack.Screen
               name="MyPageFavoriteBoardGamesScreen"
-              options={{header: SimpleAppBar, title: "보드게임 좋아요 목록"}}
+              options={{
+                header: SimpleAppBar,
+                title: "보드게임 좋아요 목록",
+                headerBackVisible: true,
+              }}
               component={MyPageFavoriteBoardGamesScreen}
             />
             <Stack.Screen
               name="MyPageNoticeScreen"
-              options={{header: SimpleAppBar, title: "공지사항"}}
+              options={{header: SimpleAppBar, title: "공지사항", headerBackVisible: true}}
               component={MyPageNoticeScreen}
             />
             <Stack.Screen
               name="MyPageInquiryTab"
-              options={{header: SimpleAppBar, title: "1:1문의"}}
+              options={{header: SimpleAppBar, title: "1:1문의", headerBackVisible: true}}
               component={InquiryTab}
             />
             <Stack.Screen
               name="MyPageSettingsScreen"
-              options={{header: SimpleAppBar, title: "설정"}}
+              options={{header: SimpleAppBar, title: "설정", headerBackVisible: true}}
               component={MyPageSettingsScreen}
+            />
+            <Stack.Screen
+              name="MyPageNotificationSettingsScreen"
+              options={{header: SimpleAppBar, title: "알림", headerBackVisible: true}}
+              component={MyPageNotificationSettingsScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

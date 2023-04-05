@@ -7,4 +7,5 @@ export {default as MyPageMyInquiriesScreen} from "./src/MyInquiriesScreen";
 export {default as MyPageMyReviewsScreen} from "./src/MyReviewsScreen";
 export {default as MyPageNewInquiryScreen} from "./src/NewInquiryScreen";
 export {default as MyPageNoticeScreen} from "./src/NoticeScreen";
+export {default as MyPageNotificationSettingsScreen} from "./src/NotificationSettingsScreen";
 export {default as MyPageSettingsScreen} from "./src/SettingsScreen";
