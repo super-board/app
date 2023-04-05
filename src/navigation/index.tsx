@@ -27,6 +27,9 @@ import {
   MyPageNoticeScreen,
   MyPageNotificationSettingsScreen,
   MyPageSettingsScreen,
+  MyPageTermsAndConditionsListScreen,
+  MyPageTermsAndConditionsPrivacyScreen,
+  MyPageTermsAndConditionsScreen,
 } from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
@@ -218,6 +221,21 @@ export default function Navigation() {
               name="MyPageNotificationSettingsScreen"
               options={{header: SimpleAppBar, title: "알림", headerBackVisible: true}}
               component={MyPageNotificationSettingsScreen}
+            />
+            <Stack.Screen
+              name="MyPageTermsAndConditionsListScreen"
+              options={{header: SimpleAppBar, title: "정책 및 약관", headerBackVisible: true}}
+              component={MyPageTermsAndConditionsListScreen}
+            />
+            <Stack.Screen
+              name="MyPageTermsAndConditionsPrivacyScreen"
+              options={{header: SimpleAppBar, title: "개인정보 처리방침", headerBackVisible: true}}
+              component={MyPageTermsAndConditionsPrivacyScreen}
+            />
+            <Stack.Screen
+              name="MyPageTermsAndConditionsScreen"
+              options={{header: SimpleAppBar, title: "이용약관", headerBackVisible: true}}
+              component={MyPageTermsAndConditionsScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

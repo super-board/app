@@ -28,7 +28,9 @@ export default function SettingsScreen({navigation}: ScreenProps) {
     notificationSettings: () => {
       navigation.navigate("MyPageNotificationSettingsScreen");
     },
-    termsAndConditions: () => {},
+    termsAndConditions: () => {
+      navigation.navigate("MyPageTermsAndConditionsListScreen");
+    },
   };
 
   /* 로그아웃 요청이 성공하면 화면 이동 */

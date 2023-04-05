@@ -42,7 +42,9 @@ export type RootStackParamList = {
   MyPageCheckPasswordScreen: undefined;
   MyPageUpdatePasswordScreen: undefined;
   MyPageNotificationSettingsScreen: undefined;
+  MyPageTermsAndConditionsListScreen: undefined;
   MyPageTermsAndConditionsScreen: undefined;
+  MyPageTermsAndConditionsPrivacyScreen: undefined;
 };
 
 export type RootStackNavigationProp = NavigationProp<RootStackParamList>;
