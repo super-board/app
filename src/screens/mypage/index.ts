@@ -9,3 +9,6 @@ export {default as MyPageNewInquiryScreen} from "./src/NewInquiryScreen";
 export {default as MyPageNoticeScreen} from "./src/NoticeScreen";
 export {default as MyPageNotificationSettingsScreen} from "./src/NotificationSettingsScreen";
 export {default as MyPageSettingsScreen} from "./src/SettingsScreen";
+export {default as MyPageTermsAndConditionsListScreen} from "./src/TermsAndConditionsListScreen";
+export {default as MyPageTermsAndConditionsPrivacyScreen} from "./src/TermsAndConditionsPrivacyScreen";
+export {default as MyPageTermsAndConditionsScreen} from "./src/TermsAndConditionsScreen";
