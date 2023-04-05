@@ -47,6 +47,10 @@ export type RootStackParamList = {
   MyPageNoticeScreen: undefined;
   MyPageInquiryTab: NavigatorScreenParams<MyPageInquiryTabParamList>;
   MyPageSettingsScreen: undefined;
+  MyPageCheckPasswordScreen: undefined;
+  MyPageUpdatePasswordScreen: undefined;
+  MyPageNotificationSettingsScreen: undefined;
+  MyPageTermsAndConditionsScreen: undefined;
 };
 
 export type RootStackNavigationProp = NavigationProp<RootStackParamList>;

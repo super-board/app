@@ -23,6 +23,14 @@ export default function SettingsScreen({navigation}: ScreenProps) {
   const [logout, {isSuccess: shouldLogout}] = useSignOutMutation();
   const [withdrawAccount, {isSuccess: isSuccessToWithdraw}] = useWithdrawAccountMutation();
 
+  const onPress = {
+    updatePassword: () => {},
+    notificationSettings: () => {
+      navigation.navigate("MyPageNotificationSettingsScreen");
+    },
+    termsAndConditions: () => {},
+  };
+
   /* 로그아웃 요청이 성공하면 화면 이동 */
   useEffect(() => {
     if (shouldLogout) navigation.reset({index: 0, routes: [{name: "LoginScreen"}]});
@@ -40,11 +48,11 @@ export default function SettingsScreen({navigation}: ScreenProps) {
         <Text style={[typography.body01, {color: colors.OTBBlack50}]}>로그아웃</Text>
         <SVG.Icon.ArrowBack style={styles.buttonIcon} width={20} height={20} />
       </Pressable>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={onPress.updatePassword}>
         <Text style={[typography.body01, {color: colors.OTBBlack50}]}>비밀번호 변경</Text>
         <SVG.Icon.ArrowBack style={styles.buttonIcon} width={20} height={20} />
       </Pressable>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={onPress.notificationSettings}>
         <Text style={[typography.body01, {color: colors.OTBBlack50}]}>알림</Text>
         <SVG.Icon.ArrowBack style={styles.buttonIcon} width={20} height={20} />
       </Pressable>
@@ -52,7 +60,7 @@ export default function SettingsScreen({navigation}: ScreenProps) {
         <Text style={[typography.body01, {color: colors.OTBBlack50}]}>서비스 탈퇴</Text>
         <SVG.Icon.ArrowBack style={styles.buttonIcon} width={20} height={20} />
       </Pressable>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={onPress.termsAndConditions}>
         <Text style={[typography.body01, {color: colors.OTBBlack50}]}>정책 및 약관</Text>
         <SVG.Icon.ArrowBack style={styles.buttonIcon} width={20} height={20} />
       </Pressable>
