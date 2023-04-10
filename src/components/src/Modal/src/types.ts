@@ -6,6 +6,8 @@ export type ModalProps = DefModal["props"] & {
   title?: string;
   description?: string;
   dismissible?: boolean;
+  back?: boolean;
+  warn?: boolean;
 };
 
 export type DialogProps = ModalProps & {

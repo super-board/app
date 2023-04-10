@@ -36,6 +36,16 @@ export default function ({navigation}: ScreenProps) {
         text="비밀번호 변경 확인"
         onPress={checkPasswordShouldBeChanged}
       />
+      <OTBButton
+        type="basic-primary"
+        text="관리자"
+        onPress={() => navigation.navigate("ManagerScreen")}
+      />
+      <OTBButton
+        type="basic-primary"
+        text="회원관리"
+        onPress={() => navigation.navigate("ManageUserScreen")}
+      />
     </View>
   );
 }

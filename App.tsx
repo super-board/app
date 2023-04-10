@@ -1,7 +1,7 @@
 import React from "react";
 
 import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
-import {FirebaseMessagingTypes} from "@react-native-firebase/messaging";
+import {FirebaseMessagingTypes, firebase} from "@react-native-firebase/messaging";
 import {Alert, StatusBar} from "react-native";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {SafeAreaProvider} from "react-native-safe-area-context";

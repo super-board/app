@@ -16,6 +16,8 @@ export default function Warn({
   title = "",
   description = "",
   dismissible = true,
+  back = false,
+  warn = true,
   onRequestClose,
   ...otherProps
 }: ModalProps) {
@@ -35,7 +37,11 @@ export default function Warn({
         />
         <View style={styles.modalContainer}>
           <SizedBox height={8} />
-          <SVG.Common.Warning width={48} height={48} />
+          {warn ? (
+            <SVG.Common.Warning width={48} height={48} />
+          ) : (
+            <SVG.Icon.EditUnderLine width={48} height={48} />
+          )}
           <SizedBox height={24} />
           <Text style={[typography.subhead01, typography.textWhite, effects.textDropShadow]}>
             {title}
@@ -45,7 +51,22 @@ export default function Warn({
             {description}
           </Text>
           {description ? <SizedBox height={22} /> : null}
-          <OTBButton type="modal-primary" text="확인" onPress={onRequestClose} />
+          <View style={styles.button}>
+            {back ? (
+              <OTBButton
+                type="modal-secondary"
+                text="돌아가기"
+                onPress={onRequestClose}
+                style={{flex: 1, marginRight: 8}}
+              />
+            ) : null}
+            <OTBButton
+              type="modal-primary"
+              text="확인"
+              onPress={onRequestClose}
+              style={{flex: 1}}
+            />
+          </View>
         </View>
       </View>
     </DefModal>
@@ -71,5 +92,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 20,
     paddingVertical: 24,
+  },
+  button: {
+    flexDirection: "row",
+    flex: 1,
   },
 });

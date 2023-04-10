@@ -3,6 +3,8 @@ import AccountCircle from "./account-circle.svg";
 import AddAPhoto from "./add-a-photo.svg";
 import Age from "./age.svg";
 import ArrowBack from "./arrow-back.svg";
+import ArrowDown from "./arrow-down.svg";
+import ArrowUp from "./arrow-up.svg";
 import Category from "./category.svg";
 import Chat from "./chat.svg";
 import CloseBlack from "./close-black.svg";
@@ -10,6 +12,7 @@ import Close from "./close.svg";
 import Collapse from "./collapse.svg";
 import EditNoteAccent from "./edit-note-accent.svg";
 import EditNote from "./edit-note.svg";
+import EditUnderLine from "./edit-underline.svg";
 import Edit from "./edit.svg";
 import ExpandMore from "./expand-more.svg";
 import Favorite from "./favorite.svg";
@@ -80,4 +83,7 @@ export {
   Collapse,
   Edit,
   SignUp,
+  ArrowUp,
+  ArrowDown,
+  EditUnderLine,
 };
