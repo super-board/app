@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   },
   bottomActions: {
     alignItems: "center",
+    marginBottom: 40,
   },
   hyperlink: {
     margin: 0,
