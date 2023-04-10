@@ -21,9 +21,9 @@ export default function Manager({navigation}: ScreenProps) {
   const onPress = {
     notice: () => navigation.navigate("ManageNoticeScreen"),
     inquiry: () => navigation.navigate("ManageInquiryScreen"),
-    review: () => navigation.navigate("ManageTabScreen"),
-    commnet: () => navigation.navigate("ManageTabScreen"),
-    report: () => navigation.navigate("ManageTabScreen"),
+    review: () => navigation.navigate("ManageTabScreen", {screen: "ManageReviewScreen"}),
+    commnet: () => navigation.navigate("ManageTabScreen", {screen: "ManageCommentScreen"}),
+    report: () => navigation.navigate("ManageTabScreen", {screen: "ManageReportScreen"}),
   };
 
   return (

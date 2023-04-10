@@ -12,22 +12,18 @@ import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";
 
 export default function ManagerAppBar({navigation}: NativeStackHeaderProps) {
-  const screenName = useNavigationState(state => state.routes[state.index].name);
-  console.log("here", screenName);
   const title = () => {
-    switch (screenName) {
+    switch (useNavigationState(state => state.routes[state.index].name)) {
       case "ManagerScreen":
         return "관리자 모드";
       case "ManageNoticeScreen":
         return "공지사항";
       case "ManageInquiryScreen":
         return "1:1 문의";
-      case "ManageReviewScreen":
-        return "리뷰 관리";
-      case "ManageCommentScreen":
-        return "댓글 관리";
-      case "ManageReportScreen":
-        return "신고게시물 관리";
+      case "ManageTabScreen":
+        return "관리자 모드";
+      case "ManageUserScreen":
+        return "회원 관리";
     }
   };
 

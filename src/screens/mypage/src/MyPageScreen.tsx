@@ -41,6 +41,11 @@ export default function ({navigation}: ScreenProps) {
         text="관리자"
         onPress={() => navigation.navigate("ManagerScreen")}
       />
+      <OTBButton
+        type="basic-primary"
+        text="회원관리"
+        onPress={() => navigation.navigate("ManageUserScreen")}
+      />
     </View>
   );
 }

@@ -18,7 +18,7 @@ import {
 import colors from "@/constants/colors";
 import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
-import {Comment, Inquiry, Manager, Notice, Report, Review} from "@/screens/manager";
+import {Comment, Inquiry, Manager, Notice, Report, Review, User} from "@/screens/manager";
 import {LoginScreen} from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
@@ -81,6 +81,7 @@ export type RootStackParamList = {
   ManageCommentScreen: undefined;
   ManageReportScreen: undefined;
   ManageTabScreen: undefined;
+  ManageUserScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -214,6 +215,11 @@ const Navigation = () => {
             <Stack.Screen
               name="ManageTabScreen"
               component={Tabs}
+              options={{header: ManagerAppBar}}
+            />
+            <Stack.Screen
+              name="ManageUserScreen"
+              component={User}
               options={{header: ManagerAppBar}}
             />
           </Stack.Group>
