@@ -84,6 +84,7 @@ export default function ProfileSelectionScreen({navigation, route}: ScreenProps)
             profileCharacter: profile,
           })
         }
+        style={{marginBottom: 40}}
       />
       <SizedBox height={36} />
     </View>

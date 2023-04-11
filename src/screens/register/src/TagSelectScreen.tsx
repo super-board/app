@@ -82,6 +82,7 @@ export default function TagSelectScreen({navigation, route}: ScreenProps) {
         text="다음"
         disabled={isLoading || !selectedTagIds.length}
         onPress={onNextPage}
+        style={{marginBottom: 40}}
       />
       <SizedBox height={36} />
 

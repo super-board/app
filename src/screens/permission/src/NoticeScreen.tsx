@@ -67,6 +67,7 @@ export default function NoticeScreen({navigation}: ScreenProps) {
         type="basic-primary"
         text="확인"
         onPress={() => navigation.navigate("PermissionGrantRequestScreen")}
+        style={{marginBottom: 40}}
       />
       <SizedBox height={36} />
     </View>

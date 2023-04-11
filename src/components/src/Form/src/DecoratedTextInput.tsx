@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   label: {color: colors.OTBBlack400},
   input: {
-    paddingHorizontal: 16,
+    padding: 16,
     borderRadius: 4,
     borderWidth: 1,
   },

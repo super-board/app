@@ -119,6 +119,7 @@ export default function LoginScreen({navigation}: ScreenProps) {
         text="로그인"
         onPress={onPress.login}
         disabled={!email || !password || isLoading}
+        style={{marginBottom: 40}}
       />
       <SizedBox height={36} />
     </KeyboardView>
@@ -141,5 +142,8 @@ const styles = StyleSheet.create({
     borderColor: "white",
     marginHorizontal: 8,
     height: 12.5,
+  },
+  button: {
+    marginBottom: 40,
   },
 });

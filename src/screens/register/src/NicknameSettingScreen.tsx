@@ -76,6 +76,7 @@ export default function NicknameSettingScreen({navigation, route}: ScreenProps) 
         text="다음"
         onPress={() => checkDuplicateNicknameRegistered(nickname)}
         disabled={isLoading || !nickname.length || !isValidNickname}
+        style={{marginBottom: 40}}
       />
       <SizedBox height={36} />
 

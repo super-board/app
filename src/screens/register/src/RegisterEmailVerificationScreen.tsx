@@ -204,6 +204,7 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
         text="다음"
         onPress={onNextPage}
         disabled={isAuthCodeExpired || authCode.length !== 6}
+        style={{marginBottom: 40}}
       />
       <SizedBox height={36} />
 

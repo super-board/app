@@ -52,7 +52,12 @@ export default function RequestScreen({navigation}: ScreenProps) {
 
       <FlexEmptyFill />
 
-      <OTBButton type="basic-primary" text="확인" onPress={onRequestPermissions} />
+      <OTBButton
+        type="basic-primary"
+        text="확인"
+        onPress={onRequestPermissions}
+        style={{marginBottom: 40}}
+      />
       <SizedBox height={36} />
     </View>
   );

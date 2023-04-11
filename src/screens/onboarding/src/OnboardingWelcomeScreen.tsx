@@ -7,6 +7,7 @@ import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-n
 import {OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
+import ios from "@/constants/ios";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 
@@ -34,7 +35,7 @@ function OnboardingWelcomeScreen({navigation}: Props) {
         </Text>
       </View>
 
-      <View style={styles.bottomActions}>
+      <View style={[styles.bottomActions, {marginBottom: 40}]}>
         <OTBButton type="basic-primary" text="로그인" onPress={navigateToLogin} />
         <SizedBox height={8} />
         <TouchableOpacity activeOpacity={1} onPress={navigateToOnboardingTagSelectScreen}>
@@ -72,7 +73,6 @@ const styles = StyleSheet.create({
   },
   bottomActions: {
     alignItems: "center",
-    marginBottom: 40,
   },
   hyperlink: {
     margin: 0,

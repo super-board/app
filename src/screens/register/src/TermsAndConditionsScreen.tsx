@@ -145,6 +145,7 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
         text="완료"
         onPress={onSignUp}
         disabled={!didAgreeAll || isSigningUp || isSigningIn}
+        style={{marginBottom: 80}}
       />
 
       <BottomSheetModal
