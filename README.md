@@ -1,4 +1,4 @@
-# 알아라 슈퍼보드 App
+# On The Board App
 
 ## React Native Debugger
 ```
