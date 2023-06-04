@@ -1,8 +1,10 @@
 import React, {useCallback, useState} from "react";
 
+import {useQuery} from "@tanstack/react-query";
 import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
 import {TouchableOpacity} from "react-native-gesture-handler";
 
+import {api} from "@/api";
 import * as SVG from "@/assets/svgs";
 import {OTBButton, RatingIcons, SizedBox} from "@/components";
 import colors from "@/constants/colors";
@@ -11,22 +13,23 @@ import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {NumberFormatter} from "@/services/formatter";
-import {useGetBoardGameDetailsQuery, useGetReviewsQuery} from "@/store";
 
 import {ReviewList} from "../components";
 
-export default function DetailsScreen({navigation, route}: ScreenProps) {
+export default function DetailsScreen({route}: ScreenProps) {
   const {id} = route.params as {id: number};
   const {
     isLoading: isBoardGameDetailsLoading,
     isSuccess,
     data: boardGame,
-  } = useGetBoardGameDetailsQuery(id);
+  } = useQuery(["boardgames/details", id], () => api.boardGame.fetchBoardGameDetails(id));
 
   const [page, setPage] = useState(1);
-  const {isLoading: isReviewsLoading, data: paginatedReviews} = useGetReviewsQuery(
-    {boardGameId: boardGame?.id ?? 0, page},
-    {skip: !isSuccess},
+  // FIXME: 연동시 무한스크롤로 변경
+  const {isLoading: isReviewsLoading, data: paginatedReviews} = useQuery(
+    ["reviews"],
+    api.review.fetchReviews,
+    {enabled: isSuccess},
   );
 
   const findTag = useCallback(
@@ -113,7 +116,7 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
         <ReviewList reviews={paginatedReviews.content} />
       ) : null}
 
-      {!isReviewsLoading && paginatedReviews?.hasNext ? (
+      {!isReviewsLoading && paginatedReviews?.pageInfo.hasNext ? (
         <TouchableOpacity
           activeOpacity={1}
           style={styles.moreReviewsButton}

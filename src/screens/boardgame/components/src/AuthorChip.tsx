@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from "react-native";
 
 import {LevelIcon, ProfileImage, SizedBox} from "@/components";
 import typography from "@/constants/typography";
-import {MemberSummary} from "@/store";
+import {MemberSummary} from "@/types";
 
 type Props = {
   author: MemberSummary;

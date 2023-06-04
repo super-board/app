@@ -1,7 +1,7 @@
 import React from "react";
 
 import * as SVG from "@/assets/svgs";
-import {ProfileCharacter} from "@/store";
+import {ProfileCharacter} from "@/types";
 
 type Props = {
   type: ProfileCharacter;

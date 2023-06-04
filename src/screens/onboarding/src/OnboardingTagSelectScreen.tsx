@@ -1,46 +1,40 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {useQuery} from "@tanstack/react-query";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
+import {api} from "@/api";
 import {Modal, OTBButton, SizedBox, TagChip} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useSelectedTagIds} from "@/hooks/common";
-import {useModal} from "@/hooks/modal";
-import {useGetTagListQuery} from "@/store";
+import {useFavoriteTagsForm, useModal} from "@/hooks";
+import {useFavoriteTagsStore} from "@/zustand-stores";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 function OnboardingTagSelectScreen({navigation}: Props) {
-  const {isLoading, data: tagList} = useGetTagListQuery();
-  const {selectedTagIds, toggleTag, resetSelectedTags, isSelectedTag} = useSelectedTagIds();
+  const {data: tagList, isLoading} = useQuery(["tags"], api.tag.fetchTags);
   const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
   const {
     visible: loadingVisible,
     openModal: openLoadingModal,
     closeModal: closeLoadingModal,
   } = useModal();
+  const {selectedTagIds, toggleTag, isSelectedTag} = useFavoriteTagsForm(openWarnModal);
+  const {saveFavoriteTags} = useFavoriteTagsStore();
   const [loadingText, setLoadingText] = useState(
     "온더보드가 당신을 위한\n보드게임을 찾는 중입니다.",
   );
 
-  const toggleTagSelection = (id: number) => {
-    if (!isSelectedTag(id) && selectedTagIds.length === 5) {
-      openWarnModal();
-      return;
-    }
-
-    toggleTag(id);
-  };
-
   const findRecommendation = () => {
     openLoadingModal();
+    saveFavoriteTags(selectedTagIds);
 
     const iterator = generateLoadingText();
     const interval = setInterval(() => setLoadingText(() => iterator.next().value as string), 750);
@@ -59,10 +53,6 @@ function OnboardingTagSelectScreen({navigation}: Props) {
       yield "온더보드가 당신을 위한\n보드게임을 찾는 중입니다.";
     }
   }
-
-  useEffect(() => {
-    resetSelectedTags();
-  }, []);
 
   return (
     <View style={style.screenWithAppBarContainer}>
@@ -89,8 +79,11 @@ function OnboardingTagSelectScreen({navigation}: Props) {
                     <TouchableOpacity
                       key={tag.id}
                       activeOpacity={1}
-                      onPress={() => toggleTagSelection(tag.id)}>
-                      <TagChip text={tag.name} active={isSelectedTag(tag.id)} />
+                      onPress={() => toggleTag(tag.id)}>
+                      <TagChip
+                        text={tag.name}
+                        type={isSelectedTag(tag.id) ? "active" : "inactive"}
+                      />
                     </TouchableOpacity>
                   ))}
                 </View>

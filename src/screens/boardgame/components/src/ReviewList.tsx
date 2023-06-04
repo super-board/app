@@ -2,7 +2,7 @@ import React from "react";
 
 import {StyleProp, StyleSheet, View, ViewStyle} from "react-native";
 
-import type {ReviewDetails} from "@/store";
+import type {ReviewDetails} from "@/types";
 
 import ReviewListItem from "./ReviewListItem";
 

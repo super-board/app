@@ -7,6 +7,7 @@ export type RootStackParamList = {
   OnboardingTagSelectScreen: undefined;
   OnboardingRecommendationScreen: undefined;
   LoginScreen: undefined;
+  OnboardingLoginScreen: undefined;
   RegisterEmailVerificationScreen: undefined;
   RegisterPasswordSettingScreen: {email?: string};
   RegisterProfileSelectionScreen: {email?: string; password?: string};

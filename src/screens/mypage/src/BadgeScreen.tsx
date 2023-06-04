@@ -4,56 +4,80 @@ import {Dimensions, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import {SizedBox} from "@/components";
 import colors from "@/constants/colors";
-import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {BadgeType, useGetMyBadgesQuery, useGetMyPageDetailsQuery} from "@/store";
+import {useLoginInfo} from "@/hooks";
+import {BadgeType} from "@/types";
 
 import {BadgeListItem} from "../components";
 
-export default function BadgeScreen({navigation}: ScreenProps) {
-  const {isLoading: isMyPageDetailsLoading, data: myPageDetails} = useGetMyPageDetailsQuery();
-  const {isLoading: isMyBadgesLoading, data: myBadges} = useGetMyBadgesQuery();
+export default function BadgeScreen() {
+  const {isLoading, loginInfo} = useLoginInfo();
 
-  const isBadgeAchieved = (type: BadgeType) =>
-    myBadges?.find(badge => badge.type === type) !== undefined;
+  const isBadgeAchieved = (type: BadgeType) => loginInfo?.badges.includes(type);
 
-  if (isMyPageDetailsLoading || isMyBadgesLoading || !myPageDetails || !myBadges)
-    return <View style={style.screenWithAppBarContainer} />;
+  if (isLoading || !loginInfo) return <View style={style.screenWithAppBarContainer} />;
 
   return (
     <ScrollView style={style.screenWithAppBarContainer}>
       <SizedBox height={16} />
       <View style={styles.headerContainer}>
         <Text style={[typography.headline, {color: colors.OTBBlack100}]}>
-          {myPageDetails.nickname}님이{"\n"}현재 획득하신 뱃지
+          {loginInfo.nickname}님이{"\n"}현재 획득하신 뱃지
         </Text>
         <Text style={[typography.headline, {color: colors.OTBBlueLight4}]}>
-          {myBadges.length}/10개
+          {loginInfo.badges.length}/10개
         </Text>
       </View>
       <SizedBox height={36} />
 
       <View style={styles.badgeContainer}>
-        <BadgeListItem type={1} isAchieved={isBadgeAchieved(1)} />
-        <BadgeListItem type={2} isAchieved={isBadgeAchieved(2)} />
-        <BadgeListItem type={3} isAchieved={isBadgeAchieved(3)} />
+        <BadgeListItem type={"JOIN"} isAchieved={isBadgeAchieved("JOIN")} />
+        <BadgeListItem
+          type={"POST_FIRST_REVIEW"}
+          isAchieved={isBadgeAchieved("POST_FIRST_REVIEW")}
+        />
+        <BadgeListItem
+          type={"POST_FIVE_REVIEWS"}
+          isAchieved={isBadgeAchieved("POST_FIVE_REVIEWS")}
+        />
       </View>
       <SizedBox height={24} />
       <View style={styles.badgeContainer}>
-        <BadgeListItem type={4} isAchieved={isBadgeAchieved(4)} />
-        <BadgeListItem type={5} isAchieved={isBadgeAchieved(5)} />
-        <BadgeListItem type={6} isAchieved={isBadgeAchieved(6)} />
+        <BadgeListItem
+          type={"ATTEND_SEVEN_DAYS"}
+          isAchieved={isBadgeAchieved("ATTEND_SEVEN_DAYS")}
+        />
+        <BadgeListItem
+          type={"ATTEND_THIRTY_DAYS"}
+          isAchieved={isBadgeAchieved("ATTEND_THIRTY_DAYS")}
+        />
+        <BadgeListItem
+          type={"SET_PROFILE_CHARACTER"}
+          isAchieved={isBadgeAchieved("SET_PROFILE_CHARACTER")}
+        />
       </View>
       <SizedBox height={24} />
       <View style={styles.badgeContainer}>
-        <BadgeListItem type={7} isAchieved={isBadgeAchieved(7)} />
-        <BadgeListItem type={8} isAchieved={isBadgeAchieved(8)} />
-        <BadgeListItem type={9} isAchieved={isBadgeAchieved(9)} />
+        <BadgeListItem
+          type={"SET_PUSH_ALARM_ON"}
+          isAchieved={isBadgeAchieved("SET_PUSH_ALARM_ON")}
+        />
+        <BadgeListItem
+          type={"POST_FIVE_COMMENTS"}
+          isAchieved={isBadgeAchieved("POST_FIVE_COMMENTS")}
+        />
+        <BadgeListItem
+          type={"SELECTED_RECOMMENDED_REVIEW"}
+          isAchieved={isBadgeAchieved("SELECTED_RECOMMENDED_REVIEW")}
+        />
       </View>
       <SizedBox height={24} />
       <View style={styles.badgeContainer}>
-        <BadgeListItem type={10} isAchieved={isBadgeAchieved(10)} />
+        <BadgeListItem
+          type={"GAIN_TEN_REVIEW_LIKES"}
+          isAchieved={isBadgeAchieved("GAIN_TEN_REVIEW_LIKES")}
+        />
       </View>
       <SizedBox height={24} />
     </ScrollView>

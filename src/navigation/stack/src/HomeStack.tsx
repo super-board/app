@@ -16,7 +16,7 @@ export default function HomeStack() {
         <Stack.Screen name="HomeScreen" options={{header: HomeAppBar}} component={HomeScreen} />
         <Stack.Screen
           name="NotificationsScreen"
-          options={{header: SimpleAppBar, title: "알림"}}
+          options={{header: SimpleAppBar, title: "알림", headerBackVisible: true}}
           component={NotificationsScreen}
         />
       </Stack.Group>

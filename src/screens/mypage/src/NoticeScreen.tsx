@@ -1,18 +1,21 @@
 import React, {useCallback, useState} from "react";
 
+import {useQuery} from "@tanstack/react-query";
 import {FlatList, View} from "react-native";
 
+import {api} from "@/api";
 import style from "@/constants/style";
-import {Notice, useGetNoticesQuery} from "@/store";
+import {Notice} from "@/types";
 
 import {PostListItem} from "../components";
 
 export default function NoticeScreen() {
   const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedNotices} = useGetNoticesQuery({page});
+  // FIXME: 무한스크롤 변경
+  const {isLoading, data: paginatedNotices} = useQuery(["notices", page], api.notice.fetchNotices);
 
   const onEndReached = () => {
-    if (paginatedNotices?.hasNext) setPage(state => state + 1);
+    if (paginatedNotices?.pageInfo.hasNext) setPage(state => state + 1);
   };
 
   const renderItem = useCallback(

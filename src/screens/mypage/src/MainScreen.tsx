@@ -1,31 +1,36 @@
 import React, {useCallback, useMemo} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
+import {useQuery} from "@tanstack/react-query";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 
+import {api} from "@/api";
 import * as SVG from "@/assets/svgs";
 import {
+  FavoriteTagsHorizontalView,
   LevelIconWithBackground,
   LevelText,
   Modal,
   OTBButton,
   ProfileImage,
-  SelectedTagsHorizontalListView,
   SizedBox,
 } from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useLogin} from "@/hooks/common";
-import {useModal} from "@/hooks/modal";
-import {useGetMyPageDetailsQuery} from "@/store";
+import {useLoginInfo, useModal} from "@/hooks";
+import {useAuthStore} from "@/zustand-stores";
 
 import {FavoriteBoardGamesPreview, MainScreenSkeleton, MyReviewsPreview} from "../components";
 
 export default function MainScreen({navigation}: ScreenProps) {
-  const {didLogin} = useLogin();
-  const {isLoading, data: myPageDetails} = useGetMyPageDetailsQuery();
+  const didLogin = useAuthStore(state => !!state.refreshToken);
+  const {isLoading: isMyPageDetailsLoading, data: myPageDetails} = useQuery(
+    ["members/mypage"],
+    api.myPage.fetchDetails,
+  );
+  const {isLoading: isLoginInfoLoading, loginInfo} = useLoginInfo();
   const {
     visible: isSignUpModalVisible,
     openModal: openSignUpModal,
@@ -77,7 +82,7 @@ export default function MainScreen({navigation}: ScreenProps) {
     }, []),
   );
 
-  if (!didLogin || isLoading || !myPageDetails)
+  if (!didLogin || isMyPageDetailsLoading || !myPageDetails || isLoginInfoLoading || !loginInfo)
     return (
       <>
         <MainScreenSkeleton />
@@ -96,19 +101,16 @@ export default function MainScreen({navigation}: ScreenProps) {
     <ScrollView style={style.screenWithAppBarContainer}>
       <SizedBox height={20} />
       <View style={styles.profileContainer}>
-        <ProfileImage type={myPageDetails.profileCharacter} width={96} height={96} />
-        <Text style={[typography.headline, typography.textWhite]}>{myPageDetails.nickname}</Text>
+        <ProfileImage type={loginInfo.profileCharacter} width={96} height={96} />
+        <Text style={[typography.headline, typography.textWhite]}>{loginInfo.nickname}</Text>
       </View>
       <SizedBox height={8} />
 
       <View style={styles.levelContainer}>
-        <LevelIconWithBackground level={myPageDetails.level} />
+        <LevelIconWithBackground level={loginInfo.level} />
         <SizedBox width={7} />
         <View style={{flex: 1}}>
-          <LevelText
-            style={[typography.subhead02, typography.textWhite]}
-            level={myPageDetails.level}
-          />
+          <LevelText style={[typography.subhead02, typography.textWhite]} level={loginInfo.level} />
           <Text style={[typography.caption, typography.textWhite]}>
             {myPageDetails.point}포인트
           </Text>
@@ -124,7 +126,7 @@ export default function MainScreen({navigation}: ScreenProps) {
         <View style={{flexDirection: "row", gap: 8}}>
           <Text style={[typography.subhead01, {color: colors.OTBBlack100}]}>내 뱃지</Text>
           <Text style={[typography.subhead02, {color: colors.OTBBlueLight4}]}>
-            {myPageDetails.badgeCounts}/10개
+            {loginInfo.badges.length}/10개
           </Text>
         </View>
         <Pressable style={styles.link} onPress={onPress.moreBadges}>
@@ -140,7 +142,7 @@ export default function MainScreen({navigation}: ScreenProps) {
         </Pressable>
       </View>
       <SizedBox height={8} />
-      <SelectedTagsHorizontalListView insetPadding={0} chipType="myPage" />
+      <FavoriteTagsHorizontalView insetPadding={0} chipType="myPage" />
       <SizedBox height={16} />
 
       <View style={styles.sectionRow}>
@@ -163,14 +165,14 @@ export default function MainScreen({navigation}: ScreenProps) {
             보드게임 좋아요 목록
           </Text>
         </View>
-        {myPageDetails.favoriteBoardGames.length > 3 ? (
+        {myPageDetails.favoriteBoardgames.length > 3 ? (
           <Pressable style={styles.link} onPress={onPress.moreFavoriteBoardGames}>
             <Text style={[typography.caption, styles.linkText]}>더보기</Text>
           </Pressable>
         ) : null}
       </View>
       <SizedBox height={16} />
-      <FavoriteBoardGamesPreview boardGames={myPageDetails.favoriteBoardGames} />
+      <FavoriteBoardGamesPreview boardGames={myPageDetails.favoriteBoardgames} />
       <SizedBox height={24} />
 
       <View style={styles.sectionRow}>

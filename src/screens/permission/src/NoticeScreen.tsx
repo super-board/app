@@ -9,10 +9,10 @@ import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useCheckPermissionGrantRequested} from "@/hooks/permssion";
+import {usePermissionGrantStore} from "@/zustand-stores";
 
 export default function NoticeScreen({navigation}: ScreenProps) {
-  const {shouldRequestPermissionGrant} = useCheckPermissionGrantRequested();
+  const {shouldRequestPermissionGrant} = usePermissionGrantStore();
 
   useFocusEffect(
     useCallback(() => {

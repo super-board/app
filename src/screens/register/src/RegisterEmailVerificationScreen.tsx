@@ -1,8 +1,10 @@
 import React, {useCallback, useEffect, useState} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
+import {useMutation} from "@tanstack/react-query";
 import Animated, {FadeIn, FadeInUp, FadeOutDown} from "react-native-reanimated";
 
+import {api} from "@/api";
 import {
   DecoratedTextInput,
   FlexEmptyFill,
@@ -15,16 +17,11 @@ import {
 } from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import {useTextInput} from "@/hooks/form";
-import {useModal} from "@/hooks/modal";
+import {useModal, useTextInput} from "@/hooks";
 import {Validator} from "@/services/validator";
-import {
-  useCheckDuplicateEmailRegisteredMutation,
-  useSendVerificationMailMutation,
-  useVerifyAuthCodeMutation,
-} from "@/store";
 
 export default function EmailVerificationScreen({navigation}: ScreenProps) {
+  const [mailSentTimestamp, setMailSentTimestamp] = React.useState(new Date().getTime());
   const {
     value: email,
     isValid: isValidEmail,
@@ -48,24 +45,23 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
     closeModal: closeExpiredAuthCodeModal,
   } = useModal();
 
-  const [
-    checkDuplicateEmailRegistered,
-    {
-      isSuccess: canSendVerificationMail,
-      isError: shouldAlertDuplicateEmailError,
-      reset: resetDuplicateEmailError,
-    },
-  ] = useCheckDuplicateEmailRegisteredMutation();
-  const [sendVerificationMail, {data: clientKeyResponse, fulfilledTimeStamp}] =
-    useSendVerificationMailMutation();
-  const [
-    verifyAuthCode,
-    {
-      isSuccess: canSubmit,
-      isError: shouldAlertInvalidAuthCodeError,
-      reset: resetInvalidAuthCodeError,
-    },
-  ] = useVerifyAuthCodeMutation();
+  const {
+    mutate: checkDuplicateEmailRegistered,
+    isSuccess: canSendVerificationMail,
+    isError: shouldAlertDuplicateEmailError,
+    reset: resetDuplicateEmailError,
+  } = useMutation(["members/mail-check"], api.member.checkDuplicateEmail);
+  const {mutate: sendVerificationMail, data: clientKeyResponse} = useMutation(
+    ["auth/code"],
+    api.auth.sendVerificationMail,
+    {onMutate: () => setMailSentTimestamp(new Date().getTime())},
+  );
+  const {
+    mutate: verifyAuthCode,
+    isSuccess: canSubmit,
+    isError: shouldAlertInvalidAuthCodeError,
+    reset: resetInvalidAuthCodeError,
+  } = useMutation(["auth/code-check"], api.auth.verifyAuthCode);
   const [didSendVerificationMail, setDidSendVerificationMail] = useState(false);
   const [canResendVerificationMail, setCanResendVerificationMail] = useState(false);
   const [isAuthCodeExpired, setIsAuthCodeExpired] = useState(false);
@@ -114,7 +110,7 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
 
     const timeouts = [disableResendButton(), expireAuthCodeAfter(180)];
     return () => timeouts.forEach(timeout => clearTimeout(timeout));
-  }, [fulfilledTimeStamp]);
+  }, [mailSentTimestamp]);
 
   /* 잘못된 AuthCode를 입력하면 Alert */
   useEffect(() => {
@@ -184,7 +180,7 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
               keyboardType="phone-pad"
               maxLength={6}
               rightDecorationComponent={
-                <TimerDecoration key={fulfilledTimeStamp} style={{paddingRight: 20}} />
+                <TimerDecoration key={mailSentTimestamp} style={{paddingRight: 20}} />
               }
             />
           </Animated.View>

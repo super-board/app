@@ -1,16 +1,16 @@
 import React, {useEffect} from "react";
 
+import {useMutation} from "@tanstack/react-query";
 import {Pressable, ScrollView, StyleSheet, Text} from "react-native";
 
+import {api} from "@/api";
 import * as SVG from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useModal} from "@/hooks/modal";
-import {useSignOutMutation} from "@/store";
-import {useWithdrawAccountMutation} from "@/store/src/api/src/MyPageApi";
+import {useModal} from "@/hooks";
 
 export default function SettingsScreen({navigation}: ScreenProps) {
   const {visible: isLogoutVisible, openModal: openLogout, closeModal: closeLogout} = useModal();
@@ -20,8 +20,14 @@ export default function SettingsScreen({navigation}: ScreenProps) {
     closeModal: closeWithdraw,
   } = useModal();
 
-  const [logout, {isSuccess: shouldLogout}] = useSignOutMutation();
-  const [withdrawAccount, {isSuccess: isSuccessToWithdraw}] = useWithdrawAccountMutation();
+  const {mutate: logout, isSuccess: shouldLogout} = useMutation(
+    ["auth/sign-out"],
+    api.auth.signOut,
+  );
+  const {mutate: withdrawAccount, isSuccess: isSuccessToWithdraw} = useMutation(
+    ["members/mypage/withdrawal"],
+    api.myPage.withdrawAccount,
+  );
 
   const onPress = {
     updatePassword: () => {},

@@ -3,7 +3,7 @@ import React from "react";
 import {StyleSheet, View} from "react-native";
 
 import colors from "@/constants/colors";
-import type {Level} from "@/store";
+import type {Level} from "@/types";
 
 import LevelIcon from "./LevelIcon";
 

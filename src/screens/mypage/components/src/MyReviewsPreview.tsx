@@ -6,12 +6,12 @@ import {Dimensions, Image, Pressable, StyleSheet, View} from "react-native";
 import * as SVG from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
-import {useModal} from "@/hooks/modal";
+import {useModal} from "@/hooks";
 import {RootStackNavigationProp} from "@/navigation/navigation";
-import {ReviewSummary} from "@/store";
+import {MyReview} from "@/types";
 
 type Props = {
-  reviews: ReviewSummary[];
+  reviews: MyReview[];
 };
 
 export default function MyReviewsPreview({reviews}: Props) {
@@ -50,7 +50,7 @@ export default function MyReviewsPreview({reviews}: Props) {
         <Pressable
           key={review.id}
           style={styles.previewButton}
-          onPress={() => onNavigateToDetails(review.boardGame.id)}>
+          onPress={() => onNavigateToDetails(review.boardGameId)}>
           <Image
             style={styles.previewThumbnail}
             source={require("@/assets/images/fallback/board-game-fallback.png")}

@@ -3,19 +3,19 @@ import React, {useCallback} from "react";
 import {FlatList, StyleProp, StyleSheet, ViewStyle} from "react-native";
 
 import SizedBox from "@/components/src/SizedBox";
-import type {BoardGameSummary} from "@/store";
+import type {BoardGameSummary, FavoriteBoardGame} from "@/types";
 
 import BoardGameGridListItem from "./BoardGameGridListItem";
 
 type Props = {
-  boardGames: BoardGameSummary[];
+  boardGames: Pick<BoardGameSummary, "id" | "name" | "image">[];
   hasNextPage?: boolean;
   onLoadNextPage?: () => void;
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function BoardGameGridListView({
+export default function FavoriteBoardGameGridListView({
   boardGames,
   hasNextPage = false,
   onLoadNextPage = () => {},
@@ -27,12 +27,11 @@ export default function BoardGameGridListView({
   };
 
   const renderItem = useCallback(
-    ({item}: {item: BoardGameSummary}) => <BoardGameGridListItem boardGame={item} />,
+    ({item}: {item: FavoriteBoardGame}) => <BoardGameGridListItem boardGame={item} />,
     [],
   );
-  // FIXME: API 연결 후 실제 ID로 처리하기
   const keyExtractor = useCallback(
-    (item: BoardGameSummary, index: number) => `${item.id}-${index}`,
+    (item: Pick<BoardGameSummary, "id" | "name" | "image">, index: number) => `${index}-${item.id}`,
     [],
   );
 

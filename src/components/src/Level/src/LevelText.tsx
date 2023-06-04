@@ -2,7 +2,7 @@ import React, {useCallback} from "react";
 
 import {Text} from "react-native";
 
-import {Level} from "@/store";
+import {Level} from "@/types";
 
 type Props = Text["props"] & {
   level: Level;

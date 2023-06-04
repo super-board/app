@@ -3,10 +3,14 @@ import React, {memo} from "react";
 import {Dimensions, Image, Pressable, StyleSheet, Text} from "react-native";
 
 import typography from "@/constants/typography";
-import {useNavigateToBoardGameDetails} from "@/hooks/navigation";
-import type {BoardGameSummary} from "@/store";
+import {useNavigateToBoardGameDetails} from "@/hooks";
+import type {BoardGameSummary} from "@/types";
 
-function BoardGameGridListItem({boardGame}: {boardGame: BoardGameSummary}) {
+function BoardGameGridListItem({
+  boardGame,
+}: {
+  boardGame: Pick<BoardGameSummary, "id" | "name" | "image">;
+}) {
   const {navigateToBoardGameDetails} = useNavigateToBoardGameDetails(boardGame.id);
 
   return (

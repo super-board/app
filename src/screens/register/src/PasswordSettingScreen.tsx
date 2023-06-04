@@ -13,7 +13,7 @@ import {
 } from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import {useTextInput} from "@/hooks/form";
+import {useTextInput} from "@/hooks";
 import {Validator} from "@/services/validator";
 
 export default function PasswordSettingScreen({navigation, route}: ScreenProps) {

@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
+import {useMutation} from "@tanstack/react-query";
 
+import {api} from "@/api";
 import {
   DecoratedTextInput,
   FlexEmptyFill,
@@ -13,10 +15,8 @@ import {
 } from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import {useTextInput} from "@/hooks/form";
-import {useModal} from "@/hooks/modal";
+import {useModal, useTextInput} from "@/hooks";
 import {Validator} from "@/services/validator";
-import {useCheckDuplicateNicknameRegisteredMutation} from "@/store";
 
 export default function NicknameSettingScreen({navigation, route}: ScreenProps) {
   const {
@@ -27,15 +27,13 @@ export default function NicknameSettingScreen({navigation, route}: ScreenProps) 
   } = useTextInput(Validator.isValidNickname);
   const {visible, openModal, closeModal} = useModal();
 
-  const [
-    checkDuplicateNicknameRegistered,
-    {
-      isLoading,
-      isSuccess: canSubmit,
-      isError: shouldAlertDuplicateNickname,
-      reset: resetDuplicateNicknameError,
-    },
-  ] = useCheckDuplicateNicknameRegisteredMutation();
+  const {
+    mutate: checkDuplicateNicknameRegistered,
+    isLoading,
+    isSuccess: canSubmit,
+    isError: shouldAlertDuplicateNickname,
+    reset: resetDuplicateNicknameError,
+  } = useMutation(["members/nickname-check"], api.member.checkDuplicateNickname);
 
   /* 중복된 닉네임이 존재하면 Alert */
   useEffect(() => {

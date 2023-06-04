@@ -1,18 +1,23 @@
 import React, {useCallback, useState} from "react";
 
+import {useQuery} from "@tanstack/react-query";
 import {FlatList, View} from "react-native";
 
+import {api} from "@/api";
 import style from "@/constants/style";
-import {Inquiry, useGetMyInquiresQuery} from "@/store";
+import {Inquiry} from "@/types";
 
 import {PostListItem} from "../components";
 
 export default function MyInquiriesScreen() {
   const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedInquires} = useGetMyInquiresQuery({page});
+  const {isLoading, data: paginatedInquires} = useQuery(
+    ["inquiries", page],
+    api.inquiry.fetchInquiries,
+  );
 
   const onEndReached = () => {
-    if (paginatedInquires?.hasNext) setPage(state => state + 1);
+    if (paginatedInquires?.pageInfo.hasNext) setPage(state => state + 1);
   };
 
   const renderItem = useCallback(
@@ -20,7 +25,7 @@ export default function MyInquiriesScreen() {
       <PostListItem
         title={item.title}
         createdAt={item.createdAt}
-        content1={item.question}
+        content1={item.content}
         content2={item.answer}
       />
     ),

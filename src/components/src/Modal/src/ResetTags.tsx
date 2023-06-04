@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
+import {useQuery} from "@tanstack/react-query";
 import type {NativeSyntheticEvent} from "react-native";
 import {
   Modal as DefModal,
@@ -12,12 +13,12 @@ import {
 } from "react-native";
 import Toast from "react-native-toast-message";
 
+import {api} from "@/api";
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useSelectedTagIds} from "@/hooks/common";
-import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {useGetTagListQuery} from "@/store";
+import {useFavoriteTagsForm} from "@/hooks";
+import {useFavoriteTagsStore, useOnboardingStore} from "@/zustand-stores";
 
 import OTBButton from "../../OTBButton";
 import SizedBox from "../../SizedBox";
@@ -26,47 +27,16 @@ import ToastConfig from "../../ToastConfig";
 import type {ModalProps} from "./types";
 
 export default function ResetTags({visible, onRequestClose}: ModalProps) {
-  const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const {isLoading, data: tagList} = useGetTagListQuery();
-  const {selectedTagIds: storedSelectedTagIds, updateSelectedTags} = useSelectedTagIds();
-  const {saveOnboardingResult} = useSaveOnboardingResult();
-
-  const isSelectedTag = (id: number) => selectedTagIds.includes(id);
-
-  const toggleTag = (targetId: number) => {
-    const isSelected = isSelectedTag(targetId);
-    if (!isSelected && selectedTagIds.length === 5) {
-      Toast.show({
-        type: "error",
-        position: "bottom",
-        visibilityTime: 3000,
-        text1: "태그는 최대 5개까지 선택 가능합니다.",
-      });
-      return;
-    }
-
-    if (isSelected) {
-      const filtered = selectedTagIds.filter(id => id !== targetId);
-      setSelectedTagIds(() => filtered);
-      return;
-    }
-
-    setSelectedTagIds(() => [...selectedTagIds, targetId]);
-  };
-
-  const resetSelectedTags = () => {
-    setSelectedTagIds(() => []);
-  };
+  const {isLoading, data: tagList} = useQuery(["tags"], api.tag.fetchTags);
+  const {selectedTagIds, isSelectedTag, toggleTag, resetSelectedTags} = useFavoriteTagsForm();
+  const {saveFavoriteTags} = useFavoriteTagsStore();
+  const {completeOnboarding} = useOnboardingStore();
 
   const onSave = (event: NativeSyntheticEvent<any>) => {
-    updateSelectedTags(selectedTagIds);
-    saveOnboardingResult();
+    saveFavoriteTags(selectedTagIds);
+    completeOnboarding();
     onRequestClose?.call(null, event);
   };
-
-  useEffect(() => {
-    setSelectedTagIds(() => storedSelectedTagIds);
-  }, [visible]);
 
   return (
     <DefModal

@@ -11,7 +11,7 @@ import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useModal} from "@/hooks/modal";
+import {useModal} from "@/hooks";
 import {PermissionCameraAndGalleryService} from "@/services/permission";
 
 import {Image} from "../components";

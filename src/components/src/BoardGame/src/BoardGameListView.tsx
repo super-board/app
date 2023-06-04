@@ -3,7 +3,7 @@ import React, {useCallback} from "react";
 import {FlatList, StyleProp, StyleSheet, View, ViewStyle} from "react-native";
 
 import colors from "@/constants/colors";
-import type {BoardGameSummary} from "@/store";
+import type {BoardGameSummary} from "@/types";
 
 import BoardGameListItem from "./BoardGameListItem";
 

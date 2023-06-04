@@ -6,13 +6,13 @@ import {StyleSheet, Text} from "react-native";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
-import {useLogin} from "@/hooks/common";
+import {useAuthStore} from "@/zustand-stores";
 
 import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";
 
 export default function MyPageAppBar({navigation}: NativeStackHeaderProps) {
-  const {didLogin} = useLogin();
+  const didLogin = useAuthStore(state => !!state.refreshToken);
 
   return (
     <AppBar.Container>

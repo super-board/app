@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from "react";
 
+import {useQuery} from "@tanstack/react-query";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import {BoardGameListView, Modal, SelectedTagsHorizontalListView} from "@/components";
+import {api} from "@/api";
+import {BoardGameListView, FavoriteTagsHorizontalView, Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useSelectedTagIds} from "@/hooks/common";
-import {useModal} from "@/hooks/modal";
-import {useGetRecommendedBoardGamesByTagsQuery} from "@/store";
+import {useFavoriteTags, useModal} from "@/hooks";
 
 export default function RecommendationScreen() {
   const [page, setPage] = useState(0);
-  const {selectedTagIds} = useSelectedTagIds();
-  const {isLoading, data: boardGames} = useGetRecommendedBoardGamesByTagsQuery({
-    tagIds: selectedTagIds,
-    page,
-  });
+  const {favoriteTags} = useFavoriteTags();
+
+  // FIXME: 연동시 무한 스크롤로 변경
+  const {isLoading, data: paginatedBoardGames} = useQuery(
+    ["boardgames/curation", favoriteTags.map(tag => tag.id).join("&")],
+    () => api.boardGame.fetchBoardGamesCuration(favoriteTags.map(tag => tag.id)),
+  );
   const {visible, openModal, closeModal} = useModal();
 
   const onLoadNextPage = () => {
@@ -24,11 +26,11 @@ export default function RecommendationScreen() {
 
   useEffect(() => {
     setPage(() => 1);
-  }, [selectedTagIds]);
+  }, [favoriteTags]);
 
   return (
     <View style={styles.container}>
-      <SelectedTagsHorizontalListView />
+      <FavoriteTagsHorizontalView />
 
       <View style={{paddingHorizontal: 24}}>
         <TouchableOpacity activeOpacity={1} style={styles.tagUpdateLink} onPress={openModal}>
@@ -36,10 +38,10 @@ export default function RecommendationScreen() {
         </TouchableOpacity>
       </View>
 
-      {!isLoading && boardGames ? (
+      {!isLoading && paginatedBoardGames ? (
         <BoardGameListView
-          key={selectedTagIds.join("&")}
-          boardGames={boardGames}
+          key={favoriteTags.join("&")}
+          boardGames={paginatedBoardGames.content}
           hasNextPage={true}
           onLoadNextPage={onLoadNextPage}
           style={{marginTop: 20}}

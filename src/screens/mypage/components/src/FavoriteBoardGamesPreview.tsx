@@ -6,12 +6,12 @@ import {Dimensions, Image, Pressable, StyleSheet, View} from "react-native";
 import * as SVG from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
-import {useModal} from "@/hooks/modal";
+import {useModal} from "@/hooks";
 import {RootStackNavigationProp} from "@/navigation/navigation";
-import {BoardGameSummary} from "@/store";
+import {FavoriteBoardGame} from "@/types";
 
 type Props = {
-  boardGames: BoardGameSummary[];
+  boardGames: FavoriteBoardGame[];
 };
 
 export default function FavoriteBoardGamesPreview({boardGames}: Props) {

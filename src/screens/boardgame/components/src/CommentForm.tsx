@@ -1,23 +1,26 @@
 import React, {useState} from "react";
 
 import {useNavigation} from "@react-navigation/native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack/lib/typescript/src/types";
+import {useQuery} from "@tanstack/react-query";
 import {Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 
+import {api} from "@/api";
 import * as SVG from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useLogin} from "@/hooks/common";
-import {useModal} from "@/hooks/modal";
-import {useGetMyMemberInfoQuery} from "@/store";
+import {useModal} from "@/hooks";
+import {RootStackParamList} from "@/navigation/navigation";
+import {useAuthStore} from "@/zustand-stores";
 
 import AuthorChip from "./AuthorChip";
 
 export default function CommentForm() {
   const [comment, setComment] = useState("");
-  const {isLoading, data: myInfo} = useGetMyMemberInfoQuery();
-  const {didLogin} = useLogin();
-  const navigation = useNavigation();
+  const {isLoading, data: loginInfo} = useQuery(["members/me"], api.member.fetchLoginInfo);
+  const didLogin = useAuthStore(state => !!state.refreshToken);
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {
     visible: isSignUpModalVisible,
     openModal: openSignUpModal,
@@ -32,11 +35,11 @@ export default function CommentForm() {
     navigation.navigate("RegisterEmailVerificationScreen");
   };
 
-  if (isLoading || !myInfo) return <View style={styles.container} />;
+  if (isLoading || !loginInfo) return <View style={styles.container} />;
 
   return (
     <View style={styles.container}>
-      <AuthorChip author={myInfo} />
+      <AuthorChip author={loginInfo} />
 
       <View style={styles.row}>
         <View style={styles.textareaContainer}>

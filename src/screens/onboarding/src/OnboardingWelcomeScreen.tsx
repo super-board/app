@@ -16,7 +16,7 @@ type Props = {
 
 function OnboardingWelcomeScreen({navigation}: Props) {
   const navigateToLogin = () => {
-    navigation.navigate("LoginScreen");
+    navigation.navigate("OnboardingLoginScreen");
   };
 
   const navigateToOnboardingTagSelectScreen = () => {

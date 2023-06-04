@@ -15,8 +15,6 @@ import {
   SimpleAppBar,
 } from "@/components";
 import colors from "@/constants/colors";
-import {useLogin} from "@/hooks/common";
-import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
 import InquiryTab from "@/navigation/stack/InquiryTab";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
 import {Inquiry, Manager, Notice, User} from "@/screens/manager";
@@ -52,6 +50,8 @@ import {
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
 import {WriteScreen} from "@/screens/write";
+import {useOnboardingStore} from "@/zustand-stores";
+import useAuthStore from "@/zustand-stores/src/useAuthStore";
 
 import {stackScreenOptions} from "./config";
 import {RootStackParamList} from "./navigation";
@@ -61,8 +61,9 @@ import Tabs from "./tab";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function Navigation() {
-  const {isLoading, shouldRequestOnboarding} = useCheckOnboardingCompleted();
-  const {shouldLogin} = useLogin();
+  const [didAppInitialized, setDidAppInitialized] = React.useState(false);
+  const {shouldRequestOnboarding} = useOnboardingStore();
+  const {shouldLogin} = useAuthStore();
   const insets = useSafeAreaInsets();
 
   const initialRouteName = useCallback(() => {
@@ -71,7 +72,12 @@ export default function Navigation() {
     return "BottomTabView";
   }, [shouldLogin, shouldRequestOnboarding]);
 
-  if (isLoading) return <SplashScreen />;
+  React.useEffect(() => {
+    const timeout = setTimeout(() => setDidAppInitialized(true), 1500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (!didAppInitialized) return <SplashScreen />;
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
@@ -98,6 +104,11 @@ export default function Navigation() {
             <Stack.Screen
               name="LoginScreen"
               options={{header: SimpleAppBar, headerBackVisible: false}}
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              name="OnboardingLoginScreen"
+              options={{header: SimpleAppBar, headerBackVisible: true}}
               component={LoginScreen}
             />
             <Stack.Screen

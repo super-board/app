@@ -8,7 +8,7 @@ import {OTBButton, ProfileImage, ScreenTitle, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import type {ProfileCharacter} from "@/store";
+import type {ProfileCharacter} from "@/types";
 
 export default function ProfileSelectionScreen({navigation, route}: ScreenProps) {
   const [profile, setProfile] = useState<ProfileCharacter>("PROFILE_1");

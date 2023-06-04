@@ -2,31 +2,31 @@ import React from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {useQuery} from "@tanstack/react-query";
 import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
 
+import {api} from "@/api";
 import {OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useSelectedTagIds} from "@/hooks/common";
-import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {useGetRecommendedBoardGamesByTagsQuery} from "@/store";
+import {useFavoriteTagsStore, useOnboardingStore} from "@/zustand-stores";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 function OnboardingRecommendationScreen({navigation}: Props) {
-  const {selectedTagIds} = useSelectedTagIds();
-  const {isLoading, data: recommendedBoardGames} = useGetRecommendedBoardGamesByTagsQuery({
-    tagIds: selectedTagIds,
-    page: 1,
-  });
-  const {isSubmitting, saveOnboardingResult} = useSaveOnboardingResult();
+  const {tagIds, saveFavoriteTags} = useFavoriteTagsStore();
+  const {isLoading, data: paginatedBoardGames} = useQuery(
+    ["boardgames/searchByTag", tagIds.join("&")],
+    api.boardGame.fetchBoardGames,
+  );
+  const {completeOnboarding} = useOnboardingStore();
 
   const submitOnboardingResult = async () => {
-    await saveOnboardingResult();
+    await Promise.allSettled([saveFavoriteTags(tagIds), completeOnboarding()]);
     navigation.reset({index: 0, routes: [{name: "BottomTabView"}]});
   };
 
@@ -43,8 +43,8 @@ function OnboardingRecommendationScreen({navigation}: Props) {
       <SizedBox height={60} />
       <View style={styles.recommendationContainer}>
         <ScrollView>
-          {!isLoading && recommendedBoardGames
-            ? recommendedBoardGames.slice(0, 5).map((boardGame, index) => (
+          {!isLoading && paginatedBoardGames
+            ? paginatedBoardGames.content.map((boardGame, index) => (
                 <View key={boardGame.id} style={{gap: 8}}>
                   <View style={styles.boardGameContainer}>
                     <Text style={[typography.subhead01, typography.textWhite]}>{index + 1}</Text>
@@ -58,7 +58,7 @@ function OnboardingRecommendationScreen({navigation}: Props) {
                       source={require("@/assets/images/fallback/board-game-fallback.png")}
                     />
                   </View>
-                  {index < recommendedBoardGames.slice(0, 5).length - 1 ? (
+                  {index < paginatedBoardGames.content.length - 1 ? (
                     <View style={styles.horizontalDivider} />
                   ) : null}
                 </View>
@@ -71,7 +71,6 @@ function OnboardingRecommendationScreen({navigation}: Props) {
       <OTBButton
         type="basic-primary"
         text="더 많은 게임 둘러보기"
-        disabled={isSubmitting}
         onPress={submitOnboardingResult}
       />
       <SizedBox height={36} />

@@ -3,8 +3,8 @@ import React, {memo} from "react";
 import {Image, Pressable, StyleSheet, Text, View} from "react-native";
 
 import typography from "@/constants/typography";
-import {useNavigateToBoardGameDetails} from "@/hooks/navigation";
-import type {BoardGameSummary} from "@/store";
+import {useNavigateToBoardGameDetails} from "@/hooks";
+import type {BoardGameSummary} from "@/types";
 
 import RatingIcons from "../../RatingIcons";
 

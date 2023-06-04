@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 
+import {useQuery} from "@tanstack/react-query";
 import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from "react-native";
 
+import {api} from "@/api";
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useGetCommentsQuery} from "@/store";
 
 import CommentListItem from "./CommentListItem";
 
@@ -17,7 +18,8 @@ type Props = {
 
 export default function CommentList({boardGameId, reviewId, style}: Props) {
   const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedComments} = useGetCommentsQuery({boardGameId, reviewId, page});
+  // FIXME: 연동시 무한스크롤로 변경
+  const {isLoading, data: paginatedComments} = useQuery(["comments"], api.comment.fetchComments);
 
   const onMoreComments = () => setPage(state => state + 1);
 

@@ -1,6 +1,7 @@
 import React, {memo, useCallback, useState} from "react";
 
 import {useNavigation, useRoute} from "@react-navigation/native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {
   NativeSyntheticEvent,
   Pressable,
@@ -15,13 +16,14 @@ import * as SVG from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useLogin} from "@/hooks/common";
-import {useModal} from "@/hooks/modal";
+import {useLoginInfo, useModal} from "@/hooks";
+import {RootStackParamList} from "@/navigation/navigation";
 import CommentList from "@/screens/boardgame/components/src/CommentList";
 import {DateTimeFormatter, NumberFormatter} from "@/services/formatter";
-import {ReviewDetails} from "@/store";
+import {ReviewDetails} from "@/types";
+import {useAuthStore} from "@/zustand-stores";
 
-import {useDialogModals, useMyMemberInfo} from "../../hooks";
+import {useDialogModals} from "../../hooks";
 import AuthorChip from "./AuthorChip";
 import CommentForm from "./CommentForm";
 import ReviewImageSlider from "./ReviewImageSlider";
@@ -34,10 +36,10 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>(MAX_LINES);
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute();
-  const {isLoginUser, isAdmin} = useMyMemberInfo();
-  const {didLogin} = useLogin();
+  const {isLoginUser, isAdmin} = useLoginInfo();
+  const didLogin = useAuthStore(state => !!state.refreshToken);
 
   const {
     isEditModalVisible,

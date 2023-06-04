@@ -1,14 +1,18 @@
 import React from "react";
 
+import {useQuery} from "@tanstack/react-query";
 import {StyleSheet, Text, View} from "react-native";
 
+import {api} from "@/api";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {DateTimeFormatter} from "@/services/formatter";
-import {useGetRecentNotificationsQuery} from "@/store";
 
 export default function NotificationsScreen() {
-  const {isLoading, data: notifications} = useGetRecentNotificationsQuery();
+  const {isLoading, data: notifications} = useQuery(
+    ["notifications"],
+    api.notification.fetchNotifications,
+  );
 
   if (isLoading || !notifications) return <View style={styles.container} />;
 

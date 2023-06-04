@@ -6,7 +6,7 @@ import {KeyboardView, OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useTextInput} from "@/hooks/form";
+import {useTextInput} from "@/hooks";
 
 export default function NewInquiryScreen() {
   const {value: title, onChangeText: onChangeTitle} = useTextInput();

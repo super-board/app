@@ -2,7 +2,7 @@ import React from "react";
 
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";
-import type {Level} from "@/store";
+import type {Level} from "@/types";
 
 type Props = {
   level: Level;

@@ -1,15 +1,18 @@
 import React, {useState} from "react";
 
+import {useQuery} from "@tanstack/react-query";
 import {View} from "react-native";
 
+import {api} from "@/api";
 import {BoardGameGridListView} from "@/components";
-import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import {useGetFavoriteBoardGamesQuery} from "@/store";
 
-export default function FavoriteBoardGamesScreen({navigation}: ScreenProps) {
+export default function FavoriteBoardGamesScreen() {
   const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedBoardGames} = useGetFavoriteBoardGamesQuery({page});
+  const {isLoading, data: paginatedBoardGames} = useQuery(
+    ["members/mypage/favorite-boardgames"],
+    api.myPage.fetchFavoriteBoardGames,
+  );
 
   const onLoadNextPage = () => {
     setPage(state => state + 1);
@@ -21,7 +24,7 @@ export default function FavoriteBoardGamesScreen({navigation}: ScreenProps) {
     <View style={style.screenWithAppBarContainer}>
       <BoardGameGridListView
         boardGames={paginatedBoardGames.content}
-        hasNextPage={paginatedBoardGames.hasNext}
+        hasNextPage={paginatedBoardGames.pageInfo.hasNext}
         onLoadNextPage={onLoadNextPage}
       />
     </View>

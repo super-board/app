@@ -4,8 +4,8 @@ import {Image, StyleSheet, Text, TouchableOpacity} from "react-native";
 
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
-import {useNavigateToBoardGameDetails} from "@/hooks/navigation";
-import {BoardGameSummary} from "@/store";
+import {useNavigateToBoardGameDetails} from "@/hooks";
+import {BoardGameSummary} from "@/types";
 
 type Props = {
   boardGame: BoardGameSummary;

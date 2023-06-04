@@ -5,7 +5,7 @@ import {Modal as DefModal, Pressable, StyleSheet, Text, View} from "react-native
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {Level} from "@/store";
+import {Level} from "@/types";
 
 import {LevelIconWithBackground} from "../../Level";
 import SizedBox from "../../SizedBox";
