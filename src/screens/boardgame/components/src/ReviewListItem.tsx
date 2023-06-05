@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";

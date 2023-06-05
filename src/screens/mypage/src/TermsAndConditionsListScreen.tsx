@@ -2,7 +2,7 @@ import React from "react";
 
 import {Pressable, StyleSheet, Text, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";

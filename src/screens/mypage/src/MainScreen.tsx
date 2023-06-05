@@ -4,7 +4,7 @@ import {useFocusEffect} from "@react-navigation/native";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import {api} from "@/api";
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {
   FavoriteTagsHorizontalView,
   LevelIconWithBackground,

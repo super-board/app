@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from "react-native";
 
 import {api} from "@/api";
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useRefetchQuery} from "@/hooks";

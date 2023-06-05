@@ -4,4 +4,4 @@ import * as Icon from "./src/icon";
 import * as Logo from "./src/logo";
 import * as Profile from "./src/profile";
 
-export {Common, Icon, Profile, Badge, Logo};
+export const SVG = {Common, Icon, Profile, Badge, Logo};

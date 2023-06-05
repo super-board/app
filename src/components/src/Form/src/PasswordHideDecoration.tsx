@@ -3,7 +3,7 @@ import React from "react";
 import {StyleProp, ViewStyle} from "react-native";
 import {TouchableOpacity} from "react-native-gesture-handler";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 
 type Props = {
   hide?: boolean;

@@ -5,7 +5,7 @@ import {TextInput} from "react-native-gesture-handler";
 import {launchImageLibrary} from "react-native-image-picker";
 import StarRating from "react-native-star-rating-widget";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {Modal, OTBButton} from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";

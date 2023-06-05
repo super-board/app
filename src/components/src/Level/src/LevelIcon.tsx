@@ -1,6 +1,6 @@
 import React from "react";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import type {Level} from "@/types";
 

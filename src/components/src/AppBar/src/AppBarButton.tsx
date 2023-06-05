@@ -4,7 +4,7 @@ import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {Pressable, StyleProp, Text, ViewStyle} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 

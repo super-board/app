@@ -3,7 +3,7 @@ import React from "react";
 import {useNavigation} from "@react-navigation/native";
 import {Dimensions, Image, Pressable, StyleSheet, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import {useModal} from "@/hooks";

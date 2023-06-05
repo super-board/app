@@ -4,7 +4,7 @@ import {useMutation} from "@tanstack/react-query";
 import {Pressable, ScrollView, StyleSheet, Text} from "react-native";
 
 import {api} from "@/api";
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";

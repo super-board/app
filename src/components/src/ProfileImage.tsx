@@ -1,6 +1,6 @@
 import React from "react";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {ProfileCharacter} from "@/types";
 
 type Props = {

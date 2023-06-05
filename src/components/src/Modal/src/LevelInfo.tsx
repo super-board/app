@@ -2,7 +2,7 @@ import React from "react";
 
 import {Modal as DefModal, Pressable, StyleSheet, Text, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {Level} from "@/types";

@@ -2,7 +2,7 @@ import React from "react";
 
 import {StyleSheet, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 
 type Props = {
   rating?: number;

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {bottomTabScreenOptions} from "@/navigation/config";
 import {RootTabParamList} from "@/navigation/navigation";
 

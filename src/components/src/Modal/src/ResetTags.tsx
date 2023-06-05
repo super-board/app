@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Toast from "react-native-toast-message";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useFavoriteTags, useFavoriteTagsForm} from "@/hooks";

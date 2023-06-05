@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {NativeStackHeaderProps} from "@react-navigation/native-stack";
 import {Dimensions, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";

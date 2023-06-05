@@ -4,7 +4,7 @@ import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
 import {TouchableOpacity} from "react-native-gesture-handler";
 
 import {api} from "@/api";
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {OTBButton, RatingIcons, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";

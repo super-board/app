@@ -1,4 +1,4 @@
-import * as SVG from "../assets/svgs";
+import {SVG} from "../assets/svgs";
 
 const badge = {
   welcome: {

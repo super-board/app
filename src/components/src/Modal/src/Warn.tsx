@@ -2,7 +2,7 @@ import React from "react";
 
 import {Modal as DefModal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";

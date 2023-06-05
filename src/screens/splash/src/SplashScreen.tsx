@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 
 import {Image, StyleSheet, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import {useInitializeApp} from "@/hooks";

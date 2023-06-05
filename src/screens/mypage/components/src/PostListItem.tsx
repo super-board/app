@@ -2,7 +2,7 @@ import React, {memo, useState} from "react";
 
 import {Pressable, StyleSheet, Text, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
