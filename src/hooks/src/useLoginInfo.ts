@@ -1,13 +1,13 @@
-import {useQuery} from "@tanstack/react-query";
-
 import {api} from "@/api";
+
+import useRefetchQuery from "./useRefetchQuery";
 
 export default function useLoginInfo() {
   const {
     isLoading,
     data: loginInfo,
     ...queryResult
-  } = useQuery(["members/me"], api.member.fetchLoginInfo);
+  } = useRefetchQuery(["members/me"], api.member.fetchLoginInfo);
 
   const isLoginUser = (id: number): boolean => {
     if (isLoading || !loginInfo) return false;

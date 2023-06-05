@@ -2,7 +2,6 @@ import React from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {useQuery} from "@tanstack/react-query";
 import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import {api} from "@/api";
@@ -11,6 +10,7 @@ import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useRefetchQuery} from "@/hooks";
 import {useFavoriteTagsStore, useOnboardingStore} from "@/zustand-stores";
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
 
 function OnboardingRecommendationScreen({navigation}: Props) {
   const {tagIds, saveFavoriteTags} = useFavoriteTagsStore();
-  const {isLoading, data: paginatedBoardGames} = useQuery(
+  const {isLoading, data: paginatedBoardGames} = useRefetchQuery(
     ["boardgames/searchByTag", tagIds.join("&")],
     api.boardGame.fetchBoardGames,
   );

@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from "react-native";
 
 import {api} from "@/api";
 import * as SVG from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
+import {useRefetchQuery} from "@/hooks";
 
 import CommentListItem from "./CommentListItem";
 
@@ -19,7 +19,10 @@ type Props = {
 export default function CommentList({boardGameId, reviewId, style}: Props) {
   const [page, setPage] = useState(1);
   // FIXME: 연동시 무한스크롤로 변경
-  const {isLoading, data: paginatedComments} = useQuery(["comments"], api.comment.fetchComments);
+  const {isLoading, data: paginatedComments} = useRefetchQuery(
+    ["comments"],
+    api.comment.fetchComments,
+  );
 
   const onMoreComments = () => setPage(state => state + 1);
 
@@ -31,7 +34,7 @@ export default function CommentList({boardGameId, reviewId, style}: Props) {
         <CommentListItem key={comment.id + index} comment={comment} />
       ))}
 
-      {paginatedComments.hasNext ? (
+      {paginatedComments.pageInfo.hasNext ? (
         <TouchableOpacity activeOpacity={1} style={styles.moreButton} onPress={onMoreComments}>
           <Text style={[typography.body02, styles.moreButtonText]}>댓글 더보기</Text>
           <SVG.Icon.ExpandMore width={20} height={20} />

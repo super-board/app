@@ -6,4 +6,5 @@ export {default as useInitializeApp} from "./src/useInitializeApp";
 export {default as useLoginInfo} from "./src/useLoginInfo";
 export {default as useModal} from "./src/useModal";
 export {default as useNavigateToBoardGameDetails} from "./src/useNavigateToBoardGameDetails";
+export {default as useRefetchQuery} from "./src/useRefetchQuery";
 export {default as useTextInput} from "./src/useTextInput";

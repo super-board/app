@@ -1,16 +1,15 @@
 import React from "react";
 
-import {useQuery} from "@tanstack/react-query";
-
 import {api} from "@/api";
+import useRefetchQuery from "@/hooks/src/useRefetchQuery";
 import {Tag} from "@/types";
 import {useAuthStore, useFavoriteTagsStore} from "@/zustand-stores";
 
 export default function useFavoriteTags() {
-  const {isLoading: isTagListLoading, data: tagList} = useQuery(["tags"], api.tag.fetchTags);
+  const {isLoading: isTagListLoading, data: tagList} = useRefetchQuery(["tags"], api.tag.fetchTags);
   const {tagIds: favoriteTagsLocal} = useFavoriteTagsStore();
   const didLogin = useAuthStore(state => !!state.accessToken);
-  const {isLoading: isMyPageDetailsLoading, data: myPageDetails} = useQuery(
+  const {isLoading: isMyPageDetailsLoading, data: myPageDetails} = useRefetchQuery(
     ["members/mypage"],
     api.myPage.fetchDetails,
     {enabled: didLogin},

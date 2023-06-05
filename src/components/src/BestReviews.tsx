@@ -1,17 +1,20 @@
 import React from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {Image, StyleSheet, Text, View} from "react-native";
 
 import {api} from "@/api";
 import typography from "@/constants/typography";
+import {useRefetchQuery} from "@/hooks";
 
 import {LevelIcon} from "./Level";
 import RatingIcons from "./RatingIcons";
 import SizedBox from "./SizedBox";
 
 export default function BestReviews() {
-  const {isLoading, data: bestReviews} = useQuery(["review/best"], api.review.fetchBestReviews);
+  const {isLoading, data: bestReviews} = useRefetchQuery(
+    ["review/best"],
+    api.review.fetchBestReviews,
+  );
 
   if (isLoading || !bestReviews) return <View style={styles.container} />;
 

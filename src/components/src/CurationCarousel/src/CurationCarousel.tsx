@@ -1,17 +1,17 @@
 import React from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {Dimensions, StyleSheet, View} from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 
 import {api} from "@/api";
+import {useRefetchQuery} from "@/hooks";
 import {BoardGameSummary} from "@/types";
 
 import CurationCarouselItem from "./CurationCarouselItem";
 
 export default function CurationCarousel() {
   const {width: screenWidth} = Dimensions.get("window");
-  const {isLoading, data: boardGames} = useQuery(
+  const {isLoading, data: boardGames} = useRefetchQuery(
     ["boardgames/home"],
     api.boardGame.fetchBoardGamesForHome,
   );

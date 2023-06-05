@@ -1,17 +1,17 @@
 import React, {useCallback, useState} from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {FlatList, View} from "react-native";
 
 import {api} from "@/api";
 import style from "@/constants/style";
+import {useRefetchQuery} from "@/hooks";
 import {Inquiry} from "@/types";
 
 import {PostListItem} from "../components";
 
 export default function MyInquiriesScreen() {
   const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedInquires} = useQuery(
+  const {isLoading, data: paginatedInquires} = useRefetchQuery(
     ["inquiries", page],
     api.inquiry.fetchInquiries,
   );

@@ -1,6 +1,5 @@
 import React, {useCallback, useState} from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
 import {TouchableOpacity} from "react-native-gesture-handler";
 
@@ -12,6 +11,7 @@ import effects from "@/constants/effects";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useRefetchQuery} from "@/hooks";
 import {NumberFormatter} from "@/services/formatter";
 
 import {ReviewList} from "../components";
@@ -22,11 +22,11 @@ export default function DetailsScreen({route}: ScreenProps) {
     isLoading: isBoardGameDetailsLoading,
     isSuccess,
     data: boardGame,
-  } = useQuery(["boardgames/details", id], () => api.boardGame.fetchBoardGameDetails(id));
+  } = useRefetchQuery(["boardgames/details", id], () => api.boardGame.fetchBoardGameDetails(id));
 
   const [page, setPage] = useState(1);
   // FIXME: 연동시 무한스크롤로 변경
-  const {isLoading: isReviewsLoading, data: paginatedReviews} = useQuery(
+  const {isLoading: isReviewsLoading, data: paginatedReviews} = useRefetchQuery(
     ["reviews"],
     api.review.fetchReviews,
     {enabled: isSuccess},

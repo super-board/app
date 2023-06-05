@@ -1,25 +1,24 @@
 import React, {useCallback, useEffect, useState} from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {api} from "@/api";
 import {BoardGameListView, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useNavigateToBoardGameDetails} from "@/hooks";
+import {useNavigateToBoardGameDetails, useRefetchQuery} from "@/hooks";
 import {BoardGameSummary} from "@/types";
 import {useSearchStore} from "@/zustand-stores";
 
 export default function SearchScreen() {
-  const {isLoading: isTop10BoardGamesLoading, data: top10BoardGames} = useQuery(
+  const {isLoading: isTop10BoardGamesLoading, data: top10BoardGames} = useRefetchQuery(
     ["boardgames/top10"],
     api.boardGame.fetchBoardGamesTop10,
   );
   const {searchQuery, resetSearchQuery} = useSearchStore();
   const [page, setPage] = useState(1);
   // FIXME: 연동시 무한스크롤로 변경
-  const {isLoading: isSearchResultsLoading, data: searchResults} = useQuery(
+  const {isLoading: isSearchResultsLoading, data: searchResults} = useRefetchQuery(
     ["boardgames/searchBoardgmaeList", searchQuery],
     api.boardGame.fetchBoardGames,
   );

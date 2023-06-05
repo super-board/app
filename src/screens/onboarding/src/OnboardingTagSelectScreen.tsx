@@ -2,7 +2,6 @@ import React, {useState} from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {useQuery} from "@tanstack/react-query";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {api} from "@/api";
@@ -11,7 +10,7 @@ import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useFavoriteTagsForm, useModal} from "@/hooks";
+import {useFavoriteTagsForm, useModal, useRefetchQuery} from "@/hooks";
 import {useFavoriteTagsStore} from "@/zustand-stores";
 
 type Props = {
@@ -19,7 +18,7 @@ type Props = {
 };
 
 function OnboardingTagSelectScreen({navigation}: Props) {
-  const {data: tagList, isLoading} = useQuery(["tags"], api.tag.fetchTags);
+  const {data: tagList, isLoading} = useRefetchQuery(["tags"], api.tag.fetchTags);
   const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
   const {
     visible: loadingVisible,

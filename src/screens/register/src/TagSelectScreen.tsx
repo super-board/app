@@ -1,21 +1,19 @@
 import React, {useCallback} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
-import {useQuery} from "@tanstack/react-query";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import {api} from "@/api";
 import {Modal, OTBButton, SizedBox, TagChip} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useFavoriteTagsForm, useModal} from "@/hooks";
+import {useFavoriteTags, useFavoriteTagsForm, useModal} from "@/hooks";
 
 export default function TagSelectScreen({navigation, route}: ScreenProps) {
   const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
-  const {isLoading, data: tagList} = useQuery(["tags"], api.tag.fetchTags);
+  const {isLoading, tagList} = useFavoriteTags();
   const {selectedTagIds, toggleTag, resetSelectedTags, isSelectedTag} =
     useFavoriteTagsForm(openWarnModal);
 

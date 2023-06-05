@@ -1,20 +1,19 @@
 import React, {useEffect, useState} from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {api} from "@/api";
 import {BoardGameListView, FavoriteTagsHorizontalView, Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useFavoriteTags, useModal} from "@/hooks";
+import {useFavoriteTags, useModal, useRefetchQuery} from "@/hooks";
 
 export default function RecommendationScreen() {
   const [page, setPage] = useState(0);
   const {favoriteTags} = useFavoriteTags();
 
   // FIXME: 연동시 무한 스크롤로 변경
-  const {isLoading, data: paginatedBoardGames} = useQuery(
+  const {isLoading, data: paginatedBoardGames} = useRefetchQuery(
     ["boardgames/curation", favoriteTags.map(tag => tag.id).join("&")],
     () => api.boardGame.fetchBoardGamesCuration(favoriteTags.map(tag => tag.id)),
   );

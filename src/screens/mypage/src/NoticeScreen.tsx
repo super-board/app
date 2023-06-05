@@ -1,10 +1,10 @@
 import React, {useCallback, useState} from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {FlatList, View} from "react-native";
 
 import {api} from "@/api";
 import style from "@/constants/style";
+import {useRefetchQuery} from "@/hooks";
 import {Notice} from "@/types";
 
 import {PostListItem} from "../components";
@@ -12,7 +12,10 @@ import {PostListItem} from "../components";
 export default function NoticeScreen() {
   const [page, setPage] = useState(1);
   // FIXME: 무한스크롤 변경
-  const {isLoading, data: paginatedNotices} = useQuery(["notices", page], api.notice.fetchNotices);
+  const {isLoading, data: paginatedNotices} = useRefetchQuery(
+    ["notices", page],
+    api.notice.fetchNotices,
+  );
 
   const onEndReached = () => {
     if (paginatedNotices?.pageInfo.hasNext) setPage(state => state + 1);

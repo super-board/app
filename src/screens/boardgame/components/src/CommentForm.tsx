@@ -2,15 +2,13 @@ import React, {useState} from "react";
 
 import {useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack/lib/typescript/src/types";
-import {useQuery} from "@tanstack/react-query";
 import {Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 
-import {api} from "@/api";
 import * as SVG from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useModal} from "@/hooks";
+import {useLoginInfo, useModal} from "@/hooks";
 import {RootStackParamList} from "@/navigation/navigation";
 import {useAuthStore} from "@/zustand-stores";
 
@@ -18,7 +16,7 @@ import AuthorChip from "./AuthorChip";
 
 export default function CommentForm() {
   const [comment, setComment] = useState("");
-  const {isLoading, data: loginInfo} = useQuery(["members/me"], api.member.fetchLoginInfo);
+  const {isLoading, loginInfo} = useLoginInfo();
   const didLogin = useAuthStore(state => !!state.refreshToken);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {

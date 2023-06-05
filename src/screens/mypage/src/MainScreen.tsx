@@ -1,7 +1,6 @@
 import React, {useCallback, useMemo} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
-import {useQuery} from "@tanstack/react-query";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import {api} from "@/api";
@@ -19,14 +18,14 @@ import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useLoginInfo, useModal} from "@/hooks";
+import {useLoginInfo, useModal, useRefetchQuery} from "@/hooks";
 import {useAuthStore} from "@/zustand-stores";
 
 import {FavoriteBoardGamesPreview, MainScreenSkeleton, MyReviewsPreview} from "../components";
 
 export default function MainScreen({navigation}: ScreenProps) {
   const didLogin = useAuthStore(state => !!state.refreshToken);
-  const {isLoading: isMyPageDetailsLoading, data: myPageDetails} = useQuery(
+  const {isLoading: isMyPageDetailsLoading, data: myPageDetails} = useRefetchQuery(
     ["members/mypage"],
     api.myPage.fetchDetails,
   );

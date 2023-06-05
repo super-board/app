@@ -1,15 +1,15 @@
 import React from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {StyleSheet, Text, View} from "react-native";
 
 import {api} from "@/api";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
+import {useRefetchQuery} from "@/hooks";
 import {DateTimeFormatter} from "@/services/formatter";
 
 export default function NotificationsScreen() {
-  const {isLoading, data: notifications} = useQuery(
+  const {isLoading, data: notifications} = useRefetchQuery(
     ["notifications"],
     api.notification.fetchNotifications,
   );

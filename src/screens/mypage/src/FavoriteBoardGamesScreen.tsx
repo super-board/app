@@ -1,17 +1,17 @@
 import React, {useState} from "react";
 
-import {useQuery} from "@tanstack/react-query";
 import {View} from "react-native";
 
 import {api} from "@/api";
 import {BoardGameGridListView} from "@/components";
 import style from "@/constants/style";
+import {useRefetchQuery} from "@/hooks";
 
 export default function FavoriteBoardGamesScreen() {
   const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedBoardGames} = useQuery(
+  const {isLoading, data: paginatedBoardGames} = useRefetchQuery(
     ["members/mypage/favorite-boardgames"],
-    api.myPage.fetchFavoriteBoardGames,
+    () => api.myPage.fetchFavoriteBoardGames({}),
   );
 
   const onLoadNextPage = () => {
