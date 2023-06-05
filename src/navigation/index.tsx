@@ -21,6 +21,7 @@ import {Inquiry, Manager, Notice, User} from "@/screens/manager";
 import {
   LoginScreen,
   MyPageBadgeScreen,
+  MyPageEditProfileCharacterScreen,
   MyPageEditProfileScreen,
   MyPageFavoriteBoardGamesScreen,
   MyPageMyReviewsScreen,
@@ -223,6 +224,11 @@ export default function Navigation() {
               name="MyPageEditProfileScreen"
               options={{header: SimpleAppBar, title: "프로필 수정", headerBackVisible: true}}
               component={MyPageEditProfileScreen}
+            />
+            <Stack.Screen
+              name="MyPageEditProfileCharacterScreen"
+              options={{header: SimpleAppBar, headerBackVisible: true}}
+              component={MyPageEditProfileCharacterScreen}
             />
             <Stack.Screen
               name="MyPageBadgeScreen"

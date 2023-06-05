@@ -30,7 +30,7 @@ export default function MyReviewsPreview({reviews}: Props) {
     return (
       <>
         <Pressable style={styles.emptyContainer} onPress={openModal}>
-          <SVG.Icon.PlusRound width={48} height={48} />
+          <SVG.Icon.PlusRound width={48} height={48} color={colors.OTBBlack400} />
         </Pressable>
 
         <Modal.Dialog

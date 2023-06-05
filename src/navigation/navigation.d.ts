@@ -33,6 +33,7 @@ export type RootStackParamList = {
   SearchScreen: undefined;
   BoardGameDetailsScreen: {id: number};
   MyPageEditProfileScreen: undefined;
+  MyPageEditProfileCharacterScreen: {profileCharacter: string};
   MyPageBadgeScreen: undefined;
   WriteScreen: undefined;
   ManagerScreen: undefined;
