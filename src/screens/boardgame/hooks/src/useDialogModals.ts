@@ -1,4 +1,4 @@
-import {useModal} from "@/hooks/modal";
+import {useModal} from "@/hooks";
 
 export default function useDialogModals() {
   const {

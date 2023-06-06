@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {FlatList} from "react-native-gesture-handler";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
@@ -28,7 +28,7 @@ export default function Review({navigation}: ScreenProps) {
     },
     {
       title: "테라포밍 마스: 아레나 익스페디션",
-      content: "등록해줘요오오오옹", 
+      content: "등록해줘요오오오옹",
       nickname: "12331",
       date: "2023-02-02",
       time: "23:00:15",

@@ -5,14 +5,15 @@ import {Pressable, StyleSheet, Text, TouchableOpacity, View} from "react-native"
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
+import {useLoginInfo} from "@/hooks";
 import {DateTimeFormatter} from "@/services/formatter";
-import {CommentDetails} from "@/store";
+import {CommentDetails} from "@/types";
 
-import {useDialogModals, useMyMemberInfo} from "../../hooks";
+import {useDialogModals} from "../../hooks";
 import AuthorChip from "./AuthorChip";
 
 function CommentListItem({comment}: {comment: CommentDetails}) {
-  const {isLoginUser, isAdmin} = useMyMemberInfo();
+  const {isLoginUser, isAdmin} = useLoginInfo();
   const {
     isDeleteModalVisible,
     openDeleteModal,

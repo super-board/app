@@ -3,13 +3,18 @@ import React from "react";
 import {Dimensions, StyleSheet, View} from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 
-import {BoardGameSummary, useGetBoardGamesForHomeCurationQuery} from "@/store";
+import {api} from "@/api";
+import {useRefetchQuery} from "@/hooks";
+import {BoardGameSummary} from "@/types";
 
 import CurationCarouselItem from "./CurationCarouselItem";
 
 export default function CurationCarousel() {
   const {width: screenWidth} = Dimensions.get("window");
-  const {isLoading, data: boardGames} = useGetBoardGamesForHomeCurationQuery();
+  const {isLoading, data: boardGames} = useRefetchQuery(
+    ["boardgames/home"],
+    api.boardGame.fetchBoardGamesForHome,
+  );
 
   if (isLoading || !boardGames) return <View style={styles.container} />;
 

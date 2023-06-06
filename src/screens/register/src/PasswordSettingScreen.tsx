@@ -13,7 +13,7 @@ import {
 } from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import {useTextInput} from "@/hooks/form";
+import {useTextInput} from "@/hooks";
 import {Validator} from "@/services/validator";
 
 export default function PasswordSettingScreen({navigation, route}: ScreenProps) {
@@ -52,7 +52,7 @@ export default function PasswordSettingScreen({navigation, route}: ScreenProps) 
         onChangeText={onChangePassword}
         instructionText="8~20자 이내로 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요."
         isValid={isValidPassword}
-        invalidText="8~20자 이내로 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요."
+        invalidText="비밀번호 형식이 맞지 않습니다. 다시 입력해주세요."
         maxLength={20}
         secureTextEntry={hidePassword}
         rightDecorationComponent={

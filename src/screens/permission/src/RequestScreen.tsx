@@ -8,22 +8,41 @@ import effects from "@/constants/effects";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useSavePermissionGrantResult} from "@/hooks/permssion";
 import {
   PermissionAppTrackingTransparencyService,
   PermissionCameraAndGalleryService,
   PermissionNotificationsService,
 } from "@/services/permission";
+import {usePermissionGrantStore} from "@/zustand-stores";
 
-export default function RequestScreen({navigation}: ScreenProps) {
-  const {savePermissionGrantResult} = useSavePermissionGrantResult();
+export default function RequestScreen({navigation, route}: ScreenProps) {
+  const {completePermissionGrant} = usePermissionGrantStore();
 
   const onRequestPermissions = async () => {
-    await PermissionNotificationsService.requestPermission();
-    await PermissionCameraAndGalleryService.requestPermission();
-    await PermissionAppTrackingTransparencyService.requestPermission();
-    savePermissionGrantResult();
-    navigation.reset({index: 0, routes: [{name: "BottomTabView"}]});
+    await Promise.allSettled([
+      PermissionNotificationsService.requestPermission(),
+      PermissionCameraAndGalleryService.requestPermission(),
+      PermissionAppTrackingTransparencyService.requestPermission(),
+    ]);
+    completePermissionGrant();
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: "BottomTabView",
+          state: {
+            routes: [
+              {
+                name: "HomeTab",
+                state: {
+                  routes: [{name: "HomeScreen", params: route.params}],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    });
   };
 
   return (

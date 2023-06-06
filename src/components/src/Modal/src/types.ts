@@ -3,6 +3,7 @@ import {ReactNode} from "react";
 import {Modal as DefModal} from "react-native";
 
 export type ModalProps = DefModal["props"] & {
+  IconComponent?: ReactNode;
   title?: string;
   description?: string;
   dismissible?: boolean;

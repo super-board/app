@@ -3,7 +3,7 @@ import React, {useCallback} from "react";
 import {FlatList, StyleProp, StyleSheet, View, ViewStyle} from "react-native";
 
 import colors from "@/constants/colors";
-import type {BoardGameSummary} from "@/store";
+import type {BoardGameSummary} from "@/types";
 
 import BoardGameListItem from "./BoardGameListItem";
 
@@ -15,7 +15,7 @@ type Props = {
   contentContainerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function BoardGameSearchResultView({
+export default function BoardGameListView({
   boardGames,
   hasNextPage = false,
   onLoadNextPage = () => {},
@@ -66,6 +66,4 @@ const styles = StyleSheet.create({
     borderTopColor: colors.OTBBlack700,
     borderTopWidth: 1,
   },
-  thumbnail: {width: 72, height: 72},
-  contentContainer: {flexDirection: "column", gap: 4},
 });

@@ -2,21 +2,18 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 
 import type {BottomSheetBackdropProps} from "@gorhom/bottom-sheet";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView} from "@gorhom/bottom-sheet";
+import {useMutation} from "@tanstack/react-query";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
+import {api} from "@/api";
 import {FlexEmptyFill, OTBButton, OTBSwitch, ScreenTitle, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import officialDocuments, {OfficialDocuments} from "@/constants/officialDocuments";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useSaveOnboardingResult} from "@/hooks/onboarding";
-import {
-  LoginForm,
-  RegisterForm,
-  useSignInMutation,
-  useSignUpWithEmailAndPasswordMutation,
-} from "@/store";
+import {RegisterForm} from "@/types";
+import {useOnboardingStore} from "@/zustand-stores";
 
 export default function TermsAndConditionsScreen({navigation, route}: ScreenProps) {
   const [didAgreeAll, setDidAgreeAll] = useState(false);
@@ -31,10 +28,17 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
     "personalInformationCollection",
   );
 
-  const {saveOnboardingResult} = useSaveOnboardingResult();
-  const [signUp, {isLoading: isSigningUp, isSuccess: isSuccessToSignUp}] =
-    useSignUpWithEmailAndPasswordMutation();
-  const [signIn, {isLoading: isSigningIn, isSuccess: isSuccessToSignIn}] = useSignInMutation();
+  const {completeOnboarding} = useOnboardingStore();
+  const {
+    mutate: signUp,
+    isLoading: isSigningUp,
+    isSuccess: isSuccessToSignUp,
+  } = useMutation(["members/sign-up"], api.member.signUpWithEmailAndPassword);
+  const {
+    mutate: signIn,
+    isLoading: isSigningIn,
+    isSuccess: isSuccessToSignIn,
+  } = useMutation(["auth/sign-in"], api.auth.signIn);
 
   const onToggleAgreeAll = () => {
     const toBe = !didAgreeAll;
@@ -67,14 +71,15 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
   useEffect(() => {
     if (!isSuccessToSignUp) return;
 
-    const {email, password} = route.params as LoginForm;
-    saveOnboardingResult();
+    const {email, password, tagIds} = route.params as RegisterForm;
+    completeOnboarding();
     signIn({email, password});
   }, [isSuccessToSignUp]);
 
-  /* 로그인 성공하면 홈 화면으로 이동 */
+  /* 로그인 성공하면 권한부여 화면으로 이동 */
   useEffect(() => {
-    if (isSuccessToSignIn) navigation.navigate("PermissionGrantNoticeScreen");
+    if (isSuccessToSignIn)
+      navigation.navigate("PermissionGrantNoticeScreen", {shouldWelcome: true});
   }, [isSuccessToSignIn]);
 
   /* 동의 여부에 따라 전체 동의 토글 상태 변경 */

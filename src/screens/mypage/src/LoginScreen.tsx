@@ -1,9 +1,10 @@
 import React, {useCallback, useEffect, useState} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
+import {useMutation} from "@tanstack/react-query";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {api} from "@/api";
 import {
   DecoratedTextInput,
   FlexEmptyFill,
@@ -15,23 +16,29 @@ import {
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useSignInMutation} from "@/store";
+import {useOnboardingStore} from "@/zustand-stores";
 
-export default function LoginScreen({navigation}: ScreenProps) {
+export default function LoginScreen({navigation, route}: ScreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
   const [isValidCredentials, setIsValidCredentials] = useState(true);
 
-  const [signIn, {isLoading, isSuccess, isError}] = useSignInMutation();
+  const {completeOnboarding} = useOnboardingStore();
+  const {
+    mutate: signIn,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useMutation(["auth/sign-in"], api.auth.signIn);
 
   const onPress = {
     login: () => {
       setIsValidCredentials(true);
       signIn({email, password});
     },
-    kakao: () => {},
-    naver: () => {},
+    // naver: async () => {},
+    // kakao: async () => {},
     register: () => {
       navigation.navigate("RegisterEmailVerificationScreen");
     },
@@ -47,7 +54,10 @@ export default function LoginScreen({navigation}: ScreenProps) {
 
   /* 로그인에 성공하면 토큰 저장 후 화면 이동 */
   useEffect(() => {
-    if (isSuccess) navigation.navigate("PermissionGrantNoticeScreen");
+    if (isSuccess) {
+      completeOnboarding();
+      navigation.navigate("PermissionGrantNoticeScreen");
+    }
   }, [isSuccess]);
 
   useFocusEffect(
@@ -105,14 +115,14 @@ export default function LoginScreen({navigation}: ScreenProps) {
 
       <FlexEmptyFill />
 
-      <View style={styles.snsContainer}>
+      {/* <View style={styles.snsContainer}>
         <TouchableOpacity onPress={onPress.naver}>
           <SVG.Icon.Naver width={48} height={48} />
         </TouchableOpacity>
         <TouchableOpacity onPress={onPress.kakao}>
           <SVG.Icon.Kakao width={48} height={48} />
         </TouchableOpacity>
-      </View>
+      </View> */}
       <SizedBox height={42} />
       <OTBButton
         type="basic-primary"

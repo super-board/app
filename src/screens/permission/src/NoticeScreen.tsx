@@ -3,21 +3,38 @@ import React, {useCallback} from "react";
 import {useFocusEffect} from "@react-navigation/native";
 import {StyleSheet, Text, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {FlexEmptyFill, OTBButton, ScreenTitle, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useCheckPermissionGrantRequested} from "@/hooks/permssion";
+import {usePermissionGrantStore} from "@/zustand-stores";
 
-export default function NoticeScreen({navigation}: ScreenProps) {
-  const {shouldRequestPermissionGrant} = useCheckPermissionGrantRequested();
+export default function NoticeScreen({navigation, route}: ScreenProps) {
+  const {shouldRequestPermissionGrant} = usePermissionGrantStore();
 
   useFocusEffect(
     useCallback(() => {
       if (!shouldRequestPermissionGrant)
-        navigation.reset({index: 0, routes: [{name: "BottomTabView"}]});
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: "BottomTabView",
+              state: {
+                routes: [
+                  {
+                    name: "HomeTab",
+                    state: {
+                      routes: [{name: "HomeScreen", params: route.params}],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        });
     }, []),
   );
 
@@ -66,7 +83,7 @@ export default function NoticeScreen({navigation}: ScreenProps) {
       <OTBButton
         type="basic-primary"
         text="확인"
-        onPress={() => navigation.navigate("PermissionGrantRequestScreen")}
+        onPress={() => navigation.navigate("PermissionGrantRequestScreen", route.params)}
       />
       <SizedBox height={36} />
     </View>

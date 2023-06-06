@@ -1,11 +1,9 @@
-export {default as BoardGameDetailsAppBar} from "./src/BoardGameDetailsAppBar";
+export {default as BackToHomeAppBar} from "./src/BackToHomeAppBar";
 export {default as EmptyAppBar} from "./src/EmptyAppBar";
-export {default as HistoryBackOnlyAppBar} from "./src/HistoryBackOnlyAppBar";
 export {default as HomeAppBar} from "./src/HomeAppBar";
-export {default as NotificationsAppBar} from "./src/NotificationsAppBar";
-export {default as OnboardingAppBar} from "./src/OnboardingAppBar";
-export {default as RecommendationAppBar} from "./src/RecommendationAppBar";
-export {default as RegisterAppBar} from "./src/RegisterAppBar";
-export {default as SearchAppBar} from "./src/SearchAppBar";
-export {default as ReviewAppBar} from "./src/ReviewAppBar";
 export {default as ManagerAppBar} from "./src/ManagerAppBar";
+export {default as MyPageAppBar} from "./src/MyPageAppBar";
+export {default as PopToSecondTopAppBar} from "./src/PopToSecondTopAppBar";
+export {default as PopToTopAppBar} from "./src/PopToTopAppBar";
+export {default as SearchAppBar} from "./src/SearchAppBar";
+export {default as SimpleAppBar} from "./src/SimpleAppBar";

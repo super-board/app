@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import keys from "@/constants/keys";
+
 export async function saveData(key: string, value: any): Promise<void> {
   try {
     const json = JSON.stringify(value);
@@ -45,4 +47,13 @@ export async function containsKey(key: string): Promise<boolean> {
   }
 
   return false;
+}
+
+export async function clearStorage(): Promise<void> {
+  try {
+    const promises = Object.keys(keys).map(key => removeData(key));
+    await Promise.allSettled(promises);
+  } catch (error) {
+    console.error(error);
+  }
 }

@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect, useState} from "react";
 
 import {useFocusEffect} from "@react-navigation/native";
+import {useMutation} from "@tanstack/react-query";
 
+import {api} from "@/api";
 import {
   DecoratedTextInput,
   FlexEmptyFill,
@@ -13,16 +15,16 @@ import {
 } from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import {useTextInput} from "@/hooks/form";
+import {useTextInput} from "@/hooks";
 import {Validator} from "@/services/validator";
-import {ResetPasswordForm, useUpdatePasswordMutation} from "@/store";
+import {ResetPasswordForm} from "@/types";
 
 export default function ResetPasswordSettingScreen({navigation, route}: ScreenProps) {
   const {
     value: password,
     isValid: isValidPassword,
     onChangeText: onChangePassword,
-    reset: resetPassword,
+    reset: resetPasswordInput,
   } = useTextInput(Validator.isValidPassword);
   const {
     value: passwordRe,
@@ -33,11 +35,15 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordRe, setHidePasswordRe] = useState(true);
 
-  const [updatePassword, {isSuccess}] = useUpdatePasswordMutation();
+  const {
+    mutate: resetPassword,
+    isSuccess,
+    isLoading,
+  } = useMutation(["passwords/reset"], api.password.resetPassword);
 
   const onSubmit = () => {
     const {email, resetToken} = route.params as ResetPasswordForm;
-    updatePassword({email, password, resetToken});
+    resetPassword({email, password, resetToken});
   };
 
   /* 비밀번호 재설정에 성공하면 화면 이동 */
@@ -51,7 +57,7 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
 
   useFocusEffect(
     useCallback(() => {
-      resetPassword();
+      resetPasswordInput();
       resetPasswordRe();
       setHidePassword(true);
       setHidePasswordRe(true);
@@ -69,7 +75,7 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
         onChangeText={onChangePassword}
         instructionText="8~20자 이내로 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요."
         isValid={isValidPassword}
-        invalidText="8~20자 이내로 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요."
+        invalidText="비밀번호 형식이 맞지 않습니다. 다시 입력해주세요."
         maxLength={20}
         secureTextEntry={hidePassword}
         rightDecorationComponent={
@@ -102,7 +108,7 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
         type="basic-primary"
         text="확인"
         onPress={onSubmit}
-        disabled={!password || !isValidPassword || !isValidPasswordRe}
+        disabled={!password || !isValidPassword || !isValidPasswordRe || isLoading}
       />
       <SizedBox height={36} />
     </KeyboardView>

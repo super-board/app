@@ -5,13 +5,13 @@ import {TextInput} from "react-native-gesture-handler";
 import {launchImageLibrary} from "react-native-image-picker";
 import StarRating from "react-native-star-rating-widget";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {Modal, OTBButton} from "@/components";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useModal} from "@/hooks/modal";
+import {useModal} from "@/hooks";
 import {PermissionCameraAndGalleryService} from "@/services/permission";
 
 import {Image} from "../components";

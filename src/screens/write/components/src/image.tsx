@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
-import {FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import FastImage from "react-native-fast-image";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 

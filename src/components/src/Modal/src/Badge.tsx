@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {Modal as DefModal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import badge from "@/constants/badges";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";

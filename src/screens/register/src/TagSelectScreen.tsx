@@ -9,23 +9,13 @@ import effects from "@/constants/effects";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useSelectedTagIds} from "@/hooks/common";
-import {useModal} from "@/hooks/modal";
-import {useGetTagListQuery} from "@/store";
+import {useFavoriteTags, useFavoriteTagsForm, useModal} from "@/hooks";
 
 export default function TagSelectScreen({navigation, route}: ScreenProps) {
-  const {isLoading, data: tagList} = useGetTagListQuery();
-  const {selectedTagIds, toggleTag, resetSelectedTags, isSelectedTag} = useSelectedTagIds();
   const {visible: warnVisible, openModal: openWarnModal, closeModal: closeWarnModal} = useModal();
-
-  const toggleTagSelection = (id: number) => {
-    if (!isSelectedTag(id) && selectedTagIds.length === 5) {
-      openWarnModal();
-      return;
-    }
-
-    toggleTag(id);
-  };
+  const {isLoading, tagList} = useFavoriteTags();
+  const {selectedTagIds, toggleTag, resetSelectedTags, isSelectedTag} =
+    useFavoriteTagsForm(openWarnModal);
 
   const onNextPage = () => {
     navigation.navigate("RegisterTermsAndConditionsScreen", {
@@ -65,8 +55,11 @@ export default function TagSelectScreen({navigation, route}: ScreenProps) {
                     <TouchableOpacity
                       key={tag.id}
                       activeOpacity={1}
-                      onPress={() => toggleTagSelection(tag.id)}>
-                      <TagChip text={tag.name} active={isSelectedTag(tag.id)} />
+                      onPress={() => toggleTag(tag.id)}>
+                      <TagChip
+                        text={tag.name}
+                        type={isSelectedTag(tag.id) ? "active" : "inactive"}
+                      />
                     </TouchableOpacity>
                   ))}
                 </View>

@@ -2,7 +2,7 @@ import React from "react";
 
 import {NativeStackHeaderProps} from "@react-navigation/native-stack";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 
 import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";

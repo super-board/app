@@ -2,21 +2,26 @@ import React, {useCallback, useEffect, useState} from "react";
 
 import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
+import {api} from "@/api";
 import {BoardGameListView, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useNavigateToBoardGameDetails} from "@/hooks/navigation";
-import {useSearchQuery} from "@/hooks/searchQuery";
-import {BoardGameSummary, useGetBoardGamesByNameQuery, useGetTop10BoardGamesQuery} from "@/store";
+import {useNavigateToBoardGameDetails, useRefetchQuery} from "@/hooks";
+import {BoardGameSummary} from "@/types";
+import {useSearchStore} from "@/zustand-stores";
 
 export default function SearchScreen() {
-  const {isLoading: isTop10BoardGamesLoading, data: top10BoardGames} = useGetTop10BoardGamesQuery();
-  const {searchQuery, resetSearchQuery} = useSearchQuery();
+  const {isLoading: isTop10BoardGamesLoading, data: top10BoardGames} = useRefetchQuery(
+    ["boardgames/top10"],
+    api.boardGame.fetchBoardGamesTop10,
+  );
+  const {searchQuery, resetSearchQuery} = useSearchStore();
   const [page, setPage] = useState(1);
-  const {isLoading: isSearchResultsLoading, data: searchResults} = useGetBoardGamesByNameQuery({
-    query: searchQuery,
-    page,
-  });
+  // FIXME: 연동시 무한스크롤로 변경
+  const {isLoading: isSearchResultsLoading, data: searchResults} = useRefetchQuery(
+    ["boardgames/searchBoardgmaeList", searchQuery],
+    api.boardGame.fetchBoardGames,
+  );
 
   const renderItem = useCallback(
     ({item}: {item: BoardGameSummary}) => <BoardGameListItem boardGame={item} />,
@@ -41,7 +46,7 @@ export default function SearchScreen() {
         <BoardGameListView
           key={searchQuery}
           style={styles.searchResultsContainer}
-          boardGames={searchResults}
+          boardGames={searchResults.content}
           hasNextPage={true}
           onLoadNextPage={onLoadNextPage}
           contentContainerStyle={{paddingBottom: 48}}

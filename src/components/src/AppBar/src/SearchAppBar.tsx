@@ -3,11 +3,11 @@ import React, {useEffect, useRef, useState} from "react";
 import {NativeStackHeaderProps} from "@react-navigation/native-stack";
 import {Dimensions, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
-import {useSearchQuery} from "@/hooks/searchQuery";
+import {useSearchStore} from "@/zustand-stores";
 
 import {AppBar} from "./AppBar";
 import {AppBarButton} from "./AppBarButton";
@@ -17,7 +17,7 @@ export default function SearchAppBar({navigation}: NativeStackHeaderProps) {
   const [query, setQuery] = useState("");
   const [hasFocus, setHasFocus] = useState(false);
 
-  const {searchQuery, updateSearchQuery, resetSearchQuery} = useSearchQuery();
+  const {searchQuery, updateSearchQuery, resetSearchQuery} = useSearchStore();
 
   const onSearch = () => {
     updateSearchQuery(query);

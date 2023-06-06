@@ -2,15 +2,17 @@ import * as React from "react";
 
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import {bottomTabScreenOptions} from "@/navigation/config";
+import {RootTabParamList} from "@/navigation/navigation";
 
 import HomeStack from "./src/HomeStack";
 import MyPageStack from "./src/MyPageStack";
-import RecommendaationStack from "./src/RecommendaationStack";
+import RecommendationStack from "./src/RecommendationStack";
 import SearchStack from "./src/SearchStack";
+import WriteStack from "./src/WriteStack";
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const HomeTabIcon = (focused: boolean) =>
   focused ? (
@@ -19,7 +21,7 @@ const HomeTabIcon = (focused: boolean) =>
     <SVG.Icon.Home width={32} height={32} />
   );
 
-const SearchTabIcon = (focused: boolean) =>
+const RecommendationTabIcon = (focused: boolean) =>
   focused ? (
     <SVG.Icon.SpaceDashboardAccent width={32} height={32} />
   ) : (
@@ -33,6 +35,9 @@ const WriteTabIcon = (focused: boolean) =>
     <SVG.Icon.EditNote width={32} height={32} />
   );
 
+const SearchTabIcon = (focused: boolean) =>
+  focused ? <SVG.Icon.Search width={32} height={32} /> : <SVG.Icon.Search width={32} height={32} />;
+
 const MyPageTabIcon = (focused: boolean) =>
   focused ? (
     <SVG.Icon.AccountCircleAccent width={32} height={32} />
@@ -40,7 +45,7 @@ const MyPageTabIcon = (focused: boolean) =>
     <SVG.Icon.AccountCircle width={32} height={32} />
   );
 
-const BottomTab = () => {
+export default function BottomTab() {
   return (
     <Tab.Navigator screenOptions={bottomTabScreenOptions}>
       <Tab.Screen
@@ -51,17 +56,22 @@ const BottomTab = () => {
         component={HomeStack}
       />
       <Tab.Screen
-        name="SearchTab"
+        name="RecommendationTab"
         options={{
-          tabBarIcon: ({focused}) => SearchTabIcon(focused),
+          tabBarIcon: ({focused}) => RecommendationTabIcon(focused),
         }}
-        component={RecommendaationStack}
+        component={RecommendationStack}
       />
       <Tab.Screen
         name="WriteTab"
         options={{
           tabBarIcon: ({focused}) => WriteTabIcon(focused),
         }}
+        component={WriteStack}
+      />
+      <Tab.Screen
+        name="SearchTab"
+        options={{tabBarIcon: ({focused}) => SearchTabIcon(focused)}}
         component={SearchStack}
       />
       <Tab.Screen
@@ -73,6 +83,4 @@ const BottomTab = () => {
       />
     </Tab.Navigator>
   );
-};
-
-export default BottomTab;
+}

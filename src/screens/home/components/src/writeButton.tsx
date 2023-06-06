@@ -3,7 +3,7 @@ import React from "react";
 import {useNavigation} from "@react-navigation/native";
 import {StyleSheet, TouchableOpacity} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 
 export default function writeButton() {

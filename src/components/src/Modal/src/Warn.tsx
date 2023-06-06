@@ -2,7 +2,7 @@ import React from "react";
 
 import {Modal as DefModal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
@@ -43,11 +43,23 @@ export default function Warn({
             <SVG.Icon.EditUnderLine width={48} height={48} />
           )}
           <SizedBox height={24} />
-          <Text style={[typography.subhead01, typography.textWhite, effects.textDropShadow]}>
+          <Text
+            style={[
+              typography.subhead01,
+              typography.textWhite,
+              effects.textDropShadow,
+              styles.textCenter,
+            ]}>
             {title}
           </Text>
           <SizedBox height={8} />
-          <Text style={[typography.body02, typography.textWhite, effects.textDropShadow]}>
+          <Text
+            style={[
+              typography.body02,
+              typography.textWhite,
+              effects.textDropShadow,
+              styles.textCenter,
+            ]}>
             {description}
           </Text>
           {description ? <SizedBox height={22} /> : null}
@@ -96,5 +108,8 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     flex: 1,
+  },
+  textCenter: {
+    textAlign: "center",
   },
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -6,20 +6,34 @@ import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {
-  BoardGameDetailsAppBar,
+  BackToHomeAppBar,
   EmptyAppBar,
-  HistoryBackOnlyAppBar,
   ManagerAppBar,
-  OnboardingAppBar,
-  RegisterAppBar,
-  ReviewAppBar,
+  PopToSecondTopAppBar,
+  PopToTopAppBar,
   SearchAppBar,
+  SimpleAppBar,
 } from "@/components";
 import colors from "@/constants/colors";
-import {useCheckOnboardingCompleted} from "@/hooks/onboarding";
+import InquiryTab from "@/navigation/stack/InquiryTab";
 import {BoardGameDetailsScreen} from "@/screens/boardgame";
-import {Comment, Inquiry, Manager, Notice, Report, Review, User} from "@/screens/manager";
-import {LoginScreen} from "@/screens/mypage";
+import {Inquiry, Manager, Notice, User} from "@/screens/manager";
+import {
+  LoginScreen,
+  MyPageBadgeScreen,
+  MyPageCheckPasswordScreen,
+  MyPageEditProfileCharacterScreen,
+  MyPageEditProfileScreen,
+  MyPageFavoriteBoardGamesScreen,
+  MyPageMyReviewsScreen,
+  MyPageNoticeScreen,
+  MyPageNotificationSettingsScreen,
+  MyPageSettingsScreen,
+  MyPageTermsAndConditionsListScreen,
+  MyPageTermsAndConditionsPrivacyScreen,
+  MyPageTermsAndConditionsScreen,
+  MyPageUpdatePasswordScreen,
+} from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
   OnboardingTagSelectScreen,
@@ -39,65 +53,39 @@ import {
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
 import {WriteScreen} from "@/screens/write";
+import {useOnboardingStore} from "@/zustand-stores";
+import useAuthStore from "@/zustand-stores/src/useAuthStore";
 
 import {stackScreenOptions} from "./config";
+import {RootStackParamList} from "./navigation";
 import BottomTab from "./stack/BottomTab";
 import Tabs from "./tab";
 
-export type RootStackParamList = {
-  OnboardingWelcomeScreen: undefined;
-  OnboardingTagSelectScreen: undefined;
-  OnboardingRecommendationScreen: undefined;
-  LoginScreen: undefined;
-  RegisterEmailVerificationScreen: undefined;
-  RegisterPasswordSettingScreen: {email?: string};
-  RegisterProfileSelectionScreen: {email?: string; password?: string};
-  RegisterNicknameSettingScreen: {email?: string; password?: string; profileCharacter?: string};
-  RegisterTagSelectScreen: {
-    email?: string;
-    password?: string;
-    profileCharacter?: string;
-    nickname?: string;
-  };
-  RegisterTermsAndConditionsScreen: {
-    email?: string;
-    password?: string;
-    profileCharacter?: string;
-    nickname?: string;
-    tagIds?: number[];
-  };
-  ResetPasswordEmailVerificationScreen: undefined;
-  ResetPasswordSettingScreen: {email?: string};
-  PermissionGrantNoticeScreen: undefined;
-  PermissionGrantRequestScreen: undefined;
-  BottomTabView: undefined;
-  SearchScreen: undefined;
-  WriteScreen: undefined;
-  BoardGameDetailsScreen: {id: number};
-  ManagerScreen: undefined;
-  ManageNoticeScreen: undefined;
-  ManageInquiryScreen: undefined;
-  ManageReviewScreen: undefined;
-  ManageCommentScreen: undefined;
-  ManageReportScreen: undefined;
-  ManageTabScreen: undefined;
-  ManageUserScreen: undefined;
-};
-
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const Navigation = () => {
-  const {isLoading, shouldRequestOnboarding} = useCheckOnboardingCompleted();
+export default function Navigation() {
+  const [didAppInitialized, setDidAppInitialized] = React.useState(false);
+  const {shouldRequestOnboarding} = useOnboardingStore();
+  const {shouldLogin} = useAuthStore();
   const insets = useSafeAreaInsets();
 
-  if (isLoading) return <SplashScreen />;
+  const initialRouteName = useCallback(() => {
+    if (shouldLogin) return "LoginScreen";
+    if (shouldRequestOnboarding) return "OnboardingWelcomeScreen";
+    return "BottomTabView";
+  }, [shouldLogin, shouldRequestOnboarding]);
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => setDidAppInitialized(true), 1500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (!didAppInitialized) return <SplashScreen />;
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={shouldRequestOnboarding ? "OnboardingWelcomeScreen" : "BottomTabView"}
-          screenOptions={stackScreenOptions}>
+        <Stack.Navigator initialRouteName={initialRouteName()} screenOptions={stackScreenOptions}>
           <Stack.Group>
             <Stack.Screen
               name="OnboardingWelcomeScreen"
@@ -106,59 +94,64 @@ const Navigation = () => {
             />
             <Stack.Screen
               name="OnboardingTagSelectScreen"
-              options={{header: OnboardingAppBar}}
+              options={{header: PopToTopAppBar}}
               component={OnboardingTagSelectScreen}
             />
             <Stack.Screen
               name="OnboardingRecommendationScreen"
-              options={{header: OnboardingAppBar}}
+              options={{header: PopToTopAppBar}}
               component={OnboardingRecommendationScreen}
             />
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen
               name="LoginScreen"
-              options={{header: HistoryBackOnlyAppBar}}
+              options={{header: SimpleAppBar, headerBackVisible: false}}
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              name="OnboardingLoginScreen"
+              options={{header: SimpleAppBar, headerBackVisible: true}}
               component={LoginScreen}
             />
             <Stack.Screen
               name="RegisterEmailVerificationScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterEmailVerificationScreen}
             />
             <Stack.Screen
               name="RegisterPasswordSettingScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterPasswordSettingScreen}
             />
             <Stack.Screen
               name="RegisterProfileSelectionScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterProfileSelectionScreen}
             />
             <Stack.Screen
               name="RegisterNicknameSettingScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterNicknameSettingScreen}
             />
             <Stack.Screen
               name="RegisterTagSelectScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterTagSelectScreen}
             />
             <Stack.Screen
               name="RegisterTermsAndConditionsScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterTermsAndConditionsScreen}
             />
             <Stack.Screen
               name="ResetPasswordEmailVerificationScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={ResetPasswordEmailVerificationScreen}
             />
             <Stack.Screen
               name="ResetPasswordSettingScreen"
-              options={{header: RegisterAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={ResetPasswordSettingScreen}
             />
           </Stack.Group>
@@ -170,7 +163,7 @@ const Navigation = () => {
             />
             <Stack.Screen
               name="PermissionGrantRequestScreen"
-              options={{header: HistoryBackOnlyAppBar}}
+              options={{header: SimpleAppBar, headerBackVisible: true}}
               component={PermissionGrantRequestScreen}
             />
           </Stack.Group>
@@ -187,12 +180,17 @@ const Navigation = () => {
             />
             <Stack.Screen
               name="WriteScreen"
-              options={{header: ReviewAppBar, animation: "slide_from_bottom"}}
+              options={{
+                header: SimpleAppBar,
+                title: "리뷰",
+                animation: "slide_from_bottom",
+                headerBackVisible: true,
+              }}
               component={WriteScreen}
             />
             <Stack.Screen
               name="BoardGameDetailsScreen"
-              options={{header: BoardGameDetailsAppBar}}
+              options={{header: BackToHomeAppBar}}
               component={BoardGameDetailsScreen}
             />
           </Stack.Group>
@@ -223,11 +221,87 @@ const Navigation = () => {
               options={{header: ManagerAppBar}}
             />
           </Stack.Group>
+          <Stack.Group>
+            <Stack.Screen
+              name="MyPageEditProfileScreen"
+              options={{header: SimpleAppBar, title: "프로필 수정", headerBackVisible: true}}
+              component={MyPageEditProfileScreen}
+            />
+            <Stack.Screen
+              name="MyPageEditProfileCharacterScreen"
+              options={{header: SimpleAppBar, headerBackVisible: true}}
+              component={MyPageEditProfileCharacterScreen}
+            />
+            <Stack.Screen
+              name="MyPageBadgeScreen"
+              options={{header: SimpleAppBar, title: "내 뱃지", headerBackVisible: true}}
+              component={MyPageBadgeScreen}
+            />
+            <Stack.Screen
+              name="MyPageMyReviewsScreen"
+              options={{header: SimpleAppBar, title: "내 리뷰", headerBackVisible: true}}
+              component={MyPageMyReviewsScreen}
+            />
+            <Stack.Screen
+              name="MyPageFavoriteBoardGamesScreen"
+              options={{
+                header: SimpleAppBar,
+                title: "보드게임 좋아요 목록",
+                headerBackVisible: true,
+              }}
+              component={MyPageFavoriteBoardGamesScreen}
+            />
+            <Stack.Screen
+              name="MyPageNoticeScreen"
+              options={{header: SimpleAppBar, title: "공지사항", headerBackVisible: true}}
+              component={MyPageNoticeScreen}
+            />
+            <Stack.Screen
+              name="MyPageInquiryTab"
+              options={{header: SimpleAppBar, title: "1:1문의", headerBackVisible: true}}
+              component={InquiryTab}
+            />
+            <Stack.Screen
+              name="MyPageSettingsScreen"
+              options={{header: SimpleAppBar, title: "설정", headerBackVisible: true}}
+              component={MyPageSettingsScreen}
+            />
+            <Stack.Screen
+              name="MyPageCheckPasswordScreen"
+              options={{header: SimpleAppBar, title: "비밀번호 변경", headerBackVisible: true}}
+              component={MyPageCheckPasswordScreen}
+            />
+            <Stack.Screen
+              name="MyPageUpdatePasswordScreen"
+              options={{header: SimpleAppBar, title: "비밀번호 변경", headerBackVisible: true}}
+              component={MyPageUpdatePasswordScreen}
+            />
+            <Stack.Screen
+              name="MyPageNotificationSettingsScreen"
+              options={{header: SimpleAppBar, title: "알림", headerBackVisible: true}}
+              component={MyPageNotificationSettingsScreen}
+            />
+            <Stack.Screen
+              name="MyPageTermsAndConditionsListScreen"
+              options={{header: SimpleAppBar, title: "정책 및 약관", headerBackVisible: true}}
+              component={MyPageTermsAndConditionsListScreen}
+            />
+            <Stack.Screen
+              name="MyPageTermsAndConditionsPrivacyScreen"
+              options={{header: SimpleAppBar, title: "개인정보 처리방침", headerBackVisible: true}}
+              component={MyPageTermsAndConditionsPrivacyScreen}
+            />
+            <Stack.Screen
+              name="MyPageTermsAndConditionsScreen"
+              options={{header: SimpleAppBar, title: "이용약관", headerBackVisible: true}}
+              component={MyPageTermsAndConditionsScreen}
+            />
+          </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -235,5 +309,3 @@ const styles = StyleSheet.create({
     backgroundColor: colors.OTBBlack,
   },
 });
-
-export default Navigation;

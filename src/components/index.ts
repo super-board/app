@@ -7,7 +7,7 @@ export * from "./src/CurationCarousel";
 export {default as FlexEmptyFill} from "./src/FlexEmptyFill";
 export * from "./src/Form";
 export {default as KeyboardView} from "./src/keyboard-avoid";
-export {default as LevelIcon} from "./src/LevelIcon";
+export * from "./src/Level";
 export {default as OTBButton} from "./src/OTBButton";
 export {default as OTBSwitch} from "./src/OTBSwitch";
 export {default as ProfileImage} from "./src/ProfileImage";

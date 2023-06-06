@@ -2,15 +2,19 @@ import React from "react";
 
 import {Image, StyleSheet, Text, View} from "react-native";
 
+import {api} from "@/api";
 import typography from "@/constants/typography";
-import {useGetBestReviewsQuery} from "@/store";
+import {useRefetchQuery} from "@/hooks";
 
-import LevelIcon from "./LevelIcon";
+import {LevelIcon} from "./Level";
 import RatingIcons from "./RatingIcons";
 import SizedBox from "./SizedBox";
 
 export default function BestReviews() {
-  const {isLoading, data: bestReviews} = useGetBestReviewsQuery();
+  const {isLoading, data: bestReviews} = useRefetchQuery(
+    ["review/best"],
+    api.review.fetchBestReviews,
+  );
 
   if (isLoading || !bestReviews) return <View style={styles.container} />;
 

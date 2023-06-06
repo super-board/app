@@ -1,16 +1,17 @@
 import React from "react";
 
 import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
-import {FirebaseMessagingTypes, firebase} from "@react-native-firebase/messaging";
+import {FirebaseMessagingTypes} from "@react-native-firebase/messaging";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {Alert, StatusBar} from "react-native";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {SafeAreaProvider} from "react-native-safe-area-context";
-import {Provider} from "react-redux";
 
 import colors from "@/constants/colors";
-import {useFcmForegroundMessageListener, useFcmTokenSave} from "@/hooks/PushNotifications";
+import {useFcmForegroundMessageListener, useFcmTokenSave} from "@/hooks";
 import Navigation from "@/navigation";
-import {store} from "@/store";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   useFcmTokenSave();
@@ -19,7 +20,7 @@ export default function App() {
   });
 
   return (
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
         <StatusBar backgroundColor={colors.OTBBlack} />
         <GestureHandlerRootView style={{flex: 1}}>
@@ -28,6 +29,6 @@ export default function App() {
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
       </SafeAreaProvider>
-    </Provider>
+    </QueryClientProvider>
   );
 }
