@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 
-import {FlatList, StyleProp, StyleSheet, ViewStyle} from "react-native";
+import {FlatList, StyleProp, ViewStyle} from "react-native";
 
 import SizedBox from "@/components/src/SizedBox";
 import type {BoardGameSummary, FavoriteBoardGame} from "@/types";
@@ -15,7 +15,7 @@ type Props = {
   contentContainerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function FavoriteBoardGameGridListView({
+export default function BoardGameGridListView({
   boardGames,
   hasNextPage = false,
   onLoadNextPage = () => {},
@@ -27,7 +27,12 @@ export default function FavoriteBoardGameGridListView({
   };
 
   const renderItem = useCallback(
-    ({item}: {item: FavoriteBoardGame}) => <BoardGameGridListItem boardGame={item} />,
+    ({index, item}: {index: number; item: FavoriteBoardGame}) => (
+      <BoardGameGridListItem
+        boardGame={item}
+        style={{marginRight: index % 2 === 0 ? 4 : 0, marginLeft: index % 2 === 0 ? 0 : 4}}
+      />
+    ),
     [],
   );
   const keyExtractor = useCallback(
@@ -37,7 +42,7 @@ export default function FavoriteBoardGameGridListView({
 
   return (
     <FlatList
-      style={[styles.container, style]}
+      style={style}
       data={boardGames}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
@@ -53,8 +58,3 @@ export default function FavoriteBoardGameGridListView({
 function ItemSeparator() {
   return <SizedBox height={24} />;
 }
-
-const styles = StyleSheet.create({
-  container: {},
-  itemContainer: {flexDirection: "row", gap: 8},
-});

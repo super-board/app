@@ -1,30 +1,31 @@
-import React, {useState} from "react";
+import React from "react";
 
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {View} from "react-native";
 
 import {api} from "@/api";
-import {BoardGameGridListView} from "@/components";
+import {BoardGameGridListView, SizedBox} from "@/components";
 import style from "@/constants/style";
-import {useRefetchQuery} from "@/hooks";
 
 export default function FavoriteBoardGamesScreen() {
-  const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedBoardGames} = useRefetchQuery(
+  const {data, hasNextPage, fetchNextPage} = useInfiniteQuery(
     ["members/mypage/favorite-boardgames"],
-    () => api.myPage.fetchFavoriteBoardGames({}),
+    ({pageParam = 0}) =>
+      api.myPage.fetchFavoriteBoardGames({limit: 10, offset: 10 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
+  const boardGames = data?.pages.flatMap(page => page.content);
 
-  const onLoadNextPage = () => {
-    setPage(state => state + 1);
-  };
+  const onLoadNextPage = () => fetchNextPage({pageParam: data!.pageParams.length});
 
-  if (isLoading || !paginatedBoardGames) return <View style={style.screenWithAppBarContainer} />;
+  if (!data) return <View style={style.screenWithAppBarContainer} />;
 
   return (
     <View style={style.screenWithAppBarContainer}>
+      <SizedBox height={8} />
       <BoardGameGridListView
-        boardGames={paginatedBoardGames.content}
-        hasNextPage={paginatedBoardGames.pageInfo.hasNext}
+        boardGames={boardGames ?? []}
+        hasNextPage={hasNextPage}
         onLoadNextPage={onLoadNextPage}
       />
     </View>

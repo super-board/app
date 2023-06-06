@@ -1,35 +1,36 @@
-import React, {useState} from "react";
+import React from "react";
 
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {View} from "react-native";
 
 import {api} from "@/api";
-import {BoardGameGridListView} from "@/components";
-import {ScreenProps} from "@/constants/props";
+import {BoardGameGridListView, SizedBox} from "@/components";
 import style from "@/constants/style";
-import {useRefetchQuery} from "@/hooks";
 
-export default function MyReviewsScreen({navigation}: ScreenProps) {
-  const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedMyReviews} = useRefetchQuery(["members/mypage/reviews"], () =>
-    api.myPage.fetchMyReviews({}),
+export default function MyReviewsScreen() {
+  const {data, hasNextPage, fetchNextPage} = useInfiniteQuery(
+    ["members/mypage/reviews"],
+    ({pageParam = 0}) => api.myPage.fetchMyReviews({limit: 10, offset: 10 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
-  const boardGames = paginatedMyReviews?.content.map(review => ({
-    id: review.boardGameId,
-    name: review.boardGameName,
-    image: review.boardGameImage,
-  }));
+  const boardGames = data?.pages.flatMap(page =>
+    page.content.map(review => ({
+      id: review.boardGameId,
+      name: review.boardGameName,
+      image: review.boardGameImage,
+    })),
+  );
 
-  const onLoadNextPage = () => {
-    setPage(state => state + 1);
-  };
+  const onLoadNextPage = () => fetchNextPage({pageParam: data!.pageParams.length});
 
-  if (isLoading || !paginatedMyReviews) return <View style={style.screenWithAppBarContainer} />;
+  if (!data) return <View style={style.screenWithAppBarContainer} />;
 
   return (
     <View style={style.screenWithAppBarContainer}>
+      <SizedBox height={8} />
       <BoardGameGridListView
         boardGames={boardGames ?? []}
-        hasNextPage={paginatedMyReviews.pageInfo.hasNext}
+        hasNextPage={hasNextPage}
         onLoadNextPage={onLoadNextPage}
       />
     </View>

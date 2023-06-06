@@ -1,11 +1,13 @@
 import React from "react";
 
 import {useNavigation} from "@react-navigation/native";
-import {Dimensions, Image, Pressable, StyleSheet, View} from "react-native";
+import {Dimensions, Pressable, StyleSheet, View} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import {SVG} from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
+import {network} from "@/constants/network";
 import {useModal} from "@/hooks";
 import {RootStackNavigationProp} from "@/navigation/navigation";
 import {MyReview} from "@/types";
@@ -51,9 +53,12 @@ export default function MyReviewsPreview({reviews}: Props) {
           key={review.id}
           style={styles.previewButton}
           onPress={() => onNavigateToDetails(review.boardGameId)}>
-          <Image
+          <FastImage
             style={styles.previewThumbnail}
-            source={require("@/assets/images/fallback/board-game-fallback.png")}
+            source={{
+              uri: `${network.IMAGE_BASE_URL}/${review.boardGameImage}`,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
           />
         </Pressable>
       ))}

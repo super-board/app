@@ -1,11 +1,13 @@
 import React from "react";
 
 import {useNavigation} from "@react-navigation/native";
-import {Dimensions, Image, Pressable, StyleSheet, View} from "react-native";
+import {Dimensions, Pressable, StyleSheet, View} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import {SVG} from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
+import {network} from "@/constants/network";
 import {useModal} from "@/hooks";
 import {RootStackNavigationProp} from "@/navigation/navigation";
 import {FavoriteBoardGame} from "@/types";
@@ -49,14 +51,17 @@ export default function FavoriteBoardGamesPreview({boardGames}: Props) {
 
   return (
     <View style={styles.previewContainer}>
-      {boardGames.map(boardGames => (
+      {boardGames.map(boardGame => (
         <Pressable
-          key={boardGames.id}
+          key={boardGame.id}
           style={styles.previewButton}
-          onPress={() => onNavigateToDetails(boardGames.id)}>
-          <Image
+          onPress={() => onNavigateToDetails(boardGame.id)}>
+          <FastImage
             style={styles.previewThumbnail}
-            source={require("@/assets/images/fallback/board-game-fallback.png")}
+            source={{
+              uri: `${network.IMAGE_BASE_URL}/${boardGame.image}`,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
           />
         </Pressable>
       ))}
