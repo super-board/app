@@ -12,11 +12,8 @@ import Close from "./close.svg";
 import Collapse from "./collapse.svg";
 import EditNoteAccent from "./edit-note-accent.svg";
 import EditNote from "./edit-note.svg";
-<<<<<<< HEAD
-import EditUnderLine from "./edit-underline.svg";
-=======
 import EditProfile from "./edit-profile.svg";
->>>>>>> 34dc8a6 (feat: add base layout with its appbar on MyPageScreen)
+import EditUnderLine from "./edit-underline.svg";
 import Edit from "./edit.svg";
 import ExpandMore from "./expand-more.svg";
 import Favorite from "./favorite.svg";
@@ -87,16 +84,10 @@ export {
   Collapse,
   Edit,
   SignUp,
-<<<<<<< HEAD
   ArrowUp,
   ArrowDown,
   EditUnderLine,
-=======
   EditProfile,
-<<<<<<< HEAD
->>>>>>> 34dc8a6 (feat: add base layout with its appbar on MyPageScreen)
-=======
   PlusRound,
   ImageAddFill,
->>>>>>> 48f4147 (feat: add my reviews, my favorite boardgames screen)
 };

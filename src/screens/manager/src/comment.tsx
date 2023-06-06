@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {FlatList} from "react-native-gesture-handler";
 
-import * as SVG from "@/assets/svgs";
+import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";

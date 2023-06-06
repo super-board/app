@@ -9,20 +9,11 @@ import style from "@/constants/style";
 import typography from "@/constants/typography";
 
 export default function Manager({navigation}: ScreenProps) {
-  function Menu(props: {text: string; onPress: () => void}) {
-    const {text, onPress} = props;
-    return (
-      <TouchableWithoutFeedback style={styles.menu} onPress={() => onPress()}>
-        <Text style={[typography.body01, styles.text]}>{text}</Text>
-      </TouchableWithoutFeedback>
-    );
-  }
-
   const onPress = {
     notice: () => navigation.navigate("ManageNoticeScreen"),
     inquiry: () => navigation.navigate("ManageInquiryScreen"),
     review: () => navigation.navigate("ManageTabScreen", {screen: "ManageReviewScreen"}),
-    commnet: () => navigation.navigate("ManageTabScreen", {screen: "ManageCommentScreen"}),
+    comment: () => navigation.navigate("ManageTabScreen", {screen: "ManageCommentScreen"}),
     report: () => navigation.navigate("ManageTabScreen", {screen: "ManageReportScreen"}),
   };
 
@@ -34,10 +25,19 @@ export default function Manager({navigation}: ScreenProps) {
       <View style={styles.divider} />
       <Menu text="리뷰 관리" onPress={onPress.review} />
       <View style={styles.divider} />
-      <Menu text="댓글 관리" onPress={onPress.commnet} />
+      <Menu text="댓글 관리" onPress={onPress.comment} />
       <View style={styles.divider} />
       <Menu text="신고게시물 관리" onPress={onPress.report} />
     </View>
+  );
+}
+
+function Menu(props: {text: string; onPress: () => void}) {
+  const {text, onPress} = props;
+  return (
+    <TouchableWithoutFeedback style={styles.menu} onPress={() => onPress()}>
+      <Text style={[typography.body01, styles.text]}>{text}</Text>
+    </TouchableWithoutFeedback>
   );
 }
 

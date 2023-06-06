@@ -29,7 +29,7 @@ export default function MainScreen({navigation}: ScreenProps) {
     ["members/mypage"],
     api.myPage.fetchDetails,
   );
-  const {isLoading: isLoginInfoLoading, loginInfo} = useLoginInfo();
+  const {isLoading: isLoginInfoLoading, loginInfo, isAdmin} = useLoginInfo();
   const {
     visible: isSignUpModalVisible,
     openModal: openSignUpModal,
@@ -196,16 +196,21 @@ export default function MainScreen({navigation}: ScreenProps) {
       </View>
       <SizedBox height={24} />
 
-      <OTBButton
-        type="basic-primary"
-        text="관리자"
-        onPress={() => navigation.navigate("ManagerScreen")}
-      />
-      <OTBButton
-        type="basic-primary"
-        text="회원관리"
-        onPress={() => navigation.navigate("ManageUserScreen")}
-      />
+      {isAdmin() ? (
+        <>
+          <OTBButton
+            type="basic-primary"
+            text="관리자"
+            onPress={() => navigation.navigate("ManagerScreen")}
+          />
+          <SizedBox height={8} />
+          <OTBButton
+            type="basic-primary"
+            text="회원관리"
+            onPress={() => navigation.navigate("ManageUserScreen")}
+          />
+        </>
+      ) : null}
 
       <Modal.LevelInfo visible={isLevelInfoModalVisible} onRequestClose={closeLevelInfoModal} />
       <Modal.ResetTags visible={isResetTagsModalVisible} onRequestClose={closeResetTagsModal} />
