@@ -17,3 +17,7 @@ export async function signIn(payload: LoginForm) {
 export async function signOut() {
   return axiosAuthenticated.patch("auth/sign-out");
 }
+
+export async function checkCurrentPassword(password: string) {
+  return axiosAuthenticated.post("auth/password-check", {password});
+}

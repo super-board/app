@@ -21,6 +21,7 @@ import {Inquiry, Manager, Notice, User} from "@/screens/manager";
 import {
   LoginScreen,
   MyPageBadgeScreen,
+  MyPageCheckPasswordScreen,
   MyPageEditProfileCharacterScreen,
   MyPageEditProfileScreen,
   MyPageFavoriteBoardGamesScreen,
@@ -31,6 +32,7 @@ import {
   MyPageTermsAndConditionsListScreen,
   MyPageTermsAndConditionsPrivacyScreen,
   MyPageTermsAndConditionsScreen,
+  MyPageUpdatePasswordScreen,
 } from "@/screens/mypage";
 import {
   OnboardingRecommendationScreen,
@@ -114,42 +116,42 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="RegisterEmailVerificationScreen"
-              options={{header: PopToSecondTopAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterEmailVerificationScreen}
             />
             <Stack.Screen
               name="RegisterPasswordSettingScreen"
-              options={{header: PopToSecondTopAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterPasswordSettingScreen}
             />
             <Stack.Screen
               name="RegisterProfileSelectionScreen"
-              options={{header: PopToSecondTopAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterProfileSelectionScreen}
             />
             <Stack.Screen
               name="RegisterNicknameSettingScreen"
-              options={{header: PopToSecondTopAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterNicknameSettingScreen}
             />
             <Stack.Screen
               name="RegisterTagSelectScreen"
-              options={{header: PopToSecondTopAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterTagSelectScreen}
             />
             <Stack.Screen
               name="RegisterTermsAndConditionsScreen"
-              options={{header: PopToSecondTopAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={RegisterTermsAndConditionsScreen}
             />
             <Stack.Screen
               name="ResetPasswordEmailVerificationScreen"
-              options={{header: PopToSecondTopAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={ResetPasswordEmailVerificationScreen}
             />
             <Stack.Screen
               name="ResetPasswordSettingScreen"
-              options={{header: PopToSecondTopAppBar}}
+              options={{header: shouldLogin ? PopToTopAppBar : PopToSecondTopAppBar}}
               component={ResetPasswordSettingScreen}
             />
           </Stack.Group>
@@ -263,6 +265,16 @@ export default function Navigation() {
               name="MyPageSettingsScreen"
               options={{header: SimpleAppBar, title: "설정", headerBackVisible: true}}
               component={MyPageSettingsScreen}
+            />
+            <Stack.Screen
+              name="MyPageCheckPasswordScreen"
+              options={{header: SimpleAppBar, title: "비밀번호 변경", headerBackVisible: true}}
+              component={MyPageCheckPasswordScreen}
+            />
+            <Stack.Screen
+              name="MyPageUpdatePasswordScreen"
+              options={{header: SimpleAppBar, title: "비밀번호 변경", headerBackVisible: true}}
+              component={MyPageUpdatePasswordScreen}
             />
             <Stack.Screen
               name="MyPageNotificationSettingsScreen"

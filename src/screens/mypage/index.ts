@@ -1,4 +1,5 @@
 export {default as MyPageBadgeScreen} from "./src/BadgeScreen";
+export {default as MyPageCheckPasswordScreen} from "./src/CheckPasswordScreen";
 export {default as MyPageEditProfileCharacterScreen} from "./src/EditProfileCharacterScreen";
 export {default as MyPageEditProfileScreen} from "./src/EditProfileScreen";
 export {default as MyPageFavoriteBoardGamesScreen} from "./src/FavoriteBoardGamesScreen";
@@ -13,3 +14,4 @@ export {default as MyPageSettingsScreen} from "./src/SettingsScreen";
 export {default as MyPageTermsAndConditionsListScreen} from "./src/TermsAndConditionsListScreen";
 export {default as MyPageTermsAndConditionsPrivacyScreen} from "./src/TermsAndConditionsPrivacyScreen";
 export {default as MyPageTermsAndConditionsScreen} from "./src/TermsAndConditionsScreen";
+export {default as MyPageUpdatePasswordScreen} from "./src/UpdatePasswordScreen";

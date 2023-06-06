@@ -43,7 +43,7 @@ axiosAuthenticated.interceptors.response.use(
     const {reissueTokens} = useAuthStore.getState();
 
     // AccessToken 만료시 인증토큰 재발급 시도
-    if (error.response.state === 401) {
+    if (!error.config.url.includes("auth/password-check") && error.response.state === 401) {
       return reissueTokens().then(() => axiosAuthenticated.request(error.config));
     }
 

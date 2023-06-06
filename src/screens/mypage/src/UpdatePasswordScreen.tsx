@@ -8,18 +8,17 @@ import {
   DecoratedTextInput,
   FlexEmptyFill,
   KeyboardView,
+  Modal,
   OTBButton,
   PasswordHideDecoration,
-  ScreenTitle,
   SizedBox,
 } from "@/components";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
-import {useTextInput} from "@/hooks";
+import {useModal, useTextInput} from "@/hooks";
 import {Validator} from "@/services/validator";
-import {ResetPasswordForm} from "@/types";
 
-export default function ResetPasswordSettingScreen({navigation, route}: ScreenProps) {
+export default function UpdatePasswordScreen({navigation, route}: ScreenProps) {
   const {
     value: password,
     isValid: isValidPassword,
@@ -34,25 +33,26 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
   } = useTextInput(passwordRe => password === passwordRe);
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordRe, setHidePasswordRe] = useState(true);
+  const {visible, openModal, closeModal} = useModal();
 
   const {
     mutate: resetPassword,
     isSuccess,
     isLoading,
-  } = useMutation(["passwords/reset"], api.password.resetPassword);
+  } = useMutation(["members/mypage/password"], api.myPage.resetPassword);
 
   const onSubmit = () => {
-    const {email, resetToken} = route.params as ResetPasswordForm;
-    resetPassword({email, password, resetToken});
+    const {password: oldPassword} = route.params as {password: string};
+    if (oldPassword === password) return openModal();
+    resetPassword(password);
   };
 
   /* 비밀번호 재설정에 성공하면 화면 이동 */
   useEffect(() => {
-    if (isSuccess)
-      navigation.reset({
-        index: 1,
-        routes: [{name: "OnboardingWelcomeScreen"}, {name: "LoginScreen"}],
-      });
+    if (isSuccess) {
+      navigation.goBack();
+      navigation.goBack();
+    }
   }, [isSuccess]);
 
   useFocusEffect(
@@ -66,11 +66,10 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
 
   return (
     <KeyboardView style={style.screenWithAppBarContainer}>
-      <ScreenTitle title="비밀번호 입력" description="로그인에 사용할 비밀번호를 입력하세요." />
-      <SizedBox height={40} />
+      <SizedBox height={24} />
 
       <DecoratedTextInput
-        label="비밀번호"
+        label="새로운 비밀번호"
         value={password}
         onChangeText={onChangePassword}
         instructionText="8~20자 이내로 숫자, 특수문자, 영문자 중 2가지를 포함하여 입력해주세요."
@@ -86,7 +85,7 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
           />
         }
       />
-      <SizedBox height={42} />
+      <SizedBox height={16} />
       <DecoratedTextInput
         label="비밀번호 확인"
         value={passwordRe}
@@ -111,6 +110,13 @@ export default function ResetPasswordSettingScreen({navigation, route}: ScreenPr
         disabled={!password || !isValidPassword || !isValidPasswordRe || isLoading}
       />
       <SizedBox height={36} />
+
+      <Modal.Warn
+        visible={visible}
+        title="현재 사용 중인 비밀번호입니다."
+        description="새로운 비밀번호를 입력해주세요."
+        onRequestClose={closeModal}
+      />
     </KeyboardView>
   );
 }

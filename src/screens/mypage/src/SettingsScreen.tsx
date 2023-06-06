@@ -30,7 +30,9 @@ export default function SettingsScreen({navigation}: ScreenProps) {
   );
 
   const onPress = {
-    updatePassword: () => {},
+    updatePassword: () => {
+      navigation.navigate("MyPageCheckPasswordScreen");
+    },
     notificationSettings: () => {
       navigation.navigate("MyPageNotificationSettingsScreen");
     },
