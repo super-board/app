@@ -7,17 +7,16 @@ import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import typography from "@/constants/typography";
 
-import SizedBox from "../..//SizedBox";
 import OTBButton from "../../OTBButton";
+import SizedBox from "../../SizedBox";
 import type {ModalProps} from "./types";
 
-export default function Warn({
+export default function Alert({
   visible,
   title = "",
   description = "",
   dismissible = true,
-  back = false,
-  warn = true,
+  IconComponent = <SVG.Common.Warning width={48} height={48} />,
   onRequestClose,
   ...otherProps
 }: ModalProps) {
@@ -37,11 +36,7 @@ export default function Warn({
         />
         <View style={styles.modalContainer}>
           <SizedBox height={8} />
-          {warn ? (
-            <SVG.Common.Warning width={48} height={48} />
-          ) : (
-            <SVG.Icon.EditUnderLine width={48} height={48} />
-          )}
+          {IconComponent}
           <SizedBox height={24} />
           <Text
             style={[
@@ -63,22 +58,7 @@ export default function Warn({
             {description}
           </Text>
           {description ? <SizedBox height={22} /> : null}
-          <View style={styles.button}>
-            {back ? (
-              <OTBButton
-                type="modal-secondary"
-                text="돌아가기"
-                onPress={onRequestClose}
-                style={{flex: 1, marginRight: 8}}
-              />
-            ) : null}
-            <OTBButton
-              type="modal-primary"
-              text="확인"
-              onPress={onRequestClose}
-              style={{flex: 1}}
-            />
-          </View>
+          <OTBButton type="modal-primary" text="확인" onPress={onRequestClose} />
         </View>
       </View>
     </DefModal>
@@ -104,10 +84,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 20,
     paddingVertical: 24,
-  },
-  button: {
-    flexDirection: "row",
-    flex: 1,
   },
   textCenter: {
     textAlign: "center",

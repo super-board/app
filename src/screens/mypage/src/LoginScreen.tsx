@@ -18,7 +18,7 @@ import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useOnboardingStore} from "@/zustand-stores";
 
-export default function LoginScreen({navigation}: ScreenProps) {
+export default function LoginScreen({navigation, route}: ScreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);

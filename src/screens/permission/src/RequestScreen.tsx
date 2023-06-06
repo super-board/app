@@ -15,7 +15,7 @@ import {
 } from "@/services/permission";
 import {usePermissionGrantStore} from "@/zustand-stores";
 
-export default function RequestScreen({navigation}: ScreenProps) {
+export default function RequestScreen({navigation, route}: ScreenProps) {
   const {completePermissionGrant} = usePermissionGrantStore();
 
   const onRequestPermissions = async () => {
@@ -25,7 +25,24 @@ export default function RequestScreen({navigation}: ScreenProps) {
       PermissionAppTrackingTransparencyService.requestPermission(),
     ]);
     completePermissionGrant();
-    navigation.reset({index: 0, routes: [{name: "BottomTabView"}]});
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: "BottomTabView",
+          state: {
+            routes: [
+              {
+                name: "HomeTab",
+                state: {
+                  routes: [{name: "HomeScreen", params: route.params}],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    });
   };
 
   return (

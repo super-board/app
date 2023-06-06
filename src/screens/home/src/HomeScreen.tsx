@@ -1,14 +1,27 @@
 import React from "react";
 
+import {useFocusEffect} from "@react-navigation/native";
 import {ScrollView, StyleSheet, Text, View} from "react-native";
 
-import {BestReviews, CurationCarousel, SizedBox} from "@/components";
+import {SVG} from "@/assets/svgs";
+import {BestReviews, CurationCarousel, Modal, SizedBox} from "@/components";
 import colors from "@/constants/colors";
+import {ScreenProps} from "@/constants/props";
 import typography from "@/constants/typography";
+import {useModal} from "@/hooks";
 
 import {WriteButton} from "../components";
 
-export default function () {
+export default function HomeScreen({route}: ScreenProps) {
+  const {visible, openModal, closeModal} = useModal();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const shouldWelcome = (route.params as {shouldWelcome?: boolean})?.shouldWelcome ?? false;
+      if (shouldWelcome) openModal();
+    }, []),
+  );
+
   return (
     <>
       <ScrollView style={styles.container}>
@@ -36,6 +49,13 @@ export default function () {
         </View>
       </ScrollView>
       <WriteButton />
+      <Modal.Alert
+        visible={visible}
+        IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
+        title="환영합니다!"
+        description="온더보드에서 보드게임에 푹 빠질 준비 되셨나요?"
+        onRequestClose={closeModal}
+      />
     </>
   );
 }
