@@ -36,7 +36,7 @@ export default function WriteScreen({navigation}: ScreenProps) {
       navigation.navigate("SearchScreen");
     },
     image: async () => {
-      PermissionCameraAndGalleryService.requestPermission();
+      await PermissionCameraAndGalleryService.requestPermission();
       launchImageLibrary(
         {
           quality: 0.5,

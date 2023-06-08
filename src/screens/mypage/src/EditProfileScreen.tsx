@@ -97,7 +97,7 @@ export default function EditProfileScreen({navigation}: ScreenProps) {
         disabled={isCheckingNickname || isUpdatingProfile || !nickname.length || !isValidNickname}
       />
 
-      <Modal.Warn
+      <Modal.Alert
         visible={visible}
         title="이미 사용중인 닉네임입니다."
         description="다시 입력해주세요."
