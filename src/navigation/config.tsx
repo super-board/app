@@ -10,8 +10,16 @@ export const stackScreenOptions = {
 
 export const bottomTabScreenOptions = {
   headerShown: false,
-  tabBarStyle: {height: 80, backgroundColor: colors.OTBBlack, borderTopWidth: 0},
-  tabBarShowLabel: false,
+  tabBarStyle: {
+    height: 80,
+    backgroundColor: colors.OTBBlack,
+    borderTopWidth: 0,
+  },
+  tabBarItemStyle: {
+    paddingVertical: 14,
+  },
+  tabBarLabelStyle: {},
+  tabBarShowLabel: true,
   tabBarActiveTintColor: colors.white,
   tabBarInactiveTintColor: colors.white,
 } as BottomTabNavigationOptions;
