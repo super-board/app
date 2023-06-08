@@ -25,8 +25,10 @@ import ToastConfig from "../../ToastConfig";
 import type {ModalProps} from "./types";
 
 export default function ResetTags({visible, onRequestClose}: ModalProps) {
-  const {isLoading, tagList} = useFavoriteTags();
-  const {selectedTagIds, isSelectedTag, toggleTag, resetSelectedTags} = useFavoriteTagsForm();
+  const {isLoading, tagList, favoriteTags} = useFavoriteTags();
+  const {selectedTagIds, isSelectedTag, toggleTag, resetSelectedTags} = useFavoriteTagsForm(() =>
+    Toast.show({type: "error", text1: "태그는 최대 5개까지 선택 가능합니다."}),
+  );
   const {saveFavoriteTags} = useFavoriteTagsStore();
   const {completeOnboarding} = useOnboardingStore();
 
@@ -94,7 +96,7 @@ export default function ResetTags({visible, onRequestClose}: ModalProps) {
         </View>
       </View>
 
-      <Toast config={ToastConfig} />
+      <Toast config={ToastConfig} position="bottom" />
     </DefModal>
   );
 }
