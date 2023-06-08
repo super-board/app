@@ -62,7 +62,7 @@ export type RootStackNavigationProp = NavigationProp<RootStackParamList>;
 export type RootTabParamList = {
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
   RecommendationTab: NavigatorScreenParams<RecommendationTabParamList>;
-  WriteTab: NavigatorScreenParams<WriteTabParamList>;
+  WriteTab: undefined;
   SearchTab: NavigatorScreenParams<SearchTabParamList>;
   MyPageTab: NavigatorScreenParams<MyPageTabParamList>;
 };
@@ -74,10 +74,6 @@ export type HomeTabParamList = {
 
 export type RecommendationTabParamList = {
   RecommendationScreen: undefined;
-};
-
-export type WriteTabParamList = {
-  WriteScreen: undefined;
 };
 
 export type SearchTabParamList = {

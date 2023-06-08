@@ -10,8 +10,6 @@ import {ScreenProps} from "@/constants/props";
 import typography from "@/constants/typography";
 import {useModal} from "@/hooks";
 
-import {WriteButton} from "../components";
-
 export default function HomeScreen({route}: ScreenProps) {
   const {visible, openModal, closeModal} = useModal();
 
@@ -48,7 +46,6 @@ export default function HomeScreen({route}: ScreenProps) {
           <SizedBox height={12} />
         </View>
       </ScrollView>
-      <WriteButton />
       <Modal.Alert
         visible={visible}
         IconComponent={<SVG.Icon.SignUp width={80} height={80} />}

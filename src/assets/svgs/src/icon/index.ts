@@ -34,12 +34,14 @@ import RatingStarFull from "./rating-star-full.svg";
 import RatingStarHalf from "./rating-star-half.svg";
 import RatingStartNotRated from "./rating-star-not-rated.svg";
 import ReviewModal from "./review-modal.svg";
+import SearchAccent from "./search-accent.svg";
 import Search from "./search.svg";
 import SignUp from "./sign-up.svg";
 import SpaceDashboardAccent from "./space-dashboard-accent.svg";
 import SpaceDashboard from "./space-dashboard.svg";
 import ViewFalse from "./view-false.svg";
 import ViewTrue from "./view-true.svg";
+import Write from "./write.svg";
 
 export {default as LevelClover} from "./LevelClover";
 export {default as LevelDiamond} from "./LevelDiamond";
@@ -56,6 +58,7 @@ export {
   ArrowBack,
   Notifications,
   Search,
+  SearchAccent,
   Home,
   HomeAccent,
   EditNote,
@@ -90,4 +93,5 @@ export {
   EditProfile,
   PlusRound,
   ImageAddFill,
+  Write,
 };
