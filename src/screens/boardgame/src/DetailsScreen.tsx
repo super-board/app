@@ -1,7 +1,6 @@
 import React, {useCallback, useState} from "react";
 
-import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
-import {TouchableOpacity} from "react-native-gesture-handler";
+import {Image, Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
@@ -16,7 +15,7 @@ import {NumberFormatter} from "@/services/formatter";
 
 import {ReviewList} from "../components";
 
-export default function DetailsScreen({route}: ScreenProps) {
+export default function DetailsScreen({navigation, route}: ScreenProps) {
   const {id} = route.params as {id: number};
   const {
     isLoading: isBoardGameDetailsLoading,
@@ -110,20 +109,22 @@ export default function DetailsScreen({route}: ScreenProps) {
 
         <Text style={[typography.bodyLong02, typography.textWhite]}>{boardGame.description}</Text>
 
-        <OTBButton style={{marginVertical: 16}} type="basic-primary" text="내 리뷰 작성하기" />
+        <OTBButton
+          style={{marginVertical: 16}}
+          type="basic-primary"
+          text="내 리뷰 작성하기"
+          onPress={() => navigation.navigate("WriteScreen")}
+        />
       </View>
       {!isReviewsLoading && paginatedReviews ? (
         <ReviewList reviews={paginatedReviews.content} />
       ) : null}
 
       {!isReviewsLoading && paginatedReviews?.pageInfo.hasNext ? (
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.moreReviewsButton}
-          onPress={onMoreReviews}>
+        <Pressable style={styles.moreReviewsButton} onPress={onMoreReviews}>
           <Text style={[typography.body02, styles.moreReviewsButtonText]}>리뷰 더보기</Text>
           <SVG.Icon.ExpandMore width={20} height={20} />
-        </TouchableOpacity>
+        </Pressable>
       ) : null}
 
       <SizedBox height={100} />
