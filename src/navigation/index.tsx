@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 
-import {NavigationContainer} from "@react-navigation/native";
+import {DarkTheme, NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
@@ -83,8 +83,9 @@ export default function Navigation() {
   if (!didAppInitialized) return <SplashScreen />;
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
-      <NavigationContainer>
+    <View style={[styles.container, {paddingTop: insets.top, backgroundColor: colors.OTBBlack}]}>
+      <NavigationContainer
+        theme={{...DarkTheme, colors: {...DarkTheme.colors, background: colors.OTBBlack}}}>
         <Stack.Navigator initialRouteName={initialRouteName()} screenOptions={stackScreenOptions}>
           <Stack.Group>
             <Stack.Screen

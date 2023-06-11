@@ -72,7 +72,7 @@ export default function MainScreen({navigation}: ScreenProps) {
   );
 
   const onSignUp = () => {
-    navigation.navigate("RegisterEmailVerificationScreen");
+    navigation.navigate("OnboardingLoginScreen");
   };
 
   useFocusEffect(

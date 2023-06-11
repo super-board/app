@@ -23,7 +23,7 @@ export type BoardGameSummary = {
   id: number;
   name: string;
   image: string;
-  averageRating: number;
+  grade?: number;
 };
 
 export type BoardGameDetails = BoardGameSummary & {

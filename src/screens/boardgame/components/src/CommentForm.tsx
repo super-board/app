@@ -30,7 +30,7 @@ export default function CommentForm() {
   };
 
   const onSignUp = () => {
-    navigation.navigate("RegisterEmailVerificationScreen");
+    navigation.navigate("OnboardingLoginScreen");
   };
 
   if (isLoading || !loginInfo) return <View style={styles.container} />;

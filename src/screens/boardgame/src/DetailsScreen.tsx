@@ -6,14 +6,14 @@ import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
-import {OTBButton, RatingIcons, SizedBox} from "@/components";
+import {Modal, OTBButton, RatingIcons, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import {network} from "@/constants/network";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useRefetchQuery} from "@/hooks";
+import {useModal, useRefetchQuery} from "@/hooks";
 import {NumberFormatter} from "@/services/formatter";
 import {useAuthStore, useReviewFormStore} from "@/zustand-stores";
 
@@ -21,6 +21,12 @@ import {ReviewList} from "../components";
 
 export default function DetailsScreen({navigation, route}: ScreenProps) {
   const {id} = route.params as {id: number};
+  const {
+    visible: isSignUpModalVisible,
+    openModal: openSignUpModal,
+    closeModal: closeSignUpModal,
+  } = useModal();
+
   const {
     isLoading: isBoardGameDetailsLoading,
     isSuccess,
@@ -38,7 +44,14 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
 
   const reviews = data?.pages.flatMap(page => page.content);
 
-  const onMoreReviews = () => fetchNextPage({pageParam: data!.pageParams.length});
+  const onMoreReviews = () => {
+    if (!didLogin) {
+      openSignUpModal();
+      return;
+    }
+
+    fetchNextPage({pageParam: data!.pageParams.length});
+  };
 
   const {selectBoardGame} = useReviewFormStore();
 
@@ -55,6 +68,10 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
   const onWriteReview = () => {
     selectBoardGame(boardGame!);
     navigation.navigate("WriteScreen");
+  };
+
+  const onSignUp = () => {
+    navigation.navigate("OnboardingLoginScreen");
   };
 
   if (isBoardGameDetailsLoading || !boardGame || !data) return null;
@@ -82,9 +99,9 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
           <Text style={[typography.headline, typography.textWhite]}>{boardGame.name}</Text>
           <SizedBox height={4} />
           <View style={styles.ratingContainer}>
-            <RatingIcons rating={boardGame.averageRating} size={16} />
+            <RatingIcons rating={boardGame.grade} size={16} />
             <Text style={[typography.body02, typography.textWhite]}>
-              {boardGame.averageRating.toFixed(2)}
+              {boardGame.grade?.toFixed(2)}
             </Text>
           </View>
         </View>
@@ -141,6 +158,16 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
       ) : null}
 
       <SizedBox height={100} />
+
+      <Modal.Dialog
+        visible={isSignUpModalVisible}
+        IconComponent={<SVG.Icon.SignUp width={80} height={80} />}
+        title={"더 많은 보드게임 정보가\n궁금하신가요?"}
+        description={"회원가입하고 재미있는\n보드게임 정보를 확인하세요!"}
+        confirmText="회원가입"
+        onConfirm={onSignUp}
+        onRequestClose={closeSignUpModal}
+      />
     </ScrollView>
   );
 }

@@ -1,18 +1,10 @@
 import {BoardGameDetails, BoardGameSummary, Paginated} from "@/types";
 
-import {
-  boardGameDetails,
-  boardGamesForHome,
-  boardGamesSearchResult,
-  boardGamesTop10,
-} from "./dummies/boardGameList";
+import {axiosPublic} from "./config";
+import {boardGameDetails, boardGamesSearchResult} from "./dummies/boardGameList";
 
-export async function fetchBoardGamesForHome(): Promise<BoardGameSummary[]> {
-  return new Promise(resolve => resolve(boardGamesForHome));
-}
-
-export async function fetchBoardGamesTop10(): Promise<BoardGameSummary[]> {
-  return new Promise(resolve => resolve(boardGamesTop10));
+export async function fetchBoardGamesTop10() {
+  return axiosPublic.get<unknown, BoardGameSummary[]>("boardgames/top10");
 }
 
 export async function fetchBoardGamesCuration(

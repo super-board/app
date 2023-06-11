@@ -1,6 +1,9 @@
 import React from "react";
 
-import {Image, StyleSheet} from "react-native";
+import {StyleSheet} from "react-native";
+import FastImage from "react-native-fast-image";
+
+import {network} from "@/constants/network";
 
 type Props = {
   imageUrl: string;
@@ -8,9 +11,12 @@ type Props = {
 
 export default function ReviewThumbnailImage({imageUrl}: Props) {
   return (
-    <Image
+    <FastImage
       style={styles.image}
-      source={require("@/assets/images/fallback/board-game-fallback.png")}
+      source={{
+        uri: `${network.IMAGE_BASE_URL}/${imageUrl}`,
+      }}
+      resizeMode={FastImage.resizeMode.cover}
     />
   );
 }

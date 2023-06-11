@@ -1,6 +1,6 @@
 import React from "react";
 
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
 import StarRating from "react-native-star-rating-widget";
@@ -33,12 +33,14 @@ export default function WriteScreen({navigation}: ScreenProps) {
     closeModal: closeCancelModal,
   } = useModal();
 
+  const queryClient = useQueryClient();
   const {mutate: writeReview, isLoading} = useMutation(
     ["boardgames/reviews/write"],
     api.review.postReview,
     {
       onSuccess: (_, {boardGameId}) => {
         reset();
+        queryClient.invalidateQueries(["boardgames/reviews"]);
         setTimeout(() => {
           navigation.goBack();
           navigation.navigate("BoardGameDetailsScreen", {id: boardGameId});

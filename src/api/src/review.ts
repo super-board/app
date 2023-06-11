@@ -1,5 +1,6 @@
-import {axiosAuthenticated, axiosPublic} from "@/api/src/config";
 import {BestReview, Paginated, PaginationParams, Review, ReviewForm} from "@/types";
+
+import {axiosAuthenticated, axiosPublic} from "./config";
 
 export async function fetchBestReviews() {
   return axiosPublic.get<unknown, Paginated<BestReview>>("reviews/curation", {
@@ -29,4 +30,15 @@ export async function fetchReviewsAuthenticated({
 
 export async function postReview({boardGameId, form}: {boardGameId: number; form: ReviewForm}) {
   return axiosAuthenticated.post(`boardgames/${boardGameId}/reviews`, form);
+}
+
+export async function deleteReview({
+  boardGameId,
+  reviewId,
+}: {
+  boardGameId: number;
+  reviewId: number;
+}) {
+  console.log(boardGameId, reviewId);
+  return axiosAuthenticated.delete(`boardgames/${boardGameId}/reviews/${reviewId}`);
 }
