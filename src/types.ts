@@ -26,14 +26,16 @@ export type BoardGameSummary = {
   averageRating: number;
 };
 
-export type BoardGameDetails = {
-  id: number;
-  name: string;
+export type BoardGameDetails = BoardGameSummary & {
   description: string;
-  image: string;
   favoriteCount: number;
-  averageRating: number;
   tagList: Tag[];
+};
+
+export type ReviewForm = {
+  content: string;
+  grade: number;
+  images: string[];
 };
 
 export type ReviewSummary = {

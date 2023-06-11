@@ -1,17 +1,20 @@
 import React, {useCallback, useState} from "react";
 
-import {Image, Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
 import {OTBButton, RatingIcons, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
+import {network} from "@/constants/network";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useRefetchQuery} from "@/hooks";
 import {NumberFormatter} from "@/services/formatter";
+import {useReviewFormStore} from "@/zustand-stores";
 
 import {ReviewList} from "../components";
 
@@ -31,6 +34,8 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
     {enabled: isSuccess},
   );
 
+  const {selectBoardGame} = useReviewFormStore();
+
   const findTag = useCallback(
     (type: string) => {
       const DEFAULT_TAG = {name: "-"};
@@ -41,9 +46,12 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
     [boardGame],
   );
 
-  const onMoreReviews = useCallback(() => {
-    setPage(state => state + 1);
-  }, []);
+  const onMoreReviews = () => setPage(page => page + 1);
+
+  const onWriteReview = () => {
+    selectBoardGame(boardGame!);
+    navigation.navigate("WriteScreen");
+  };
 
   if (isBoardGameDetailsLoading || !boardGame) return null;
 
@@ -52,9 +60,12 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
       <View style={{paddingHorizontal: 24}}>
         <View style={styles.basicInfoContainer}>
           <View style={styles.thumbnailContainer}>
-            <Image
+            <FastImage
               style={styles.thumbnail}
-              source={require("@/assets/images/fallback/board-game-fallback.png")}
+              source={{
+                uri: `${network.IMAGE_BASE_URL}/${boardGame.image}`,
+              }}
+              resizeMode={FastImage.resizeMode.cover}
             />
             <View style={styles.likesContainer}>
               <SVG.Icon.Favorite width={32} height={32} />
@@ -113,7 +124,7 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
           style={{marginVertical: 16}}
           type="basic-primary"
           text="내 리뷰 작성하기"
-          onPress={() => navigation.navigate("WriteScreen")}
+          onPress={onWriteReview}
         />
       </View>
       {!isReviewsLoading && paginatedReviews ? (

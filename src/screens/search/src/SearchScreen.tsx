@@ -1,5 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 
+import {useNavigation, useRoute} from "@react-navigation/native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {api} from "@/api";
@@ -7,8 +9,9 @@ import {BoardGameListView, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useNavigateToBoardGameDetails, useRefetchQuery} from "@/hooks";
+import {RootStackParamList} from "@/navigation/navigation";
 import {BoardGameSummary} from "@/types";
-import {useSearchStore} from "@/zustand-stores";
+import {useReviewFormStore, useSearchStore} from "@/zustand-stores";
 
 export default function SearchScreen() {
   const {isLoading: isTop10BoardGamesLoading, data: top10BoardGames} = useRefetchQuery(
@@ -71,13 +74,23 @@ export default function SearchScreen() {
 }
 
 function BoardGameListItem({boardGame}: {boardGame: BoardGameSummary}) {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const params = useRoute().params as {from: "write"};
   const {navigateToBoardGameDetails} = useNavigateToBoardGameDetails(boardGame.id);
+  const {selectBoardGame} = useReviewFormStore();
+
+  const onPress = () => {
+    if (params && params.from === "write") {
+      selectBoardGame(boardGame);
+      navigation.goBack();
+      return;
+    }
+
+    navigateToBoardGameDetails();
+  };
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={styles.itemContainer}
-      onPress={navigateToBoardGameDetails}>
+    <TouchableOpacity activeOpacity={1} style={styles.itemContainer} onPress={onPress}>
       <Image
         source={require("@/assets/images/fallback/board-game-fallback.png")}
         style={styles.thumbnail}

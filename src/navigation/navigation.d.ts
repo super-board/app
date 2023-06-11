@@ -77,7 +77,7 @@ export type RecommendationTabParamList = {
 };
 
 export type SearchTabParamList = {
-  SearchScreen: undefined;
+  SearchScreen: {from: "select" | "search"};
 };
 
 export type MyPageTabParamList = {

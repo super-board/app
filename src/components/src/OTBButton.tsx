@@ -143,7 +143,7 @@ function OTBButton({
           disabled ? styles.buttonDisabled : styles.buttonModalSecondary,
           style,
         ]}
-        underlayColor={colors.OTBBlueDark}
+        underlayColor={colors.OTBBlack400}
         disabled={disabled}
         onPress={onPress}
         {...otherProps}>
