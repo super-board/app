@@ -197,7 +197,7 @@ export default function ResetPasswordEmailVerificationScreen({navigation}: Scree
       />
       <SizedBox height={36} />
 
-      <Modal.Warn
+      <Modal.Alert
         visible={unregisteredEmailModalVisible}
         title="등록되지 않은 이메일입니다."
         description="다시 입력해주세요."
@@ -206,7 +206,7 @@ export default function ResetPasswordEmailVerificationScreen({navigation}: Scree
           closeUnregisteredEmailModal();
         }}
       />
-      <Modal.Warn
+      <Modal.Alert
         visible={invalidAuthCodeModalVisible}
         title="인증 번호가 맞지 않습니다."
         description="다시 입력해주세요."
@@ -215,7 +215,7 @@ export default function ResetPasswordEmailVerificationScreen({navigation}: Scree
           closeInvalidAuthCodeModal();
         }}
       />
-      <Modal.Warn
+      <Modal.Alert
         visible={expiredAuthCodeModalVisible}
         title="인증 번호 입력 시간이 만료되었습니다."
         description="인증번호 다시 받기를 클릭하세요."

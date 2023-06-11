@@ -85,7 +85,7 @@ export default function CheckPasswordScreen({navigation, route}: ScreenProps) {
       />
       <SizedBox height={36} />
 
-      <Modal.Warn
+      <Modal.Alert
         visible={visible}
         title="비밀번호가 일치하지 않습니다."
         description="비밀번호를 다시 입력해주세요."

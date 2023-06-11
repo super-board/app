@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 
-import {Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useMutation} from "@tanstack/react-query";
+import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
-import {launchImageLibrary} from "react-native-image-picker";
 import StarRating from "react-native-star-rating-widget";
 
+import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
 import {Modal, OTBButton} from "@/components";
 import colors from "@/constants/colors";
@@ -12,55 +13,75 @@ import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useModal} from "@/hooks";
-import {PermissionCameraAndGalleryService} from "@/services/permission";
+import {useReviewFormStore} from "@/zustand-stores";
 
-import {Image} from "../components";
+import {ImageForm} from "../components";
 
 export default function WriteScreen({navigation}: ScreenProps) {
-  const [rate, setRate] = useState(0);
-  const [image, setImage] = useState([]);
-  const [text, setText] = useState("");
+  const {boardGame, grade, images, content, updateGrade, addImage, updateContent, reset} =
+    useReviewFormStore();
+  const canSubmit = boardGame && content.length >= 20;
+  const hasUnsavedChanges = images.length || content.length >= 20;
   const {
-    visible: submitVisible,
+    visible: isSubmitModalVisible,
     openModal: openSubmitModal,
     closeModal: closeSubmitModal,
   } = useModal();
   const {
-    visible: cancelVisible,
+    visible: isCancelModalVisible,
     openModal: openCancelModal,
     closeModal: closeCancelModal,
   } = useModal();
 
-  const onPress = {
-    search: () => {
-      navigation.navigate("SearchScreen");
+  const {mutate: writeReview, isLoading} = useMutation(
+    ["boardgames/reviews/write"],
+    api.review.postReview,
+    {
+      onSuccess: (_, {boardGameId}) => {
+        reset();
+        setTimeout(() => {
+          navigation.goBack();
+          navigation.navigate("BoardGameDetailsScreen", {id: boardGameId});
+        }, 1);
+      },
     },
-    image: async () => {
-      PermissionCameraAndGalleryService.requestPermission();
-      launchImageLibrary(
-        {
-          quality: 0.5,
-          mediaType: "photo",
-          includeBase64: true,
-        },
-        response => {
-          if (!response.didCancel) setImage(image => [...image, response.assets[0].uri]);
-        },
-      );
-    },
-    cancel: () => {
-      openCancelModal();
-    },
-    submit: () => {
-      openSubmitModal();
-    },
+  );
+
+  const onSearch = () => navigation.navigate("SearchScreen", {from: "write"});
+
+  const onSubmit = () =>
+    writeReview({
+      boardGameId: boardGame!.id,
+      form: {
+        grade,
+        images: images.map(image => image.base64!),
+        content,
+      },
+    });
+  const onCancel = () => {
+    reset();
+    setTimeout(navigation.goBack, 1);
   };
+
+  /* 뒤로가기 이벤트 발생 시 경고 */
+  React.useEffect(
+    () =>
+      navigation.addListener("beforeRemove", e => {
+        if (!hasUnsavedChanges) return reset();
+
+        e.preventDefault();
+        openCancelModal();
+      }),
+    [navigation, hasUnsavedChanges],
+  );
 
   return (
     <ScrollView style={style.screenWithAppBarContainer}>
       <Text style={[typography.subhead01, typography.textWhite, styles.title]}>보드게임</Text>
-      <Pressable style={styles.search} onPress={onPress.search}>
-        <Text style={{color: colors.OTBBlack500}}>보드게임을 선택해주세요</Text>
+      <Pressable style={styles.search} onPress={onSearch}>
+        <Text style={[typography.body01, {color: boardGame ? colors.white : colors.OTBBlack500}]}>
+          {boardGame ? boardGame.name : "보드게임을 선택해주세요."}
+        </Text>
       </Pressable>
       <Text style={[typography.subhead01, typography.textWhite, styles.title, {marginTop: 32}]}>
         게임 평점
@@ -68,35 +89,37 @@ export default function WriteScreen({navigation}: ScreenProps) {
 
       <View style={styles.rate}>
         <StarRating
-          rating={rate}
-          onChange={setRate}
+          rating={grade}
+          onChange={updateGrade}
           color={colors.OTBBlueLight3}
           starStyle={{marginHorizontal: 0}}
         />
-        <Text style={[typography.bodyLong01, typography.textWhite, styles.rateText]}>{rate}</Text>
+        <Text style={[typography.subhead01, typography.textWhite, styles.rateText]}>
+          {grade.toFixed(1)}
+        </Text>
       </View>
       <View style={styles.review}>
         <Text style={[typography.subhead01, typography.textWhite, styles.title]}>리뷰 작성</Text>
-        <Text style={styles.subtitle}>({image.length}/5 , 사진 1개당 400KB 제한)</Text>
+        <Text style={styles.subtitle}>({images.length}/5 , 사진 1개당 400KB 제한)</Text>
       </View>
 
-      {image.length ? (
-        <Image imageArray={image} setImage={setImage} addImage={onPress.image} />
+      {images.length ? (
+        <ImageForm />
       ) : (
-        <TouchableOpacity onPress={onPress.image} style={styles.imageBtn}>
-          <SVG.Icon.Camera width={20} height={16} />
+        <Pressable onPress={addImage} style={styles.imageBtn}>
+          <SVG.Icon.Camera width={20} height={16} color={colors.OTBBlack} />
           <Text style={styles.imageText}>사진 추가</Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
       <View>
         <TextInput
-          style={[styles.textInput, typography.subheadLong01, typography.textWhite]}
-          onChangeText={text => setText(text)}
+          style={[styles.textInput, typography.body01, typography.textWhite]}
+          onChangeText={updateContent}
           placeholder="리뷰를 작성해주세요. (20자 이상)"
           placeholderTextColor={colors.OTBBlack500}
           multiline={true}
         />
-        <Text style={[typography.caption, styles.count]}>({text.length}/1000)</Text>
+        <Text style={[typography.caption, styles.count]}>({content.length}/1000)</Text>
       </View>
 
       <View style={styles.buttonContainer}>
@@ -104,28 +127,33 @@ export default function WriteScreen({navigation}: ScreenProps) {
           type="medium-secondary"
           text="취소"
           style={[styles.button, {marginRight: 4}]}
-          onPress={onPress.cancel}
+          onPress={navigation.goBack}
         />
         <OTBButton
           type="medium-primary"
           text="등록"
           style={[styles.button, {marginLeft: 4}]}
-          onPress={onPress.submit}
+          onPress={openSubmitModal}
+          disabled={!canSubmit || isLoading}
         />
       </View>
 
-      <Modal.Warn
-        visible={submitVisible}
+      <Modal.Dialog
+        visible={isSubmitModalVisible}
+        IconComponent={<SVG.Icon.Submit width={48} height={48} />}
         title="리뷰를 등록하시겠습니까?"
+        confirmText="확인"
+        onConfirm={onSubmit}
         onRequestClose={closeSubmitModal}
-        dismissible
       />
-      <Modal.Warn
-        visible={cancelVisible}
-        title={`지금 취소시\n작성된 내용이 사라집니다.`}
+      <Modal.Dialog
+        visible={isCancelModalVisible}
+        title={"지금 취소시\n작성된 내용이 사라집니다."}
         description="그래도 작성을 취소하시겠습니까?"
+        confirmText="확인"
+        cancelText="돌아가기"
+        onConfirm={onCancel}
         onRequestClose={closeCancelModal}
-        dismissible
       />
     </ScrollView>
   );
@@ -181,10 +209,11 @@ const styles = StyleSheet.create({
     color: colors.OTBBlack500,
   },
   search: {
-    width: "100%",
     height: 48,
     backgroundColor: colors.OTBBlack700,
     borderRadius: 4,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 13,
+    overflow: "hidden",
   },
 });

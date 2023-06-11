@@ -203,7 +203,7 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
       />
       <SizedBox height={36} />
 
-      <Modal.Warn
+      <Modal.Alert
         visible={duplicateEmailModalVisible}
         title="이미 사용중인 이메일 주소입니다."
         description="다시 입력해주세요."
@@ -212,7 +212,7 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
           closeDuplicateEmailModal();
         }}
       />
-      <Modal.Warn
+      <Modal.Alert
         visible={invalidAuthCodeModalVisible}
         title="인증 번호가 맞지 않습니다."
         description="다시 입력해주세요."
@@ -221,7 +221,7 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
           closeInvalidAuthCodeModal();
         }}
       />
-      <Modal.Warn
+      <Modal.Alert
         visible={expiredAuthCodeModalVisible}
         title="인증 번호 입력 시간이 만료되었습니다."
         description="인증번호 다시 받기를 클릭하세요."

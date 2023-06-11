@@ -1,3 +1,1 @@
-import WriteScreen from "./src/write";
-
-export {WriteScreen};
+export {default as WriteScreen} from "./src/WriteScreen";

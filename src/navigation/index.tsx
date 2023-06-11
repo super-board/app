@@ -175,7 +175,7 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="SearchScreen"
-              options={{header: SearchAppBar}}
+              options={{header: SearchAppBar, animation: "slide_from_bottom"}}
               component={SearchScreen}
             />
             <Stack.Screen

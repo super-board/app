@@ -111,7 +111,7 @@ export default function UpdatePasswordScreen({navigation, route}: ScreenProps) {
       />
       <SizedBox height={36} />
 
-      <Modal.Warn
+      <Modal.Alert
         visible={visible}
         title="현재 사용 중인 비밀번호입니다."
         description="새로운 비밀번호를 입력해주세요."

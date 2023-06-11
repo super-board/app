@@ -1,1 +1,1 @@
-export {default as Image} from './src/image'
+export {default as ImageForm} from "./src/ImageForm";
