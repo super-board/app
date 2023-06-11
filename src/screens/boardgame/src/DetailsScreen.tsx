@@ -6,7 +6,7 @@ import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
-import {Modal, OTBButton, RatingIcons, SizedBox} from "@/components";
+import {Modal, OTBButton, RatingIcons, SizedBox, TagsHorizontalView} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
 import {network} from "@/constants/network";
@@ -27,18 +27,25 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
     closeModal: closeSignUpModal,
   } = useModal();
 
+  const didLogin = useAuthStore(state => !!state.refreshToken);
+  const fetchDetailsFunc = didLogin
+    ? api.boardGame.fetchBoardGameDetailsAuthenticated
+    : api.boardGame.fetchBoardGameDetailsPublic;
   const {
     isLoading: isBoardGameDetailsLoading,
     isSuccess,
     data: boardGame,
-  } = useRefetchQuery(["boardgames/details", id], () => api.boardGame.fetchBoardGameDetails(id));
-  const didLogin = useAuthStore(state => !!state.refreshToken);
+  } = useRefetchQuery(["boardgames/details", id], () => fetchDetailsFunc(id));
+  const filteredTags =
+    boardGame?.tagList.filter(tag => !["BEST_PLAYER", "PLAYTIME", "AGE"].includes(tag.type)) ?? [];
 
-  const fetchFunc = didLogin ? api.review.fetchReviewsAuthenticated : api.review.fetchReviewsPublic;
+  const fetchReviewsFunc = didLogin
+    ? api.review.fetchReviewsAuthenticated
+    : api.review.fetchReviewsPublic;
   const {data, hasNextPage, fetchNextPage} = useInfiniteQuery(
     ["boardgames/reviews", boardGame?.id],
     ({pageParam = 0}) =>
-      fetchFunc({boardGameId: boardGame!.id, limit: 3, offset: 3 * pageParam + 1}),
+      fetchReviewsFunc({boardGameId: boardGame!.id, limit: 3, offset: 3 * pageParam + 1}),
     {enabled: isSuccess, getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
 
@@ -107,37 +114,27 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
         </View>
 
         <SizedBox height={24} />
-        <View style={styles.tagsContainer}>
-          <View style={styles.tagsRow}>
-            <View style={styles.tags}>
-              <SVG.Icon.Players width={24} height={24} />
-              <Text style={[typography.subhead02, typography.textWhite]}>
-                {findTag("PLAYERS").name}
-              </Text>
-            </View>
-            <View style={styles.tags}>
-              <SVG.Icon.PlayTime width={24} height={24} />
-              <Text style={[typography.subhead02, typography.textWhite]}>
-                {findTag("PLAY_TIME").name}
-              </Text>
-            </View>
+        <View style={styles.tagsRow}>
+          <View style={styles.tags}>
+            <SVG.Icon.Players width={24} height={24} />
+            <Text style={[typography.subhead02, typography.textWhite]}>
+              {findTag("BEST_PLAYER").name}
+            </Text>
           </View>
-          <View style={styles.tagsRow}>
-            <View style={styles.tags}>
-              <SVG.Icon.Category width={24} height={24} />
-              <Text style={[typography.subhead02, typography.textWhite]}>
-                {findTag("CATEGORY").name}
-              </Text>
-            </View>
-            <View style={styles.tags}>
-              <SVG.Icon.Age width={24} height={24} />
-              <Text style={[typography.subhead02, typography.textWhite]}>
-                {findTag("AGE").name}
-              </Text>
-            </View>
+          <View style={styles.tags}>
+            <SVG.Icon.PlayTime width={24} height={24} />
+            <Text style={[typography.subhead02, typography.textWhite]}>
+              {findTag("PLAYTIME").name}
+            </Text>
+          </View>
+          <View style={styles.tags}>
+            <SVG.Icon.Age width={24} height={24} />
+            <Text style={[typography.subhead02, typography.textWhite]}>{findTag("AGE").name}</Text>
           </View>
         </View>
-        <SizedBox height={24} />
+        <SizedBox height={8} />
+        <TagsHorizontalView tags={filteredTags} chipType="myPage" insetPadding={0} />
+        <SizedBox height={40} />
 
         <Text style={[typography.bodyLong02, typography.textWhite]}>{boardGame.description}</Text>
 

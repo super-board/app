@@ -191,7 +191,7 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="BoardGameDetailsScreen"
-              options={{header: BackToHomeAppBar}}
+              options={{header: BackToHomeAppBar, headerBackTitle: "닫기"}}
               component={BoardGameDetailsScreen}
             />
           </Stack.Group>

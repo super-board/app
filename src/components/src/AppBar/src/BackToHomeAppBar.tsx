@@ -18,7 +18,7 @@ export default function BackToHomeAppBar({navigation, options}: NativeStackHeade
           <AppBarButton.HistoryBack navigation={navigation} />
         </AppBar.Left>
         <AppBar.Right marginRight={24}>
-          <AppBarButton.Cancel onPress={onCancel} />
+          <AppBarButton.Cancel onPress={onCancel} text={options.headerBackTitle ?? "취소"} />
         </AppBar.Right>
       </AppBar.Header>
     </AppBar.Container>

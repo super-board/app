@@ -11,6 +11,7 @@ import typography from "@/constants/typography";
 type ButtonProps = {
   navigation?: NativeStackNavigationProp<ParamListBase>;
   onPress?: () => void;
+  text?: string;
 };
 
 function HistoryBack({navigation, onPress}: ButtonProps) {
@@ -29,14 +30,14 @@ function HistoryBack({navigation, onPress}: ButtonProps) {
   );
 }
 
-function Cancel({navigation, onPress}: ButtonProps) {
+function Cancel({navigation, onPress, text = "취소"}: ButtonProps) {
   const onPressDefault = () => {
     navigation?.popToTop();
   };
 
   return (
     <Pressable onPress={onPress ?? onPressDefault}>
-      <Text style={[typography.subhead02, {color: colors.OTBBlack50}]}>취소</Text>
+      <Text style={[typography.subhead02, {color: colors.OTBBlack50}]}>{text}</Text>
     </Pressable>
   );
 }
