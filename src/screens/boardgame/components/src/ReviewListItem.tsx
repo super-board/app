@@ -20,7 +20,7 @@ import {useLoginInfo, useModal} from "@/hooks";
 import {RootStackParamList} from "@/navigation/navigation";
 import CommentList from "@/screens/boardgame/components/src/CommentList";
 import {DateTimeFormatter, NumberFormatter} from "@/services/formatter";
-import {ReviewDetails} from "@/types";
+import {Review} from "@/types";
 import {useAuthStore} from "@/zustand-stores";
 
 import {useDialogModals} from "../../hooks";
@@ -31,7 +31,7 @@ import ReviewThumbnailImage from "./ReviewThumbnailImage";
 
 const MAX_LINES = 3;
 
-function ReviewListItem({review}: {review: ReviewDetails}) {
+function ReviewListItem({review}: {review: Review}) {
   const [hasEllipsis, setHasEllipsis] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>(MAX_LINES);
@@ -94,7 +94,14 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
     <>
       <View style={styles.container}>
         <View style={styles.row}>
-          <AuthorChip author={review.author} />
+          <AuthorChip
+            author={{
+              id: review.writerId,
+              nickname: review.nickname,
+              profileCharacter: review.profileCharacter,
+              level: review.writerLevel,
+            }}
+          />
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               activeOpacity={1}
@@ -120,9 +127,7 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
 
         <View
           style={isExpanded ? styles.contentExpandedContainer : styles.contentCollapsedContainer}>
-          {isExpanded && review.images.length ? (
-            <ReviewImageSlider imageUrls={review.images} />
-          ) : null}
+          {isExpanded && review.images ? <ReviewImageSlider imageUrls={review.images} /> : null}
           <Text
             style={[typography.body02, typography.textWhite, {flex: 1}]}
             onTextLayout={onTextLayout}
@@ -130,7 +135,7 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
             ellipsizeMode="tail">
             {review.content}
           </Text>
-          {!isExpanded && review.images.length ? (
+          {!isExpanded && review.images ? (
             <ReviewThumbnailImage imageUrl={review.images[0]} />
           ) : null}
         </View>
@@ -155,7 +160,7 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
             </View>
           ) : null}
 
-          {!isAdmin() && isLoginUser(review.author.id) ? (
+          {!isAdmin() && isLoginUser(review.writerId) ? (
             <View style={styles.buttonsContainer}>
               <Pressable onPress={openEditModal}>
                 <Text style={[typography.body02, typography.textWhite, typography.underline]}>
@@ -170,7 +175,7 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
             </View>
           ) : null}
 
-          {!isAdmin() && !isLoginUser(review.author.id) ? (
+          {!isAdmin() && !isLoginUser(review.writerId) ? (
             <View style={styles.buttonsContainer}>
               <Pressable onPress={openReportModal}>
                 <Text style={[typography.body02, typography.textWhite, typography.underline]}>
@@ -181,7 +186,7 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
           ) : null}
         </View>
 
-        {hasEllipsis || review.images.length > 1 ? (
+        {hasEllipsis || review.images ? (
           <TouchableOpacity activeOpacity={1} style={styles.expandButton} onPress={onToggleExpand}>
             {isExpanded ? (
               <SVG.Icon.Collapse width={24} height={24} />

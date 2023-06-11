@@ -79,7 +79,10 @@ export default function WriteScreen({navigation}: ScreenProps) {
     <ScrollView style={style.screenWithAppBarContainer}>
       <Text style={[typography.subhead01, typography.textWhite, styles.title]}>보드게임</Text>
       <Pressable style={styles.search} onPress={onSearch}>
-        <Text style={[typography.body01, {color: boardGame ? colors.white : colors.OTBBlack500}]}>
+        <Text
+          style={[typography.body01, {color: boardGame ? colors.white : colors.OTBBlack500}]}
+          numberOfLines={1}
+          ellipsizeMode="tail">
           {boardGame ? boardGame.name : "보드게임을 선택해주세요."}
         </Text>
       </Pressable>

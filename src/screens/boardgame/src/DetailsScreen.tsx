@@ -1,5 +1,6 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback} from "react";
 
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import FastImage from "react-native-fast-image";
 
@@ -14,7 +15,7 @@ import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useRefetchQuery} from "@/hooks";
 import {NumberFormatter} from "@/services/formatter";
-import {useReviewFormStore} from "@/zustand-stores";
+import {useAuthStore, useReviewFormStore} from "@/zustand-stores";
 
 import {ReviewList} from "../components";
 
@@ -25,14 +26,19 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
     isSuccess,
     data: boardGame,
   } = useRefetchQuery(["boardgames/details", id], () => api.boardGame.fetchBoardGameDetails(id));
+  const didLogin = useAuthStore(state => !!state.refreshToken);
 
-  const [page, setPage] = useState(1);
-  // FIXME: 연동시 무한스크롤로 변경
-  const {isLoading: isReviewsLoading, data: paginatedReviews} = useRefetchQuery(
-    ["reviews"],
-    api.review.fetchReviews,
-    {enabled: isSuccess},
+  const fetchFunc = didLogin ? api.review.fetchReviewsAuthenticated : api.review.fetchReviewsPublic;
+  const {data, hasNextPage, fetchNextPage} = useInfiniteQuery(
+    ["boardgames/reviews", boardGame?.id],
+    ({pageParam = 0}) =>
+      fetchFunc({boardGameId: boardGame!.id, limit: 3, offset: 3 * pageParam + 1}),
+    {enabled: isSuccess, getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
+
+  const reviews = data?.pages.flatMap(page => page.content);
+
+  const onMoreReviews = () => fetchNextPage({pageParam: data!.pageParams.length});
 
   const {selectBoardGame} = useReviewFormStore();
 
@@ -46,14 +52,12 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
     [boardGame],
   );
 
-  const onMoreReviews = () => setPage(page => page + 1);
-
   const onWriteReview = () => {
     selectBoardGame(boardGame!);
     navigation.navigate("WriteScreen");
   };
 
-  if (isBoardGameDetailsLoading || !boardGame) return null;
+  if (isBoardGameDetailsLoading || !boardGame || !data) return null;
 
   return (
     <ScrollView style={[style.screenWithAppBarContainer, {padding: 0}]}>
@@ -127,11 +131,9 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
           onPress={onWriteReview}
         />
       </View>
-      {!isReviewsLoading && paginatedReviews ? (
-        <ReviewList reviews={paginatedReviews.content} />
-      ) : null}
+      {reviews ? <ReviewList reviews={reviews} /> : null}
 
-      {!isReviewsLoading && paginatedReviews?.pageInfo.hasNext ? (
+      {hasNextPage ? (
         <Pressable style={styles.moreReviewsButton} onPress={onMoreReviews}>
           <Text style={[typography.body02, styles.moreReviewsButtonText]}>리뷰 더보기</Text>
           <SVG.Icon.ExpandMore width={20} height={20} />

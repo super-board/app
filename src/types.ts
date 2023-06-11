@@ -38,27 +38,31 @@ export type ReviewForm = {
   images: string[];
 };
 
-export type ReviewSummary = {
+export type BestReview = {
   id: number;
-  title: string;
-  boardGame: BoardGameSummary;
-  author: {
-    id: number;
-    nickname: string;
-    level: Level;
-  };
-  rating: number;
+  content: string;
+  grade: number;
+  writerNickname: string;
+  writerLevel: Level;
+  boardGameTitle: string;
+  boardGameImage: string;
+  likeCount: number;
 };
 
-export type ReviewDetails = {
+export type Review = {
   id: number;
-  createdAt: string;
+  grade: number;
   content: string;
-  rating: number;
   images: string[];
-  commentCount: number;
   likeCount: number;
-  author: MemberSummary;
+  commentCount: number;
+  isHidden: boolean;
+  createdAt: string;
+  writerId: number;
+  profileCharacter: ProfileCharacter;
+  nickname: string;
+  writerLevel: Level;
+  isLiked: boolean;
 };
 
 export type CommentDetails = {

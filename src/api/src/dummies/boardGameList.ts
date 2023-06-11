@@ -36,7 +36,7 @@ export const boardGamesForHome: BoardGameSummary[] = [
 export const boardGamesTop10: BoardGameSummary[] = [
   {
     id: 1,
-    name: "테라포밍 마스: 아레스 익스페디션",
+    name: "테테라포밍 마스: 아레스 익스페디션테라포밍 마스: 아레스 익스페디션테라포밍 마스: 아레스 익스페디션라포밍 마스: 아레스 익스페디션",
     image: "@/assets/images/fallback/board-game-fallback.png",
     averageRating: 3.7,
   },
