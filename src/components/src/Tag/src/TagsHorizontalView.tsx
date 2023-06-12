@@ -24,7 +24,7 @@ export default function TagsHorizontalView({
 }: Props) {
   return (
     <View style={[styles.container, style]}>
-      <ScrollView horizontal>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <SizedBox width={insetPadding} />
         {tags.map(tag => (
           <View key={tag.id} style={styles.row}>

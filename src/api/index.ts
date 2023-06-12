@@ -9,6 +9,7 @@ import * as myPage from "./src/myPage";
 import * as notice from "./src/notice";
 import * as notification from "./src/notification";
 import * as password from "./src/password";
+import * as report from "./src/report";
 import * as review from "./src/review";
 import * as tag from "./src/tag";
 
@@ -24,8 +25,9 @@ export const api = {
   notice,
   notification,
   password,
-  tag,
+  report,
   review,
+  tag,
 };
 
 export * from "./src/config";

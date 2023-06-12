@@ -82,6 +82,9 @@ function ReviewListItem({boardGame, review}: Props) {
   const {mutate: toggleLike} = useMutation(["reviews/likes"], api.like.toggleReviewLike, {
     onSuccess: invalidateReviews,
   });
+  const {mutate: reportReview} = useMutation(["reviews/report"], api.report.report, {
+    onSuccess: invalidateReviews,
+  });
 
   const onTextLayout = useCallback((e: NativeSyntheticEvent<TextLayoutEventData>) => {
     if (e.nativeEvent.lines.length > MAX_LINES) setHasEllipsis(true);
@@ -118,9 +121,8 @@ function ReviewListItem({boardGame, review}: Props) {
     deleteReview({boardGameId: boardGame.id, reviewId: review.id});
   };
 
-  const onReport = async () => {
-    // TODO: 리뷰 신고 요청 날리기
-    await new Promise(resolve => setTimeout(resolve, 3000));
+  const onReport = () => {
+    reportReview({id: review.id, type: "REVIEW"});
   };
 
   const onHide = () => hideReview(review.id);
@@ -216,7 +218,7 @@ function ReviewListItem({boardGame, review}: Props) {
               </>
             ) : null}
 
-            {!isAdmin() && !isLoginUser(review.writerId) ? (
+            {didLogin && !isAdmin() && !isLoginUser(review.writerId) ? (
               <Pressable onPress={openReportModal}>
                 <Text style={[typography.body02, typography.textWhite, typography.underline]}>
                   신고
