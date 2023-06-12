@@ -22,8 +22,8 @@ import {useLoginInfo, useModal} from "@/hooks";
 import {RootStackParamList} from "@/navigation/navigation";
 import CommentList from "@/screens/boardgame/components/src/CommentList";
 import {DateTimeFormatter, NumberFormatter} from "@/services/formatter";
-import {Review} from "@/types";
-import {useAuthStore} from "@/zustand-stores";
+import {BoardGameDetails, Review} from "@/types";
+import {useAuthStore, useReviewFormStore} from "@/zustand-stores";
 
 import {useDialogModals} from "../../hooks";
 import AuthorChip from "./AuthorChip";
@@ -33,7 +33,12 @@ import ReviewThumbnailImage from "./ReviewThumbnailImage";
 
 const MAX_LINES = 3;
 
-function ReviewListItem({review}: {review: Review}) {
+type Props = {
+  boardGame: BoardGameDetails;
+  review: Review;
+};
+
+function ReviewListItem({boardGame, review}: Props) {
   const [hasEllipsis, setHasEllipsis] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>(MAX_LINES);
@@ -42,6 +47,7 @@ function ReviewListItem({review}: {review: Review}) {
   const route = useRoute();
   const {isLoginUser, isAdmin} = useLoginInfo();
   const didLogin = useAuthStore(state => !!state.refreshToken);
+  const {selectBoardGame, updateGrade, loadImages, updateContent} = useReviewFormStore();
 
   const {
     isEditModalVisible,
@@ -97,15 +103,19 @@ function ReviewListItem({review}: {review: Review}) {
       return;
     }
 
-    toggleLike({boardGameId: (route.params! as {id: number}).id, reviewId: review.id});
+    toggleLike({boardGameId: boardGame.id, reviewId: review.id});
   };
 
   const onEdit = () => {
-    // TODO: 리뷰 수정페이지로 이동하기
+    selectBoardGame(boardGame);
+    updateGrade(review.grade);
+    loadImages(review.images);
+    updateContent(review.content);
+    setTimeout(() => navigation.navigate("EditScreen", {reviewId: review.id}), 1);
   };
 
   const onDelete = () => {
-    deleteReview({boardGameId: (route.params! as {id: number}).id, reviewId: review.id});
+    deleteReview({boardGameId: boardGame.id, reviewId: review.id});
   };
 
   const onReport = async () => {
@@ -157,7 +167,9 @@ function ReviewListItem({review}: {review: Review}) {
 
         <View
           style={isExpanded ? styles.contentExpandedContainer : styles.contentCollapsedContainer}>
-          {isExpanded && review.images ? <ReviewImageSlider imageUrls={review.images} /> : null}
+          {isExpanded && review.images && review.images.length ? (
+            <ReviewImageSlider imageUrls={review.images} />
+          ) : null}
           <Text
             style={[typography.body02, typography.textWhite, {flex: 1}]}
             onTextLayout={onTextLayout}
@@ -165,7 +177,7 @@ function ReviewListItem({review}: {review: Review}) {
             ellipsizeMode="tail">
             {review.content}
           </Text>
-          {!isExpanded && review.images ? (
+          {!isExpanded && review.images && review.images.length ? (
             <ReviewThumbnailImage imageUrl={review.images[0]} />
           ) : null}
         </View>
@@ -213,7 +225,7 @@ function ReviewListItem({review}: {review: Review}) {
             ) : null}
           </View>
         </View>
-        {hasEllipsis || review.images ? (
+        {hasEllipsis || (review.images && review.images.length) ? (
           <TouchableOpacity activeOpacity={1} style={styles.expandButton} onPress={onToggleExpand}>
             {isExpanded ? (
               <SVG.Icon.Collapse width={24} height={24} />

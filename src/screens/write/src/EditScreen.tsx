@@ -17,7 +17,8 @@ import {useReviewFormStore} from "@/zustand-stores";
 
 import {ImageForm} from "../components";
 
-export default function WriteScreen({navigation}: ScreenProps) {
+export default function EditScreen({navigation, route}: ScreenProps) {
+  const {reviewId} = route.params as {reviewId: number};
   const {boardGame, grade, images, content, updateGrade, addImage, updateContent, reset} =
     useReviewFormStore();
   const canSubmit = boardGame && content.length >= 20;
@@ -35,8 +36,8 @@ export default function WriteScreen({navigation}: ScreenProps) {
 
   const queryClient = useQueryClient();
   const {mutate: writeReview, isLoading} = useMutation(
-    ["boardgames/reviews/write"],
-    api.review.postReview,
+    ["boardgames/reviews/edit"],
+    api.review.editReview,
     {
       onSuccess: (_, {boardGameId}) => {
         reset();
@@ -49,11 +50,10 @@ export default function WriteScreen({navigation}: ScreenProps) {
     },
   );
 
-  const onSearch = () => navigation.navigate("SearchScreen", {from: "write"});
-
   const onSubmit = () =>
     writeReview({
       boardGameId: boardGame!.id,
+      reviewId,
       form: {
         grade,
         images: images.map(image => image.base64!),
@@ -80,14 +80,14 @@ export default function WriteScreen({navigation}: ScreenProps) {
   return (
     <ScrollView style={style.screenWithAppBarContainer}>
       <Text style={[typography.subhead01, typography.textWhite, styles.title]}>보드게임</Text>
-      <Pressable style={styles.search} onPress={onSearch}>
+      <View style={styles.search}>
         <Text
           style={[typography.body01, {color: boardGame ? colors.white : colors.OTBBlack500}]}
           numberOfLines={1}
           ellipsizeMode="tail">
           {boardGame ? boardGame.name : "보드게임을 선택해주세요."}
         </Text>
-      </Pressable>
+      </View>
       <Text style={[typography.subhead01, typography.textWhite, styles.title, {marginTop: 32}]}>
         게임 평점
       </Text>
@@ -137,7 +137,7 @@ export default function WriteScreen({navigation}: ScreenProps) {
         />
         <OTBButton
           type="medium-primary"
-          text="등록"
+          text="수정"
           style={[styles.button, {marginLeft: 4}]}
           onPress={openSubmitModal}
           disabled={!canSubmit || isLoading}
@@ -147,7 +147,7 @@ export default function WriteScreen({navigation}: ScreenProps) {
       <Modal.Dialog
         visible={isSubmitModalVisible}
         IconComponent={<SVG.Icon.Submit width={48} height={48} />}
-        title="리뷰를 등록하시겠습니까?"
+        title="리뷰를 수정하시겠습니까?"
         confirmText="확인"
         onConfirm={onSubmit}
         onRequestClose={closeSubmitModal}

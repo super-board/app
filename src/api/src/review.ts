@@ -32,6 +32,19 @@ export async function postReview({boardGameId, form}: {boardGameId: number; form
   return axiosAuthenticated.post(`boardgames/${boardGameId}/reviews`, form);
 }
 
+export async function editReview({
+  boardGameId,
+  reviewId,
+  form,
+}: {
+  boardGameId: number;
+  reviewId: number;
+  form: ReviewForm;
+}) {
+  console.log(form);
+  return axiosAuthenticated.patch(`boardgames/${boardGameId}/reviews/${reviewId}`, form);
+}
+
 export async function deleteReview({
   boardGameId,
   reviewId,
@@ -39,6 +52,5 @@ export async function deleteReview({
   boardGameId: number;
   reviewId: number;
 }) {
-  console.log(boardGameId, reviewId);
   return axiosAuthenticated.delete(`boardgames/${boardGameId}/reviews/${reviewId}`);
 }

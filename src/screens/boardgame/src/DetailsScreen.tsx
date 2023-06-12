@@ -145,7 +145,7 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
           onPress={onWriteReview}
         />
       </View>
-      {reviews ? <ReviewList reviews={reviews} /> : null}
+      {reviews ? <ReviewList reviews={reviews} boardGame={boardGame} /> : null}
 
       {hasNextPage ? (
         <Pressable style={styles.moreReviewsButton} onPress={onMoreReviews}>

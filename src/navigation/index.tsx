@@ -52,7 +52,7 @@ import {
 } from "@/screens/register";
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
-import {WriteScreen} from "@/screens/write";
+import {EditScreen, WriteScreen} from "@/screens/write";
 import {useOnboardingStore} from "@/zustand-stores";
 import useAuthStore from "@/zustand-stores/src/useAuthStore";
 
@@ -188,6 +188,16 @@ export default function Navigation() {
                 headerBackVisible: true,
               }}
               component={WriteScreen}
+            />
+            <Stack.Screen
+              name="EditScreen"
+              options={{
+                header: SimpleAppBar,
+                title: "리뷰 수정",
+                animation: "slide_from_bottom",
+                headerBackVisible: true,
+              }}
+              component={EditScreen}
             />
             <Stack.Screen
               name="BoardGameDetailsScreen"
