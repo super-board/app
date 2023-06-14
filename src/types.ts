@@ -23,7 +23,7 @@ export type BoardGameSummary = {
   id: number;
   name: string;
   image: string;
-  grade?: number;
+  grade: number;
 };
 
 export type BoardGameDetails = BoardGameSummary & {
@@ -44,8 +44,9 @@ export type BestReview = {
   grade: number;
   writerNickname: string;
   writerLevel: Level;
+  profileCharacter: ProfileCharacter;
   boardGameTitle: string;
-  boardGameImage: string;
+  boardgameImage: string;
   likeCount: number;
 };
 

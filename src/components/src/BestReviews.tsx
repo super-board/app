@@ -9,6 +9,7 @@ import typography from "@/constants/typography";
 import {useRefetchQuery} from "@/hooks";
 
 import {LevelIcon} from "./Level";
+import ProfileImage from "./ProfileImage";
 import RatingIcons from "./RatingIcons";
 import SizedBox from "./SizedBox";
 
@@ -32,7 +33,7 @@ export default function BestReviews() {
           <FastImage
             style={styles.thumbnailImage}
             source={{
-              uri: `${network.IMAGE_BASE_URL}/${review.boardGameImage}`,
+              uri: `${network.IMAGE_BASE_URL}/${review.boardgameImage}`,
             }}
             resizeMode={FastImage.resizeMode.cover}
           />
@@ -46,6 +47,7 @@ export default function BestReviews() {
               {review.content}
             </Text>
             <View style={styles.authorContainer}>
+              <ProfileImage width={16} height={16} type={review.profileCharacter} />
               <Text style={[typography.caption, typography.textWhite]}>
                 {review.writerNickname}
               </Text>
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   index: {width: 13},
-  thumbnailImage: {width: 104, height: 104},
+  thumbnailImage: {width: 104, height: 104, borderRadius: 4},
   contentContainer: {
     flex: 1,
     flexDirection: "column",

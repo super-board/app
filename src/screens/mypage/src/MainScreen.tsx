@@ -200,15 +200,15 @@ export default function MainScreen({navigation}: ScreenProps) {
         <>
           <OTBButton
             type="basic-primary"
-            text="관리자"
+            text="관리자 모드"
             onPress={() => navigation.navigate("ManagerScreen")}
           />
-          <SizedBox height={8} />
+          {/* <SizedBox height={8} />
           <OTBButton
             type="basic-primary"
             text="회원관리"
             onPress={() => navigation.navigate("ManageUserScreen")}
-          />
+          /> */}
         </>
       ) : null}
 
