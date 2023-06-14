@@ -239,8 +239,8 @@ function ReviewListItem({boardGame, review}: Props) {
 
         {isCommentsVisible ? (
           <View style={{paddingLeft: 20, gap: 16}}>
-            <CommentList boardGameId={(route.params as {id: number}).id} reviewId={review.id} />
-            <CommentForm />
+            <CommentList boardGameId={boardGame.id} reviewId={review.id} />
+            <CommentForm boardGameId={boardGame.id} reviewId={review.id} />
           </View>
         ) : null}
       </View>

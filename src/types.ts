@@ -69,7 +69,11 @@ export type CommentDetails = {
   id: number;
   createdAt: string;
   content: string;
-  author: MemberSummary;
+  isHidden: boolean;
+  nickname: string;
+  profileCharacter: ProfileCharacter;
+  writerId: number;
+  writerLevel: Level;
 };
 
 export type MemberSummary = {

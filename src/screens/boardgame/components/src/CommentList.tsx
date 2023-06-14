@@ -1,12 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 
-import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from "react-native";
+import {useInfiniteQuery} from "@tanstack/react-query";
+import {Pressable, StyleProp, StyleSheet, Text, View, ViewStyle} from "react-native";
 
 import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useRefetchQuery} from "@/hooks";
 
 import CommentListItem from "./CommentListItem";
 
@@ -17,28 +17,34 @@ type Props = {
 };
 
 export default function CommentList({boardGameId, reviewId, style}: Props) {
-  const [page, setPage] = useState(1);
-  // FIXME: 연동시 무한스크롤로 변경
-  const {isLoading, data: paginatedComments} = useRefetchQuery(
-    ["comments"],
-    api.comment.fetchComments,
+  const {isLoading, data, hasNextPage, fetchNextPage} = useInfiniteQuery(
+    ["comments", boardGameId, reviewId],
+    ({pageParam = 0}) =>
+      api.comment.fetchComments({boardGameId, reviewId, limit: 3, offset: 3 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
+  const comments = data?.pages.flatMap(page => page.content);
 
-  const onMoreComments = () => setPage(state => state + 1);
-
-  if (isLoading || !paginatedComments) return <View style={[styles.container, style]} />;
+  if (isLoading || !data) return <View style={[styles.container, style]} />;
 
   return (
     <View style={[styles.container, style]}>
-      {paginatedComments.content.map((comment, index) => (
-        <CommentListItem key={comment.id + index} comment={comment} />
+      {comments?.map((comment, index) => (
+        <CommentListItem
+          key={comment.id + index}
+          boardGameId={boardGameId}
+          reviewId={reviewId}
+          comment={comment}
+        />
       ))}
 
-      {paginatedComments.pageInfo.hasNext ? (
-        <TouchableOpacity activeOpacity={1} style={styles.moreButton} onPress={onMoreComments}>
+      {hasNextPage ? (
+        <Pressable
+          style={styles.moreButton}
+          onPress={() => fetchNextPage({pageParam: data!.pageParams.length})}>
           <Text style={[typography.body02, styles.moreButtonText]}>댓글 더보기</Text>
           <SVG.Icon.ExpandMore width={20} height={20} />
-        </TouchableOpacity>
+        </Pressable>
       ) : null}
     </View>
   );

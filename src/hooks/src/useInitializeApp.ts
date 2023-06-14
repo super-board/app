@@ -13,8 +13,8 @@ export default function useInitializeApp() {
 
   const initializeApp = async () => {
     await Promise.allSettled([
-      // loadOnboardingStatus(),
-      // loadAuthState(),
+      loadOnboardingStatus(),
+      loadAuthState(),
       loadFavoriteTags(),
       loadPermissionGrantStatus(),
     ]);

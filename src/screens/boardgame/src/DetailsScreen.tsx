@@ -1,7 +1,7 @@
 import React, {useCallback} from "react";
 
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
+import {ScrollView, StyleSheet, Text, View} from "react-native";
 import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
@@ -148,10 +148,12 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
       {reviews ? <ReviewList reviews={reviews} boardGame={boardGame} /> : null}
 
       {hasNextPage ? (
-        <Pressable style={styles.moreReviewsButton} onPress={onMoreReviews}>
-          <Text style={[typography.body02, styles.moreReviewsButtonText]}>리뷰 더보기</Text>
-          <SVG.Icon.ExpandMore width={20} height={20} />
-        </Pressable>
+        <OTBButton
+          style={{width: 152, alignSelf: "center", marginTop: 8}}
+          type="short-secondary"
+          text="리뷰 더보기"
+          onPress={onMoreReviews}
+        />
       ) : null}
 
       <SizedBox height={100} />
@@ -188,16 +190,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 8,
-  },
-  moreReviewsButton: {
-    width: "100%",
-    paddingVertical: 10,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 4,
-  },
-  moreReviewsButtonText: {
-    color: colors.OTBBlack200,
   },
 });

@@ -1,18 +1,26 @@
 import React, {memo} from "react";
 
-import {Pressable, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {Pressable, StyleSheet, Text, View} from "react-native";
 
+import {api} from "@/api";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useLoginInfo} from "@/hooks";
+import {useLoginInfo, useModal} from "@/hooks";
 import {DateTimeFormatter} from "@/services/formatter";
 import {CommentDetails} from "@/types";
 
 import {useDialogModals} from "../../hooks";
 import AuthorChip from "./AuthorChip";
 
-function CommentListItem({comment}: {comment: CommentDetails}) {
+type Props = {
+  boardGameId: number;
+  reviewId: number;
+  comment: CommentDetails;
+};
+
+function CommentListItem({boardGameId, reviewId, comment}: Props) {
   const {isLoginUser, isAdmin} = useLoginInfo();
   const {
     isDeleteModalVisible,
@@ -22,21 +30,50 @@ function CommentListItem({comment}: {comment: CommentDetails}) {
     openReportModal,
     closeReportModal,
   } = useDialogModals();
+  const {
+    visible: isHideModalVisible,
+    openModal: openHideModal,
+    closeModal: closeHideModal,
+  } = useModal();
 
-  const onDelete = async () => {
-    // TODO: 리뷰 삭제 요청 날리기
-    await new Promise(resolve => setTimeout(resolve, 3000));
+  const queryClient = useQueryClient();
+  const invalidateQueries = () => {
+    queryClient.invalidateQueries(["boardgames/reviews"]);
+    queryClient.invalidateQueries(["comments"]);
+  };
+  const {mutate: deleteComment} = useMutation(["comments/delete"], api.comment.deleteComment, {
+    onSuccess: invalidateQueries,
+  });
+  const {mutate: hideComment} = useMutation(["admin/comments/hide"], api.admin.hideComment, {
+    onSuccess: invalidateQueries,
+  });
+  const {mutate: reportComment} = useMutation(["comments/report"], api.report.report, {
+    onSuccess: invalidateQueries,
+  });
+
+  const onDelete = () => {
+    deleteComment({boardGameId, reviewId, commentId: comment.id});
   };
 
-  const onReport = async () => {
-    // TODO: 리뷰 신고 요청 날리기
-    await new Promise(resolve => setTimeout(resolve, 3000));
+  const onReport = () => {
+    reportComment({id: comment.id, type: "COMMENT"});
+  };
+
+  const onHide = () => {
+    hideComment(comment.id);
   };
 
   return (
     <>
       <View style={styles.container}>
-        <AuthorChip author={comment.author} />
+        <AuthorChip
+          author={{
+            id: comment.writerId,
+            profileCharacter: comment.profileCharacter,
+            nickname: comment.nickname,
+            level: comment.writerLevel,
+          }}
+        />
 
         <Text style={[typography.body02, typography.textWhite, {flex: 1}]}>{comment.content}</Text>
 
@@ -50,41 +87,38 @@ function CommentListItem({comment}: {comment: CommentDetails}) {
             </Text>
           </View>
 
-          {isAdmin() ? (
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity activeOpacity={1}>
+          <View style={styles.buttonsContainer}>
+            {isAdmin() ? (
+              <Pressable onPress={openHideModal}>
                 <Text style={[typography.body02, typography.textWhite, typography.underline]}>
                   숨김
                 </Text>
-              </TouchableOpacity>
-            </View>
-          ) : null}
-
-          {!isAdmin() && isLoginUser(comment.author.id) ? (
-            <View style={styles.buttonsContainer}>
-              {/* TODO: 댓글 수정 화면 디자인 완료되면 활성화하기
-            <TouchableOpacity activeOpacity={1}>
-              <Text style={[typography.body02, typography.textWhite, typography.underline]}>
-                수정
-              </Text>
-            </TouchableOpacity> */}
-              <Pressable onPress={openDeleteModal}>
-                <Text style={[typography.body02, typography.textWhite, typography.underline]}>
-                  삭제
-                </Text>
               </Pressable>
-            </View>
-          ) : null}
+            ) : null}
 
-          {!isAdmin() && !isLoginUser(comment.author.id) ? (
-            <View style={styles.buttonsContainer}>
+            {isLoginUser(comment.writerId) ? (
+              <>
+                <Pressable>
+                  <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                    수정
+                  </Text>
+                </Pressable>
+                <Pressable onPress={openDeleteModal}>
+                  <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                    삭제
+                  </Text>
+                </Pressable>
+              </>
+            ) : null}
+
+            {!isAdmin() && !isLoginUser(comment.writerId) ? (
               <Pressable onPress={openReportModal}>
                 <Text style={[typography.body02, typography.textWhite, typography.underline]}>
                   신고
                 </Text>
               </Pressable>
-            </View>
-          ) : null}
+            ) : null}
+          </View>
         </View>
       </View>
 
@@ -101,6 +135,13 @@ function CommentListItem({comment}: {comment: CommentDetails}) {
         confirmText="신고"
         onConfirm={onReport}
         onRequestClose={closeReportModal}
+      />
+      <Modal.Dialog
+        visible={isHideModalVisible}
+        title="숨김처리 하시겠습니까?"
+        confirmText="확인"
+        onConfirm={onHide}
+        onRequestClose={closeHideModal}
       />
     </>
   );
