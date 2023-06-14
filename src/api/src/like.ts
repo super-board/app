@@ -10,16 +10,6 @@ export async function toggleReviewLike({
   return axiosAuthenticated.post(`boardgames/${boardGameId}/reviews/${reviewId}/likes`);
 }
 
-export async function toggleCommentId({
-  boardGameId,
-  reviewId,
-  commentId,
-}: {
-  boardGameId: number;
-  reviewId: number;
-  commentId: number;
-}) {
-  return axiosAuthenticated.post(
-    `boardgames/${boardGameId}/reviews/${reviewId}/Comments/${commentId}/likes`,
-  );
+export async function toggleBoardGameLike({boardGameId}: {boardGameId: number}) {
+  return axiosAuthenticated.post(`boardgames/${boardGameId}/likes`);
 }

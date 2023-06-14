@@ -30,6 +30,7 @@ export type BoardGameDetails = BoardGameSummary & {
   description: string;
   favoriteCount: number;
   tagList: Tag[];
+  isLiked: boolean;
 };
 
 export type ReviewForm = {

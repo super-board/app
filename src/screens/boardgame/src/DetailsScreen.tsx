@@ -1,7 +1,7 @@
 import React, {useCallback} from "react";
 
-import {useInfiniteQuery} from "@tanstack/react-query";
-import {ScrollView, StyleSheet, Text, View} from "react-native";
+import {useInfiniteQuery, useMutation, useQueryClient} from "@tanstack/react-query";
+import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
@@ -26,8 +26,9 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
     openModal: openSignUpModal,
     closeModal: closeSignUpModal,
   } = useModal();
-
   const didLogin = useAuthStore(state => !!state.refreshToken);
+
+  const queryClient = useQueryClient();
   const fetchDetailsFunc = didLogin
     ? api.boardGame.fetchBoardGameDetailsAuthenticated
     : api.boardGame.fetchBoardGameDetailsPublic;
@@ -38,7 +39,6 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
   } = useRefetchQuery(["boardgames/details", id], () => fetchDetailsFunc(id));
   const filteredTags =
     boardGame?.tagList.filter(tag => !["BEST_PLAYER", "PLAYTIME", "AGE"].includes(tag.type)) ?? [];
-
   const fetchReviewsFunc = didLogin
     ? api.review.fetchReviewsAuthenticated
     : api.review.fetchReviewsPublic;
@@ -48,8 +48,10 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
       fetchReviewsFunc({boardGameId: boardGame!.id, limit: 3, offset: 3 * pageParam + 1}),
     {enabled: isSuccess, getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
-
   const reviews = data?.pages.flatMap(page => page.content);
+  const {mutate: toggleLike} = useMutation(["boardgames/likes"], api.like.toggleBoardGameLike, {
+    onSuccess: () => queryClient.invalidateQueries(["boardgames/reviews", id]),
+  });
 
   const onMoreReviews = () => {
     if (!didLogin) {
@@ -58,6 +60,10 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
     }
 
     fetchNextPage({pageParam: data!.pageParams.length});
+  };
+
+  const onToggleLike = () => {
+    if (didLogin) toggleLike({boardGameId: id});
   };
 
   const {selectBoardGame} = useReviewFormStore();
@@ -96,7 +102,13 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
               resizeMode={FastImage.resizeMode.cover}
             />
             <View style={styles.likesContainer}>
-              <SVG.Icon.Favorite width={32} height={32} />
+              <Pressable onPress={onToggleLike}>
+                {boardGame.isLiked ? (
+                  <SVG.Icon.FavoriteFill width={32} height={32} />
+                ) : (
+                  <SVG.Icon.Favorite width={32} height={32} />
+                )}
+              </Pressable>
               <Text style={[typography.subhead03, typography.textWhite, effects.textDropShadow]}>
                 {NumberFormatter.toCompactNumber(boardGame.favoriteCount)}
               </Text>
