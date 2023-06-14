@@ -11,6 +11,7 @@ type Props = {
 function ReviewImageSliderItem({imageUrl}: Props) {
   return (
     <FastImage
+      style={{width: "100%", aspectRatio: 1}}
       source={{
         uri: `${network.IMAGE_BASE_URL}/${imageUrl}`,
       }}

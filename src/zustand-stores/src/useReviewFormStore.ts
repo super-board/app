@@ -42,12 +42,19 @@ const useReviewFormStore = create<ReviewFormState & ReviewFormAction>()(set => (
             blob =>
               new Promise(resolve => {
                 const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
+                reader.onloadend = () =>
+                  resolve({
+                    uri: (reader.result as string).replace("application/octet-stream", "image/png"),
+                    base64: (reader.result as string).replace(
+                      "data:application/octet-stream;base64,",
+                      "",
+                    ),
+                  });
                 reader.readAsDataURL(blob);
               }),
           ),
       ),
-    )) as {status: "fulfilled" | "rejected"; value: Blob}[];
+    )) as {status: "fulfilled" | "rejected"; value: Asset}[];
     const resolvedPromises = promises.filter(({status}) => status === "fulfilled");
     const images = resolvedPromises.map(promise => promise.value);
     set({images});

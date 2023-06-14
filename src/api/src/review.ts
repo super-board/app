@@ -41,7 +41,6 @@ export async function editReview({
   reviewId: number;
   form: ReviewForm;
 }) {
-  console.log(form);
   return axiosAuthenticated.patch(`boardgames/${boardGameId}/reviews/${reviewId}`, form);
 }
 
