@@ -29,9 +29,9 @@ export default function CommentList({boardGameId, reviewId, style}: Props) {
 
   return (
     <View style={[styles.container, style]}>
-      {comments?.map((comment, index) => (
+      {comments?.map(comment => (
         <CommentListItem
-          key={comment.id + index}
+          key={comment.id}
           boardGameId={boardGameId}
           reviewId={reviewId}
           comment={comment}
