@@ -1,25 +1,22 @@
 import React, {useCallback, useState} from "react";
 
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {FlatList, View} from "react-native";
 
 import {api} from "@/api";
 import style from "@/constants/style";
-import {useRefetchQuery} from "@/hooks";
 import {Notice} from "@/types";
 
 import {PostListItem} from "../components";
 
 export default function NoticeScreen() {
   const [page, setPage] = useState(1);
-  // FIXME: 무한스크롤 변경
-  const {isLoading, data: paginatedNotices} = useRefetchQuery(
-    ["notices", page],
-    api.notice.fetchNotices,
+  const {isLoading, data, fetchNextPage} = useInfiniteQuery(
+    ["notices"],
+    ({pageParam = 0}) => api.notice.fetchNotices({limit: 10, offset: 10 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
-
-  const onEndReached = () => {
-    if (paginatedNotices?.pageInfo.hasNext) setPage(state => state + 1);
-  };
+  const notices = data?.pages.flatMap(page => page.content);
 
   const renderItem = useCallback(
     ({item}: {item: Notice}) => (
@@ -30,16 +27,16 @@ export default function NoticeScreen() {
 
   const keyExtractor = useCallback((item: Notice, index: number) => `${item.id}-${index}`, []);
 
-  if (isLoading || !paginatedNotices) return <View style={style.screenWithAppBarContainer} />;
+  if (isLoading || !data) return <View style={style.screenWithAppBarContainer} />;
 
   return (
     <View style={[style.screenWithAppBarContainer, {padding: 0}]}>
       <FlatList
-        data={paginatedNotices.content}
+        data={notices}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.8}
-        onEndReached={onEndReached}
+        onEndReached={() => fetchNextPage({pageParam: data!.pageParams.length})}
       />
     </View>
   );
