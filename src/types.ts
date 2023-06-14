@@ -194,6 +194,17 @@ export type Inquiry = {
   isAnswered: boolean;
 };
 
+export type InquiryAdmin = {
+  id: number;
+  title: string;
+  content: string;
+  memberId: number;
+  nickname: string;
+  createdAt: string;
+  isAnswered: boolean;
+  answer: string;
+};
+
 export type InquiryForm = {
   title: string;
   content: string;
