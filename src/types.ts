@@ -178,6 +178,11 @@ export type Notice = {
   admin: string;
 };
 
+export type NoticeForm = {
+  title: string;
+  content: string;
+};
+
 export type Inquiry = {
   id: number;
   title: string;

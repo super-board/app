@@ -1,7 +1,6 @@
 import React from "react";
 
-import {StyleSheet, Text, View} from "react-native";
-import {TouchableWithoutFeedback} from "react-native-gesture-handler";
+import {Pressable, StyleSheet, Text, View} from "react-native";
 
 import colors from "@/constants/colors";
 import {ScreenProps} from "@/constants/props";
@@ -35,9 +34,9 @@ export default function Manager({navigation}: ScreenProps) {
 function Menu(props: {text: string; onPress: () => void}) {
   const {text, onPress} = props;
   return (
-    <TouchableWithoutFeedback style={styles.menu} onPress={() => onPress()}>
+    <Pressable style={styles.menu} onPress={() => onPress()}>
       <Text style={[typography.body01, styles.text]}>{text}</Text>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 }
 
