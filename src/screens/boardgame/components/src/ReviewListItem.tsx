@@ -2,6 +2,7 @@ import React, {memo, useCallback, useState} from "react";
 
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {
   NativeSyntheticEvent,
   Pressable,
@@ -12,6 +13,7 @@ import {
   View,
 } from "react-native";
 
+import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
 import {Modal} from "@/components";
 import colors from "@/constants/colors";
@@ -20,8 +22,8 @@ import {useLoginInfo, useModal} from "@/hooks";
 import {RootStackParamList} from "@/navigation/navigation";
 import CommentList from "@/screens/boardgame/components/src/CommentList";
 import {DateTimeFormatter, NumberFormatter} from "@/services/formatter";
-import {ReviewDetails} from "@/types";
-import {useAuthStore} from "@/zustand-stores";
+import {BoardGameDetails, Review} from "@/types";
+import {useAuthStore, useReviewFormStore} from "@/zustand-stores";
 
 import {useDialogModals} from "../../hooks";
 import AuthorChip from "./AuthorChip";
@@ -31,7 +33,12 @@ import ReviewThumbnailImage from "./ReviewThumbnailImage";
 
 const MAX_LINES = 3;
 
-function ReviewListItem({review}: {review: ReviewDetails}) {
+type Props = {
+  boardGame: BoardGameDetails;
+  review: Review;
+};
+
+function ReviewListItem({boardGame, review}: Props) {
   const [hasEllipsis, setHasEllipsis] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>(MAX_LINES);
@@ -40,6 +47,7 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
   const route = useRoute();
   const {isLoginUser, isAdmin} = useLoginInfo();
   const didLogin = useAuthStore(state => !!state.refreshToken);
+  const {selectBoardGame, updateGrade, loadImages, updateContent} = useReviewFormStore();
 
   const {
     isEditModalVisible,
@@ -57,6 +65,26 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
     openModal: openSignUpModal,
     closeModal: closeSignUpModal,
   } = useModal();
+  const {
+    visible: isHideModalVisible,
+    openModal: openHideModal,
+    closeModal: closeHideModal,
+  } = useModal();
+
+  const queryClient = useQueryClient();
+  const invalidateReviews = () => queryClient.invalidateQueries({queryKey: ["boardgames/reviews"]});
+  const {mutate: deleteReview} = useMutation(["reviews/delete"], api.review.deleteReview, {
+    onSuccess: invalidateReviews,
+  });
+  const {mutate: hideReview} = useMutation(["admin/reviews/hide"], api.admin.hideReview, {
+    onSuccess: invalidateReviews,
+  });
+  const {mutate: toggleLike} = useMutation(["reviews/likes"], api.like.toggleReviewLike, {
+    onSuccess: invalidateReviews,
+  });
+  const {mutate: reportReview} = useMutation(["reviews/report"], api.report.report, {
+    onSuccess: invalidateReviews,
+  });
 
   const onTextLayout = useCallback((e: NativeSyntheticEvent<TextLayoutEventData>) => {
     if (e.nativeEvent.lines.length > MAX_LINES) setHasEllipsis(true);
@@ -72,55 +100,76 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
     setIsExpanded(state => !state);
   };
 
+  const onLike = () => {
+    if (!didLogin) {
+      openSignUpModal();
+      return;
+    }
+
+    toggleLike({boardGameId: boardGame.id, reviewId: review.id});
+  };
+
   const onEdit = () => {
-    // TODO: 리뷰 수정페이지로 이동하기
+    selectBoardGame(boardGame);
+    updateGrade(review.grade);
+    loadImages(review.images);
+    updateContent(review.content);
+    setTimeout(() => navigation.navigate("EditScreen", {reviewId: review.id}), 1);
   };
 
-  const onDelete = async () => {
-    // TODO: 리뷰 삭제 요청 날리기
-    await new Promise(resolve => setTimeout(resolve, 3000));
+  const onDelete = () => {
+    deleteReview({boardGameId: boardGame.id, reviewId: review.id});
   };
 
-  const onReport = async () => {
-    // TODO: 리뷰 신고 요청 날리기
-    await new Promise(resolve => setTimeout(resolve, 3000));
+  const onReport = () => {
+    reportReview({id: review.id, type: "REVIEW"});
   };
+
+  const onHide = () => hideReview(review.id);
 
   const onSignUp = () => {
-    navigation.navigate("RegisterEmailVerificationScreen");
+    navigation.navigate("OnboardingLoginScreen");
   };
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.row}>
-          <AuthorChip author={review.author} />
+          <AuthorChip
+            author={{
+              id: review.writerId,
+              nickname: review.nickname,
+              profileCharacter: review.profileCharacter,
+              level: review.writerLevel,
+            }}
+          />
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              activeOpacity={1}
-              style={styles.button}
-              onPress={() => setIsCommentsVisible(state => !state)}>
+            <Pressable style={styles.button} onPress={() => setIsCommentsVisible(state => !state)}>
               <SVG.Icon.Chat width={20} height={20} />
               {review.commentCount ? (
                 <Text style={[typography.body02, typography.textWhite]}>
                   {NumberFormatter.toCompactNumber(review.commentCount)}
                 </Text>
               ) : null}
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1} style={styles.button}>
-              <SVG.Icon.Favorite width={20} height={20} />
+            </Pressable>
+            <Pressable style={styles.button} onPress={onLike}>
+              {review.isLiked ? (
+                <SVG.Icon.FavoriteFill width={20} height={20} />
+              ) : (
+                <SVG.Icon.Favorite width={20} height={20} />
+              )}
               {review.likeCount ? (
                 <Text style={[typography.body02, typography.textWhite]}>
                   {NumberFormatter.toCompactNumber(review.likeCount)}
                 </Text>
               ) : null}
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
 
         <View
           style={isExpanded ? styles.contentExpandedContainer : styles.contentCollapsedContainer}>
-          {isExpanded && review.images.length ? (
+          {isExpanded && review.images && review.images.length ? (
             <ReviewImageSlider imageUrls={review.images} />
           ) : null}
           <Text
@@ -130,7 +179,7 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
             ellipsizeMode="tail">
             {review.content}
           </Text>
-          {!isExpanded && review.images.length ? (
+          {!isExpanded && review.images && review.images.length ? (
             <ReviewThumbnailImage imageUrl={review.images[0]} />
           ) : null}
         </View>
@@ -145,43 +194,40 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
             </Text>
           </View>
 
-          {isAdmin() ? (
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity activeOpacity={1}>
+          <View style={styles.buttonsContainer}>
+            {isAdmin() ? (
+              <Pressable onPress={openHideModal}>
                 <Text style={[typography.body02, typography.textWhite, typography.underline]}>
                   숨김
                 </Text>
-              </TouchableOpacity>
-            </View>
-          ) : null}
-
-          {!isAdmin() && isLoginUser(review.author.id) ? (
-            <View style={styles.buttonsContainer}>
-              <Pressable onPress={openEditModal}>
-                <Text style={[typography.body02, typography.textWhite, typography.underline]}>
-                  수정
-                </Text>
               </Pressable>
-              <Pressable onPress={openDeleteModal}>
-                <Text style={[typography.body02, typography.textWhite, typography.underline]}>
-                  삭제
-                </Text>
-              </Pressable>
-            </View>
-          ) : null}
+            ) : null}
 
-          {!isAdmin() && !isLoginUser(review.author.id) ? (
-            <View style={styles.buttonsContainer}>
+            {isLoginUser(review.writerId) ? (
+              <>
+                <Pressable onPress={openEditModal}>
+                  <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                    수정
+                  </Text>
+                </Pressable>
+                <Pressable onPress={openDeleteModal}>
+                  <Text style={[typography.body02, typography.textWhite, typography.underline]}>
+                    삭제
+                  </Text>
+                </Pressable>
+              </>
+            ) : null}
+
+            {didLogin && !isAdmin() && !isLoginUser(review.writerId) ? (
               <Pressable onPress={openReportModal}>
                 <Text style={[typography.body02, typography.textWhite, typography.underline]}>
                   신고
                 </Text>
               </Pressable>
-            </View>
-          ) : null}
+            ) : null}
+          </View>
         </View>
-
-        {hasEllipsis || review.images.length > 1 ? (
+        {hasEllipsis || (review.images && review.images.length) ? (
           <TouchableOpacity activeOpacity={1} style={styles.expandButton} onPress={onToggleExpand}>
             {isExpanded ? (
               <SVG.Icon.Collapse width={24} height={24} />
@@ -193,8 +239,8 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
 
         {isCommentsVisible ? (
           <View style={{paddingLeft: 20, gap: 16}}>
-            <CommentList boardGameId={(route.params as {id: number}).id} reviewId={review.id} />
-            <CommentForm />
+            <CommentList boardGameId={boardGame.id} reviewId={review.id} />
+            <CommentForm boardGameId={boardGame.id} reviewId={review.id} />
           </View>
         ) : null}
       </View>
@@ -220,6 +266,13 @@ function ReviewListItem({review}: {review: ReviewDetails}) {
         confirmText="신고"
         onConfirm={onReport}
         onRequestClose={closeReportModal}
+      />
+      <Modal.Dialog
+        visible={isHideModalVisible}
+        title="숨김처리 하시겠습니까?"
+        confirmText="확인"
+        onConfirm={onHide}
+        onRequestClose={closeHideModal}
       />
       <Modal.Dialog
         visible={isSignUpModalVisible}

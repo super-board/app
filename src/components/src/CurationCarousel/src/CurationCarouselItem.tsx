@@ -1,8 +1,10 @@
 import React, {memo} from "react";
 
-import {Image, StyleSheet, Text, TouchableOpacity} from "react-native";
+import {Pressable, StyleSheet, Text} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import effects from "@/constants/effects";
+import {network} from "@/constants/network";
 import typography from "@/constants/typography";
 import {useNavigateToBoardGameDetails} from "@/hooks";
 import {BoardGameSummary} from "@/types";
@@ -15,12 +17,14 @@ function CurationCarouselItem({boardGame}: Props) {
   const {navigateToBoardGameDetails} = useNavigateToBoardGameDetails(boardGame.id);
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={styles.itemContainer}
-      onPress={navigateToBoardGameDetails}>
-      {/* FIXME: item에서 이미지 source 불러오게 변경*/}
-      <Image source={require("@/assets/images/fallback/board-game-fallback.png")} />
+    <Pressable style={styles.itemContainer} onPress={navigateToBoardGameDetails}>
+      <FastImage
+        style={styles.image}
+        source={{
+          uri: `${network.IMAGE_BASE_URL}/${boardGame.image}`,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
       <Text
         style={[
           typography.subhead01,
@@ -31,13 +35,14 @@ function CurationCarouselItem({boardGame}: Props) {
         ]}>
         {boardGame.name}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   itemContainer: {justifyContent: "center", alignItems: "center"},
-  itemTitle: {marginTop: -12},
+  itemTitle: {marginTop: 8},
+  image: {width: "74%", aspectRatio: 1, borderRadius: 4},
 });
 
 export default memo(CurationCarouselItem);

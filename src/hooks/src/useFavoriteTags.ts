@@ -9,11 +9,9 @@ export default function useFavoriteTags() {
   const {isLoading: isTagListLoading, data: tagList} = useRefetchQuery(["tags"], api.tag.fetchTags);
   const {tagIds: favoriteTagsLocal} = useFavoriteTagsStore();
   const didLogin = useAuthStore(state => !!state.accessToken);
-  const {isLoading: isMyPageDetailsLoading, data: myPageDetails} = useRefetchQuery(
-    ["members/mypage"],
-    api.myPage.fetchDetails,
-    {enabled: didLogin},
-  );
+  const {data: myPageDetails} = useRefetchQuery(["members/mypage"], api.myPage.fetchDetails, {
+    enabled: didLogin,
+  });
   const [favoriteTags, setFavoriteTags] = React.useState<Tag[]>([]);
 
   React.useEffect(() => {
@@ -28,7 +26,7 @@ export default function useFavoriteTags() {
       .flat()
       .filter(tag => tagIds.includes(tag.id));
     setFavoriteTags(filteredTags);
-  }, [isTagListLoading, isMyPageDetailsLoading, tagList, favoriteTagsLocal, myPageDetails]);
+  }, [isTagListLoading, tagList, favoriteTagsLocal, myPageDetails]);
 
-  return {isLoading: isTagListLoading || isMyPageDetailsLoading, tagList, favoriteTags};
+  return {isLoading: isTagListLoading, tagList, favoriteTags};
 }

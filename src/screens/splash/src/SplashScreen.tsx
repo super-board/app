@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 
-import {Image, StyleSheet, View} from "react-native";
+import {StyleSheet, View} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import {SVG} from "@/assets/svgs";
 import {SizedBox} from "@/components";
@@ -16,7 +17,7 @@ function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.icon} source={require("@/assets/images/icon/splash-icon.png")} />
+      <FastImage style={styles.icon} source={require("@/assets/images/icon/splash-icon.png")} />
       <SizedBox width={8} />
       <SVG.Logo.Text width={180} height={22.5} fill={colors.white} />
     </View>

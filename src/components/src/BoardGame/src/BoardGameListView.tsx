@@ -30,11 +30,7 @@ export default function BoardGameListView({
     ({item}: {item: BoardGameSummary}) => <BoardGameListItem boardGame={item} />,
     [],
   );
-  // FIXME: API 연결 후 실제 ID로 처리하기
-  const keyExtractor = useCallback(
-    (item: BoardGameSummary, index: number) => `${item.id}-${index}`,
-    [],
-  );
+  const keyExtractor = useCallback((item: BoardGameSummary) => item.id.toString(), []);
 
   return (
     <FlatList

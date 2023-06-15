@@ -36,6 +36,7 @@ export type RootStackParamList = {
   MyPageEditProfileCharacterScreen: {profileCharacter: string};
   MyPageBadgeScreen: undefined;
   WriteScreen: undefined;
+  EditScreen: {reviewId: number};
   ManagerScreen: undefined;
   ManageNoticeScreen: undefined;
   ManageInquiryScreen: undefined;

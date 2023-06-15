@@ -1,48 +1,44 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useInfiniteQuery} from "@tanstack/react-query";
+import {Pressable, StyleSheet, Text, View} from "react-native";
 
 import {api} from "@/api";
 import {BoardGameListView, FavoriteTagsHorizontalView, Modal} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
-import {useFavoriteTags, useModal, useRefetchQuery} from "@/hooks";
+import {useFavoriteTags, useModal} from "@/hooks";
 
 export default function RecommendationScreen() {
-  const [page, setPage] = useState(0);
   const {favoriteTags} = useFavoriteTags();
+  const tagIds = favoriteTags.map(tag => tag.id);
 
-  // FIXME: 연동시 무한 스크롤로 변경
-  const {isLoading, data: paginatedBoardGames} = useRefetchQuery(
-    ["boardgames/curation", favoriteTags.map(tag => tag.id).join("&")],
-    () => api.boardGame.fetchBoardGamesCuration(favoriteTags.map(tag => tag.id)),
+  const {isLoading, data, fetchNextPage} = useInfiniteQuery(
+    ["boardgames/curation", tagIds.join("&")],
+    ({pageParam = 0}) =>
+      api.boardGame.fetchBoardGamesCuration({tagIds, limit: 10, offset: 10 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
+  const boardGames = data?.pages.flatMap(page => page.content) ?? [];
+
   const {visible, openModal, closeModal} = useModal();
-
-  const onLoadNextPage = () => {
-    setPage(() => page + 1);
-  };
-
-  useEffect(() => {
-    setPage(() => 1);
-  }, [favoriteTags]);
 
   return (
     <View style={styles.container}>
       <FavoriteTagsHorizontalView />
 
       <View style={{paddingHorizontal: 24}}>
-        <TouchableOpacity activeOpacity={1} style={styles.tagUpdateLink} onPress={openModal}>
+        <Pressable style={styles.tagUpdateLink} onPress={openModal}>
           <Text style={[typography.caption, styles.tagUpdateLinkText]}>태그 재설정</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
-      {!isLoading && paginatedBoardGames ? (
+      {!isLoading && data ? (
         <BoardGameListView
           key={favoriteTags.join("&")}
-          boardGames={paginatedBoardGames.content}
+          boardGames={boardGames}
           hasNextPage={true}
-          onLoadNextPage={onLoadNextPage}
+          onLoadNextPage={() => fetchNextPage({pageParam: data?.pageParams.length})}
           style={{marginTop: 20}}
           contentContainerStyle={{paddingBottom: 20}}
         />

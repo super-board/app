@@ -1,5 +1,6 @@
 import React from "react";
 
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import type {NativeSyntheticEvent} from "react-native";
 import {
   Modal as DefModal,
@@ -12,11 +13,12 @@ import {
 } from "react-native";
 import Toast from "react-native-toast-message";
 
+import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useFavoriteTags, useFavoriteTagsForm} from "@/hooks";
-import {useFavoriteTagsStore, useOnboardingStore} from "@/zustand-stores";
+import {useAuthStore, useFavoriteTagsStore, useOnboardingStore} from "@/zustand-stores";
 
 import OTBButton from "../../OTBButton";
 import SizedBox from "../../SizedBox";
@@ -25,14 +27,23 @@ import ToastConfig from "../../ToastConfig";
 import type {ModalProps} from "./types";
 
 export default function ResetTags({visible, onRequestClose}: ModalProps) {
-  const {isLoading, tagList, favoriteTags} = useFavoriteTags();
+  const {isLoading, tagList} = useFavoriteTags();
   const {selectedTagIds, isSelectedTag, toggleTag, resetSelectedTags} = useFavoriteTagsForm(() =>
     Toast.show({type: "error", text1: "태그는 최대 5개까지 선택 가능합니다."}),
   );
   const {saveFavoriteTags} = useFavoriteTagsStore();
   const {completeOnboarding} = useOnboardingStore();
+  const didLogin = useAuthStore(state => !!state.refreshToken);
+
+  const queryClient = useQueryClient();
+  const {mutate: resetFavoriteTags} = useMutation(
+    ["mypage/favorite-tags"],
+    api.myPage.resetFavoriteTags,
+    {onSuccess: () => queryClient.invalidateQueries({queryKey: ["members/mypage"]})},
+  );
 
   const onSave = (event: NativeSyntheticEvent<any>) => {
+    if (didLogin) resetFavoriteTags(selectedTagIds);
     saveFavoriteTags(selectedTagIds);
     completeOnboarding();
     onRequestClose?.call(null, event);

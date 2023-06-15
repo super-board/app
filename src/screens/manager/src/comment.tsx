@@ -1,94 +1,138 @@
-import React, {useState} from "react";
+import React from "react";
 
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useNavigation} from "@react-navigation/native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {useInfiniteQuery, useMutation, useQueryClient} from "@tanstack/react-query";
+import {Pressable, StyleSheet, Text, View} from "react-native";
 import {FlatList} from "react-native-gesture-handler";
 
+import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
+import {Modal} from "@/components";
 import colors from "@/constants/colors";
-import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useModal} from "@/hooks";
+import {RootStackParamList} from "@/navigation/navigation";
+import {CommentAdmin} from "@/types";
 
-export default function Comment({navigation}: ScreenProps) {
-  const data = [
-    {
-      title: "테라포밍 마스: 아레나 익스페디션",
-      content: "등록해줘요오오오옹",
-      nickname: "12331",
-      date: "2023-02-02",
-      time: "23:00:15",
-    },
-    {
-      title: "테라포밍 마스: 아레나 익스페디션",
-      content:
-        "등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹등록해줘요오오오옹",
-      nickname: "12331",
-      date: "2023-02-02",
-      time: "23:00:15",
-    },
-    {
-      title: "테라포밍 마스: 아레나 익스페디션",
-      content: "등록해줘요오오오옹",
-      nickname: "12331",
-      date: "2023-02-02",
-      time: "23:00:15",
-    },
-  ];
+export default function CommentTabScreen() {
+  const {data, fetchNextPage, hasNextPage} = useInfiniteQuery(
+    ["admin/comments"],
+    ({pageParam = 0}) => api.admin.fetchComments({limit: 10, offset: 10 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
+  );
+  const comments = data?.pages.flatMap(page => page.content);
+  const onEndReached = () => {
+    if (hasNextPage) fetchNextPage({pageParam: data?.pageParams.length});
+  };
 
-  //pressed 추가 작업 필요
-  function Block(data: any) {
-    const {nickname, date, time, title, content} = data.item;
-    const [open, setOpen] = useState(false);
-
-    return (
-      <>
-        <TouchableOpacity style={styles.block} onPress={() => setOpen(!open)}>
-          <View style={styles.contentContainer}>
-            <View style={styles.content}>
-              <Text style={[typography.body02, styles.text]} numberOfLines={open ? undefined : 1}>
-                {content}
-              </Text>
-              {open ? (
-                <SVG.Icon.ArrowUp width={12} height={8} />
-              ) : (
-                <SVG.Icon.ArrowDown width={12} height={8} />
-              )}
-            </View>
-            <View style={styles.infoContainer}>
-              <Text style={[typography.body02, styles.info]}>{nickname}</Text>
-              <Text style={[typography.body02, styles.info, {marginLeft: 8}]}>{date}</Text>
-              <Text style={[typography.body02, styles.info, {marginLeft: 8}]}>{time}</Text>
-            </View>
-            <Text style={[typography.caption, styles.caption]}>{title}</Text>
-          </View>
-        </TouchableOpacity>
-      </>
-    );
-  }
+  const renderItem = React.useCallback(
+    ({item}: {item: CommentAdmin}) => <ListItem comment={item} />,
+    [],
+  );
+  const listHeader = React.useCallback(() => <View style={{marginTop: 16}} />, []);
+  const itemSeparator = React.useCallback(() => <View style={styles.divider} />, []);
 
   return (
     <View style={style.screenWithAppBarContainer}>
       <FlatList
-        data={data}
-        renderItem={item => <Block {...item} key={item.index} />}
-        ListHeaderComponent={() => <View style={{marginTop: 16}} />}
-        ItemSeparatorComponent={() => <View style={styles.divider} />}
-        keyExtractor={(item, idx) => idx.toString()}
+        data={comments}
+        renderItem={renderItem}
+        ListHeaderComponent={listHeader}
+        ItemSeparatorComponent={itemSeparator}
+        keyExtractor={item => item.id.toString()}
+        onEndReachedThreshold={0.8}
+        onEndReached={onEndReached}
       />
     </View>
   );
 }
 
+function ListItem({comment}: {comment: CommentAdmin}) {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  const {visible, openModal, closeModal} = useModal();
+
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const queryClient = useQueryClient();
+  const {mutate: hideComment} = useMutation(["admin/comments/hide"], api.admin.hideComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["comments"], refetchType: "all"});
+      queryClient.invalidateQueries({queryKey: ["admin/comments"], refetchType: "all"});
+    },
+  });
+  const onPress = {
+    toBoardGame: () => navigation.navigate("BoardGameDetailsScreen", {id: comment.boardgameId}),
+    hide: () => hideComment(comment.id),
+  };
+
+  return (
+    <>
+      <Pressable style={styles.block} onPress={() => setIsExpanded(state => !state)}>
+        <View style={styles.contentContainer}>
+          <View style={styles.content}>
+            <Text
+              style={[typography.body02, styles.text, comment.isHidden ? styles.lineThrough : null]}
+              numberOfLines={isExpanded ? undefined : 1}>
+              {comment.content}
+            </Text>
+            {isExpanded ? (
+              <SVG.Icon.ArrowUp width={12} height={8} />
+            ) : (
+              <SVG.Icon.ArrowDown width={12} height={8} />
+            )}
+          </View>
+
+          <View style={styles.info}>
+            <Text style={[typography.caption, typography.textBlack500]}>{comment.nickname}</Text>
+            <Text style={[typography.caption, typography.textBlack500]}>
+              {comment.createdAt.slice(0, 10)}
+            </Text>
+            <Text style={[typography.caption, typography.textBlack500]}>
+              {comment.createdAt.slice(11)}
+            </Text>
+          </View>
+
+          {isExpanded ? (
+            <View style={{flexDirection: "row", gap: 12, marginVertical: 8}}>
+              <Pressable onPress={onPress.toBoardGame}>
+                <Text style={[typography.caption, typography.textWhite, typography.underline]}>
+                  보드게임으로 이동
+                </Text>
+              </Pressable>
+              <Pressable onPress={openModal}>
+                <Text style={[typography.caption, typography.textWhite, typography.underline]}>
+                  숨김
+                </Text>
+              </Pressable>
+            </View>
+          ) : null}
+
+          <Text
+            style={[typography.body02, styles.title, comment.isHidden ? styles.lineThrough : null]}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {comment.boardgameName}
+          </Text>
+        </View>
+
+        <Modal.Dialog
+          visible={visible}
+          title="숨김처리 하시겠습니까?"
+          confirmText="확인"
+          onConfirm={onPress.hide}
+          onRequestClose={closeModal}
+        />
+      </Pressable>
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
-  inquiry: {
-    color: colors.white,
-    marginBottom: 32,
-  },
   block: {
     flex: 1,
     flexDirection: "row",
   },
-  answer: {},
   title: {
     color: colors.OTBBlack400,
   },
@@ -98,10 +142,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   info: {
-    color: colors.OTBBlack400,
-  },
-  caption: {
-    color: colors.OTBBlack500,
+    flexDirection: "row",
+    gap: 8,
   },
   contentContainer: {
     flex: 1,
@@ -110,9 +152,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.OTBBlack600,
     marginVertical: 16,
-  },
-  contentText: {
-    color: colors.white,
   },
   textInput: {
     height: 216,
@@ -124,16 +163,11 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     fontSize: 16,
   },
-  otbButton: {
-    marginTop: 8,
-  },
-  reply: {
-    color: colors.OTBBlack400,
-  },
   text: {
     color: colors.white,
   },
-  infoContainer: {
-    flexDirection: "row",
+  lineThrough: {
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid",
   },
 });

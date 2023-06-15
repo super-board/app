@@ -13,7 +13,7 @@ export default function CurationCarousel() {
   const {width: screenWidth} = Dimensions.get("window");
   const {isLoading, data: boardGames} = useRefetchQuery(
     ["boardgames/home"],
-    api.boardGame.fetchBoardGamesForHome,
+    api.boardGame.fetchBoardGamesTop10,
   );
 
   if (isLoading || !boardGames) return <View style={styles.container} />;
@@ -37,7 +37,7 @@ export default function CurationCarousel() {
         }}
         width={screenWidth}
         height={screenWidth * 0.8}
-        data={boardGames}
+        data={boardGames.slice(0, 5)}
         renderItem={renderItem}
       />
     </View>

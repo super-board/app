@@ -1,6 +1,7 @@
 import React from "react";
 
-import {Modal as DefModal, Image, StyleSheet, Text, View} from "react-native";
+import {Modal as DefModal, StyleSheet, Text, View} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
@@ -21,7 +22,7 @@ export default function Loading({visible, title = "", ...otherProps}: ModalProps
       <View style={styles.screenContainer}>
         <View style={styles.backdrop} />
         <View style={[styles.modalContainer, styles.loadingContainer]}>
-          <Image
+          <FastImage
             source={require("@/assets/images/icon/puzzle-icon.png")}
             style={styles.loadingImage}
           />

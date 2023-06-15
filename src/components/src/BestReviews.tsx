@@ -1,35 +1,41 @@
 import React from "react";
 
-import {Image, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
+import {network} from "@/constants/network";
 import typography from "@/constants/typography";
 import {useRefetchQuery} from "@/hooks";
 
 import {LevelIcon} from "./Level";
+import ProfileImage from "./ProfileImage";
 import RatingIcons from "./RatingIcons";
 import SizedBox from "./SizedBox";
 
 export default function BestReviews() {
-  const {isLoading, data: bestReviews} = useRefetchQuery(
+  const {isLoading, data: paginatedBestReviews} = useRefetchQuery(
     ["review/best"],
     api.review.fetchBestReviews,
   );
 
-  if (isLoading || !bestReviews) return <View style={styles.container} />;
+  if (isLoading || !paginatedBestReviews) return <View style={styles.container} />;
 
   return (
     <View style={styles.container}>
-      {bestReviews.map((review, index) => (
+      {paginatedBestReviews.content.map((review, index) => (
         <View key={review.id} style={styles.listItemContainer}>
           <Text style={[typography.subhead03, typography.textWhite, styles.index]}>
             {index + 1}
           </Text>
 
           <SizedBox width={6} />
-          <Image
+          <FastImage
             style={styles.thumbnailImage}
-            source={require("@/assets/images/fallback/board-game-fallback.png")}
+            source={{
+              uri: `${network.IMAGE_BASE_URL}/${review.boardgameImage}`,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
           />
           <SizedBox width={8} />
 
@@ -38,18 +44,22 @@ export default function BestReviews() {
               style={[typography.subhead02, typography.textWhite]}
               numberOfLines={2}
               ellipsizeMode="tail">
-              {review.title}
+              {review.content}
             </Text>
             <View style={styles.authorContainer}>
+              <ProfileImage width={16} height={16} type={review.profileCharacter} />
               <Text style={[typography.caption, typography.textWhite]}>
-                {review.author.nickname}
+                {review.writerNickname}
               </Text>
-              <LevelIcon level={review.author.level} />
+              <LevelIcon level={review.writerLevel} />
             </View>
-            <Text style={[typography.subhead03, typography.textWhite]}>
-              {review.boardGame.name}
+            <Text
+              style={[typography.subhead03, typography.textWhite]}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {review.boardGameTitle}
             </Text>
-            <RatingIcons rating={review.rating} />
+            <RatingIcons rating={review.grade} />
           </View>
         </View>
       ))}
@@ -65,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   index: {width: 13},
-  thumbnailImage: {width: 104, height: 104},
+  thumbnailImage: {width: 104, height: 104, borderRadius: 4},
   contentContainer: {
     flex: 1,
     flexDirection: "column",

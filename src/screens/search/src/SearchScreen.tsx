@@ -1,12 +1,15 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect} from "react";
 
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useInfiniteQuery} from "@tanstack/react-query";
+import {Dimensions, FlatList, Pressable, StyleSheet, Text, View} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
 import {BoardGameListView, SizedBox} from "@/components";
 import colors from "@/constants/colors";
+import {network} from "@/constants/network";
 import typography from "@/constants/typography";
 import {useNavigateToBoardGameDetails, useRefetchQuery} from "@/hooks";
 import {RootStackParamList} from "@/navigation/navigation";
@@ -19,12 +22,17 @@ export default function SearchScreen() {
     api.boardGame.fetchBoardGamesTop10,
   );
   const {searchQuery, resetSearchQuery} = useSearchStore();
-  const [page, setPage] = useState(1);
-  // FIXME: 연동시 무한스크롤로 변경
-  const {isLoading: isSearchResultsLoading, data: searchResults} = useRefetchQuery(
-    ["boardgames/searchBoardgmaeList", searchQuery],
-    api.boardGame.fetchBoardGames,
+  const {
+    isLoading: isSearchLoading,
+    data,
+    fetchNextPage,
+  } = useInfiniteQuery(
+    ["boardgames/search", searchQuery],
+    ({pageParam = 0}) =>
+      api.boardGame.fetchBoardGames({query: searchQuery, limit: 10, offset: 10 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
+  const searchResult = data?.pages.flatMap(page => page.content) ?? [];
 
   const renderItem = useCallback(
     ({item}: {item: BoardGameSummary}) => <BoardGameListItem boardGame={item} />,
@@ -32,15 +40,11 @@ export default function SearchScreen() {
   );
   const keyExtractor = useCallback((item: BoardGameSummary) => item.id.toString(), []);
 
-  const onLoadNextPage = () => {
-    setPage(() => page + 1);
-  };
-
   useEffect(() => {
     resetSearchQuery();
   }, []);
 
-  if (isTop10BoardGamesLoading || isSearchResultsLoading || !top10BoardGames || !searchResults)
+  if (isTop10BoardGamesLoading || isSearchLoading || !top10BoardGames || !data)
     return <View style={styles.container} />;
 
   return (
@@ -49,9 +53,9 @@ export default function SearchScreen() {
         <BoardGameListView
           key={searchQuery}
           style={styles.searchResultsContainer}
-          boardGames={searchResults.content}
+          boardGames={searchResult}
           hasNextPage={true}
-          onLoadNextPage={onLoadNextPage}
+          onLoadNextPage={() => fetchNextPage({pageParam: data?.pageParams.length})}
           contentContainerStyle={{paddingBottom: 48}}
         />
       ) : (
@@ -90,12 +94,12 @@ function BoardGameListItem({boardGame}: {boardGame: BoardGameSummary}) {
   };
 
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.itemContainer} onPress={onPress}>
-      <Image
-        source={require("@/assets/images/fallback/board-game-fallback.png")}
+    <Pressable style={styles.itemContainer} onPress={onPress}>
+      <FastImage
         style={styles.thumbnail}
+        source={{uri: `${network.IMAGE_BASE_URL}/${boardGame.image}`}}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 

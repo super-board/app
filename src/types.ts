@@ -23,13 +23,14 @@ export type BoardGameSummary = {
   id: number;
   name: string;
   image: string;
-  averageRating: number;
+  grade: number;
 };
 
 export type BoardGameDetails = BoardGameSummary & {
   description: string;
   favoriteCount: number;
   tagList: Tag[];
+  isLiked: boolean;
 };
 
 export type ReviewForm = {
@@ -38,34 +39,66 @@ export type ReviewForm = {
   images: string[];
 };
 
-export type ReviewSummary = {
+export type BestReview = {
   id: number;
-  title: string;
-  boardGame: BoardGameSummary;
-  author: {
-    id: number;
-    nickname: string;
-    level: Level;
-  };
-  rating: number;
+  content: string;
+  grade: number;
+  writerNickname: string;
+  writerLevel: Level;
+  profileCharacter: ProfileCharacter;
+  boardGameTitle: string;
+  boardgameImage: string;
+  likeCount: number;
 };
 
-export type ReviewDetails = {
+export type Review = {
   id: number;
-  createdAt: string;
+  grade: number;
   content: string;
-  rating: number;
   images: string[];
-  commentCount: number;
   likeCount: number;
-  author: MemberSummary;
+  commentCount: number;
+  isHidden: boolean;
+  createdAt: string;
+  writerId: number;
+  profileCharacter: ProfileCharacter;
+  nickname: string;
+  writerLevel: Level;
+  isLiked: boolean;
+};
+
+export type ReviewAdmin = {
+  id: number;
+  boardgameId: number;
+  boardgameName: string;
+  content: string;
+  createdAt: string;
+  isHidden: boolean;
+  nickname: string;
+  writerId: number;
 };
 
 export type CommentDetails = {
   id: number;
   createdAt: string;
   content: string;
-  author: MemberSummary;
+  isHidden: boolean;
+  nickname: string;
+  profileCharacter: ProfileCharacter;
+  writerId: number;
+  writerLevel: Level;
+};
+
+export type CommentAdmin = {
+  id: number;
+  boardgameId: number;
+  boardgameName: string;
+  content: string;
+  createdAt: string;
+  isHidden: boolean;
+  nickname: string;
+  reviewId: number;
+  writerId: number;
 };
 
 export type MemberSummary = {
@@ -168,6 +201,11 @@ export type Notice = {
   admin: string;
 };
 
+export type NoticeForm = {
+  title: string;
+  content: string;
+};
+
 export type Inquiry = {
   id: number;
   title: string;
@@ -179,7 +217,35 @@ export type Inquiry = {
   isAnswered: boolean;
 };
 
+export type InquiryAdmin = {
+  id: number;
+  title: string;
+  content: string;
+  memberId: number;
+  nickname: string;
+  createdAt: string;
+  isAnswered: boolean;
+  answer: string;
+};
+
 export type InquiryForm = {
   title: string;
   content: string;
+};
+
+export type Report = {
+  id: number;
+  content: string;
+  createdAt: string;
+  isHidden: boolean;
+  isResolved: boolean;
+  postId: number;
+  reportedAt: string;
+  type: "REVIEW" | "COMMENT";
+  whistleblowerId: number;
+  whistleblowerNickname: string;
+  writerId: number;
+  writerNickname: string;
+  boardgameId: number;
+  boardgameName: string;
 };

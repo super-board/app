@@ -26,7 +26,7 @@ export default function FavoriteTagsHorizontalView({
 
   return (
     <View style={[styles.container, style]}>
-      <ScrollView horizontal>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <SizedBox width={insetPadding} />
         {favoriteTags.map(tag => (
           <View key={tag.id} style={styles.row}>

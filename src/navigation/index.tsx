@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 
-import {NavigationContainer} from "@react-navigation/native";
+import {DarkTheme, NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
@@ -52,7 +52,7 @@ import {
 } from "@/screens/register";
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
-import {WriteScreen} from "@/screens/write";
+import {EditScreen, WriteScreen} from "@/screens/write";
 import {useOnboardingStore} from "@/zustand-stores";
 import useAuthStore from "@/zustand-stores/src/useAuthStore";
 
@@ -83,8 +83,9 @@ export default function Navigation() {
   if (!didAppInitialized) return <SplashScreen />;
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
-      <NavigationContainer>
+    <View style={[styles.container, {paddingTop: insets.top, backgroundColor: colors.OTBBlack}]}>
+      <NavigationContainer
+        theme={{...DarkTheme, colors: {...DarkTheme.colors, background: colors.OTBBlack}}}>
         <Stack.Navigator initialRouteName={initialRouteName()} screenOptions={stackScreenOptions}>
           <Stack.Group>
             <Stack.Screen
@@ -189,8 +190,18 @@ export default function Navigation() {
               component={WriteScreen}
             />
             <Stack.Screen
+              name="EditScreen"
+              options={{
+                header: SimpleAppBar,
+                title: "리뷰 수정",
+                animation: "slide_from_bottom",
+                headerBackVisible: true,
+              }}
+              component={EditScreen}
+            />
+            <Stack.Screen
               name="BoardGameDetailsScreen"
-              options={{header: BackToHomeAppBar}}
+              options={{header: BackToHomeAppBar, headerBackTitle: "닫기"}}
               component={BoardGameDetailsScreen}
             />
           </Stack.Group>

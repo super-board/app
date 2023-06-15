@@ -1,6 +1,6 @@
 import React from "react";
 
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
 import StarRating from "react-native-star-rating-widget";
@@ -33,12 +33,14 @@ export default function WriteScreen({navigation}: ScreenProps) {
     closeModal: closeCancelModal,
   } = useModal();
 
+  const queryClient = useQueryClient();
   const {mutate: writeReview, isLoading} = useMutation(
     ["boardgames/reviews/write"],
     api.review.postReview,
     {
       onSuccess: (_, {boardGameId}) => {
         reset();
+        queryClient.invalidateQueries(["boardgames/reviews"]);
         setTimeout(() => {
           navigation.goBack();
           navigation.navigate("BoardGameDetailsScreen", {id: boardGameId});
@@ -79,7 +81,10 @@ export default function WriteScreen({navigation}: ScreenProps) {
     <ScrollView style={style.screenWithAppBarContainer}>
       <Text style={[typography.subhead01, typography.textWhite, styles.title]}>보드게임</Text>
       <Pressable style={styles.search} onPress={onSearch}>
-        <Text style={[typography.body01, {color: boardGame ? colors.white : colors.OTBBlack500}]}>
+        <Text
+          style={[typography.body01, {color: boardGame ? colors.white : colors.OTBBlack500}]}
+          numberOfLines={1}
+          ellipsizeMode="tail">
           {boardGame ? boardGame.name : "보드게임을 선택해주세요."}
         </Text>
       </Pressable>
@@ -114,6 +119,7 @@ export default function WriteScreen({navigation}: ScreenProps) {
       <View>
         <TextInput
           style={[styles.textInput, typography.body01, typography.textWhite]}
+          value={content}
           onChangeText={updateContent}
           placeholder="리뷰를 작성해주세요. (20자 이상)"
           placeholderTextColor={colors.OTBBlack500}

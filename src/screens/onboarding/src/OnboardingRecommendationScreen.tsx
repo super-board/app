@@ -2,12 +2,14 @@ import React from "react";
 
 import {ParamListBase} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {Image, ScrollView, StyleSheet, Text, View} from "react-native";
+import {ScrollView, StyleSheet, Text, View} from "react-native";
+import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
 import {OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
+import {network} from "@/constants/network";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useRefetchQuery} from "@/hooks";
@@ -21,7 +23,7 @@ function OnboardingRecommendationScreen({navigation}: Props) {
   const {tagIds, saveFavoriteTags} = useFavoriteTagsStore();
   const {isLoading, data: paginatedBoardGames} = useRefetchQuery(
     ["boardgames/searchByTag", tagIds.join("&")],
-    api.boardGame.fetchBoardGames,
+    () => api.boardGame.fetchBoardGamesCuration({limit: 5, offset: 1, tagIds}),
   );
   const {completeOnboarding} = useOnboardingStore();
 
@@ -52,10 +54,9 @@ function OnboardingRecommendationScreen({navigation}: Props) {
                       style={[typography.subhead01, typography.textWhite, styles.boardGameTitle]}>
                       {boardGame.name}
                     </Text>
-                    <Image
+                    <FastImage
                       style={styles.boardGameImage}
-                      // FIXME: 백엔드 API 연결 시 imageUrl로 교체
-                      source={require("@/assets/images/fallback/board-game-fallback.png")}
+                      source={{uri: `${network.IMAGE_BASE_URL}/${boardGame.image}`}}
                     />
                   </View>
                   {index < paginatedBoardGames.content.length - 1 ? (

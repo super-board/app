@@ -16,6 +16,7 @@ import EditProfile from "./edit-profile.svg";
 import EditUnderLine from "./edit-underline.svg";
 import Edit from "./edit.svg";
 import ExpandMore from "./expand-more.svg";
+import FavoriteFill from "./favorite-fill.svg";
 import Favorite from "./favorite.svg";
 import HomeAccent from "./home-accent.svg";
 import Home from "./home.svg";
@@ -71,6 +72,7 @@ export {
   EditUnderLine,
   ExpandMore,
   Favorite,
+  FavoriteFill,
   Home,
   HomeAccent,
   ImageAddFill,

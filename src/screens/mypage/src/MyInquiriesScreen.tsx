@@ -1,23 +1,23 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback} from "react";
 
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {FlatList, View} from "react-native";
 
 import {api} from "@/api";
 import style from "@/constants/style";
-import {useRefetchQuery} from "@/hooks";
 import {Inquiry} from "@/types";
 
 import {PostListItem} from "../components";
 
 export default function MyInquiriesScreen() {
-  const [page, setPage] = useState(1);
-  const {isLoading, data: paginatedInquires} = useRefetchQuery(
-    ["inquiries", page],
-    api.inquiry.fetchInquiries,
+  const {isLoading, data, fetchNextPage, hasNextPage} = useInfiniteQuery(
+    ["inquiries"],
+    ({pageParam = 0}) => api.inquiry.fetchInquiries({limit: 10, offset: 10 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
-
+  const inquiries = data?.pages.flatMap(page => page.content);
   const onEndReached = () => {
-    if (paginatedInquires?.pageInfo.hasNext) setPage(state => state + 1);
+    if (hasNextPage) fetchNextPage({pageParam: data?.pageParams.length});
   };
 
   const renderItem = useCallback(
@@ -34,12 +34,12 @@ export default function MyInquiriesScreen() {
 
   const keyExtractor = useCallback((item: Inquiry, index: number) => `${item.id}-${index}`, []);
 
-  if (isLoading || !paginatedInquires) return <View style={style.screenWithAppBarContainer} />;
+  if (isLoading || !data) return <View style={style.screenWithAppBarContainer} />;
 
   return (
     <View style={[style.screenWithAppBarContainer, {padding: 0}]}>
       <FlatList
-        data={paginatedInquires.content}
+        data={inquiries}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.8}

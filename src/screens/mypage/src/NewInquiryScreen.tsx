@@ -1,16 +1,38 @@
 import React from "react";
 
+import {MaterialTopTabNavigationProp} from "@react-navigation/material-top-tabs";
+import {useNavigation} from "@react-navigation/native";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {StyleSheet, Text, TextInput} from "react-native";
 
+import {api} from "@/api";
 import {KeyboardView, OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useTextInput} from "@/hooks";
+import {MyPageInquiryTabParamList} from "@/navigation/navigation";
 
 export default function NewInquiryScreen() {
   const {value: title, onChangeText: onChangeTitle} = useTextInput();
   const {value: content, onChangeText: onChangeContent} = useTextInput();
+
+  const navigation = useNavigation<MaterialTopTabNavigationProp<MyPageInquiryTabParamList>>();
+  const queryClient = useQueryClient();
+  const {mutate: postInquiry, isLoading} = useMutation(
+    ["inquiries/post"],
+    api.inquiry.postInquiry,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["inquiries"]);
+        navigation.navigate("MyPageMyInquiriesScreen");
+      },
+    },
+  );
+
+  const onSubmit = () => {
+    postInquiry({title, content});
+  };
 
   return (
     <KeyboardView style={style.screenWithAppBarContainer}>
@@ -29,7 +51,7 @@ export default function NewInquiryScreen() {
       <Text style={[typography.body02, typography.textWhite]}>내용</Text>
       <SizedBox height={8} />
       <TextInput
-        style={[typography.body01, typography.textWhite, styles.textarea]}
+        style={[typography.body01, typography.textWhite, styles.textarea, {minHeight: 200}]}
         multiline
         value={content}
         onChangeText={onChangeContent}
@@ -39,7 +61,12 @@ export default function NewInquiryScreen() {
       />
 
       <SizedBox height={16} />
-      <OTBButton type="basic-primary" text="등록" disabled={!title || !content} />
+      <OTBButton
+        type="basic-primary"
+        text="등록"
+        onPress={onSubmit}
+        disabled={!title || !content || isLoading}
+      />
       <SizedBox height={92} />
     </KeyboardView>
   );

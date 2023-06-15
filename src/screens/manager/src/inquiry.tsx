@@ -1,137 +1,135 @@
 import React, {useState} from "react";
 
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {useInfiniteQuery, useMutation, useQueryClient} from "@tanstack/react-query";
+import {Pressable, StyleSheet, Text, TextInput, View} from "react-native";
 import {FlatList} from "react-native-gesture-handler";
 
+import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
-import {Modal, OTBButton} from "@/components";
+import {Modal, OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
-import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useModal} from "@/hooks";
+import {InquiryAdmin} from "@/types";
 
-export default function Inquiry({navigation}: ScreenProps) {
-  const {visible: visible, openModal: openModal, closeModal: closeModal} = useModal();
-  const data = [
-    {
-      title: "새로나온 보드게임 등록해주세여",
-      content: "등록해줘요오오오옹",
-      nickname: "12331",
-      date: "2023-02-02",
-      time: "23:00:15",
-    },
-    {
-      title: "새로나온 보드게임 등록해주세여",
-      content: "등록해줘요오오오옹",
-      nickname: "12331",
-      date: "2023-02-02",
-      time: "23:00:15",
-      reply:
-        "안녕하세요 온더보더 Yeayea님! 새로나온 마스 시리즈라면 <테라포밍 마스 : 격동> 을 말씀하시는 걸까요? 해당 보드게임은 1.2 어플리케이션 업데이트때 등록 완료되었습니다! 혹 어플리케이션이 최신 버전인지 확인해주시고, 확인하신 이후에도 찾지 못하신다면 다시 한 번 1:1 문의 부탁드리겠습니다 :)",
-    },
-    {
-      title: "새로나온 보드게임 등록해주세여",
-      content: "등록해줘요오오오옹",
-      nickname: "12331",
-      date: "2023-02-02",
-      time: "23:00:15",
-    },
-  ];
+export default function InquiryScreen() {
+  const {data, fetchNextPage, hasNextPage} = useInfiniteQuery(
+    ["admin/inquiries"],
+    ({pageParam = 0}) => api.admin.fetchInquiries({limit: 10, offset: 10 * pageParam + 1}),
+    {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
+  );
+  const inquiries = data?.pages.flatMap(page => page.content);
+  const onEndReached = () => {
+    if (hasNextPage) fetchNextPage({pageParam: data?.pageParams.length});
+  };
 
-  function Block(data: any) {
-    const {nickname, date, time, title, content, reply} = data.item;
-    const [open, setOpen] = useState(false);
-    const [text, setText] = useState("");
+  const renderItem = React.useCallback(
+    ({item}: {item: InquiryAdmin}) => <ListItem inquiry={item} />,
+    [],
+  );
 
-    const onPress = {
-      submit: () => {
-        openModal();
-      },
-    };
-    return (
-      <>
-        <TouchableOpacity style={styles.block} onPress={() => setOpen(!open)}>
-          <Text
-            style={[
-              typography.subhead03,
-              styles.answer,
-              {color: reply ? colors.OTBBlack600 : colors.OTBBlueLight1},
-            ]}>
-            {reply ? "답변완료" : "답변대기"}
-          </Text>
-          <View style={styles.contentContainer}>
-            <View style={styles.content}>
-              <Text style={[typography.body02, styles.title]}>{title}</Text>
-              {open ? (
-                <SVG.Icon.ArrowUp width={12} height={8} />
-              ) : (
-                <SVG.Icon.ArrowDown width={12} height={8} />
-              )}
-            </View>
-            <View style={styles.info}>
-              <Text style={[typography.caption, styles.caption]}>{nickname}</Text>
-              <Text style={[typography.caption, styles.caption]}> {date}</Text>
-              <Text style={[typography.caption, styles.caption]}> {time}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        {open ? (
-          <>
-            <View style={{flexDirection: "row"}}>
-              <Text style={[typography.subhead03, styles.answer, {color: colors.OTBBlack}]}>
-                안보이는
-              </Text>
-              <Text style={[typography.bodyLong02, styles.contentText]}>{content}</Text>
-            </View>
-            {reply ? (
-              <View style={{flexDirection: "row"}}>
-                <Text style={[typography.subhead03, styles.answer, {color: colors.OTBBlack}]}>
-                  안보이는
-                </Text>
-                <Text style={[typography.bodyLong02, styles.reply]}>{reply}</Text>
-              </View>
-            ) : (
-              <>
-                <TextInput
-                  style={[styles.textInput, typography.body01, typography.textWhite]}
-                  onChangeText={text => setText(text)}
-                  placeholder="내용을 입력해주세요"
-                  placeholderTextColor={colors.OTBBlack500}
-                  multiline={true}
-                />
-                <OTBButton
-                  type={"basic-primary"}
-                  text="등록"
-                  style={styles.otbButton}
-                  onPress={onPress.submit}
-                />
-              </>
-            )}
-          </>
-        ) : null}
-      </>
-    );
-  }
+  const itemSeparator = React.useCallback(() => <View style={styles.divider} />, []);
 
   return (
     <View style={style.screenWithAppBarContainer}>
       <Text style={[typography.headline, styles.inquiry]}>1:1 문의</Text>
       <FlatList
-        data={data}
-        renderItem={item => <Block {...item} key={item.index} />}
-        ItemSeparatorComponent={() => <View style={styles.divider} />}
-        keyExtractor={(item, idx) => idx.toString()}
-      />
-      <Modal.Warn
-        visible={visible}
-        title="등록하시겠습니까?"
-        onRequestClose={closeModal}
-        dismissible
-        back
-        warn={false}
+        data={inquiries}
+        renderItem={renderItem}
+        ItemSeparatorComponent={itemSeparator}
+        keyExtractor={item => item.id.toString()}
+        onEndReachedThreshold={0.8}
+        onEndReached={onEndReached}
       />
     </View>
+  );
+}
+
+function ListItem({inquiry}: {inquiry: InquiryAdmin}) {
+  const {visible, openModal, closeModal} = useModal();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [content, setContent] = useState("");
+
+  const queryClient = useQueryClient();
+  const {mutate: answerInquiry} = useMutation(["admin/inquiries/answer"], api.admin.answerInquiry, {
+    onSuccess: () => queryClient.invalidateQueries(["admin/inquiries"]),
+  });
+
+  const onSubmit = () => {
+    answerInquiry({id: inquiry.id, answer: content});
+  };
+
+  return (
+    <>
+      <Pressable style={styles.block} onPress={() => setIsExpanded(state => !state)}>
+        <Text
+          style={[
+            typography.subhead03,
+            {color: inquiry.isAnswered ? colors.OTBBlack600 : colors.OTBBlueLight1},
+          ]}>
+          {inquiry.isAnswered ? "답변완료" : "답변대기"}
+        </Text>
+        <View style={styles.contentContainer}>
+          <View style={styles.content}>
+            <Text style={[typography.body02, styles.title]}>{inquiry.title}</Text>
+            {isExpanded ? (
+              <SVG.Icon.ArrowUp width={12} height={8} />
+            ) : (
+              <SVG.Icon.ArrowDown width={12} height={8} />
+            )}
+          </View>
+          <View style={styles.info}>
+            <Text style={[typography.caption, typography.textBlack500]}>{inquiry.nickname}</Text>
+            <Text style={[typography.caption, typography.textBlack500]}>
+              {inquiry.createdAt.slice(0, 10)}
+            </Text>
+            <Text style={[typography.caption, typography.textBlack500]}>
+              {inquiry.createdAt.slice(11)}
+            </Text>
+          </View>
+        </View>
+      </Pressable>
+      {isExpanded ? (
+        <>
+          <SizedBox height={16} />
+          <View style={{paddingLeft: 57}}>
+            <Text style={[typography.bodyLong02, styles.contentText]}>{inquiry.content}</Text>
+          </View>
+          <SizedBox height={16} />
+          {inquiry.isAnswered ? (
+            <View style={{paddingLeft: 57}}>
+              <Text style={[typography.bodyLong02, styles.reply]}>{inquiry.answer}</Text>
+            </View>
+          ) : (
+            <>
+              <TextInput
+                style={[styles.textInput, typography.body01, typography.textWhite]}
+                value={content}
+                onChangeText={setContent}
+                placeholder="내용을 입력해주세요"
+                placeholderTextColor={colors.OTBBlack500}
+                multiline={true}
+              />
+              <OTBButton
+                type={"basic-primary"}
+                text="등록"
+                style={styles.otbButton}
+                onPress={openModal}
+              />
+            </>
+          )}
+        </>
+      ) : null}
+      <Modal.Dialog
+        visible={visible}
+        IconComponent={<SVG.Icon.Submit width={48} height={48} />}
+        title="등록하시겠습니까?"
+        confirmText="확인"
+        onConfirm={onSubmit}
+        onRequestClose={closeModal}
+      />
+    </>
   );
 }
 
@@ -143,8 +141,8 @@ const styles = StyleSheet.create({
   block: {
     flex: 1,
     flexDirection: "row",
+    gap: 8,
   },
-  answer: {},
   title: {
     color: colors.white,
   },
@@ -155,13 +153,12 @@ const styles = StyleSheet.create({
   },
   info: {
     flexDirection: "row",
-  },
-  caption: {
-    color: colors.OTBBlack500,
+    gap: 8,
   },
   contentContainer: {
     marginLeft: 8,
     flex: 1,
+    gap: 4,
   },
   divider: {
     borderBottomWidth: 1,

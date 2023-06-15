@@ -15,7 +15,7 @@ export default function ImageForm() {
 
   const renderItem = useCallback(
     ({item, index}: {item: Asset; index: number}) => (
-      <View key={item.id}>
+      <View key={index}>
         <FastImage style={styles.image} source={{uri: item.uri}} />
         <Pressable style={styles.close} onPress={() => removeImage(index)}>
           <SVG.Icon.CloseBlack width={12} height={12} />
@@ -27,7 +27,7 @@ export default function ImageForm() {
 
   const itemSeparator = useCallback(() => <SizedBox width={8} />, []);
 
-  const keyExtractor = useCallback((item: Asset, index: number) => `${item.id}-${index}`, []);
+  const keyExtractor = useCallback((item: Asset, index: number) => `${item.uri}-${index}`, []);
 
   const listHeader = useCallback(() => {
     const disabled = images.length >= 5;
