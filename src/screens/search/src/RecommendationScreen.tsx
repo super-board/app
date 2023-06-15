@@ -38,7 +38,7 @@ export default function RecommendationScreen() {
           key={favoriteTags.join("&")}
           boardGames={boardGames}
           hasNextPage={true}
-          onLoadNextPage={() => fetchNextPage({pageParam: data!.pageParams.length})}
+          onLoadNextPage={() => fetchNextPage({pageParam: data?.pageParams.length})}
           style={{marginTop: 20}}
           contentContainerStyle={{paddingBottom: 20}}
         />

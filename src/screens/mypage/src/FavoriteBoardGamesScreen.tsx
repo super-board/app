@@ -16,7 +16,7 @@ export default function FavoriteBoardGamesScreen() {
   );
   const boardGames = data?.pages.flatMap(page => page.content);
 
-  const onLoadNextPage = () => fetchNextPage({pageParam: data!.pageParams.length});
+  const onLoadNextPage = () => fetchNextPage({pageParam: data?.pageParams.length});
 
   if (!data) return <View style={style.screenWithAppBarContainer} />;
 

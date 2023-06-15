@@ -10,12 +10,15 @@ import {Inquiry} from "@/types";
 import {PostListItem} from "../components";
 
 export default function MyInquiriesScreen() {
-  const {isLoading, data, fetchNextPage} = useInfiniteQuery(
+  const {isLoading, data, fetchNextPage, hasNextPage} = useInfiniteQuery(
     ["inquiries"],
     ({pageParam = 0}) => api.inquiry.fetchInquiries({limit: 10, offset: 10 * pageParam + 1}),
     {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
   const inquiries = data?.pages.flatMap(page => page.content);
+  const onEndReached = () => {
+    if (hasNextPage) fetchNextPage({pageParam: data?.pageParams.length});
+  };
 
   const renderItem = useCallback(
     ({item}: {item: Inquiry}) => (
@@ -40,7 +43,7 @@ export default function MyInquiriesScreen() {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.8}
-        onEndReached={() => fetchNextPage({pageParam: data!.pageParams.length})}
+        onEndReached={onEndReached}
       />
     </View>
   );

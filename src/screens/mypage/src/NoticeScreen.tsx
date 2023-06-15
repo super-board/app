@@ -11,12 +11,15 @@ import {PostListItem} from "../components";
 
 export default function NoticeScreen() {
   const [page, setPage] = useState(1);
-  const {isLoading, data, fetchNextPage} = useInfiniteQuery(
+  const {isLoading, data, fetchNextPage, hasNextPage} = useInfiniteQuery(
     ["notices"],
     ({pageParam = 0}) => api.notice.fetchNotices({limit: 10, offset: 10 * pageParam + 1}),
     {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
   const notices = data?.pages.flatMap(page => page.content);
+  const onEndReached = () => {
+    if (hasNextPage) fetchNextPage({pageParam: data?.pageParams.length});
+  };
 
   const renderItem = useCallback(
     ({item}: {item: Notice}) => (
@@ -36,7 +39,7 @@ export default function NoticeScreen() {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.8}
-        onEndReached={() => fetchNextPage({pageParam: data!.pageParams.length})}
+        onEndReached={onEndReached}
       />
     </View>
   );

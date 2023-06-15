@@ -55,7 +55,7 @@ export default function SearchScreen() {
           style={styles.searchResultsContainer}
           boardGames={searchResult}
           hasNextPage={true}
-          onLoadNextPage={() => fetchNextPage({pageParam: data!.pageParams.length})}
+          onLoadNextPage={() => fetchNextPage({pageParam: data?.pageParams.length})}
           contentContainerStyle={{paddingBottom: 48}}
         />
       ) : (

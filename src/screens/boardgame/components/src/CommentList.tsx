@@ -41,7 +41,7 @@ export default function CommentList({boardGameId, reviewId, style}: Props) {
       {hasNextPage ? (
         <Pressable
           style={styles.moreButton}
-          onPress={() => fetchNextPage({pageParam: data!.pageParams.length})}>
+          onPress={() => fetchNextPage({pageParam: data?.pageParams.length})}>
           <Text style={[typography.body02, styles.moreButtonText]}>댓글 더보기</Text>
           <SVG.Icon.ExpandMore width={20} height={20} />
         </Pressable>

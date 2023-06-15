@@ -67,6 +67,17 @@ export type Review = {
   isLiked: boolean;
 };
 
+export type ReviewAdmin = {
+  id: number;
+  boardgameId: number;
+  boardgameName: string;
+  content: string;
+  createdAt: string;
+  isHidden: boolean;
+  nickname: string;
+  writerId: number;
+};
+
 export type CommentDetails = {
   id: number;
   createdAt: string;
@@ -76,6 +87,18 @@ export type CommentDetails = {
   profileCharacter: ProfileCharacter;
   writerId: number;
   writerLevel: Level;
+};
+
+export type CommentAdmin = {
+  id: number;
+  boardgameId: number;
+  boardgameName: string;
+  content: string;
+  createdAt: string;
+  isHidden: boolean;
+  nickname: string;
+  reviewId: number;
+  writerId: number;
 };
 
 export type MemberSummary = {
@@ -208,4 +231,21 @@ export type InquiryAdmin = {
 export type InquiryForm = {
   title: string;
   content: string;
+};
+
+export type Report = {
+  id: number;
+  content: string;
+  createdAt: string;
+  isHidden: boolean;
+  isResolved: boolean;
+  postId: number;
+  reportedAt: string;
+  type: "REVIEW" | "COMMENT";
+  whistleblowerId: number;
+  whistleblowerNickname: string;
+  writerId: number;
+  writerNickname: string;
+  boardgameId: number;
+  boardgameName: string;
 };

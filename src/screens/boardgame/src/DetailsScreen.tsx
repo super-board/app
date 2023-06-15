@@ -59,7 +59,7 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
       return;
     }
 
-    fetchNextPage({pageParam: data!.pageParams.length});
+    fetchNextPage({pageParam: data?.pageParams.length});
   };
 
   const onToggleLike = () => {

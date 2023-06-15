@@ -14,12 +14,15 @@ import {useModal} from "@/hooks";
 import {InquiryAdmin} from "@/types";
 
 export default function InquiryScreen() {
-  const {data, fetchNextPage} = useInfiniteQuery(
+  const {data, fetchNextPage, hasNextPage} = useInfiniteQuery(
     ["admin/inquiries"],
     ({pageParam = 0}) => api.admin.fetchInquiries({limit: 10, offset: 10 * pageParam + 1}),
     {getNextPageParam: lastPage => lastPage.pageInfo.hasNext},
   );
   const inquiries = data?.pages.flatMap(page => page.content);
+  const onEndReached = () => {
+    if (hasNextPage) fetchNextPage({pageParam: data?.pageParams.length});
+  };
 
   const renderItem = React.useCallback(
     ({item}: {item: InquiryAdmin}) => <ListItem inquiry={item} />,
@@ -36,7 +39,8 @@ export default function InquiryScreen() {
         renderItem={renderItem}
         ItemSeparatorComponent={itemSeparator}
         keyExtractor={item => item.id.toString()}
-        onEndReached={() => fetchNextPage({pageParam: data!.pageParams.length})}
+        onEndReachedThreshold={0.8}
+        onEndReached={onEndReached}
       />
     </View>
   );

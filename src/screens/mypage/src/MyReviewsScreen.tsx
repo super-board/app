@@ -21,7 +21,7 @@ export default function MyReviewsScreen() {
     })),
   );
 
-  const onLoadNextPage = () => fetchNextPage({pageParam: data!.pageParams.length});
+  const onLoadNextPage = () => fetchNextPage({pageParam: data?.pageParams.length});
 
   if (!data) return <View style={style.screenWithAppBarContainer} />;
 
