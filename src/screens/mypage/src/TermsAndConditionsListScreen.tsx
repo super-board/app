@@ -17,7 +17,7 @@ export default function TermsAndConditionsListScreen({navigation}: ScreenProps) 
   return (
     <View style={[style.screenWithAppBarContainer, {padding: 0}]}>
       <Pressable style={styles.button} onPress={onPress.privacy}>
-        <Text style={[typography.body01, {color: colors.OTBBlack50}]}>개인정보 처리방침</Text>
+        <Text style={[typography.body01, {color: colors.OTBBlack50}]}>개인 정보 수집 및 이용</Text>
         <SVG.Icon.ArrowBack style={styles.buttonIcon} width={20} height={20} />
       </Pressable>
       <Pressable style={styles.button} onPress={onPress.termsAndConditions}>
