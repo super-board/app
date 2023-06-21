@@ -24,12 +24,12 @@ export type BoardGameSummary = {
   name: string;
   image: string;
   grade: number;
+  tagList: Tag[];
 };
 
 export type BoardGameDetails = BoardGameSummary & {
   description: string;
   favoriteCount: number;
-  tagList: Tag[];
   isLiked: boolean;
 };
 
