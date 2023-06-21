@@ -21,7 +21,7 @@ export default function MyReviewsPreview({reviews}: Props) {
   const navigation = useNavigation<RootStackNavigationProp>();
 
   const onWriteReview = () => {
-    navigation.navigate("BottomTabView", {screen: "WriteTab", params: {screen: "WriteScreen"}});
+    navigation.navigate("WriteScreen");
   };
 
   const onNavigateToDetails = (boardGameId: number) => {
