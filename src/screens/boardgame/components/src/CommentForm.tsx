@@ -23,7 +23,7 @@ type Props = {
 
 export default function CommentForm({boardGameId, reviewId}: Props) {
   const [comment, setComment] = useState("");
-  const {isLoading, loginInfo} = useLoginInfo();
+  const {loginInfo} = useLoginInfo();
   const didLogin = useAuthStore(state => !!state.refreshToken);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {
@@ -38,6 +38,7 @@ export default function CommentForm({boardGameId, reviewId}: Props) {
     api.comment.postComment,
     {
       onSuccess: () => {
+        queryClient.invalidateQueries(["boardgames/reviews"]);
         queryClient.invalidateQueries(["comments"]);
         setComment("");
       },
