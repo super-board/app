@@ -1,12 +1,15 @@
 import React from "react";
 
-import {StyleSheet, Text, View} from "react-native";
+import {useNavigation} from "@react-navigation/native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {Pressable, StyleSheet, Text, View} from "react-native";
 import FastImage from "react-native-fast-image";
 
 import {api} from "@/api";
 import {network} from "@/constants/network";
 import typography from "@/constants/typography";
 import {useRefetchQuery} from "@/hooks";
+import {RootStackParamList} from "@/navigation/navigation";
 
 import {LevelIcon} from "./Level";
 import ProfileImage from "./ProfileImage";
@@ -14,17 +17,23 @@ import RatingIcons from "./RatingIcons";
 import SizedBox from "./SizedBox";
 
 export default function BestReviews() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {isLoading, data: paginatedBestReviews} = useRefetchQuery(
     ["review/best"],
     api.review.fetchBestReviews,
   );
+
+  const onNavigate = (id: number) => navigation.navigate("BoardGameDetailsScreen", {id});
 
   if (isLoading || !paginatedBestReviews) return <View style={styles.container} />;
 
   return (
     <View style={styles.container}>
       {paginatedBestReviews.content.map((review, index) => (
-        <View key={review.id} style={styles.listItemContainer}>
+        <Pressable
+          key={review.id}
+          style={styles.listItemContainer}
+          onPress={() => onNavigate(review.id)}>
           <Text style={[typography.subhead03, typography.textWhite, styles.index]}>
             {index + 1}
           </Text>
@@ -61,7 +70,7 @@ export default function BestReviews() {
             </Text>
             <RatingIcons rating={review.grade} />
           </View>
-        </View>
+        </Pressable>
       ))}
     </View>
   );

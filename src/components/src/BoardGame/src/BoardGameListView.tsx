@@ -13,6 +13,7 @@ type Props = {
   onLoadNextPage?: () => void;
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
+  shouldFilterTag?: boolean;
 };
 
 export default function BoardGameListView({
@@ -21,13 +22,16 @@ export default function BoardGameListView({
   onLoadNextPage = () => {},
   style,
   contentContainerStyle,
+  shouldFilterTag = false,
 }: Props) {
   const onEndReached = () => {
     if (hasNextPage) onLoadNextPage();
   };
 
   const renderItem = useCallback(
-    ({item}: {item: BoardGameSummary}) => <BoardGameListItem boardGame={item} />,
+    ({item}: {item: BoardGameSummary}) => (
+      <BoardGameListItem boardGame={item} shouldFilterTag={shouldFilterTag} />
+    ),
     [],
   );
   const keyExtractor = useCallback((item: BoardGameSummary) => item.id.toString(), []);

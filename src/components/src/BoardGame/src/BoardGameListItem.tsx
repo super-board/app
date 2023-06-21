@@ -7,18 +7,28 @@ import FastImage from "react-native-fast-image";
 
 import {network} from "@/constants/network";
 import typography from "@/constants/typography";
-import {useNavigateToBoardGameDetails} from "@/hooks";
+import {useFavoriteTags, useNavigateToBoardGameDetails} from "@/hooks";
 import {RootStackParamList} from "@/navigation/navigation";
 import type {BoardGameSummary} from "@/types";
 import {useReviewFormStore} from "@/zustand-stores";
 
 import RatingIcons from "../../RatingIcons";
 
-function BoardGameListItem({boardGame}: {boardGame: BoardGameSummary}) {
+function BoardGameListItem({
+  boardGame,
+  shouldFilterTag,
+}: {
+  boardGame: BoardGameSummary;
+  shouldFilterTag: boolean;
+}) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const params = useRoute().params as {from: "write"};
   const {navigateToBoardGameDetails} = useNavigateToBoardGameDetails(boardGame.id);
   const {selectBoardGame} = useReviewFormStore();
+  const {favoriteTags} = useFavoriteTags();
+  const filteredTag = shouldFilterTag
+    ? boardGame.tagList.filter(tag => !!favoriteTags.find(favoriteTag => tag.id === favoriteTag.id))
+    : boardGame.tagList;
 
   const onPress = () => {
     if (params && params.from === "write") {
@@ -40,7 +50,18 @@ function BoardGameListItem({boardGame}: {boardGame: BoardGameSummary}) {
         resizeMode={FastImage.resizeMode.cover}
       />
       <View style={styles.contentContainer}>
-        <Text style={[typography.subhead01, typography.textWhite]}>{boardGame.name}</Text>
+        <Text
+          style={[typography.subhead01, typography.textWhite]}
+          numberOfLines={1}
+          ellipsizeMode="tail">
+          {boardGame.name}
+        </Text>
+        <Text
+          style={[typography.subhead03, typography.textWhite]}
+          numberOfLines={1}
+          ellipsizeMode="tail">
+          {filteredTag.map(tag => tag.name).join(" | ")}
+        </Text>
         <RatingIcons rating={boardGame.grade} />
       </View>
     </Pressable>

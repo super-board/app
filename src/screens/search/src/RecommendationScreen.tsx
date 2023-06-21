@@ -41,6 +41,7 @@ export default function RecommendationScreen() {
           onLoadNextPage={() => fetchNextPage({pageParam: data?.pageParams.length})}
           style={{marginTop: 20}}
           contentContainerStyle={{paddingBottom: 20}}
+          shouldFilterTag
         />
       ) : null}
 

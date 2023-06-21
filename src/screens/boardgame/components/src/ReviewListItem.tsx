@@ -15,7 +15,7 @@ import {
 
 import {api} from "@/api";
 import {SVG} from "@/assets/svgs";
-import {Modal} from "@/components";
+import {Modal, RatingIcons} from "@/components";
 import colors from "@/constants/colors";
 import typography from "@/constants/typography";
 import {useLoginInfo, useModal} from "@/hooks";
@@ -165,6 +165,11 @@ function ReviewListItem({boardGame, review}: Props) {
               ) : null}
             </Pressable>
           </View>
+        </View>
+
+        <View style={{flexDirection: "row", gap: 8, alignItems: "center"}}>
+          <RatingIcons rating={review.grade} size={16} />
+          <Text style={[typography.body02, typography.textWhite]}>{review.grade}</Text>
         </View>
 
         <View

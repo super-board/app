@@ -23,7 +23,7 @@ type Props = {
 
 export default function CommentForm({boardGameId, reviewId}: Props) {
   const [comment, setComment] = useState("");
-  const {isLoading, loginInfo} = useLoginInfo();
+  const {loginInfo} = useLoginInfo();
   const didLogin = useAuthStore(state => !!state.refreshToken);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {
@@ -38,6 +38,7 @@ export default function CommentForm({boardGameId, reviewId}: Props) {
     api.comment.postComment,
     {
       onSuccess: () => {
+        queryClient.invalidateQueries(["boardgames/reviews"]);
         queryClient.invalidateQueries(["comments"]);
         setComment("");
       },
@@ -55,17 +56,19 @@ export default function CommentForm({boardGameId, reviewId}: Props) {
 
   const onPostComment = () => postComment({boardGameId, reviewId, content: comment});
 
-  if (isLoading || !loginInfo) return <View style={styles.container} />;
-
   return (
     <View style={styles.container}>
-      <AuthorChip author={loginInfo} />
+      <AuthorChip
+        author={
+          loginInfo ?? {id: 1, nickname: "비회원", level: "PLAYER", profileCharacter: "PROFILE_1"}
+        }
+      />
 
       <View style={styles.row}>
         <View style={styles.textareaContainer}>
           <Pressable onPress={checkDidLogIn}>
             <TextInput
-              style={styles.textarea}
+              style={[styles.textarea, typography.bodyLong02]}
               multiline={true}
               value={comment}
               onChangeText={setComment}
