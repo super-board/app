@@ -67,7 +67,7 @@ export default function CommentForm({boardGameId, reviewId}: Props) {
         <View style={styles.textareaContainer}>
           <Pressable onPress={checkDidLogIn}>
             <TextInput
-              style={styles.textarea}
+              style={[styles.textarea, typography.bodyLong02]}
               multiline={true}
               value={comment}
               onChangeText={setComment}
