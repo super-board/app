@@ -55,11 +55,13 @@ export default function CommentForm({boardGameId, reviewId}: Props) {
 
   const onPostComment = () => postComment({boardGameId, reviewId, content: comment});
 
-  if (isLoading || !loginInfo) return <View style={styles.container} />;
-
   return (
     <View style={styles.container}>
-      <AuthorChip author={loginInfo} />
+      <AuthorChip
+        author={
+          loginInfo ?? {id: 1, nickname: "비회원", level: "PLAYER", profileCharacter: "PROFILE_1"}
+        }
+      />
 
       <View style={styles.row}>
         <View style={styles.textareaContainer}>
