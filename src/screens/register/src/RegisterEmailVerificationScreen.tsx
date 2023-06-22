@@ -22,6 +22,14 @@ import {Validator} from "@/services/validator";
 
 export default function EmailVerificationScreen({navigation}: ScreenProps) {
   const [mailSentTimestamp, setMailSentTimestamp] = React.useState(new Date().getTime());
+  const [didSendVerificationMail, setDidSendVerificationMail] = useState(false);
+  const [canResendVerificationMail, setCanResendVerificationMail] = useState(false);
+  const [isAuthCodeExpired, setIsAuthCodeExpired] = useState(false);
+  const [timeouts, setTimeouts] = useState<NodeJS.Timeout[]>([]);
+  const clearTimeouts = () => {
+    timeouts.forEach(clearTimeout);
+    setTimeouts([]);
+  };
   const {
     value: email,
     isValid: isValidEmail,
@@ -45,26 +53,54 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
     closeModal: closeExpiredAuthCodeModal,
   } = useModal();
 
-  const {
-    mutate: checkDuplicateEmailRegistered,
-    isSuccess: canSendVerificationMail,
-    isError: shouldAlertDuplicateEmailError,
-    reset: resetDuplicateEmailError,
-  } = useMutation(["members/mail-check"], api.member.checkDuplicateEmail);
+  const {mutate: checkDuplicateEmailRegistered, reset: resetDuplicateEmailError} = useMutation(
+    ["members/mail-check"],
+    api.member.checkDuplicateEmail,
+    {
+      onSuccess: () => {
+        sendVerificationMail(email);
+        setDidSendVerificationMail(true);
+      },
+      onError: openDuplicateEmailModal,
+    },
+  );
   const {mutate: sendVerificationMail, data: clientKeyResponse} = useMutation(
     ["auth/code"],
     api.auth.sendVerificationMail,
-    {onMutate: () => setMailSentTimestamp(new Date().getTime())},
+    {
+      onSuccess: () => {
+        function disableResendButton() {
+          const RESEND_INTERVAL = 10 * 1000;
+          setCanResendVerificationMail(false);
+          return setTimeout(() => {
+            setCanResendVerificationMail(true);
+          }, RESEND_INTERVAL);
+        }
+
+        function expireAuthCodeAfter(seconds: number) {
+          const TO_BE_EXPIRED = seconds * 1000;
+          setIsAuthCodeExpired(false);
+          return setTimeout(() => {
+            setIsAuthCodeExpired(true);
+          }, TO_BE_EXPIRED);
+        }
+
+        setMailSentTimestamp(new Date().getTime());
+        setTimeouts([disableResendButton(), expireAuthCodeAfter(180)]);
+      },
+    },
   );
-  const {
-    mutate: verifyAuthCode,
-    isSuccess: canSubmit,
-    isError: shouldAlertInvalidAuthCodeError,
-    reset: resetInvalidAuthCodeError,
-  } = useMutation(["auth/code-check"], api.auth.verifyAuthCode);
-  const [didSendVerificationMail, setDidSendVerificationMail] = useState(false);
-  const [canResendVerificationMail, setCanResendVerificationMail] = useState(false);
-  const [isAuthCodeExpired, setIsAuthCodeExpired] = useState(false);
+  const {mutate: verifyAuthCode, reset: resetInvalidAuthCodeError} = useMutation(
+    ["auth/code-check"],
+    api.auth.verifyAuthCode,
+    {
+      onSuccess: () => {
+        navigation.navigate("RegisterPasswordSettingScreen", {email});
+        clearTimeouts();
+      },
+      onError: openInvalidAuthCodeModal,
+    },
+  );
 
   const onResendVerificationMail = () => {
     setCanResendVerificationMail(false);
@@ -76,51 +112,6 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
     const payload = {authCode, clientKey: clientKeyResponse!.clientKey};
     verifyAuthCode(payload);
   };
-
-  /* 중복된 이메일을 입력하면 Alert */
-  useEffect(() => {
-    if (shouldAlertDuplicateEmailError) openDuplicateEmailModal();
-  }, [shouldAlertDuplicateEmailError]);
-
-  /* 사용할 수 있는 이메일을 입력하면 인증메일 보내기 */
-  useEffect(() => {
-    if (!canSendVerificationMail) return;
-
-    sendVerificationMail(email);
-    setDidSendVerificationMail(true);
-  }, [canSendVerificationMail]);
-
-  /* 인증메일 발송 후 Side Effect */
-  useEffect(() => {
-    function disableResendButton() {
-      const RESEND_INTERVAL = 10 * 1000;
-      setCanResendVerificationMail(false);
-      return setTimeout(() => {
-        setCanResendVerificationMail(true);
-      }, RESEND_INTERVAL);
-    }
-
-    function expireAuthCodeAfter(seconds: number) {
-      const TO_BE_EXPIRED = seconds * 1000;
-      setIsAuthCodeExpired(false);
-      return setTimeout(() => {
-        setIsAuthCodeExpired(true);
-      }, TO_BE_EXPIRED);
-    }
-
-    const timeouts = [disableResendButton(), expireAuthCodeAfter(180)];
-    return () => timeouts.forEach(timeout => clearTimeout(timeout));
-  }, [mailSentTimestamp]);
-
-  /* 잘못된 AuthCode를 입력하면 Alert */
-  useEffect(() => {
-    if (shouldAlertInvalidAuthCodeError) openInvalidAuthCodeModal();
-  }, [shouldAlertInvalidAuthCodeError]);
-
-  /* 올바른 AuthCode를 입력하면 다음 화면으로 이동 */
-  useEffect(() => {
-    if (canSubmit) navigation.navigate("RegisterPasswordSettingScreen", {email});
-  }, [canSubmit]);
 
   /* AuthCode가 만료되면 Alert */
   useEffect(() => {
@@ -135,6 +126,7 @@ export default function EmailVerificationScreen({navigation}: ScreenProps) {
       resetAuthCode();
       resetDuplicateEmailError();
       resetInvalidAuthCodeError();
+      clearTimeouts();
     }, []),
   );
 
