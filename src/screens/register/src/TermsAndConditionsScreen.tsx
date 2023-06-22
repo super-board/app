@@ -71,7 +71,7 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
   useEffect(() => {
     if (!isSuccessToSignUp) return;
 
-    const {email, password, tagIds} = route.params as RegisterForm;
+    const {email, password} = route.params as RegisterForm;
     completeOnboarding();
     signIn({email, password});
   }, [isSuccessToSignUp]);
