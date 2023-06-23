@@ -30,7 +30,7 @@ function OnboardingWelcomeScreen({navigation}: Props) {
       source={require("@/assets/images/background/onboarding-welcome.png")}>
       <View style={[styles.slogan]}>
         <Text style={[typography.display01, styles.textWhite, effects.textDropShadow]}>
-          {`보드게임\n좋아하는 사람\n'온더보드'에서\n모여라!`}
+          {`보드게임\n좋아하는 사람\n'온더보드'에\n모여라!`}
         </Text>
       </View>
 
