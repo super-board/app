@@ -84,17 +84,17 @@ export default function ResetPasswordEmailVerificationScreen({navigation}: Scree
       },
     },
   );
-  const {
-    mutate: verifyAuthCode,
-    data: resetTokenResponse,
-    reset: resetInvalidAuthCodeError,
-  } = useMutation(["password/code-check"], api.password.verifyAuthCode, {
-    onSuccess: () => {
-      navigation.navigate("ResetPasswordSettingScreen", {email, resetToken: resetTokenResponse});
-      clearTimeouts();
+  const {mutate: verifyAuthCode, reset: resetInvalidAuthCodeError} = useMutation(
+    ["password/code-check"],
+    api.password.verifyAuthCode,
+    {
+      onSuccess: data => {
+        navigation.navigate("ResetPasswordSettingScreen", {email, resetToken: data});
+        clearTimeouts();
+      },
+      onError: openInvalidAuthCodeModal,
     },
-    onError: openInvalidAuthCodeModal,
-  });
+  );
 
   const onResendVerificationMail = () => {
     setCanResendVerificationMail(false);
