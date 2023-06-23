@@ -120,7 +120,7 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
           <View style={styles.ratingContainer}>
             <RatingIcons rating={boardGame.grade} size={16} />
             <Text style={[typography.body02, typography.textWhite]}>
-              {boardGame.grade?.toFixed(2)}
+              {boardGame.grade?.toFixed(1)}
             </Text>
           </View>
         </View>
