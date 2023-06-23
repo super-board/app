@@ -50,7 +50,7 @@ export default function DetailsScreen({navigation, route}: ScreenProps) {
   );
   const reviews = data?.pages.flatMap(page => page.content);
   const {mutate: toggleLike} = useMutation(["boardgames/likes"], api.like.toggleBoardGameLike, {
-    onSuccess: () => queryClient.invalidateQueries(["boardgames/reviews", id]),
+    onSuccess: () => queryClient.invalidateQueries(["boardgames/details"]),
   });
 
   const onMoreReviews = () => {

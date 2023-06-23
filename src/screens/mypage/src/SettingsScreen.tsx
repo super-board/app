@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 
 import {useMutation} from "@tanstack/react-query";
 import {Pressable, ScrollView, StyleSheet, Text} from "react-native";
@@ -11,6 +11,7 @@ import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
 import {useModal} from "@/hooks";
+import {useAuthStore} from "@/zustand-stores";
 
 export default function SettingsScreen({navigation}: ScreenProps) {
   const {visible: isLogoutVisible, openModal: openLogout, closeModal: closeLogout} = useModal();
@@ -19,14 +20,20 @@ export default function SettingsScreen({navigation}: ScreenProps) {
     openModal: openWithdraw,
     closeModal: closeWithdraw,
   } = useModal();
+  const {logout: logoutLocal} = useAuthStore();
 
-  const {mutate: logout, isSuccess: shouldLogout} = useMutation(
-    ["auth/sign-out"],
-    api.auth.signOut,
-  );
+  const {mutate: logout} = useMutation(["auth/sign-out"], api.auth.signOut, {
+    onSuccess: () => {
+      logoutLocal();
+      navigation.reset({index: 0, routes: [{name: "LoginScreen"}]});
+    },
+  });
   const {mutate: withdrawAccount, isSuccess: isSuccessToWithdraw} = useMutation(
     ["members/mypage/withdrawal"],
     api.myPage.withdrawAccount,
+    {
+      onSuccess: () => navigation.reset({index: 0, routes: [{name: "OnboardingWelcomeScreen"}]}),
+    },
   );
 
   const onPress = {
@@ -40,17 +47,6 @@ export default function SettingsScreen({navigation}: ScreenProps) {
       navigation.navigate("MyPageTermsAndConditionsListScreen");
     },
   };
-
-  /* 로그아웃 요청이 성공하면 화면 이동 */
-  useEffect(() => {
-    if (shouldLogout) navigation.reset({index: 0, routes: [{name: "LoginScreen"}]});
-  }, [shouldLogout]);
-
-  /* 회원탈퇴 요청이 성공하면 화면 이동 */
-  useEffect(() => {
-    if (isSuccessToWithdraw)
-      navigation.reset({index: 0, routes: [{name: "OnboardingWelcomeScreen"}]});
-  }, [isSuccessToWithdraw]);
 
   return (
     <ScrollView style={[style.screenWithAppBarContainer, {padding: 0}]}>

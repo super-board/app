@@ -10,14 +10,17 @@ import {ScreenProps} from "@/constants/props";
 import typography from "@/constants/typography";
 import {useModal} from "@/hooks";
 
-export default function HomeScreen({route}: ScreenProps) {
+export default function HomeScreen({navigation, route}: ScreenProps) {
   const {visible, openModal, closeModal} = useModal();
 
   useFocusEffect(
     React.useCallback(() => {
       const shouldWelcome = (route.params as {shouldWelcome?: boolean})?.shouldWelcome ?? false;
-      if (shouldWelcome) openModal();
-    }, []),
+      if (shouldWelcome) {
+        openModal();
+        navigation.setParams({shouldWelcome: false});
+      }
+    }, [route.params]),
   );
 
   return (

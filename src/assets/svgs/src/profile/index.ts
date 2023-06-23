@@ -1,9 +1,0 @@
-export {default as Profile1} from "./profile1.svg";
-export {default as Profile2} from "./profile2.svg";
-export {default as Profile3} from "./profile3.svg";
-export {default as Profile4} from "./profile4.svg";
-export {default as Profile5} from "./profile5.svg";
-export {default as Profile6} from "./profile6.svg";
-export {default as Profile7} from "./profile7.svg";
-export {default as Profile8} from "./profile8.svg";
-export {default as Profile9} from "./profile9.svg";

@@ -299,7 +299,11 @@ export default function Navigation() {
             />
             <Stack.Screen
               name="MyPageTermsAndConditionsPrivacyScreen"
-              options={{header: SimpleAppBar, title: "개인정보 처리방침", headerBackVisible: true}}
+              options={{
+                header: SimpleAppBar,
+                title: "개인 정보 수집 및 이용",
+                headerBackVisible: true,
+              }}
               component={MyPageTermsAndConditionsPrivacyScreen}
             />
             <Stack.Screen
