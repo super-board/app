@@ -6,9 +6,16 @@ import {useMutation} from "@tanstack/react-query";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {api} from "@/api";
-import {FlexEmptyFill, OTBButton, OTBSwitch, ScreenTitle, SizedBox} from "@/components";
+import {
+  FlexEmptyFill,
+  OTBButton,
+  OTBSwitch,
+  PrivacyDocument,
+  ScreenTitle,
+  SizedBox,
+  TermsAndConditionsDocument,
+} from "@/components";
 import colors from "@/constants/colors";
-import officialDocuments, {OfficialDocuments} from "@/constants/officialDocuments";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
@@ -24,9 +31,8 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const bottomSheetSnapPoints = useMemo(() => ["40%", "100%"], []);
-  const [bottomSheetContent, setBottomSheetContent] = useState<keyof OfficialDocuments>(
-    "personalInformationCollection",
-  );
+  const [bottomSheetTitle, setBottomSheetTitle] = useState<string>("");
+  const [bottomSheetContent, setBottomSheetContent] = useState<React.ReactNode>(null);
 
   const {completeOnboarding} = useOnboardingStore();
   const {
@@ -49,12 +55,14 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
   };
 
   const onOpenPersonalInformationCollectionDocument = () => {
-    setBottomSheetContent("personalInformationCollection");
+    setBottomSheetTitle("개인 정보 수집 및 이용");
+    setBottomSheetContent(<PrivacyDocument />);
     bottomSheetModalRef.current?.present();
   };
 
   const onOpenTermsAndConditionsDocument = () => {
-    setBottomSheetContent("termsAndConditions");
+    setBottomSheetTitle("이용 약관");
+    setBottomSheetContent(<TermsAndConditionsDocument />);
     bottomSheetModalRef.current?.present();
   };
 
@@ -160,12 +168,10 @@ export default function TermsAndConditionsScreen({navigation, route}: ScreenProp
         backdropComponent={renderBottomSheetBackdrop}>
         <BottomSheetScrollView contentContainerStyle={styles.bottomSheetContentContainer}>
           <Text style={[typography.subhead01, typography.textWhite, styles.titleText]}>
-            {officialDocuments[bottomSheetContent].title}
+            {bottomSheetTitle}
           </Text>
           <SizedBox height={16} />
-          <Text style={[typography.caption, typography.textWhite, styles.contentText]}>
-            {officialDocuments[bottomSheetContent].content}
-          </Text>
+          {bottomSheetContent}
         </BottomSheetScrollView>
       </BottomSheetModal>
     </View>
@@ -192,7 +198,7 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   bottomSheetContentContainer: {
-    paddingHorizontal: "10%",
+    paddingHorizontal: "5%",
     alignItems: "stretch",
   },
   titleText: {
