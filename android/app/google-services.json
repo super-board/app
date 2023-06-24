@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "1038740653507",
-    "project_id": "on-the-board-14183",
-    "storage_bucket": "on-the-board-14183.appspot.com"
+    "project_number": "160715100478",
+    "project_id": "on-the-board-8adc5",
+    "storage_bucket": "on-the-board-8adc5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1038740653507:android:0045ed3a306ab8fb33a976",
+        "mobilesdk_app_id": "1:160715100478:android:34ecc05771d28f5d4fdc6f",
         "android_client_info": {
           "package_name": "kr.co.ontheboard"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1038740653507-pnen1sfj0rirj252fmh4aflki228b1ee.apps.googleusercontent.com",
+          "client_id": "160715100478-ceur5j4mn4jk5i7rktd6ifvi3h6ams4g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDCGpYh6i7ccO8zRhl_S8uYwvAwLv7tdEQ"
+          "current_key": "AIzaSyCQPqyT2OPCUj4QgchrQpkYqhANAqAw9cc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1038740653507-pnen1sfj0rirj252fmh4aflki228b1ee.apps.googleusercontent.com",
+              "client_id": "160715100478-ceur5j4mn4jk5i7rktd6ifvi3h6ams4g.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "160715100478-f3ejdau29852mb4g9l5mf4nh0khn1puq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.MyApp"
+              }
             }
           ]
         }

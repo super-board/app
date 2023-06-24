@@ -1,6 +1,6 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-$RNFirebaseAsStaticFramework = true
+$FirebaseSDKVersion = '10.10.0'
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
@@ -22,6 +22,7 @@ end
 
 target 'MyApp' do
   use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
   
   pre_install do |installer|
     Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
