@@ -33,7 +33,7 @@ export default function BestReviews() {
         <Pressable
           key={review.id}
           style={styles.listItemContainer}
-          onPress={() => onNavigate(review.id)}>
+          onPress={() => onNavigate(review.boardGameId)}>
           <Text style={[typography.subhead03, typography.textWhite, styles.index]}>
             {index + 1}
           </Text>

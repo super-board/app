@@ -46,6 +46,7 @@ export type BestReview = {
   writerNickname: string;
   writerLevel: Level;
   profileCharacter: ProfileCharacter;
+  boardGameId: number;
   boardGameTitle: string;
   boardgameImage: string;
   likeCount: number;
