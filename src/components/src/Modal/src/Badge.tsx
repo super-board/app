@@ -2,15 +2,7 @@ import React from "react";
 
 import {useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {
-  Modal as DefModal,
-  NativeSyntheticEvent,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import {Modal as DefModal, Pressable, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {SVG} from "@/assets/svgs";
 import colors from "@/constants/colors";
@@ -27,7 +19,7 @@ export default function Badge({
   visible,
   type,
   onRequestClose,
-  setModalQueue,
+  onNavigateToMyBadges,
   ...otherProps
 }: BadgeModalProps) {
   const {loginInfo} = useLoginInfo();
@@ -88,12 +80,6 @@ export default function Badge({
   );
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const onNavigate = (event: NativeSyntheticEvent<any>) => {
-    onRequestClose?.call(null, event);
-    setModalQueue([]);
-    navigation.navigate("MyPageBadgeScreen");
-  };
-
   return (
     <DefModal
       visible={visible}
@@ -138,7 +124,7 @@ export default function Badge({
         <OTBButton
           type="modal-primary"
           text="내 뱃지 보러가기"
-          onPress={onNavigate}
+          onPress={onNavigateToMyBadges}
           style={{marginTop: 8, width: "70%"}}
         />
       </View>

@@ -23,7 +23,7 @@ export type DialogProps = ModalProps & {
 
 export type BadgeModalProps = {
   type: BadgeType;
-  setModalQueue: (queue: BadgeType[]) => void;
+  onNavigateToMyBadges: () => void;
 } & ModalProps;
 
 export type BadgeProps = {

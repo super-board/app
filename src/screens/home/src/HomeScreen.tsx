@@ -37,6 +37,13 @@ export default function HomeScreen({navigation, route}: ScreenProps) {
     setBadgeModalQueue(badgeModalQueue.slice(1));
   };
 
+  const onNavigateToMyBadges = () => {
+    queryClient.invalidateQueries(["members/mypage/badges"]);
+    closeBadgeModal();
+    setBadgeModalQueue([]);
+    navigation.navigate("MyPageBadgeScreen");
+  };
+
   React.useEffect(() => {
     if (badgeModalQueue.length) openBadgeModal();
   }, [badgeModalQueue]);
@@ -90,7 +97,7 @@ export default function HomeScreen({navigation, route}: ScreenProps) {
         visible={badgeModalVisible}
         type={badgeModalQueue[0] ?? "JOIN"}
         onRequestClose={onCloseBadgeModal}
-        setModalQueue={setBadgeModalQueue}
+        onNavigateToMyBadges={onNavigateToMyBadges}
       />
     </>
   );
