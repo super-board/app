@@ -10,7 +10,6 @@ import effects from "@/constants/effects";
 import {ScreenProps} from "@/constants/props";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
-import {useFcmTokenSave} from "@/hooks";
 import {
   PermissionAppTrackingTransparencyService,
   PermissionCameraAndGalleryService,
@@ -49,8 +48,6 @@ export default function RequestScreen({navigation, route}: ScreenProps) {
       ],
     });
   };
-
-  useFcmTokenSave();
 
   return (
     <View style={style.screenWithAppBarContainer}>
