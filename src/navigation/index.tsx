@@ -58,7 +58,7 @@ import {
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
 import {EditScreen, WriteScreen} from "@/screens/write";
-import {useNavigationStore, useOnboardingStore} from "@/zustand-stores";
+import {useAppSettingStore, useNavigationStore, useOnboardingStore} from "@/zustand-stores";
 import useAuthStore from "@/zustand-stores/src/useAuthStore";
 
 import {stackScreenOptions} from "./config";
@@ -71,7 +71,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 export default function Navigation() {
-  const [didAppInitialized, setDidAppInitialized] = React.useState(false);
+  const {didAppInitialized} = useAppSettingStore();
   const {shouldRequestOnboarding} = useOnboardingStore();
   const {shouldLogin} = useAuthStore();
   const insets = useSafeAreaInsets();
@@ -84,8 +84,6 @@ export default function Navigation() {
   }, [shouldLogin, shouldRequestOnboarding]);
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => setDidAppInitialized(true), 1500);
-
     // 백그라운드 실행 중 푸시 알림이 올 경우
     messaging().onNotificationOpenedApp((remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
       if (!navigationRef.isReady() || !remoteMessage.data) return;
@@ -116,8 +114,6 @@ export default function Navigation() {
             break;
         }
       });
-
-    return () => clearTimeout(timeout);
   }, []);
 
   if (!didAppInitialized) return <SplashScreen />;

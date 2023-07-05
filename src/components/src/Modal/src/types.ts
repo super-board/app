@@ -16,6 +16,7 @@ export type DialogProps = ModalProps & {
   confirmText?: string;
   cancelText?: string;
   onConfirm?: (() => void) | (() => Promise<void>);
+  onCancel?: (() => void) | (() => Promise<void>);
 };
 
 export type BadgeModalProps = {
