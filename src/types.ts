@@ -121,11 +121,22 @@ export type MemberRole = "ROLE_ADMIN" | "ROLE_USER";
 
 export type Level = "PLAYER" | "CLOVER" | "HEART" | "DIAMOND" | "SPADE" | "JOKER";
 
+export type NotificationResponse = {
+  id: number;
+  isChecked: boolean;
+  notificationType: "NEW_COMMENT" | "NEW_BOARDGAME";
+  payload: string;
+  pushedAt: string;
+};
+
 export type Notification = {
   id: number;
-  message: string;
-  createdAt: string;
-  isSeen: boolean;
+  isChecked: boolean;
+  notificationType: "NEW_COMMENT" | "NEW_BOARDGAME";
+  payload: {
+    boardgameId?: number;
+  };
+  pushedAt: string;
 };
 
 export type EmailVerificationPayload = {
