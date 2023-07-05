@@ -1,16 +1,19 @@
 import {useEffect} from "react";
 
 import messaging, {FirebaseMessagingTypes, firebase} from "@react-native-firebase/messaging";
+import {useMutation} from "@tanstack/react-query";
 
+import {api} from "@/api";
 import {useAuthStore} from "@/zustand-stores";
 
 export default function useFcmTokenSave() {
   const didLogin = useAuthStore(state => !!state.accessToken);
+  const {mutate: uploadToken} = useMutation(api.pushToggle.uploadFCMToken);
 
   async function saveTokenToDatabase(token: string | undefined) {
     if (!didLogin || !token) return;
 
-    console.log(token);
+    uploadToken(token);
   }
 
   function hasPermission(status: FirebaseMessagingTypes.AuthorizationStatus) {
