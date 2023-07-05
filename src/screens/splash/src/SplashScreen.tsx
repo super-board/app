@@ -15,7 +15,7 @@ function SplashScreen() {
   const netInfo = useNetInfo();
   const {initializeApp} = useInitializeApp();
   const {initializeApp: completeInitializing} = useAppSettingStore();
-  const {visible, openModal, closeModal} = useModal();
+  const {visible, openModal} = useModal();
 
   const initializeAppAsync = React.useCallback(async () => {
     if (!netInfo.isConnected) return openModal();

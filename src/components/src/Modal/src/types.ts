@@ -2,6 +2,8 @@ import {ReactNode} from "react";
 
 import {Modal as DefModal} from "react-native";
 
+import {BadgeType} from "@/types";
+
 export type ModalProps = DefModal["props"] & {
   IconComponent?: ReactNode;
   title?: string;
@@ -20,7 +22,8 @@ export type DialogProps = ModalProps & {
 };
 
 export type BadgeModalProps = {
-  type: string;
+  type: BadgeType;
+  setModalQueue: (queue: BadgeType[]) => void;
 } & ModalProps;
 
 export type BadgeProps = {
