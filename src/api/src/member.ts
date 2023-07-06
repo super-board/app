@@ -1,5 +1,5 @@
 import {axiosAuthenticated, axiosPublic} from "@/api/src/config";
-import {MemberDetails, RegisterForm} from "@/types";
+import {BadgeType, MemberDetails, RegisterForm} from "@/types";
 
 export async function checkDuplicateEmail(email: string) {
   return axiosPublic.get("/members/mail-check", {params: {email}});
@@ -15,4 +15,10 @@ export async function signUpWithEmailAndPassword(payload: RegisterForm) {
 
 export async function fetchLoginInfo() {
   return axiosAuthenticated.get<unknown, MemberDetails>("/members/me");
+}
+
+export async function fetchBadges() {
+  return axiosAuthenticated.get<unknown, {badges: BadgeType[]; newBadges: BadgeType[]}>(
+    "/members/mypage/badges",
+  );
 }

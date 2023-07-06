@@ -7,8 +7,10 @@ import {Dimensions, Pressable, Text} from "react-native";
 
 import {SVG} from "@/assets/svgs";
 import typography from "@/constants/typography";
+import {useFcmTokenSave} from "@/hooks";
 import {bottomTabScreenOptions} from "@/navigation/config";
 import {RootStackParamList, RootTabParamList} from "@/navigation/navigation";
+import {useNavigationStore} from "@/zustand-stores";
 
 import HomeStack from "./src/HomeStack";
 import MyPageStack from "./src/MyPageStack";
@@ -18,6 +20,17 @@ import SearchStack from "./src/SearchStack";
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export default function BottomTab() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const {reservedRoute, params, reset} = useNavigationStore();
+
+  useFcmTokenSave();
+  React.useEffect(() => {
+    if (reservedRoute === "BottomTabView") return;
+
+    navigation.navigate(reservedRoute, params);
+    reset();
+  }, []);
+
   return (
     <Tab.Navigator screenOptions={bottomTabScreenOptions}>
       <Tab.Screen

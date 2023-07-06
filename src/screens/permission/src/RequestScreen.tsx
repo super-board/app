@@ -1,7 +1,9 @@
 import React from "react";
 
+import {useMutation} from "@tanstack/react-query";
 import {StyleSheet, Text, View} from "react-native";
 
+import {api} from "@/api";
 import {FlexEmptyFill, OTBButton, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import effects from "@/constants/effects";
@@ -17,12 +19,14 @@ import {usePermissionGrantStore} from "@/zustand-stores";
 
 export default function RequestScreen({navigation, route}: ScreenProps) {
   const {completePermissionGrant} = usePermissionGrantStore();
+  const {mutate: updatePushSetting} = useMutation([], api.pushToggle.updatePushSettings);
 
   const onRequestPermissions = async () => {
     await Promise.allSettled([
       PermissionNotificationsService.requestPermission(),
       PermissionCameraAndGalleryService.requestPermission(),
       PermissionAppTrackingTransparencyService.requestPermission(),
+      updatePushSetting({commentYn: "Y", favoriteTagYn: "Y"}),
     ]);
     completePermissionGrant();
     navigation.reset({

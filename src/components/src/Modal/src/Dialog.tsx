@@ -26,6 +26,7 @@ export default function Dialog({
   confirmText = "확인",
   cancelText = "취소",
   onConfirm = async () => {},
+  onCancel = async () => {},
   onRequestClose,
   ...otherProps
 }: DialogProps) {
@@ -36,6 +37,11 @@ export default function Dialog({
     await onConfirm.call(null);
     setIsLoading(false);
     onRequestClose?.call(null, event);
+  };
+
+  const _onCancel = (event: NativeSyntheticEvent<any>) => {
+    if (!onCancel) return onRequestClose?.call(null, event);
+    onCancel();
   };
 
   return (
@@ -81,7 +87,7 @@ export default function Dialog({
               style={{flex: 1}}
               type="modal-secondary"
               text={cancelText}
-              onPress={onRequestClose}
+              onPress={onCancel}
               disabled={isLoading}
             />
             <OTBButton

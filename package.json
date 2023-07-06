@@ -12,6 +12,7 @@
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.4.5",
     "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-community/netinfo": "^9.4.1",
     "@react-native-firebase/analytics": "^17.5.0",
     "@react-native-firebase/app": "^17.5.0",
     "@react-native-firebase/crashlytics": "^17.5.0",
@@ -27,6 +28,7 @@
     "react": "^18.2.0",
     "react-native": "^0.71.1",
     "react-native-encrypted-storage": "^4.0.3",
+    "react-native-exit-app": "^2.0.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-image-picker": "^5.1.0",
@@ -57,7 +59,7 @@
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
     "babel-jest": "^29.3.1",
-    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -67,6 +69,9 @@
     "react-native-svg-transformer": "^1.0.0",
     "react-test-renderer": "^18.2.0",
     "typescript": "^4.9.4"
+  },
+  "overrides": {
+    "semver": "~7.5.2"
   },
   "jest": {
     "preset": "react-native",

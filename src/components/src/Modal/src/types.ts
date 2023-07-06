@@ -2,6 +2,8 @@ import {ReactNode} from "react";
 
 import {Modal as DefModal} from "react-native";
 
+import {BadgeType} from "@/types";
+
 export type ModalProps = DefModal["props"] & {
   IconComponent?: ReactNode;
   title?: string;
@@ -16,10 +18,12 @@ export type DialogProps = ModalProps & {
   confirmText?: string;
   cancelText?: string;
   onConfirm?: (() => void) | (() => Promise<void>);
+  onCancel?: (() => void) | (() => Promise<void>);
 };
 
 export type BadgeModalProps = {
-  type: string;
+  type: BadgeType;
+  onNavigateToMyBadges: () => void;
 } & ModalProps;
 
 export type BadgeProps = {

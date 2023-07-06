@@ -1,31 +1,51 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {StyleSheet, Text, View} from "react-native";
 
+import {api} from "@/api";
 import {OTBSwitch, SizedBox} from "@/components";
 import colors from "@/constants/colors";
 import style from "@/constants/style";
 import typography from "@/constants/typography";
+import {useRefetchQuery} from "@/hooks";
 
 export default function NotificationSettingsScreen() {
-  const [isAllOn, setIsAllOn] = useState(true);
-  const [isCommentOn, setIsCommentOn] = useState(true);
-  const [isTagOn, setIsTagOn] = useState(true);
+  const queryClient = useQueryClient();
+  const {data: settings} = useRefetchQuery(
+    ["settings/notification"],
+    api.pushToggle.fetchPushSettings,
+  );
+  const {mutate: updatePushSettings} = useMutation(api.pushToggle.updatePushSettings, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["settings/notification"]);
+    },
+  });
+  const isAllOn = React.useMemo(
+    () => settings?.commentYn === "Y" && settings?.favoriteTagYn === "Y",
+    [settings],
+  );
 
   const onToggle = {
     all: () => {
       const toBe = !isAllOn;
-      setIsAllOn(toBe);
-      setIsCommentOn(toBe);
-      setIsTagOn(toBe);
+      updatePushSettings({commentYn: toBe ? "Y" : "N", favoriteTagYn: toBe ? "Y" : "N"});
     },
-    comment: () => setIsCommentOn(state => !state),
-    tag: () => setIsTagOn(state => !state),
+    comment: () => {
+      if (settings)
+        updatePushSettings({
+          commentYn: settings.commentYn === "Y" ? "N" : "Y",
+          favoriteTagYn: settings.favoriteTagYn,
+        });
+    },
+    tag: () => {
+      if (settings)
+        updatePushSettings({
+          commentYn: settings.commentYn,
+          favoriteTagYn: settings.favoriteTagYn === "Y" ? "N" : "Y",
+        });
+    },
   };
-
-  useEffect(() => {
-    setIsAllOn(isCommentOn && isTagOn);
-  }, [isCommentOn, isTagOn]);
 
   return (
     <View style={style.screenWithAppBarContainer}>
@@ -43,7 +63,7 @@ export default function NotificationSettingsScreen() {
             내가 작성한 리뷰에 댓글이 달렸을 때 알림을 받을 수 있어요.
           </Text>
         </View>
-        <OTBSwitch isOn={isCommentOn} onToggle={onToggle.comment} />
+        <OTBSwitch isOn={settings?.commentYn === "Y"} onToggle={onToggle.comment} />
       </View>
       <SizedBox height={16} />
       <View style={styles.row}>
@@ -54,7 +74,7 @@ export default function NotificationSettingsScreen() {
             내가 선택한 관심 태그에 해당되는 게임이 새롭게 등록되었을 때 알림을 받을 수 있어요.
           </Text>
         </View>
-        <OTBSwitch isOn={isTagOn} onToggle={onToggle.tag} />
+        <OTBSwitch isOn={settings?.favoriteTagYn === "Y"} onToggle={onToggle.tag} />
       </View>
     </View>
   );

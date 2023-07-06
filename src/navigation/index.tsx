@@ -1,6 +1,11 @@
 import React, {useCallback} from "react";
 
-import {DarkTheme, NavigationContainer} from "@react-navigation/native";
+import messaging, {FirebaseMessagingTypes} from "@react-native-firebase/messaging";
+import {
+  DarkTheme,
+  NavigationContainer,
+  createNavigationContainerRef,
+} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {StyleSheet, View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
@@ -53,7 +58,7 @@ import {
 import {SearchScreen} from "@/screens/search";
 import {SplashScreen} from "@/screens/splash";
 import {EditScreen, WriteScreen} from "@/screens/write";
-import {useOnboardingStore} from "@/zustand-stores";
+import {useAppSettingStore, useNavigationStore, useOnboardingStore} from "@/zustand-stores";
 import useAuthStore from "@/zustand-stores/src/useAuthStore";
 
 import {stackScreenOptions} from "./config";
@@ -63,11 +68,14 @@ import Tabs from "./tab";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+export const navigationRef = createNavigationContainerRef<RootStackParamList>();
+
 export default function Navigation() {
-  const [didAppInitialized, setDidAppInitialized] = React.useState(false);
+  const {didAppInitialized} = useAppSettingStore();
   const {shouldRequestOnboarding} = useOnboardingStore();
   const {shouldLogin} = useAuthStore();
   const insets = useSafeAreaInsets();
+  const {navigateAfterInitializing} = useNavigationStore();
 
   const initialRouteName = useCallback(() => {
     if (shouldLogin) return "LoginScreen";
@@ -76,8 +84,36 @@ export default function Navigation() {
   }, [shouldLogin, shouldRequestOnboarding]);
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => setDidAppInitialized(true), 1500);
-    return () => clearTimeout(timeout);
+    // 백그라운드 실행 중 푸시 알림이 올 경우
+    messaging().onNotificationOpenedApp((remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+      if (!navigationRef.isReady() || !remoteMessage.data) return;
+      switch (remoteMessage.data.eventType) {
+        case "NEW_COMMENT":
+        case "NEW_BOARDGAME":
+          if (!remoteMessage.data.boardgameId) break;
+          navigationRef.navigate("BoardGameDetailsScreen", {
+            id: +remoteMessage.data.boardgameId,
+          });
+          break;
+      }
+    });
+
+    // 앱이 완전히 종료된 상태에서 푸시 알림이 올 경우
+    messaging()
+      .getInitialNotification()
+      .then((remoteMessage: FirebaseMessagingTypes.RemoteMessage | null) => {
+        if (!remoteMessage || !remoteMessage.data) return;
+
+        switch (remoteMessage.data.eventType) {
+          case "NEW_COMMENT":
+          case "NEW_BOARDGAME":
+            if (!remoteMessage.data.boardgameId) break;
+            navigateAfterInitializing("BoardGameDetailsScreen", {
+              id: +remoteMessage.data.boardgameId,
+            });
+            break;
+        }
+      });
   }, []);
 
   if (!didAppInitialized) return <SplashScreen />;
@@ -85,6 +121,7 @@ export default function Navigation() {
   return (
     <View style={[styles.container, {paddingTop: insets.top, backgroundColor: colors.OTBBlack}]}>
       <NavigationContainer
+        ref={navigationRef}
         theme={{...DarkTheme, colors: {...DarkTheme.colors, background: colors.OTBBlack}}}>
         <Stack.Navigator initialRouteName={initialRouteName()} screenOptions={stackScreenOptions}>
           <Stack.Group>
